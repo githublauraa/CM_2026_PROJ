@@ -14,8 +14,9 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            //HomeScreen()
-            NovedadScreen()
+            HomeScreen()
+            // NovedadScreen()
+            // ProfileScreen()
         }
     }
 }

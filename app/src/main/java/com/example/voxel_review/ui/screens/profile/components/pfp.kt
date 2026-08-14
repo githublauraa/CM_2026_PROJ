@@ -16,6 +16,6 @@ fun Pfp(
     Image(
 	    painter = painterResource(R.drawable.profile_picture),
 	    contentDescription = "Profile Picture",
-        modifier = Modifier.width(110.dp).height(110.dp)
+        modifier = Modifier.width(130.dp).height(110.dp)
     )
 }
