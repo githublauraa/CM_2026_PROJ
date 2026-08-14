@@ -7,9 +7,24 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.voxel_review.R
 import com.example.voxel_review.ui.screens.novedades.components.NovedadesContent
 import com.example.voxel_review.ui.utils.BarraInferior
+
+
+@Composable
+fun NovedadBody(
+    modifier: Modifier = Modifier
+) {
+    Box(
+        modifier = modifier.fillMaxSize()
+    ) {
+        NovedadesContent()
+    }
+}
+
 
 @Composable
 fun NovedadScreen(
@@ -18,16 +33,17 @@ fun NovedadScreen(
     Box(
         modifier = modifier
             .fillMaxSize()
-            .background(Color(0xFF0D0917))
+            .background(color = colorResource(R.color.Voxel_moradooo))
     ) {
 
-        NovedadesContent()
+        NovedadBody()
 
         BarraInferior(
             modifier = Modifier.align(Alignment.BottomCenter)
         )
     }
 }
+
 
 @Composable
 @Preview(

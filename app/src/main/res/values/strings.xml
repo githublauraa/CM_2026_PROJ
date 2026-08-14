@@ -14,4 +14,8 @@
     <string name="iniciar_sesi_n">Iniciar sesión</string>
     <string name="o">"   O   "</string>
     <string name="crear_cuenta">Crear cuenta</string>
+    <string name="inicio">Inicio</string>
+    <string name="buscar">Buscar</string>
+    <string name="novedades">Novedades</string>
+    <string name="perfil">Perfil</string>
 </resources>

@@ -11,13 +11,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.material3.Icon
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.voxel_review.R
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -27,8 +25,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.ui.Alignment
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.shape.CircleShape
-
+import androidx.compose.ui.res.colorResource
 
 
 @Composable
@@ -38,7 +35,9 @@ fun MostrarLogo(
     Image(
         painter = painterResource(R.drawable.logo_app),
         contentDescription = stringResource(R.string.logo_app),
-        modifier = Modifier.width(110.dp).height(110.dp)
+        modifier = Modifier
+            .width(110.dp)
+            .height(110.dp)
     )
 }
 
@@ -61,11 +60,14 @@ fun Boton(
         colors = ButtonDefaults.buttonColors(
             containerColor = colorFondo
         ),shape = RoundedCornerShape(10.dp),
-        modifier = modifier.width(300.dp).height(50.dp).border(
-            width = (2.dp),
-            color = colorBorde,
-            shape = RoundedCornerShape(10.dp)
-        )
+        modifier = modifier
+            .width(300.dp)
+            .height(50.dp)
+            .border(
+                width = (2.dp),
+                color = colorBorde,
+                shape = RoundedCornerShape(10.dp)
+            )
 
     ) {
         Text(
@@ -84,7 +86,7 @@ fun BarraInferior(
         modifier = modifier
             .fillMaxWidth()
             .height(78.dp)
-            .background(Color(0xFF18132E))
+            .background(color = colorResource(R.color.Voxel_moradooo))
             .padding(horizontal = 32.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
@@ -92,13 +94,13 @@ fun BarraInferior(
 
         Image(
             painter = painterResource(R.drawable.ic_home),
-            contentDescription = "Inicio",
+            contentDescription = stringResource(R.string.inicio),
             modifier = Modifier.size(30.dp)
         )
 
         Image(
             painter = painterResource(R.drawable.ic_search),
-            contentDescription = "Buscar",
+            contentDescription = stringResource(R.string.buscar),
             modifier = Modifier.size(30.dp)
         )
 
@@ -108,7 +110,7 @@ fun BarraInferior(
 
             Image(
                 painter = painterResource(R.drawable.ic_star),
-                contentDescription = "Novedades",
+                contentDescription = stringResource(R.string.novedades),
                 modifier = Modifier.size(32.dp)
             )
 
@@ -121,7 +123,7 @@ fun BarraInferior(
 
         Image(
             painter = painterResource(R.drawable.ic_profile),
-            contentDescription = "Perfil",
+            contentDescription = stringResource(R.string.perfil),
             modifier = Modifier.size(30.dp)
         )
     }
