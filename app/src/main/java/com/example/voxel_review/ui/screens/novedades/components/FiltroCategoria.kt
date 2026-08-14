@@ -7,36 +7,28 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.voxel_review.R
 
 @Composable
 fun FiltroCategoria(
     texto: String,
-    seleccionado: Boolean = false,
     modifier: Modifier = Modifier
 ) {
     Text(
         text = texto,
-        color = if (seleccionado) Color.Black else Color(0xFF9B93AF),
+        color = colorResource(R.color.Voxel_secundario),
         fontSize = 14.sp,
         modifier = modifier
             .background(
-                color = if (seleccionado) {
-                    Color(0xFF10DDF5)
-                } else {
-                    Color(0xFF17122D)
-                },
+                color = colorResource(R.color.Voxel_moradooo),
                 shape = RoundedCornerShape(20.dp)
             )
             .border(
                 width = 1.dp,
-                color = if (seleccionado) {
-                    Color.Transparent
-                } else {
-                    Color(0xFF3A2D64)
-                },
+                color = colorResource(R.color.Voxel_morado_oscuro),
                 shape = RoundedCornerShape(20.dp)
             )
             .padding(

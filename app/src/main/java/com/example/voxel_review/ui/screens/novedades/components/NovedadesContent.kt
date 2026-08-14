@@ -5,6 +5,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.voxel_review.R
@@ -21,7 +22,7 @@ fun NovedadesContent(
     ) {
 
         Text(
-            text = "Novedades y Reseñas",
+            text = stringResource(R.string.novedades_y_rese_as),
             color = Color.White,
             fontSize = 22.sp
         )
@@ -35,8 +36,7 @@ fun NovedadesContent(
         ) {
 
             FiltroCategoria(
-                texto = "Todo",
-                seleccionado = true
+                texto = "Todo"
             )
 
             FiltroCategoria(
@@ -58,11 +58,11 @@ fun NovedadesContent(
 
         TarjetaJuego(
             imagen = R.drawable.logo_fortnite,
-            etiqueta = "RESEÑA",
-            nombre = "Cyber RPG 2077",
-            descripcion = "Una obra maestra del género. Mundo abierto increíble con profundidad narrativa sin precedentes.",
-            autor = "NeonPixel",
-            calificacion = "4.5"
+            etiqueta = stringResource(R.string.rese_a),
+            nombre = stringResource(R.string.cyber_rpg_2077),
+            descripcion = stringResource(R.string.una_obra_maestra_del_g_nero_mundo_abierto_incre_ble_con_profundidad_narrativa_sin_precedentes),
+            autor = stringResource(R.string.neonpixel),
+            calificacion = stringResource(R.string._4_5)
         )
 
         Spacer(
@@ -71,11 +71,11 @@ fun NovedadesContent(
 
         TarjetaJuego(
             imagen = R.drawable.logo_fortnite,
-            etiqueta = "NOVEDAD",
-            nombre = "Blockworld Adventure",
-            descripcion = "Sandbox creativo con mecánicas de supervivencia. Horas y horas de diversión garantizada.",
-            autor = "VoxelMaster",
-            calificacion = "4.7"
+            etiqueta = stringResource(R.string.novedad),
+            nombre = stringResource(R.string.blockworld_adventure),
+            descripcion = stringResource(R.string.sandbox_creativo_con_mec_nicas_de_supervivencia_horas_y_horas_de_diversi_n_garantizada),
+            autor = stringResource(R.string.voxelmaster),
+            calificacion = stringResource(R.string._4_7)
         )
 
         Spacer(
@@ -84,11 +84,11 @@ fun NovedadesContent(
 
         TarjetaJuego(
             imagen = R.drawable.logo_fortnite,
-            etiqueta = "CLÁSICO",
-            nombre = "Uber RPG 2017",
-            descripcion = "El mejor RPG de su generación. Historia épica con personajes memorables.",
-            autor = "RetroGamer",
-            calificacion = "4.2"
+            etiqueta = stringResource(R.string.cl_sico),
+            nombre = stringResource(R.string.uber_rpg_2017),
+            descripcion = stringResource(R.string.el_mejor_rpg_de_su_generaci_n_historia_pica_con_personajes_memorables),
+            autor = stringResource(R.string.retrogamer),
+            calificacion = stringResource(R.string._4_2)
         )
     }
 }

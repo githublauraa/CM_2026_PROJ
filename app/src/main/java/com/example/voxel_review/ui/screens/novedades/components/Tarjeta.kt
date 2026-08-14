@@ -8,9 +8,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.voxel_review.R
 
 @Composable
 fun TarjetaJuego(
@@ -27,12 +28,12 @@ fun TarjetaJuego(
             .fillMaxWidth()
             .height(145.dp)
             .background(
-                color = Color(0xFF18122E),
+                color = colorResource(R.color.Voxel_moradooo),
                 shape = RoundedCornerShape(18.dp)
             )
             .border(
                 width = 1.dp,
-                color = Color(0xFF362762),
+                color = colorResource(R.color.Voxel_morado_oscuro),
                 shape = RoundedCornerShape(18.dp)
             )
             .padding(12.dp),
@@ -61,7 +62,7 @@ fun TarjetaJuego(
 
                 Text(
                     text = etiqueta,
-                    color = Color(0xFFFF3C9E),
+                    color = colorResource(R.color.Voxel_rosado),
                     fontSize = 10.sp
                 )
 
@@ -71,7 +72,7 @@ fun TarjetaJuego(
 
                 Text(
                     text = "☆ $calificacion",
-                    color = Color.Yellow,
+                    color = colorResource(R.color.Voxel_amarillo),
                     fontSize = 13.sp
                 )
             }
@@ -82,7 +83,7 @@ fun TarjetaJuego(
 
             Text(
                 text = nombre,
-                color = Color.White,
+                color = colorResource(R.color.white),
                 fontSize = 15.sp
             )
 
@@ -92,7 +93,7 @@ fun TarjetaJuego(
 
             Text(
                 text = descripcion,
-                color = Color(0xFFA49CB9),
+                color = colorResource(R.color.Voxel_secundario),
                 fontSize = 12.sp,
                 lineHeight = 14.sp
             )
@@ -103,7 +104,7 @@ fun TarjetaJuego(
 
             Text(
                 text = "●  $autor",
-                color = Color(0xFF9189A8),
+                color = colorResource(R.color.Voxel_secundario),
                 fontSize = 11.sp
             )
         }
