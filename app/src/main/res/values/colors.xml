@@ -14,4 +14,5 @@
     <color name="Voxel_amarillo">#FFD700</color>
     <color name="Voxel_morado_oscuro">#2A2254</color>
     <color name="Voxel_negro">#040C15</color>
+    <color name="Voxel_secundario">#A09EBC</color>
 </resources>

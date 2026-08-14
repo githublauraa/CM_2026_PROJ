@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Voxel_Review</string>
+    <string name="logo_app">logo app</string>
+    <string name="voxel_review">Voxel review</string>
 </resources>
