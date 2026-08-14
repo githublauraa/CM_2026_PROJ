@@ -18,7 +18,8 @@ fun NombreApp(
         text = stringResource(R.string.voxel_review),
         fontSize = 30.sp,
         fontWeight = FontWeight.Bold,
-        color = Color.White
+        color = Color.White,
+        modifier = modifier
 
     )
 }
