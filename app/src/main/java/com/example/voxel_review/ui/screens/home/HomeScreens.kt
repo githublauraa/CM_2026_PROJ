@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
@@ -44,7 +45,8 @@ fun HomeContent(
     ){//columna para mostrar el logo, nombre y subtitulo
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.align(Alignment.BottomStart)
+            modifier = Modifier
+                .align(Alignment.BottomStart)
                 .padding(
                     start = 100.dp, //start es para el espacio que se quiere dejar desde la izquierda
                     bottom = 600.dp// espacio que se deja desde abajo
@@ -70,7 +72,7 @@ fun HomeContent(
                 modifier = Modifier.height(16.dp) //height espacio entre composables
             )
             MensajeUsuario(
-                tipo = "USUARIO",
+                tipo = stringResource(R.string.usuario),
             )
 
             Spacer(
@@ -78,8 +80,9 @@ fun HomeContent(
             )
 
             CampoUsuario(
-                modifier = Modifier.width(320.dp).
-                height(50.dp)
+                modifier = Modifier
+                    .width(320.dp)
+                    .height(50.dp)
             )
 
             Spacer(
@@ -87,15 +90,16 @@ fun HomeContent(
             )
 
             MensajeUsuario(
-                tipo = "CONTRASEÑA",
+                tipo = stringResource(R.string.contrase_aa),
             )
 
             Spacer(
                 modifier = Modifier.height(8.dp)
             )
             CampoContrasena(
-                modifier = Modifier.width(320.dp).
-                height(50.dp)
+                modifier = Modifier
+                    .width(320.dp)
+                    .height(50.dp)
             )
 
             Spacer(
@@ -113,7 +117,7 @@ fun HomeContent(
                 )
         ) {
             Boton(
-                "Iniciar sesión",
+                stringResource(R.string.iniciar_sesi_n),
                 colorFondo = colorResource(R.color.Voxel_rosado),
                 colorBorde = colorResource(R.color.Voxel_rosado),
                 colorLetra = colorResource(R.color.white)
@@ -126,7 +130,7 @@ fun HomeContent(
             ){
                 LineaDivisora()
                 Text(
-                    text = "   O   ",
+                    text = stringResource(R.string.o),
                     color = colorResource(R.color.Voxel_secundario)
                     )
                 LineaDivisora()
@@ -134,7 +138,7 @@ fun HomeContent(
             Spacer(modifier = Modifier.height(10.dp))
 
             Boton(
-                "Crear cuenta",
+                stringResource(R.string.crear_cuenta),
                 colorFondo = colorResource(R.color.Voxel_morado_oscuro),
                 colorBorde = colorResource(R.color.voxel_azul),
                 colorLetra = colorResource(R.color.voxel_azul)
@@ -159,8 +163,9 @@ fun HomeScreen(
     ){
         FondoPantalla()
         HomeContent(
-            modifier = Modifier.align(Alignment.Center).
-            offset(y = 20.dp)//para mover 20dp hacia abajo
+            modifier = Modifier
+                .align(Alignment.Center)
+                .offset(y = 20.dp)//para mover 20dp hacia abajo
         )
     }
 }

@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.voxel_review.R
 
@@ -25,7 +26,7 @@ fun CampoUsuario(
         onValueChange = {},
         placeholder = {
             Text(
-                text = "tu_usuario",
+                text = stringResource(R.string.tu_usuario),
                 color = colorResource(R.color.Voxel_secundario)
             ) },//placeholder para que desaparezca apenas escribe el usuario
         colors = TextFieldDefaults.colors(
@@ -36,7 +37,7 @@ fun CampoUsuario(
             IconButton(onClick = {}) {
                 Icon(
                     painter = painterResource(R.drawable.imagen_login_user),
-                    contentDescription = "imagen para campo usuario"
+                    contentDescription = stringResource(R.string.imagen_para_campo_usuario)
                 )
             }
         },

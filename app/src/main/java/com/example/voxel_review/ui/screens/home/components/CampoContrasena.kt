@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import com.example.voxel_review.R
@@ -25,7 +26,7 @@ fun CampoContrasena(
         value = "",
         onValueChange = {},placeholder = {
             Text(
-                text = "Contraseña",
+                text = stringResource(R.string.contrase_a),
                 color = colorResource(R.color.Voxel_secundario)
             )
         },
@@ -38,7 +39,7 @@ fun CampoContrasena(
             IconButton(onClick = {}) {
                 Icon(
                     painter = painterResource(R.drawable.img_no_ver_contrasena),
-                    contentDescription = "Ocultar contraseña"
+                    contentDescription = stringResource(R.string.ocultar_contrase_a)
                 )
             }
         },
