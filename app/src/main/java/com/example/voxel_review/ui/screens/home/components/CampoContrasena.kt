@@ -1,7 +1,6 @@
 package com.example.voxel_review.ui.screens.home.components
 
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -45,7 +44,7 @@ fun CampoContrasena(
         },
         shape = RoundedCornerShape(10.dp),
         modifier = modifier.border(
-            width = (2.dp),
+            width = 2.dp,
             color = colorResource(R.color.Voxel_morado),
             shape = RoundedCornerShape(10.dp)
         )

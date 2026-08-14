@@ -13,12 +13,12 @@ import com.example.voxel_review.R
 
 @Composable
 fun Subtitulo(
-    modifire: Modifier = Modifier
+    modifier: Modifier = Modifier
 ){
     Text(
         text = stringResource(R.string.explora_rese_a_crea),
         color = colorResource(R.color.Voxel_secundario),
-        modifier = Modifier.padding(8.dp)
+        modifier = modifier.padding(8.dp)
 
     )
 }

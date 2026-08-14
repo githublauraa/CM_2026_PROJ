@@ -14,7 +14,7 @@ fun LineaDivisora(
     modifier: Modifier = Modifier
 ){
     HorizontalDivider(
-        modifier = Modifier.width(130.dp),
+        modifier = modifier.width(130.dp),
         color = colorResource(R.color.Voxel_secundario)
     )
 }

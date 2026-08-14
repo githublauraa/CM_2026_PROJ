@@ -15,6 +15,7 @@ fun MensajeTerminos(
     Text(
         text = stringResource(R.string.al_continuar_acepta_nuestros_t_rminos_de_servicio),
         color = colorResource(R.color.Voxel_secundario),
-        fontSize = 15.sp
+        fontSize = 15.sp,
+        modifier = modifier
     )
 }
