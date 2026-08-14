@@ -42,7 +42,7 @@ fun CampoUsuario(
         shape = RoundedCornerShape(10.dp), //para que quede redondeado el campo
         modifier = modifier.border(
             width = (2.dp),
-            color = colorResource(R.color.Voxel_morado),
+            color = colorResource(R.color.Voxel_morado_oscuro),
             shape = RoundedCornerShape(10.dp)
         )
     )

@@ -45,7 +45,7 @@ fun CampoContrasena(
         shape = RoundedCornerShape(10.dp),
         modifier = modifier.border(
             width = 2.dp,
-            color = colorResource(R.color.Voxel_morado),
+            color = colorResource(R.color.Voxel_morado_oscuro),
             shape = RoundedCornerShape(10.dp)
         )
     )

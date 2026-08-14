@@ -9,6 +9,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.voxel_review.R
+import androidx.compose.ui.Alignment
 
 @Composable
 fun NovedadesContent(
@@ -21,11 +22,22 @@ fun NovedadesContent(
             .padding(top = 45.dp)
     ) {
 
-        Text(
-            text = stringResource(R.string.novedades_y_rese_as),
-            color = Color.White,
-            fontSize = 22.sp
-        )
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = stringResource(R.string.novedades_y_rese_as),
+                color = Color.White,
+                fontSize = 25.sp
+            )
+
+            Spacer(
+                modifier = Modifier.weight(1f)
+            )
+
+            Campana()
+        }
 
         Spacer(
             modifier = Modifier.height(16.dp)
@@ -36,19 +48,19 @@ fun NovedadesContent(
         ) {
 
             FiltroCategoria(
-                texto = "Todo"
+                texto = stringResource(R.string.todo)
             )
 
             FiltroCategoria(
-                texto = "RPG"
+                texto = stringResource(R.string.rpg)
             )
 
             FiltroCategoria(
-                texto = "Acción"
+                texto = stringResource(R.string.acci_n)
             )
 
             FiltroCategoria(
-                texto = "Aventura"
+                texto = stringResource(R.string.aventura)
             )
         }
 

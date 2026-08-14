@@ -34,4 +34,8 @@
     <string name="el_mejor_rpg_de_su_generaci_n_historia_pica_con_personajes_memorables">El mejor RPG de su generación. Historia épica con personajes memorables.</string>
     <string name="retrogamer">RetroGamer</string>
     <string name="_4_2">4.2</string>
+    <string name="aventura">Aventura</string>
+    <string name="acci_n">Acción</string>
+    <string name="rpg">RPG</string>
+    <string name="todo">Todo</string>
 </resources>

@@ -18,7 +18,7 @@ fun FondoPantalla(
     Box(
         modifier = modifier.fillMaxSize().
         background(
-            colorResource(R.color.Voxel_morado_oscuro)
+            colorResource(R.color.Voxel_moradooo)
         )
     )
 }

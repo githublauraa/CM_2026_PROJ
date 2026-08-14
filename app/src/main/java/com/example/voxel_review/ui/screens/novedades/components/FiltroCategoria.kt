@@ -20,7 +20,7 @@ fun FiltroCategoria(
     Text(
         text = texto,
         color = colorResource(R.color.Voxel_secundario),
-        fontSize = 14.sp,
+        fontSize = 10.sp,
         modifier = modifier
             .background(
                 color = colorResource(R.color.Voxel_moradooo),
