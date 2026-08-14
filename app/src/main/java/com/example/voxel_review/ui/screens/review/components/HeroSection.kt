@@ -23,6 +23,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.voxel_review.R
+import androidx.compose.ui.tooling.preview.Preview
+import com.example.voxel_review.ui.theme.Voxel_ReviewTheme
 
 @Composable
 fun HeroSection(
@@ -95,5 +97,13 @@ fun HeroSection(
                 fontSize = 12.sp
             )
         }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun HeroSectionPreview() {
+    Voxel_ReviewTheme {
+        HeroSection()
     }
 }

@@ -41,11 +41,6 @@ fun MostrarLogo(
     )
 }
 
-@Composable
-@Preview(showBackground = true)
-fun MostrarLogoPreview(){
-    MostrarLogo()
-}
 
 @Composable
 fun Boton(
@@ -127,4 +122,17 @@ fun BarraInferior(
             modifier = Modifier.size(30.dp)
         )
     }
+}
+
+
+@Composable
+@Preview
+fun MostrarLogoPreview(){
+    MostrarLogo()
+}
+
+@Composable
+@Preview
+fun BotonPreview(){
+    Boton(textoBoton = "Iniciar sesion", colorFondo = colorResource(R.color.Voxel_elemento), colorBorde = colorResource(R.color.Voxel_elemento), colorLetra = colorResource(R.color.Voxel_elemento))
 }
