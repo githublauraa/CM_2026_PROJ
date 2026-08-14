@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.voxel_review.ui.screens.home.HomeScreen
+import com.example.voxel_review.ui.screens.novedades.NovedadScreen
 import com.example.voxel_review.ui.theme.Voxel_ReviewTheme
 
 class MainActivity : ComponentActivity() {
@@ -19,7 +20,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            HomeScreen()
+            //HomeScreen()
+            NovedadScreen()
         }
     }
 }
