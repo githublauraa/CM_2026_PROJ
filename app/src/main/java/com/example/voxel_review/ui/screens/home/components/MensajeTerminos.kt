@@ -8,14 +8,12 @@ import androidx.compose.ui.unit.sp
 import com.example.voxel_review.R
 
 @Composable
-fun MensajeUsuario(
-    modifier: Modifier = Modifier,
-    tipo: String
+fun MensajeTerminos(
+    modifier: Modifier = Modifier
 ){
     Text(
-        text = tipo,
+        text = "Al continuar acepta nuestros términos de servicio",
         color = colorResource(R.color.Voxel_secundario),
-        fontSize = 15.sp,
-        modifier = modifier
+        fontSize = 15.sp
     )
 }

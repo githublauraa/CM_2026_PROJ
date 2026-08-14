@@ -16,7 +16,7 @@ fun MensajeLogin(
 ){
     Text(
         text = "Login / Registro",
-        fontSize = 20.sp,
+        fontSize = 30.sp,
         fontWeight = FontWeight.Bold,
         color =  Color.White,
         modifier = modifier
