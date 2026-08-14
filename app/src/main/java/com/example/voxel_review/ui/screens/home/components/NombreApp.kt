@@ -23,3 +23,9 @@ fun NombreApp(
 
     )
 }
+
+@Composable
+@Preview
+fun NombreAppPreview(){
+    NombreApp()
+}

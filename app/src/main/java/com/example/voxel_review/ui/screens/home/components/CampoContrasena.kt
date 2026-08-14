@@ -13,6 +13,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.voxel_review.R
 
@@ -49,4 +50,10 @@ fun CampoContrasena(
             shape = RoundedCornerShape(10.dp)
         )
     )
+}
+
+@Composable
+@Preview
+fun CampoContrasenaPreview(){
+    CampoContrasena()
 }

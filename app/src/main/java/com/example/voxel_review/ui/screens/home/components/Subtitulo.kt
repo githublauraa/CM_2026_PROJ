@@ -23,3 +23,9 @@ fun Subtitulo(
     )
 }
 
+
+@Composable
+@Preview
+fun SubtituloPreview(){
+    Subtitulo()
+}

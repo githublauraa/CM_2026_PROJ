@@ -5,6 +5,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.voxel_review.R
 
@@ -17,4 +18,10 @@ fun LineaDivisora(
         modifier = modifier.width(130.dp),
         color = colorResource(R.color.Voxel_secundario)
     )
+}
+
+@Composable
+@Preview
+fun LineaDivisoraPreview(){
+    LineaDivisora()
 }
