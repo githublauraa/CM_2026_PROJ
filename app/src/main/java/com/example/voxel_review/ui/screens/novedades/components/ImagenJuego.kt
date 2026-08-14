@@ -10,6 +10,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.example.voxel_review.R
 
 @Composable
 fun ImagenJuego(
@@ -27,3 +28,8 @@ fun ImagenJuego(
         contentScale = ContentScale.Crop
     )
 }
+
+//@Composable
+//7fun ImagenJuegoPreview(){
+//    ImagenJuego(R.drawable.logo_fortnite, "Juego ....")
+//}

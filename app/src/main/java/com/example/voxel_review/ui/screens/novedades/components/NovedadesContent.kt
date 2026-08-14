@@ -10,6 +10,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.voxel_review.R
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
 fun NovedadesContent(
@@ -103,4 +104,10 @@ fun NovedadesContent(
             calificacion = stringResource(R.string._4_2)
         )
     }
+}
+
+@Composable
+@Preview
+fun NovedadesContentPreview(){
+    NovedadesContent()
 }

@@ -6,6 +6,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.ui.res.painterResource
 import androidx.compose.foundation.layout.size
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.voxel_review.R
 
@@ -18,4 +19,10 @@ fun Campana(
         contentDescription = stringResource(R.string.notificaciones),
         modifier = modifier.size(27.dp)
     )
+}
+
+@Composable
+@Preview
+fun CampanaPreview(){
+    Campana()
 }
