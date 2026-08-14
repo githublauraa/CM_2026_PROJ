@@ -7,6 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import com.example.voxel_review.ui.screens.home.HomeScreen
 import com.example.voxel_review.ui.screens.novedades.NovedadScreen
 import com.example.voxel_review.ui.screens.profile.ProfileScreen
+import com.example.voxel_review.ui.screens.review.ReviewDetailScreen
 import com.example.voxel_review.ui.theme.Voxel_ReviewTheme
 
 class MainActivity : ComponentActivity() {
@@ -14,9 +15,10 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            HomeScreen()
+            // HomeScreen()
             // NovedadScreen()
             // ProfileScreen()
+            ReviewDetailScreen()
         }
     }
 }
