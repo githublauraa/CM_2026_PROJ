@@ -14,6 +14,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.voxel_review.R
+import com.example.voxel_review.ui.screens.home.components.CampoContrasena
 import com.example.voxel_review.ui.screens.home.components.CampoUsuario
 import com.example.voxel_review.ui.screens.home.components.MensajeLogin
 import com.example.voxel_review.ui.screens.home.components.MensajeUsuario
@@ -48,7 +49,7 @@ fun HomeContent(
                 .align(Alignment.BottomStart)
                 .padding(
                     start = 30.dp, //start es para el espacio que se quiere dejar desde la izquierda
-                    bottom = 350.dp// espacio que se deja desde abajo
+                    bottom = 300.dp// espacio que se deja desde abajo
                 )
         ){
             MensajeLogin()
@@ -66,13 +67,17 @@ fun HomeContent(
             CampoUsuario()
 
             Spacer(
-                modifier = Modifier.height(10.dp) //height espacio entre composables
+                modifier = Modifier.height(10.dp)
             )
 
             MensajeUsuario(
                 tipo = "CONTRASEÑA",
             )
 
+            Spacer(
+                modifier = Modifier.height(10.dp)
+            )
+            CampoContrasena()
         }
     }
 

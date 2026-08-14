@@ -2,7 +2,6 @@ package com.example.voxel_review.ui.screens.home.components
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -10,24 +9,26 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import com.example.voxel_review.R
 
+
 @Composable
-fun CampoUsuario(
+fun CampoContrasena(
     modifier: Modifier = Modifier
 ){
     TextField(
         value = "",
-        onValueChange = {},
-        placeholder = {
+        onValueChange = {},placeholder = {
             Text(
-                text = "tu_usuario",
+                text = "Contraseña",
                 color = colorResource(R.color.Voxel_secundario)
-            ) },//placeholder para que desaparezca apenas escribe el usuario
+            )
+        },
+        visualTransformation = PasswordVisualTransformation(),
         colors = TextFieldDefaults.colors(
             focusedContainerColor = colorResource(R.color.Voxel_morado_oscuro),
             unfocusedContainerColor = colorResource(R.color.Voxel_morado_oscuro)
@@ -35,12 +36,12 @@ fun CampoUsuario(
         trailingIcon = {
             IconButton(onClick = {}) {
                 Icon(
-                    painter = painterResource(R.drawable.imagen_login_user),
-                    contentDescription = "imagen para campo usuario"
+                    painter = painterResource(R.drawable.img_no_ver_contrasena),
+                    contentDescription = "Ocultar contraseña"
                 )
             }
         },
-        shape = RoundedCornerShape(10.dp), //para que quede redondeado el campo
+        shape = RoundedCornerShape(10.dp),
         modifier = modifier.border(
             width = (2.dp),
             color = colorResource(R.color.Voxel_morado),
