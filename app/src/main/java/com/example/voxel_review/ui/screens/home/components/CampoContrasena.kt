@@ -13,6 +13,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.voxel_review.R
@@ -20,25 +21,33 @@ import com.example.voxel_review.R
 
 @Composable
 fun CampoContrasena(
+    password:String,
+    mostrarContrasena: Boolean,
+    icono: Int,
+    onPasswordChange: (String) -> Unit,
+    onMostrarContrasenaChange: () -> Unit,
     modifier: Modifier = Modifier
 ){
     TextField(
-        value = "",
-        onValueChange = {},placeholder = {
+        value = password,
+        onValueChange = onPasswordChange,
+        placeholder = {
             Text(
                 text = stringResource(R.string.contrase_a),
                 color = colorResource(R.color.Voxel_secundario)
             )
         },
-        visualTransformation = PasswordVisualTransformation(),
+        visualTransformation = if (mostrarContrasena) VisualTransformation.None else PasswordVisualTransformation(),
         colors = TextFieldDefaults.colors(
             focusedContainerColor = colorResource(R.color.Voxel_morado_oscuro),
-            unfocusedContainerColor = colorResource(R.color.Voxel_morado_oscuro)
+            unfocusedContainerColor = colorResource(R.color.Voxel_morado_oscuro),
+            focusedTextColor = colorResource(R.color.white),
+            unfocusedTextColor = colorResource(R.color.white)
         ),
         trailingIcon = {
-            IconButton(onClick = {}) {
+            IconButton(onClick = onMostrarContrasenaChange) {
                 Icon(
-                    painter = painterResource(R.drawable.img_no_ver_contrasena),
+                    painter = painterResource(icono),
                     contentDescription = stringResource(R.string.ocultar_contrase_a)
                 )
             }
@@ -55,5 +64,11 @@ fun CampoContrasena(
 @Composable
 @Preview
 fun CampoContrasenaPreview(){
-    CampoContrasena()
+    CampoContrasena(
+        password = "",
+        mostrarContrasena = false,
+        icono = R.drawable.img_no_ver_contrasena,
+        onPasswordChange = {},
+        onMostrarContrasenaChange = {}
+    )
 }

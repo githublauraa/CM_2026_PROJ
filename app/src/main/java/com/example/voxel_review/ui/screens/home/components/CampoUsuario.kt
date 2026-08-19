@@ -18,24 +18,29 @@ import com.example.voxel_review.R
 
 @Composable
 fun CampoUsuario(
+    usuario: String,
+    icono : Int,
+    onUserChange: (String) -> Unit,
     modifier: Modifier = Modifier
 ){
     TextField(
-        value = "",
-        onValueChange = {},
+        value = usuario,
+        onValueChange = onUserChange,
         placeholder = {
             Text(
                 text = stringResource(R.string.tu_usuario),
                 color = colorResource(R.color.Voxel_secundario)
-            ) },//placeholder para que desaparezca apenas escribe el usuario
+            ) },
         colors = TextFieldDefaults.colors(
             focusedContainerColor = colorResource(R.color.Voxel_morado_oscuro),
-            unfocusedContainerColor = colorResource(R.color.Voxel_morado_oscuro)
+            unfocusedContainerColor = colorResource(R.color.Voxel_morado_oscuro),
+            focusedTextColor = colorResource(R.color.white),
+            unfocusedTextColor = colorResource(R.color.white)
         ),
         trailingIcon = {
             IconButton(onClick = {}) {
                 Icon(
-                    painter = painterResource(R.drawable.imagen_login_user),
+                    painter = painterResource(icono),
                     contentDescription = stringResource(R.string.imagen_para_campo_usuario)
                 )
             }
@@ -52,5 +57,9 @@ fun CampoUsuario(
 @Composable
 @Preview
 fun CampoUsuarioPreview(){
-    CampoUsuario()
+    CampoUsuario(
+        usuario = "",
+        icono = R.drawable.imagen_login_user,
+        onUserChange = {}
+    )
 }

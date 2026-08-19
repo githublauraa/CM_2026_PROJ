@@ -30,24 +30,31 @@ import com.example.voxel_review.ui.screens.home.components.Subtitulo
 import com.example.voxel_review.ui.utils.Boton
 import com.example.voxel_review.ui.utils.FondoPantalla
 import com.example.voxel_review.ui.utils.MostrarLogo
-
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 
 
 @Composable
 fun HomeContent(
     modifier: Modifier = Modifier
 ){
+    var usuario by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+
+    var mostrarContrasena by remember { mutableStateOf(false) }
+    var icono = if (!mostrarContrasena) R.drawable.img_no_ver_contrasena else R.drawable.visible
+
+
     Box(
         modifier = modifier.fillMaxSize()
     ){//columna para mostrar el logo, nombre y subtitulo
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
-                .align(Alignment.BottomStart)
-                .padding(
-                    start = 100.dp, //start es para el espacio que se quiere dejar desde la izquierda
-                    bottom = 600.dp// espacio que se deja desde abajo
-                )
+                .align(Alignment.TopCenter)
+
         ){
             MostrarLogo()
             NombreApp()
@@ -57,16 +64,13 @@ fun HomeContent(
         Column( //columna para mensaje de login/registro, mensaje USUARIO, PASSWORD y campos
 
             modifier = Modifier
-                .align(Alignment.BottomStart)
-                .padding(
-                    start = 30.dp, //start es para el espacio que se quiere dejar desde la izquierda
-                    bottom = 270.dp// espacio que se deja desde abajo
-                )
+                .align(Alignment.Center)
+
 
         ){
             MensajeLogin()
             Spacer(
-                modifier = Modifier.height(16.dp) //height espacio entre composables
+                modifier = Modifier.height(13.dp) //height espacio entre composables
             )
             MensajeUsuario(
                 tipo = stringResource(R.string.usuario),
@@ -77,6 +81,9 @@ fun HomeContent(
             )
 
             CampoUsuario(
+                usuario = usuario,
+                onUserChange = {usuario = it},
+                icono = R.drawable.imagen_login_user,
                 modifier = Modifier
                     .width(320.dp)
                     .height(50.dp)
@@ -94,10 +101,19 @@ fun HomeContent(
                 modifier = Modifier.height(8.dp)
             )
             CampoContrasena(
+                password = password,
+                onPasswordChange = {password = it},
+                mostrarContrasena = mostrarContrasena,
+                onMostrarContrasenaChange = { mostrarContrasena = !mostrarContrasena },
+                icono = icono,
                 modifier = Modifier
                     .width(320.dp)
                     .height(50.dp)
             )
+            if (password.length < 6)
+                Text(
+                    text = "La contraseña debe ser mayor a 6 caracteres"
+                )
 
             Spacer(
                 modifier = Modifier.height(115.dp)
@@ -107,10 +123,10 @@ fun HomeContent(
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
-                .align(Alignment.BottomStart)
+                .align(Alignment.BottomCenter)
                 .fillMaxWidth()
                 .padding(
-                    bottom = 180.dp
+                    bottom = 170.dp
                 )
         ) {
             Boton(
