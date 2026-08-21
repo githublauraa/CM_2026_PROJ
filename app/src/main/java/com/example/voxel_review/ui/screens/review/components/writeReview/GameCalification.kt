@@ -1,5 +1,6 @@
 package com.example.voxel_review.ui.screens.review.components.writeReview
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
@@ -8,21 +9,17 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.voxel_review.R
 import com.example.voxel_review.ui.screens.review.components.*
 import com.example.voxel_review.ui.theme.*
 
 @Composable
-fun GameInfo(
-    imagen: Int,
-    nombre: String,
-    desarrollador: String,
-    anio: String,
-    modifier: Modifier = Modifier,
-) {
-    Row(
+fun GameCalification(modifier: Modifier = Modifier) {
+    Column(
         modifier =
             modifier
                 .fillMaxWidth()
@@ -34,35 +31,21 @@ fun GameInfo(
                     width = 1.dp,
                     color = VoxelSurfaceVariant,
                     shape = RoundedCornerShape(18.dp),
-                ).padding(12.dp),
-        verticalAlignment = Alignment.CenterVertically,
+                ).padding(20.dp, 12.dp),
     ) {
-        GameImage(
-            imagen = imagen,
-            descripcion = nombre,
+        Text(
+            text = "CALIFICACIONES",
+            color = VoxelTextSecondary,
+            fontSize = 15.sp,
+            fontWeight = FontWeight.Bold,
         )
-
-        Spacer(
-            modifier = Modifier.width(15.dp),
-        )
-
-        Column(
+        Image(
+            painter = painterResource(id = R.drawable.rv_grades),
+            contentDescription = "Calificaciones",
             modifier =
                 Modifier
-                    .weight(1f)
-                    .fillMaxHeight(),
-        ) {
-            Text(
-                text = nombre,
-                color = White,
-                fontWeight = FontWeight.Bold,
-                fontSize = 15.sp,
-            )
-            Text(
-                text = "$desarrollador • $anio",
-                color = VoxelTextSecondary,
-                fontSize = 10.sp,
-            )
-        }
+                    .size(250.dp)
+                    .padding(top = 8.dp),
+        )
     }
 }

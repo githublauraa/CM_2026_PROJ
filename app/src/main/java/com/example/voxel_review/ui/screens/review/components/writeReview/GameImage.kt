@@ -16,15 +16,16 @@ import com.example.voxel_review.R
 fun GameImage(
     imagen: Int,
     descripcion: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Image(
         painter = painterResource(imagen),
         contentDescription = descripcion,
-        modifier = modifier
-            .width(88.dp)
-            .height(100.dp)
-            .clip(RoundedCornerShape(10.dp)),
-        contentScale = ContentScale.Crop
+        modifier =
+            modifier
+                .width(88.dp)
+                .height(100.dp)
+                .clip(RoundedCornerShape(10.dp)),
+        contentScale = ContentScale.Crop,
     )
 }

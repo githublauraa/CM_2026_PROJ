@@ -20,28 +20,26 @@ import com.example.voxel_review.ui.theme.VoxelSurfaceVariant
 import com.example.voxel_review.ui.theme.White
 
 @Composable
-fun TopBar(
-    modifier: Modifier = Modifier
-) {
+fun TopBar(modifier: Modifier = Modifier) {
     Box(
-        modifier = modifier
-            .fillMaxWidth()
-            .background(VoxelBackground)
-            .padding(
-                horizontal = 8.dp,
-                vertical = 12.dp
-            )
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .background(VoxelBackground)
+                .padding(
+                    horizontal = 8.dp,
+                    vertical = 12.dp,
+                ),
     ) {
-
         IconButton(
             onClick = {},
-            modifier = Modifier.align(Alignment.CenterStart)
+            modifier = Modifier.align(Alignment.CenterStart),
         ) {
             Icon(
                 painter = painterResource(R.drawable.back_arrow),
                 contentDescription = "Volver",
                 tint = White,
-                modifier = Modifier.size(24.dp)
+                modifier = Modifier.size(24.dp),
             )
         }
 
@@ -50,18 +48,18 @@ fun TopBar(
             color = White,
             fontSize = 22.sp,
             fontWeight = FontWeight.Bold,
-            modifier = Modifier.align(Alignment.Center)
+            modifier = Modifier.align(Alignment.Center),
         )
 
         IconButton(
             onClick = {},
-            modifier = Modifier.align(Alignment.CenterEnd)
+            modifier = Modifier.align(Alignment.CenterEnd),
         ) {
             Icon(
                 painter = painterResource(R.drawable.settings),
                 contentDescription = "Configuración",
                 tint = White,
-                modifier = Modifier.size(24.dp)
+                modifier = Modifier.size(24.dp),
             )
         }
     }
