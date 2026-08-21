@@ -48,10 +48,11 @@ fun Boton(
     modifier: Modifier = Modifier,
     colorFondo: Color,
     colorBorde : Color,
-    colorLetra: Color
+    colorLetra: Color,
+    onClick : () -> Unit
 ){
     Button(
-        onClick = {},
+        onClick = onClick,
         colors = ButtonDefaults.buttonColors(
             containerColor = colorFondo
         ),shape = RoundedCornerShape(10.dp),
@@ -134,5 +135,5 @@ fun MostrarLogoPreview(){
 @Composable
 @Preview
 fun BotonPreview(){
-    Boton(textoBoton = "Iniciar sesion", colorFondo = colorResource(R.color.Voxel_elemento), colorBorde = colorResource(R.color.Voxel_elemento), colorLetra = colorResource(R.color.Voxel_elemento))
+    Boton(textoBoton = "Iniciar sesion", colorFondo = colorResource(R.color.Voxel_elemento), colorBorde = colorResource(R.color.Voxel_elemento), colorLetra = colorResource(R.color.Voxel_elemento), onClick = {})
 }

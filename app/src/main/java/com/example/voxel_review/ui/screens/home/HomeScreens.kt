@@ -34,6 +34,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import android.util.Log
 
 
 @Composable
@@ -110,9 +111,10 @@ fun HomeContent(
                     .width(320.dp)
                     .height(50.dp)
             )
-            if (password.length < 6)
+            if (password.isNotEmpty() && password.length < 6)
                 Text(
-                    text = "La contraseña debe ser mayor a 6 caracteres"
+                    text = "La contraseña debe ser mayor a 6 caracteres",
+                    color = colorResource(R.color.white)
                 )
 
             Spacer(
@@ -126,14 +128,21 @@ fun HomeContent(
                 .align(Alignment.BottomCenter)
                 .fillMaxWidth()
                 .padding(
-                    bottom = 170.dp
+                    bottom = 90.dp
                 )
+
         ) {
             Boton(
                 stringResource(R.string.iniciar_sesi_n),
                 colorFondo = colorResource(R.color.Voxel_rosado),
                 colorBorde = colorResource(R.color.Voxel_rosado),
-                colorLetra = colorResource(R.color.white)
+                colorLetra = colorResource(R.color.white),
+                onClick = {
+                    Log.d("HomeContent", "Iniciar sesion button");
+                    Log.d("HomeContent", "tu_usuario es $usuario");
+                    Log.d("HomeContent", "tu_contrasena es $password");
+                }
+
             )
 
             Spacer(modifier = Modifier.height(10.dp))
@@ -154,7 +163,10 @@ fun HomeContent(
                 stringResource(R.string.crear_cuenta),
                 colorFondo = colorResource(R.color.Voxel_morado_oscuro),
                 colorBorde = colorResource(R.color.voxel_azul),
-                colorLetra = colorResource(R.color.voxel_azul)
+                colorLetra = colorResource(R.color.voxel_azul),
+                onClick = {
+                    Log.d("HomeContent", "Crear cuenta button");
+                }
             )
 
             Spacer(modifier = Modifier.height(35.dp))
