@@ -57,7 +57,7 @@ fun Boton(
             containerColor = colorFondo
         ),shape = RoundedCornerShape(10.dp),
         modifier = modifier
-            .width(300.dp)
+            .width(320.dp)
             .height(50.dp)
             .border(
                 width = (2.dp),

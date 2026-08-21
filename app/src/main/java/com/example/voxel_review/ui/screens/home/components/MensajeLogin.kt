@@ -17,7 +17,7 @@ fun MensajeLogin(
 ){
     Text(
         text = stringResource(R.string.login_registro),
-        fontSize = 30.sp,
+        fontSize = 23.sp,
         fontWeight = FontWeight.Bold,
         color =  Color.White,
         modifier = modifier
