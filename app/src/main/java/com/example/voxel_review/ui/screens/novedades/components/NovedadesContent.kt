@@ -12,64 +12,79 @@ import com.example.voxel_review.R
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.voxel_review.data.LocalJuegosProvider
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import com.example.voxel_review.ui.screens.novedades.components.TarjetaJuego
+import androidx.compose.ui.res.stringResource
 
 @Composable
 fun NovedadesContent(
     modifier: Modifier = Modifier
 ) {
-    Column(
+
+    val allJuegos = LocalJuegosProvider.juegos
+
+    LazyColumn(
         modifier = modifier
             .fillMaxSize()
             .padding(horizontal = 22.dp)
-            .padding(top = 45.dp)
+            .padding(top = 45.dp),
+        contentPadding = PaddingValues(
+            bottom = 70.dp
+        )
     ) {
 
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(
-                text = stringResource(R.string.novedades_y_rese_as),
-                color = Color.White,
-                fontSize = 25.sp
-            )
+        item {
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+
+                Text(
+                    text = stringResource(R.string.novedades_y_rese_as),
+                    color = Color.White,
+                    fontSize = 25.sp
+                )
+
+                Spacer(
+                    modifier = Modifier.weight(1f)
+                )
+
+                Campana()
+            }
 
             Spacer(
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.height(16.dp)
             )
 
-            Campana()
-        }
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                FiltroCategoria(
+                    texto = stringResource(R.string.todo)
+                )
 
-        Spacer(
-            modifier = Modifier.height(16.dp)
-        )
+                FiltroCategoria(
+                    texto = stringResource(R.string.rpg)
+                )
 
-        Row(
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
+                FiltroCategoria(
+                    texto = stringResource(R.string.acci_n)
+                )
 
-            FiltroCategoria(
-                texto = stringResource(R.string.todo)
-            )
+                FiltroCategoria(
+                    texto = stringResource(R.string.aventura)
+                )
+            }
 
-            FiltroCategoria(
-                texto = stringResource(R.string.rpg)
-            )
-
-            FiltroCategoria(
-                texto = stringResource(R.string.acci_n)
-            )
-
-            FiltroCategoria(
-                texto = stringResource(R.string.aventura)
+            Spacer(
+                modifier = Modifier.height(18.dp)
             )
         }
 
-        Spacer(
-            modifier = Modifier.height(18.dp)
-        )
-        LocalJuegosProvider.juegos.forEach { juego ->
+        items(allJuegos) { juego ->
+
             TarjetaJuego(
                 imagen = juego.imagen,
                 etiqueta = stringResource(juego.etiqueta),
@@ -78,8 +93,9 @@ fun NovedadesContent(
                 autor = stringResource(juego.autor),
                 calificacion = stringResource(juego.calificacion)
             )
+
             Spacer(
-                modifier = Modifier.height(18.dp)
+                modifier = Modifier.height(16.dp)
             )
         }
     }

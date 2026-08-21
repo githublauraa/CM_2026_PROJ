@@ -32,6 +32,23 @@ object LocalJuegosProvider {
             descripcion = R.string.el_mejor_rpg_de_su_generaci_n_historia_pica_con_personajes_memorables,
             autor = R.string.retrogamer,
             calificacion = R.string._4_2
+        ),
+        JuegoInfo(
+            imagen = R.drawable.logo_fortnite,
+            etiqueta = R.string.cl_sico,
+            nombre = R.string.uber_rpg_2017,
+            descripcion = R.string.el_mejor_rpg_de_su_generaci_n_historia_pica_con_personajes_memorables,
+            autor = R.string.retrogamer,
+            calificacion = R.string._4_2
+        ),
+        JuegoInfo(
+            imagen = R.drawable.logo_fortnite,
+            etiqueta = R.string.cl_sico,
+            nombre = R.string.uber_rpg_2017,
+            descripcion = R.string.el_mejor_rpg_de_su_generaci_n_historia_pica_con_personajes_memorables,
+            autor = R.string.retrogamer,
+            calificacion = R.string._4_2
         )
+
     )
 }
