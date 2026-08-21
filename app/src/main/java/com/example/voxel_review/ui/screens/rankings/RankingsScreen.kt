@@ -26,7 +26,8 @@ import androidx.compose.foundation.layout.Arrangement
 import com.example.voxel_review.data.infoRanking.ListaRanking
 import com.example.voxel_review.ui.screens.rankings.components.RankingCard
 import androidx.compose.foundation.lazy.items
-
+import com.example.voxel_review.ui.utils.DiscoverTab
+import com.example.voxel_review.ui.utils.DiscoverBottomNavigationBar
 
 @Composable
 fun RankingContent(
@@ -104,11 +105,19 @@ fun RankingsScreen(
 ) {
     Box(
         modifier = modifier.fillMaxSize()
-    ){
-      FondoPantalla()
-        RankingContent()
-    }
+    ) {
+        FondoPantalla()
 
+        RankingContent(
+            modifier = Modifier.padding(bottom = 70.dp)
+        )
+
+        DiscoverBottomNavigationBar(
+            selectedTab = DiscoverTab.HOME,
+            onTabSelected = {},
+            modifier = Modifier.align(Alignment.BottomCenter)
+        )
+    }
 }
 
 @Preview
