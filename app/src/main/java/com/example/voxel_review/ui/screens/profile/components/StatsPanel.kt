@@ -10,70 +10,83 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.voxel_review.R
+import com.example.voxel_review.ui.theme.VoxelBorder
+import com.example.voxel_review.ui.theme.VoxelPrimary
+import com.example.voxel_review.ui.theme.VoxelSecondary
+import com.example.voxel_review.ui.theme.VoxelSurface
+import com.example.voxel_review.ui.theme.VoxelTextSecondary
+import com.example.voxel_review.ui.theme.White
 
 @Composable
-fun StatsPanel(modifier: Modifier = Modifier) {
-
-    val colorFondo = colorResource(id = R.color.Voxel_elemento)
-    val colorBorde = Color(0xFF2E2B5F)
-    val colorTextoSecundario = colorResource(id = R.color.Voxel_secundario)
+fun StatsPanel(
+    modifier: Modifier = Modifier
+) {
 
     Box(
         modifier = modifier
             .fillMaxWidth(0.9f)
-            .background(color = colorFondo, shape = RoundedCornerShape(16.dp))
-            .border(width = 1.dp, color = colorBorde, shape = RoundedCornerShape(16.dp))
-            .padding(vertical = 16.dp, horizontal = 10.dp)
+            .background(
+                color = VoxelSurface,
+                shape = RoundedCornerShape(16.dp)
+            )
+            .border(
+                width = 1.dp,
+                color = VoxelBorder,
+                shape = RoundedCornerShape(16.dp)
+            )
+            .padding(
+                vertical = 16.dp,
+                horizontal = 10.dp
+            )
     ) {
-        // IntrinsicSize.Min es vital para que el VerticalDivider sepa qué altura tomar
+
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(50.dp), 
+                .height(50.dp),
             horizontalArrangement = Arrangement.SpaceEvenly,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            // # Reseñas
+
+            // Reseñas
             ItemEstadistica(
                 valor = "47",
                 etiqueta = "RESEÑAS",
-                colorValor = colorResource(id = R.color.voxel_azul),
-                colorEtiqueta = colorTextoSecundario,
+                colorValor = VoxelPrimary,
+                colorEtiqueta = VoxelTextSecondary,
                 modifier = Modifier.weight(1f)
             )
 
             VerticalDivider(
-                color = colorBorde,
-                thickness = 1.dp,
-                modifier = Modifier.fillMaxHeight(0.8f) // Ocupa el 80% del alto disponible
-            )
-
-            // Promedio de notas
-            ItemEstadistica(
-                valor = "4.3",
-                etiqueta = "PROMEDIO",
-                colorValor = colorResource(id = R.color.Voxel_rosado),
-                colorEtiqueta = colorTextoSecundario,
-                modifier = Modifier.weight(1f)
-            )
-
-            VerticalDivider(
-                color = colorBorde,
+                color = VoxelBorder,
                 thickness = 1.dp,
                 modifier = Modifier.fillMaxHeight(0.8f)
             )
 
-            // Likes recibidos
+            // Promedio
+            ItemEstadistica(
+                valor = "4.3",
+                etiqueta = "PROMEDIO",
+                colorValor = VoxelSecondary,
+                colorEtiqueta = VoxelTextSecondary,
+                modifier = Modifier.weight(1f)
+            )
+
+            VerticalDivider(
+                color = VoxelBorder,
+                thickness = 1.dp,
+                modifier = Modifier.fillMaxHeight(0.8f)
+            )
+
+            // Likes
             ItemEstadistica(
                 valor = "312",
                 etiqueta = "LIKES",
-                colorValor = Color.White,
-                colorEtiqueta = colorTextoSecundario,
+                colorValor = White,
+                colorEtiqueta = VoxelTextSecondary,
                 modifier = Modifier.weight(1f)
             )
         }
@@ -88,22 +101,28 @@ private fun ItemEstadistica(
     colorEtiqueta: Color,
     modifier: Modifier = Modifier
 ) {
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
     ) {
+
         Text(
             text = valor,
             color = colorValor,
-            fontSize = 28.sp,
+            fontSize = 24.sp,
             fontWeight = FontWeight.ExtraBold
         )
-        Spacer(modifier = Modifier.height(4.dp))
+
+        Spacer(
+            modifier = Modifier.height(4.dp)
+        )
+
         Text(
             text = etiqueta,
             color = colorEtiqueta,
             fontSize = 12.sp,
-            fontWeight = FontWeight.Medium,
+            fontWeight = FontWeight.Medium
         )
     }
 }

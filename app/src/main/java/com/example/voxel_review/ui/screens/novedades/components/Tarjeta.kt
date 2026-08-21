@@ -8,11 +8,16 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.voxel_review.R
+import com.example.voxel_review.ui.theme.VoxelAccentYellow
+import com.example.voxel_review.ui.theme.VoxelBackground
+import com.example.voxel_review.ui.theme.VoxelSecondary
+import com.example.voxel_review.ui.theme.VoxelSurfaceVariant
+import com.example.voxel_review.ui.theme.VoxelTextSecondary
+import com.example.voxel_review.ui.theme.White
 
 @Composable
 fun TarjetaJuego(
@@ -29,12 +34,12 @@ fun TarjetaJuego(
             .fillMaxWidth()
             .height(145.dp)
             .background(
-                color = colorResource(R.color.Voxel_moradooo),
+                color = VoxelBackground,
                 shape = RoundedCornerShape(18.dp)
             )
             .border(
                 width = 1.dp,
-                color = colorResource(R.color.Voxel_morado_oscuro),
+                color = VoxelSurfaceVariant,
                 shape = RoundedCornerShape(18.dp)
             )
             .padding(12.dp),
@@ -63,7 +68,7 @@ fun TarjetaJuego(
 
                 Text(
                     text = etiqueta,
-                    color = colorResource(R.color.Voxel_rosado),
+                    color = VoxelSecondary,
                     fontSize = 10.sp
                 )
 
@@ -73,7 +78,7 @@ fun TarjetaJuego(
 
                 Text(
                     text = "☆ $calificacion",
-                    color = colorResource(R.color.Voxel_amarillo),
+                    color = VoxelAccentYellow,
                     fontSize = 13.sp
                 )
             }
@@ -84,7 +89,7 @@ fun TarjetaJuego(
 
             Text(
                 text = nombre,
-                color = colorResource(R.color.white),
+                color = White,
                 fontSize = 15.sp
             )
 
@@ -94,7 +99,7 @@ fun TarjetaJuego(
 
             Text(
                 text = descripcion,
-                color = colorResource(R.color.Voxel_secundario),
+                color = VoxelTextSecondary,
                 fontSize = 12.sp,
                 lineHeight = 14.sp
             )
@@ -105,7 +110,7 @@ fun TarjetaJuego(
 
             Text(
                 text = "●  $autor",
-                color = colorResource(R.color.Voxel_secundario),
+                color = VoxelTextSecondary,
                 fontSize = 11.sp
             )
         }
@@ -114,7 +119,7 @@ fun TarjetaJuego(
 
 @Composable
 @Preview
-fun TarjetaJuegoPreview(){
+fun TarjetaJuegoPreview() {
     TarjetaJuego(
         imagen = R.drawable.logo_fortnite,
         etiqueta = "Reseña",

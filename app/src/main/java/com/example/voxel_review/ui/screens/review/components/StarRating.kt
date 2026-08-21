@@ -5,11 +5,11 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.voxel_review.R
+import com.example.voxel_review.ui.theme.VoxelAccentYellow
+import androidx.compose.ui.graphics.Color.Companion.Gray
 
 @Composable
 fun StarRating(
@@ -24,9 +24,9 @@ fun StarRating(
                 contentDescription = null,
 
                 tint = if (index < rating) {
-                    colorResource(R.color.Voxel_amarillo)
+                    VoxelAccentYellow
                 } else {
-                    Color.Gray
+                    Gray
                 },
 
                 modifier = Modifier.size(14.dp)

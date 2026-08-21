@@ -8,24 +8,30 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.voxel_review.R
+import com.example.voxel_review.ui.theme.VoxelBackground
+import com.example.voxel_review.ui.theme.VoxelBackgroundDark
+import com.example.voxel_review.ui.theme.VoxelSurfaceVariant
+import com.example.voxel_review.ui.theme.White
 
 @Composable
-fun TopBar(modifier: Modifier = Modifier) {
-    val colorFondo = colorResource(R.color.Voxel_negro)
-
+fun TopBar(
+    modifier: Modifier = Modifier
+) {
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .background(colorFondo)
-            .padding(horizontal = 8.dp, vertical = 12.dp)
+            .background(VoxelBackground)
+            .padding(
+                horizontal = 8.dp,
+                vertical = 12.dp
+            )
     ) {
+
         IconButton(
             onClick = {},
             modifier = Modifier.align(Alignment.CenterStart)
@@ -33,14 +39,14 @@ fun TopBar(modifier: Modifier = Modifier) {
             Icon(
                 painter = painterResource(R.drawable.back_arrow),
                 contentDescription = "Volver",
-		tint = Color.White,
-		modifier = Modifier.size(24.dp)
+                tint = White,
+                modifier = Modifier.size(24.dp)
             )
         }
 
         Text(
             text = "Mi Perfil",
-            color = Color.White,
+            color = White,
             fontSize = 22.sp,
             fontWeight = FontWeight.Bold,
             modifier = Modifier.align(Alignment.Center)
@@ -53,8 +59,8 @@ fun TopBar(modifier: Modifier = Modifier) {
             Icon(
                 painter = painterResource(R.drawable.settings),
                 contentDescription = "Configuración",
-		tint = Color.White,
-		modifier = Modifier.size(24.dp)
+                tint = White,
+                modifier = Modifier.size(24.dp)
             )
         }
     }

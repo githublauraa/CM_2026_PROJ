@@ -1,19 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <color name="purple_200">#FFBB86FC</color>
-  <color name="purple_500">#FF6200EE</color>
-  <color name="purple_700">#FF3700B3</color>
-  <color name="teal_200">#FF03DAC5</color>
-  <color name="teal_700">#FF018786</color>
+
+  <!-- Colores básicos -->
   <color name="black">#FF000000</color>
   <color name="white">#FFFFFFFF</color>
-  <color name="voxel_azul">#00F0FF</color>
-  <color name="Voxel_rosado">#FF2E93</color>
-  <color name="Voxel_morado">#8F00FF</color>
-  <color name="Voxel_amarillo">#FFD700</color>
-  <color name="Voxel_morado_oscuro">#2A2254</color>
-  <color name="Voxel_negro">#040C15</color>
-  <color name="Voxel_secundario">#A09EBC</color>
-  <color name="Voxel_elemento">#191430</color>
-  <color name="Voxel_moradooo">#0F0D1F</color>
+
+  <!-- Colores principales de Voxel Review -->
+  <color name="voxel_primary">#00F0FF</color>
+  <color name="voxel_secondary">#FF2E93</color>
+  <color name="voxel_accent_purple">#8F00FF</color>
+  <color name="voxel_accent_yellow">#FFD700</color>
+
+  <!-- Fondos -->
+  <color name="voxel_background">#0F0D1F</color>
+  <color name="voxel_surface">#191430</color>
+  <color name="voxel_surface_variant">#2A2254</color>
+  <color name="voxel_background_dark">#040C15</color>
+
+  <!-- Texto -->
+  <color name="voxel_text_primary">#FFFFFFFF</color>
+  <color name="voxel_text_secondary">#A09EBC</color>
+
 </resources>

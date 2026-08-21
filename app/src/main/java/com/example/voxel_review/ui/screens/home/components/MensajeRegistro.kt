@@ -3,19 +3,18 @@ package com.example.voxel_review.ui.screens.home.components
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
-import com.example.voxel_review.R
+import com.example.voxel_review.ui.theme.VoxelTextSecondary
 
 @Composable
 fun MensajeUsuario(
     modifier: Modifier = Modifier,
     tipo: String
-){
+) {
     Text(
         text = tipo,
-        color = colorResource(R.color.Voxel_secundario),
+        color = VoxelTextSecondary,
         fontSize = 15.sp,
         modifier = modifier
     )
@@ -23,6 +22,8 @@ fun MensajeUsuario(
 
 @Composable
 @Preview
-fun MensajeUsuarioPreview(){
-    MensajeUsuario(tipo = " Usuario")
+fun MensajeUsuarioPreview() {
+    MensajeUsuario(
+        tipo = "Usuario"
+    )
 }

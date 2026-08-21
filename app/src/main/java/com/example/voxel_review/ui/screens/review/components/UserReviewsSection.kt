@@ -7,10 +7,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
@@ -21,13 +21,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.voxel_review.R
+import com.example.voxel_review.ui.theme.VoxelPrimary
+import com.example.voxel_review.ui.theme.VoxelTextSecondary
+import com.example.voxel_review.ui.theme.White
 
 @Composable
 fun UserReviewsSection(
@@ -47,14 +50,14 @@ fun UserReviewsSection(
 
             Text(
                 text = stringResource(R.string.resenas_usuarios),
-                color = Color.White,
+                color = White,
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold
             )
 
             Text(
                 text = stringResource(R.string.ver_todas),
-                color = colorResource(R.color.voxel_azul),
+                color = VoxelPrimary,
                 fontSize = 14.sp
             )
         }
@@ -89,7 +92,7 @@ fun UserReviewsSection(
                         ),
                         contentDescription = null,
                         modifier = Modifier.fillMaxWidth(),
-                        contentScale = androidx.compose.ui.layout.ContentScale.Crop
+                        contentScale = ContentScale.Crop
                     )
                 }
 
@@ -103,13 +106,12 @@ fun UserReviewsSection(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement =
                             androidx.compose.foundation.layout.Arrangement.SpaceBetween,
-                        verticalAlignment =
-                            Alignment.CenterVertically
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
 
                         Text(
                             text = stringResource(R.string.gamerx_pro),
-                            color = Color.White,
+                            color = White,
                             fontWeight = FontWeight.Bold,
                             fontSize = 14.sp
                         )
@@ -125,7 +127,7 @@ fun UserReviewsSection(
 
                     Text(
                         text = stringResource(R.string.resena_gamerx),
-                        color = Color.LightGray,
+                        color = VoxelTextSecondary,
                         fontSize = 12.sp,
                         lineHeight = 18.sp
                     )

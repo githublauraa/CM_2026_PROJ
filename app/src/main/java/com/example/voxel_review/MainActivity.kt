@@ -22,9 +22,9 @@ class MainActivity : ComponentActivity() {
                 Scaffold(
 
                 ){
-                     HomeScreen(modifier = Modifier.padding(it))
+                     //HomeScreen(modifier = Modifier.padding(it))
                      //NovedadScreen(modifier = Modifier.padding(it))
-                    // ProfileScreen(modifier = Modifier.padding(it)
+                    ProfileScreen(modifier = Modifier.padding(it))
                     //ReviewDetailScreen(modifier = Modifier.padding(it))
                 }
             }

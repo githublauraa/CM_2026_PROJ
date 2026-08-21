@@ -7,11 +7,12 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.voxel_review.R
+import com.example.voxel_review.ui.theme.VoxelBackground
+import com.example.voxel_review.ui.theme.VoxelSurfaceVariant
+import com.example.voxel_review.ui.theme.VoxelTextSecondary
 
 @Composable
 fun FiltroCategoria(
@@ -20,16 +21,16 @@ fun FiltroCategoria(
 ) {
     Text(
         text = texto,
-        color = colorResource(R.color.Voxel_secundario),
+        color = VoxelTextSecondary,
         fontSize = 10.sp,
         modifier = modifier
             .background(
-                color = colorResource(R.color.Voxel_moradooo),
+                color = VoxelBackground,
                 shape = RoundedCornerShape(20.dp)
             )
             .border(
                 width = 1.dp,
-                color = colorResource(R.color.Voxel_morado_oscuro),
+                color = VoxelSurfaceVariant,
                 shape = RoundedCornerShape(20.dp)
             )
             .padding(
@@ -41,6 +42,6 @@ fun FiltroCategoria(
 
 @Composable
 @Preview
-fun FiltroCategoriaPreview(){
+fun FiltroCategoriaPreview() {
     FiltroCategoria("Categoria")
 }

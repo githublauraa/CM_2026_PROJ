@@ -11,7 +11,7 @@ import androidx.compose.ui.unit.dp
 import com.example.voxel_review.ui.screens.profile.components.*
 import com.example.voxel_review.ui.utils.BarraInferior
 import com.example.voxel_review.ui.utils.FondoPantalla
-
+import androidx.compose.ui.tooling.preview.Preview
 @Composable
 fun ProfileContent(
     modifier: Modifier = Modifier
@@ -51,4 +51,10 @@ fun ProfileScreen(
                 .offset(y = 20.dp)
         )
     }
+}
+
+@Preview
+@Composable
+fun ProfileContentPreview() {
+    ProfileContent()
 }
