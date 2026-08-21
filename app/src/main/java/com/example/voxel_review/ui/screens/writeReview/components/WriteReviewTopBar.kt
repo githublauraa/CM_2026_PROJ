@@ -1,5 +1,4 @@
-
-package com.example.voxel_review.ui.screens.review.components.writeReview
+package com.example.voxel_review.ui.screens.writeReview.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -15,8 +14,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.voxel_review.R
 import com.example.voxel_review.ui.theme.VoxelBackground
-import com.example.voxel_review.ui.theme.VoxelBackgroundDark
-import com.example.voxel_review.ui.theme.VoxelSurfaceVariant
 import com.example.voxel_review.ui.theme.White
 
 @Composable

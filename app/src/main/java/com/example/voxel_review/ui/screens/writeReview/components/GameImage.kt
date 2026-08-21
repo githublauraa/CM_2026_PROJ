@@ -1,4 +1,4 @@
-package com.example.voxel_review.ui.screens.review.components.writeReview
+package com.example.voxel_review.ui.screens.writeReview.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.height
@@ -10,7 +10,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.example.voxel_review.R
 
 @Composable
 fun GameImage(

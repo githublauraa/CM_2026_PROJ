@@ -1,4 +1,4 @@
-package com.example.voxel_review.ui.screens.review.components.writeReview
+package com.example.voxel_review.ui.screens.writeReview.components
 
 import android.widget.Toast
 import androidx.compose.foundation.background
