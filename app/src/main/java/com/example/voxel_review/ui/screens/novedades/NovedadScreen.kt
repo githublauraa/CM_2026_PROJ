@@ -12,6 +12,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.voxel_review.R
 import com.example.voxel_review.ui.screens.novedades.components.NovedadesContent
 import com.example.voxel_review.ui.utils.BarraInferior
+import com.example.voxel_review.ui.utils.FondoPantalla
 
 
 @Composable
@@ -30,12 +31,12 @@ fun NovedadBody(
 fun NovedadScreen(
     modifier: Modifier = Modifier
 ) {
+
     Box(
         modifier = modifier
             .fillMaxSize()
-            .background(color = colorResource(R.color.Voxel_moradooo))
     ) {
-
+        FondoPantalla(modifier = Modifier.fillMaxSize())
         NovedadBody()
 
         BarraInferior(

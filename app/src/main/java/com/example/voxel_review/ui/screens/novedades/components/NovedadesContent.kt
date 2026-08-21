@@ -11,6 +11,7 @@ import androidx.compose.ui.unit.sp
 import com.example.voxel_review.R
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.voxel_review.data.LocalJuegosProvider
 
 @Composable
 fun NovedadesContent(
@@ -68,41 +69,19 @@ fun NovedadesContent(
         Spacer(
             modifier = Modifier.height(18.dp)
         )
-
-        TarjetaJuego(
-            imagen = R.drawable.logo_fortnite,
-            etiqueta = stringResource(R.string.rese_a),
-            nombre = stringResource(R.string.cyber_rpg_2077),
-            descripcion = stringResource(R.string.una_obra_maestra_del_g_nero_mundo_abierto_incre_ble_con_profundidad_narrativa_sin_precedentes),
-            autor = stringResource(R.string.neonpixel),
-            calificacion = stringResource(R.string._4_5)
-        )
-
-        Spacer(
-            modifier = Modifier.height(18.dp)
-        )
-
-        TarjetaJuego(
-            imagen = R.drawable.logo_fortnite,
-            etiqueta = stringResource(R.string.novedad),
-            nombre = stringResource(R.string.blockworld_adventure),
-            descripcion = stringResource(R.string.sandbox_creativo_con_mec_nicas_de_supervivencia_horas_y_horas_de_diversi_n_garantizada),
-            autor = stringResource(R.string.voxelmaster),
-            calificacion = stringResource(R.string._4_7)
-        )
-
-        Spacer(
-            modifier = Modifier.height(18.dp)
-        )
-
-        TarjetaJuego(
-            imagen = R.drawable.logo_fortnite,
-            etiqueta = stringResource(R.string.cl_sico),
-            nombre = stringResource(R.string.uber_rpg_2017),
-            descripcion = stringResource(R.string.el_mejor_rpg_de_su_generaci_n_historia_pica_con_personajes_memorables),
-            autor = stringResource(R.string.retrogamer),
-            calificacion = stringResource(R.string._4_2)
-        )
+        LocalJuegosProvider.juegos.forEach { juego ->
+            TarjetaJuego(
+                imagen = juego.imagen,
+                etiqueta = stringResource(juego.etiqueta),
+                nombre = stringResource(juego.nombre),
+                descripcion = stringResource(juego.descripcion),
+                autor = stringResource(juego.autor),
+                calificacion = stringResource(juego.calificacion)
+            )
+            Spacer(
+                modifier = Modifier.height(18.dp)
+            )
+        }
     }
 }
 
