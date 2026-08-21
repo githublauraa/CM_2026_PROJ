@@ -13,6 +13,8 @@ import com.example.voxel_review.ui.screens.profile.ProfileScreen
 import com.example.voxel_review.ui.screens.review.ReviewDetailScreen
 import com.example.voxel_review.ui.theme.Voxel_ReviewTheme
 import androidx.compose.ui.unit.dp
+import com.example.voxel_review.ui.screens.rankings.RankingsScreen
+
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,8 +26,9 @@ class MainActivity : ComponentActivity() {
                 ){
                      //HomeScreen(modifier = Modifier.padding(it))
                      //NovedadScreen(modifier = Modifier.padding(it))
-                    ProfileScreen(modifier = Modifier.padding(it))
+                    //ProfileScreen(modifier = Modifier.padding(it))
                     //ReviewDetailScreen(modifier = Modifier.padding(it))
+                    RankingsScreen(modifier = Modifier.padding(it))
                 }
             }
 

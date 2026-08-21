@@ -142,7 +142,7 @@ fun HomeContent(
 
             if (password.isNotEmpty() && password.length < 6) {
                 Text(
-                    text = "La contraseña debe ser mayor a 6 caracteres",
+                    text = stringResource(R.string.la_contrase_a_debe_ser_mayor_a_6_caracteres),
                     color = White
                 )
             }
