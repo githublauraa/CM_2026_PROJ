@@ -31,11 +31,15 @@ import com.example.voxel_review.ui.screens.home.components.MensajeTerminos
 import com.example.voxel_review.ui.screens.home.components.MensajeUsuario
 import com.example.voxel_review.ui.screens.home.components.NombreApp
 import com.example.voxel_review.ui.screens.home.components.Subtitulo
-import com.example.voxel_review.ui.theme.VoxelPrimary
-import com.example.voxel_review.ui.theme.VoxelSecondary
-import com.example.voxel_review.ui.theme.VoxelSurfaceVariant
-import com.example.voxel_review.ui.theme.VoxelTextSecondary
-import com.example.voxel_review.ui.theme.White
+import com.example.voxel_review.ui.theme.backgroundDark
+import com.example.voxel_review.ui.theme.onPrimaryContainerDark
+import com.example.voxel_review.ui.theme.primaryLight
+import com.example.voxel_review.ui.theme.secondaryLight
+import com.example.voxel_review.ui.theme.secondaryContainerLight
+import com.example.voxel_review.ui.theme.onTertiaryLight
+import com.example.voxel_review.ui.theme.secondaryDark
+import com.example.voxel_review.ui.theme.surfaceContainerLowestLight
+import com.example.voxel_review.ui.theme.tertiaryDark
 import com.example.voxel_review.ui.utils.Boton
 import com.example.voxel_review.ui.utils.FondoPantalla
 import com.example.voxel_review.ui.utils.MostrarLogo
@@ -143,12 +147,12 @@ fun HomeContent(
             if (password.isNotEmpty() && password.length < 6) {
                 Text(
                     text = stringResource(R.string.la_contrase_a_debe_ser_mayor_a_6_caracteres),
-                    color = White
+                    color = surfaceContainerLowestLight
                 )
             }
 
             Spacer(
-                modifier = Modifier.height(115.dp)
+                modifier = Modifier.height(100.dp)
             )
         }
 
@@ -159,15 +163,15 @@ fun HomeContent(
                 .align(Alignment.BottomCenter)
                 .fillMaxWidth()
                 .padding(
-                    bottom = 90.dp
+                    bottom = 80.dp
                 )
         ) {
 
             Boton(
                 textoBoton = stringResource(R.string.iniciar_sesi_n),
-                colorFondo = VoxelSecondary,
-                colorBorde = VoxelSecondary,
-                colorLetra = White,
+                colorFondo = tertiaryDark,
+                colorBorde = tertiaryDark,
+                colorLetra = surfaceContainerLowestLight,
                 onClick = {
                     Log.d("HomeContent", "Iniciar sesion button")
                     Log.d("HomeContent", "tu_usuario es $usuario")
@@ -187,7 +191,7 @@ fun HomeContent(
 
                 Text(
                     text = stringResource(R.string.o),
-                    color = VoxelTextSecondary
+                    color = onTertiaryLight
                 )
 
                 LineaDivisora()
@@ -199,9 +203,9 @@ fun HomeContent(
 
             Boton(
                 textoBoton = stringResource(R.string.crear_cuenta),
-                colorFondo = VoxelSurfaceVariant,
-                colorBorde = VoxelPrimary,
-                colorLetra = VoxelPrimary,
+                colorFondo = backgroundDark,
+                colorBorde = secondaryDark,
+                colorLetra = secondaryDark,
                 onClick = {
                     Log.d("HomeContent", "Crear cuenta button")
                 }

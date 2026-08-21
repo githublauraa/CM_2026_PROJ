@@ -7,7 +7,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import com.example.voxel_review.R
-import com.example.voxel_review.ui.theme.VoxelTextSecondary
+import com.example.voxel_review.ui.theme.onSurfaceVariantDark
 
 @Composable
 fun MensajeTerminos(
@@ -17,7 +17,7 @@ fun MensajeTerminos(
         text = stringResource(
             R.string.al_continuar_acepta_nuestros_t_rminos_de_servicio
         ),
-        color = VoxelTextSecondary,
+        color = onSurfaceVariantDark,
         fontSize = 10.sp,
         modifier = modifier
     )

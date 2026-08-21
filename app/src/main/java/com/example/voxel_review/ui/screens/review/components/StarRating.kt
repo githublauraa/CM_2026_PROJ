@@ -6,6 +6,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.voxel_review.R
 import com.example.voxel_review.ui.theme.VoxelAccentYellow
@@ -33,4 +34,12 @@ fun StarRating(
             )
         }
     }
+}
+
+@Composable
+@Preview
+fun StarRatingPreview () {
+    StarRating(
+        rating = 5
+    )
 }

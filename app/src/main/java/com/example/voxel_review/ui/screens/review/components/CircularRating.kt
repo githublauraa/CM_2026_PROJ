@@ -11,13 +11,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.voxel_review.ui.theme.VoxelSecondary
-import com.example.voxel_review.ui.theme.VoxelTextSecondary
-import com.example.voxel_review.ui.theme.White
+import androidx.compose.ui.tooling.preview.Preview
+import com.example.voxel_review.R
 
 @Composable
 fun CircularRating(
@@ -75,14 +74,14 @@ fun CircularRating(
 
             Text(
                 text = rating.toString(),
-                color = White,
+                color = Color.White,
                 fontSize = 36.sp,
                 fontWeight = FontWeight.ExtraBold
             )
 
             Text(
                 text = "/$maxRating",
-                color = VoxelTextSecondary,
+                color = Color.LightGray,
                 fontSize = 12.sp
             )
         }
@@ -95,6 +94,6 @@ fun CircularRatingPreview() {
     CircularRating(
         rating = 4.2f,
         maxRating = 5,
-        color = VoxelSecondary
+        color = colorResource(R.color.voxel_secondary)
     )
 }

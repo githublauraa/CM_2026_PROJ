@@ -10,9 +10,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.voxel_review.ui.theme.VoxelBackground
-import com.example.voxel_review.ui.theme.VoxelSurfaceVariant
-import com.example.voxel_review.ui.theme.VoxelTextSecondary
+import com.example.voxel_review.ui.theme.backgroundDark
+import com.example.voxel_review.ui.theme.onPrimaryDark
+import com.example.voxel_review.ui.theme.onSurfaceVariantDark
 
 @Composable
 fun FiltroCategoria(
@@ -21,16 +21,16 @@ fun FiltroCategoria(
 ) {
     Text(
         text = texto,
-        color = VoxelTextSecondary,
+        color = onSurfaceVariantDark,
         fontSize = 10.sp,
         modifier = modifier
             .background(
-                color = VoxelBackground,
+                color = backgroundDark,
                 shape = RoundedCornerShape(20.dp)
             )
             .border(
                 width = 1.dp,
-                color = VoxelSurfaceVariant,
+                color = onPrimaryDark,
                 shape = RoundedCornerShape(20.dp)
             )
             .padding(

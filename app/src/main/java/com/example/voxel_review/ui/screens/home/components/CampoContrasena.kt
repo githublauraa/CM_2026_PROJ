@@ -16,9 +16,9 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.voxel_review.R
-import com.example.voxel_review.ui.theme.VoxelSurfaceVariant
-import com.example.voxel_review.ui.theme.VoxelTextSecondary
-import com.example.voxel_review.ui.theme.White
+import com.example.voxel_review.ui.theme.onPrimaryDark
+import com.example.voxel_review.ui.theme.onSurfaceVariantDark
+import com.example.voxel_review.ui.theme.onSurfaceDark
 
 @Composable
 fun CampoContrasena(
@@ -36,7 +36,7 @@ fun CampoContrasena(
         placeholder = {
             Text(
                 text = stringResource(R.string.contrase_a),
-                color = VoxelTextSecondary
+                color = onSurfaceVariantDark
             )
         },
 
@@ -48,10 +48,10 @@ fun CampoContrasena(
             },
 
         colors = TextFieldDefaults.colors(
-            focusedContainerColor = VoxelSurfaceVariant,
-            unfocusedContainerColor = VoxelSurfaceVariant,
-            focusedTextColor = White,
-            unfocusedTextColor = White
+            focusedContainerColor = onPrimaryDark,
+            unfocusedContainerColor = onPrimaryDark,
+            focusedTextColor = onSurfaceDark,
+            unfocusedTextColor = onSurfaceDark
         ),
 
         trailingIcon = {
@@ -69,7 +69,7 @@ fun CampoContrasena(
 
         modifier = modifier.border(
             width = 2.dp,
-            color = VoxelSurfaceVariant,
+            color = onPrimaryDark,
             shape = RoundedCornerShape(10.dp)
         )
     )

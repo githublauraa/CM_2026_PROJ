@@ -8,7 +8,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.voxel_review.R
-import com.example.voxel_review.ui.theme.VoxelTextSecondary
+import com.example.voxel_review.ui.theme.onSurfaceVariantDark
 
 @Composable
 fun Subtitulo(
@@ -16,7 +16,7 @@ fun Subtitulo(
 ) {
     Text(
         text = stringResource(R.string.explora_rese_a_crea),
-        color = VoxelTextSecondary,
+        color = onSurfaceVariantDark,
         modifier = modifier.padding(8.dp)
     )
 }

@@ -14,9 +14,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.voxel_review.R
-import com.example.voxel_review.ui.theme.VoxelSurfaceVariant
-import com.example.voxel_review.ui.theme.VoxelTextSecondary
-import com.example.voxel_review.ui.theme.White
+import com.example.voxel_review.ui.theme.onPrimaryDark
+import com.example.voxel_review.ui.theme.onSurfaceVariantDark
+import com.example.voxel_review.ui.theme.onSurfaceDark
 
 @Composable
 fun CampoUsuario(
@@ -32,15 +32,15 @@ fun CampoUsuario(
         placeholder = {
             Text(
                 text = stringResource(R.string.tu_usuario),
-                color = VoxelTextSecondary
+                color = onSurfaceVariantDark
             )
         },
 
         colors = TextFieldDefaults.colors(
-            focusedContainerColor = VoxelSurfaceVariant,
-            unfocusedContainerColor = VoxelSurfaceVariant,
-            focusedTextColor = White,
-            unfocusedTextColor = White
+            focusedContainerColor = onPrimaryDark,
+            unfocusedContainerColor = onPrimaryDark,
+            focusedTextColor = onSurfaceDark,
+            unfocusedTextColor = onSurfaceDark
         ),
 
         trailingIcon = {
@@ -60,7 +60,7 @@ fun CampoUsuario(
 
         modifier = modifier.border(
             width = 2.dp,
-            color = VoxelSurfaceVariant,
+            color = onPrimaryDark,
             shape = RoundedCornerShape(10.dp)
         )
     )
