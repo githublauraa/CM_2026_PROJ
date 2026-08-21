@@ -28,7 +28,6 @@ fun ReviewDetailContent(
 
     Column(
         modifier = modifier
-            .padding(innerPadding)
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
     ) {
