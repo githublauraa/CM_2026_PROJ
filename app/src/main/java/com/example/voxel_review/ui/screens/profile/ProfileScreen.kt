@@ -40,15 +40,17 @@ fun ProfileContent(
 @Composable
 fun ProfileScreen(
     modifier: Modifier = Modifier
-){
+) {
     Box(
         modifier = modifier.fillMaxSize()
-    ){
-        FondoPantalla()
+    ) {
+
+        FondoPantalla(
+            modifier = Modifier.fillMaxSize()
+        )
+
         ProfileContent(
-            modifier = Modifier
-                .align(Alignment.Center)
-                .offset(y = 20.dp)
+            modifier = Modifier.fillMaxSize()
         )
     }
 }

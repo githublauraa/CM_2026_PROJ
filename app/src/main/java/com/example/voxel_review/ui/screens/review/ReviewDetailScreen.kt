@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import com.example.voxel_review.ui.screens.review.components.ReviewDetailContent
 import com.example.voxel_review.ui.screens.review.components.ReviewDetailTopBar
 import com.example.voxel_review.ui.theme.VoxelBackgroundDark
-
+import androidx.compose.ui.tooling.preview.Preview
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ReviewDetailScreen(
@@ -32,4 +32,10 @@ fun ReviewDetailScreen(
             innerPadding = innerPadding
         )
     }
+}
+
+@Preview
+@Composable
+fun ReviewDetailScreenPreview() {
+    ReviewDetailScreen()
 }

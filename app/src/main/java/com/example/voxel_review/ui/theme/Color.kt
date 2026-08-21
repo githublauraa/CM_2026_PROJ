@@ -24,3 +24,7 @@ val VoxelTextSecondary = Color(0xFFA09EBC)
 // Colores básicos
 val White = Color(0xFFFFFFFF)
 val Black = Color(0xFF000000)
+
+
+val VoxelGameBlue = Color(0xFF1A3B66)
+val VoxelGameOrange = Color(0xFF9E471A)

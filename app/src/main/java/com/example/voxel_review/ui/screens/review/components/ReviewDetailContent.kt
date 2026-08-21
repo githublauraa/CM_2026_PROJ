@@ -1,5 +1,6 @@
 package com.example.voxel_review.ui.screens.review.components
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -17,6 +18,7 @@ import com.example.voxel_review.ui.screens.review.HeroSection
 import com.example.voxel_review.ui.screens.review.RatingCard
 import com.example.voxel_review.ui.screens.review.UserReviewsSection
 import com.example.voxel_review.ui.theme.VoxelSurfaceVariant
+import com.example.voxel_review.ui.utils.FondoPantalla
 
 @Composable
 fun ReviewDetailContent(
@@ -28,44 +30,53 @@ fun ReviewDetailContent(
         alpha = 0.5f
     )
 
-    Column(
-        modifier = modifier
-            .padding(innerPadding)
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState())
+    Box(
+        modifier = modifier.fillMaxSize()
     ) {
 
-        HeroSection(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
+        FondoPantalla(
+            modifier = Modifier.fillMaxSize()
         )
 
-        RatingCard(
+        Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp),
-            cardBackgroundColor = cardBackground
-        )
+                .padding(innerPadding)
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+        ) {
 
-        DescriptionSection(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
-        )
+            HeroSection(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
+            )
 
-        UserReviewsSection(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(
-                    horizontal = 16.dp,
-                    vertical = 8.dp
-                ),
-            cardBackgroundColor = cardBackground
-        )
+            RatingCard(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp),
+                cardBackgroundColor = cardBackground
+            )
 
-        Spacer(
-            modifier = Modifier.height(16.dp)
-        )
+            DescriptionSection(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
+            )
+
+            UserReviewsSection(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(
+                        horizontal = 16.dp,
+                        vertical = 8.dp
+                    ),
+                cardBackgroundColor = cardBackground
+            )
+
+            Spacer(
+                modifier = Modifier.height(16.dp)
+            )
+        }
     }
 }
