@@ -21,7 +21,6 @@ import com.example.voxel_review.ui.screens.review.UserReviewsSection
 
 @Composable
 fun ReviewDetailContent(
-    innerPadding: PaddingValues,
     modifier: Modifier = Modifier
 ) {
     val cardBackground =
