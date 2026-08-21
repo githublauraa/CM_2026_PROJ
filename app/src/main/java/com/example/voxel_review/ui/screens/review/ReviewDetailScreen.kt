@@ -11,6 +11,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.voxel_review.ui.screens.review.components.ReviewDetailContent
 import com.example.voxel_review.ui.screens.review.components.ReviewDetailTopBar
 import com.example.voxel_review.ui.screens.review.components.writeReview.TopBar
+import com.example.voxel_review.ui.utils.DiscoverBottomNavigationBar
+import com.example.voxel_review.ui.utils.DiscoverTab
 import com.example.voxel_review.ui.utils.FondoPantalla
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -18,23 +20,24 @@ import com.example.voxel_review.ui.utils.FondoPantalla
 fun ReviewDetailScreenContent(
     modifier: Modifier = Modifier
 ) {
-Box(
-	modifier = modifier.fillMaxSize()
-    ){
+    Box(
+        modifier = modifier.fillMaxSize()
+    ) {
 
-Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-	    modifier = Modifier.align(Alignment.TopCenter)
-    ){
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.align(Alignment.TopCenter)
+        ) {
+            ReviewDetailTopBar()
+            ReviewDetailContent()
+        }
 
-        ReviewDetailTopBar()
-        ReviewDetailContent()
+        DiscoverBottomNavigationBar(
+            selectedTab = DiscoverTab.FAVORITES,
+            onTabSelected = {},
+            modifier = Modifier.align(Alignment.BottomCenter)
+        )
     }
-    ReviewBottomNavigationBar(
-        modifier = Modifier.align(Alignment.BottomCenter)
-    )
-
-}
 }
 
 @Composable
@@ -47,6 +50,7 @@ fun ReviewDetailScreen(
         FondoPantalla(
             modifier = Modifier.fillMaxSize()
         )
+
         ReviewDetailScreenContent(
             modifier = Modifier.fillMaxSize()
         )
@@ -58,12 +62,12 @@ fun WriteReviewScreen(
     modifier: Modifier = Modifier
 ) {
     Box(
-        modifier =  modifier.fillMaxSize()
+        modifier = modifier.fillMaxSize()
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.align(Alignment.TopCenter)
-        ){
+        ) {
             TopBar()
         }
     }
