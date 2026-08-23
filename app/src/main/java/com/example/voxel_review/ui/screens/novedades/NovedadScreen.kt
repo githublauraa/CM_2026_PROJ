@@ -30,7 +30,7 @@ fun NovedadScreen(
     modifier: Modifier = Modifier
 ) {
     Box(
-        modifier = modifier.fillMaxSize()
+
     ) {
         FondoPantalla(
             modifier = Modifier.fillMaxSize()

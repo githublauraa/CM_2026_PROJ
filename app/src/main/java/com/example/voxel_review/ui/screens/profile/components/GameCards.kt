@@ -1,27 +1,28 @@
 package com.example.voxel_review.ui.screens.profile.components
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.voxel_review.ui.theme.VoxelBorder
-import com.example.voxel_review.ui.theme.VoxelGameBlue
-import com.example.voxel_review.ui.theme.VoxelGameOrange
+import com.example.voxel_review.R
 import com.example.voxel_review.ui.theme.White
 
 @Composable
@@ -48,15 +49,15 @@ fun GameCards(
         ) {
 
             GameCard(
-                colorFondo = VoxelGameBlue
+                imagen = R.drawable.imagen_uno
             )
 
             GameCard(
-                colorFondo = VoxelGameOrange
+                imagen = R.drawable.imagen_dos
             )
 
             GameCard(
-                colorFondo = VoxelBorder
+                imagen = R.drawable.imagen_tres
             )
         }
     }
@@ -64,18 +65,35 @@ fun GameCards(
 
 @Composable
 fun GameCard(
-    colorFondo: Color,
+    imagen: Int,
     modifier: Modifier = Modifier
 ) {
-    Box(
+    Card(
         modifier = modifier
-            .size(100.dp)
-            .clip(RoundedCornerShape(16.dp))
-            .background(colorFondo)
-            .border(
-                width = 1.dp,
-                color = VoxelBorder,
-                shape = RoundedCornerShape(16.dp)
-            )
+            .width(120.dp)
+            .height(170.dp),
+        shape = RoundedCornerShape(12.dp),
+        colors = CardDefaults.cardColors()
+    ) {
+        Image(
+            painter = painterResource(id = imagen),
+            contentDescription = null,
+            contentScale = ContentScale.Crop,
+            modifier = Modifier.fillMaxSize()
+        )
+    }
+}
+
+@Composable
+@Preview
+fun GameCardsPreview() {
+    GameCards()
+}
+
+@Composable
+@Preview
+fun GameCardPreview(){
+    GameCard(
+        imagen = R.drawable.imagen_tres
     )
 }

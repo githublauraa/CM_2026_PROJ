@@ -10,15 +10,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.voxel_review.ui.screens.review.components.ReviewDetailContent
 import com.example.voxel_review.ui.screens.review.components.ReviewDetailTopBar
-import com.example.voxel_review.ui.screens.writeReview.WriteReviewScreen
 import com.example.voxel_review.ui.utils.FondoPantalla
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ReviewDetailScreenContent(modifier: Modifier = Modifier) {
+fun ReviewDetailScreen(
+    modifier: Modifier = Modifier
+) {
     Box(
         modifier = modifier.fillMaxSize(),
     ) {
+        FondoPantalla(
+            modifier = Modifier.fillMaxSize(),
+        )
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.align(Alignment.TopCenter),
@@ -33,29 +37,7 @@ fun ReviewDetailScreenContent(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun ReviewDetailScreen(modifier: Modifier = Modifier) {
-    Box(
-        modifier = modifier.fillMaxSize(),
-    ) {
-        FondoPantalla(
-            modifier = Modifier.fillMaxSize(),
-        )
-        ReviewDetailScreenContent(
-            modifier = Modifier.fillMaxSize(),
-        )
-    }
-}
-
-
-
-@Composable
 @Preview
 fun ReviewDetailScreenPreview() {
     ReviewDetailScreen()
-}
-
-@Composable
-@Preview
-fun WriteReviewScreenPreview() {
-    WriteReviewScreen()
 }

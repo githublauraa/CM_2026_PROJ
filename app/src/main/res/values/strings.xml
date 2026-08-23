@@ -54,5 +54,6 @@
   <string name="ver_todas">Ver todas</string>
   <string name="gamerx_pro">GamerX_Pro</string>
   <string name="resena_gamerx">Absolutamente increíble. La mejor experiencia gaming de los últimos años sin duda.</string>
-    <string name="la_contrase_a_debe_ser_mayor_a_6_caracteres">La contraseña debe ser mayor a 6 caracteres</string>
+  <string name="la_contrase_a_debe_ser_mayor_a_6_caracteres">La contraseña debe ser mayor a 6 caracteres</string>
+  <string name="Notificaciones">Notificaciones</string>
 </resources>

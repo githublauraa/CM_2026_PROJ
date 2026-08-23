@@ -18,16 +18,17 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.voxel_review.R
 import com.example.voxel_review.ui.theme.onSurfaceDark
-import com.example.voxel_review.ui.theme.surfaceDimDark
 
 @Composable
 fun DiscoverTopBar(
     modifier: Modifier = Modifier,
-    onNotificationClick: () -> Unit = {}
+    onNotificationClick: () -> Unit = {},
+    onBackClick: () -> Unit = {},
 ) {
     Row(
         modifier = modifier
@@ -36,13 +37,25 @@ fun DiscoverTopBar(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Text(
-            text = "Descubrir",
-            color = onSurfaceDark,
-            fontSize = 28.sp,
-            fontWeight = FontWeight.Bold
-        )
+        Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+            IconButton(onClick = onBackClick) {
+                Icon(
+                    painter = painterResource(R.drawable.ic_back),
+                    contentDescription = "Volver",
+                    tint = onSurfaceDark
+                )
+            }
 
+            Text(
+                text = "Descubrir",
+                color = onSurfaceDark,
+                fontSize = 28.sp,
+                fontWeight = FontWeight.Bold
+            )
+        }
         Box(
             modifier = Modifier
                 .size(40.dp)

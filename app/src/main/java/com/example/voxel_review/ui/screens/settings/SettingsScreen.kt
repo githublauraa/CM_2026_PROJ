@@ -55,17 +55,18 @@ fun SettingsScreen(
 }
 
 @Preview(
-    showBackground = true,
+    showBackground = false,
     backgroundColor = 0xFF0F0D1F
 )
 @Composable
 private fun SettingsScreenPreview() {
     Voxel_ReviewTheme(
-        darkTheme = true,
-        dynamicColor = false
+        darkTheme = false,
+        dynamicColor = true
+
     ) {
         SettingsScreen(
-            darkMode = true,
+            darkMode = false,
             notificationsEnabled = true,
             selectedAccent = AccentOption.CYAN,
             onDarkModeChange = {},

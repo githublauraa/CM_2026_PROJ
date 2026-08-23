@@ -31,7 +31,6 @@ fun ReviewBottomNavigationBar(
         containerColor = barColor,
         contentColor = White
     ) {
-
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceAround,

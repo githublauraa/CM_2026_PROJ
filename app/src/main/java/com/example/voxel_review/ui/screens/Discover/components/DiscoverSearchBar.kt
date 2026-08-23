@@ -20,6 +20,7 @@ import com.example.voxel_review.R
 import com.example.voxel_review.ui.theme.VoxelBackgroundDark
 import com.example.voxel_review.ui.theme.VoxelSecondary
 import com.example.voxel_review.ui.theme.onPrimaryDark
+import com.example.voxel_review.ui.theme.onSurfaceDark
 import com.example.voxel_review.ui.theme.onSurfaceVariantDark
 import com.example.voxel_review.ui.theme.primaryDark
 
@@ -59,8 +60,8 @@ fun DiscoverSearchBar(
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
             disabledIndicatorColor = Color.Transparent,
-            focusedTextColor = VoxelBackgroundDark,
-            unfocusedTextColor = VoxelBackgroundDark,
+            focusedTextColor = onSurfaceDark,
+            unfocusedTextColor = onSurfaceDark,
             cursorColor = VoxelSecondary
         )
     )

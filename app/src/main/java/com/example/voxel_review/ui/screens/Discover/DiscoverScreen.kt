@@ -1,6 +1,7 @@
 package com.example.voxel_review.ui.screens.Discover
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,6 +14,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -23,6 +25,8 @@ import com.example.voxel_review.ui.screens.Discover.components.TrendingSearchesS
 import com.example.voxel_review.R
 import com.example.voxel_review.ui.screens.Discover.components.DiscoverSearchBar
 import com.example.voxel_review.ui.screens.Discover.components.GenreFilterSection
+import com.example.voxel_review.ui.utils.DiscoverBottomNavigationBar
+import com.example.voxel_review.ui.utils.DiscoverTab
 
 @Composable
 fun DiscoverScreen(
@@ -71,7 +75,9 @@ fun DiscoverContent(
         TrendingSearch("Baldur's Gate 3", "RPG de Turnos"),
         TrendingSearch("Borra Gold", "Aventura / Estrategia")
     )
-
+    Box(
+        modifier = modifier.fillMaxSize()
+    ) {
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -118,7 +124,13 @@ fun DiscoverContent(
         )
 
         Spacer(
-            modifier = Modifier.height(24.dp)
+            modifier = Modifier.height(80.dp)
+        )
+    }
+        DiscoverBottomNavigationBar(
+            selectedTab = DiscoverTab.SEARCH,
+            onTabSelected = {},
+            modifier = Modifier.align(alignment = Alignment.BottomCenter)
         )
     }
 }
