@@ -11,10 +11,11 @@ import com.example.voxel_review.R
 
 @Composable
 fun Pfp(
+    image: Int,
     modifier: Modifier = Modifier
 ){
     Image(
-	    painter = painterResource(R.drawable.profile_picture),
+	    painter = painterResource(image),
 	    contentDescription = "Profile Picture",
         modifier = Modifier.width(130.dp).height(110.dp)
     )

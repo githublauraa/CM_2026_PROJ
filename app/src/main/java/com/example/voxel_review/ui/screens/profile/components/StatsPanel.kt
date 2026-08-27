@@ -22,6 +22,9 @@ import com.example.voxel_review.ui.theme.White
 
 @Composable
 fun StatsPanel(
+    resenia: Int,
+    promedio: Float,
+    likes: Int,
     modifier: Modifier = Modifier
 ) {
 
@@ -53,7 +56,7 @@ fun StatsPanel(
 
             // Reseñas
             ItemEstadistica(
-                valor = "47",
+                valor = resenia,
                 etiqueta = "RESEÑAS",
                 colorValor = VoxelPrimary,
                 colorEtiqueta = VoxelTextSecondary,
@@ -68,7 +71,7 @@ fun StatsPanel(
 
             // Promedio
             ItemEstadistica(
-                valor = "4.3",
+                valor = promedio,
                 etiqueta = "PROMEDIO",
                 colorValor = VoxelSecondary,
                 colorEtiqueta = VoxelTextSecondary,
@@ -83,7 +86,7 @@ fun StatsPanel(
 
             // Likes
             ItemEstadistica(
-                valor = "312",
+                valor = likes,
                 etiqueta = "LIKES",
                 colorValor = White,
                 colorEtiqueta = VoxelTextSecondary,
@@ -95,7 +98,7 @@ fun StatsPanel(
 
 @Composable
 private fun ItemEstadistica(
-    valor: String,
+    valor: Number,
     etiqueta: String,
     colorValor: Color,
     colorEtiqueta: Color,
@@ -108,7 +111,7 @@ private fun ItemEstadistica(
     ) {
 
         Text(
-            text = valor,
+            text = valor.toString(),
             color = colorValor,
             fontSize = 24.sp,
             fontWeight = FontWeight.ExtraBold

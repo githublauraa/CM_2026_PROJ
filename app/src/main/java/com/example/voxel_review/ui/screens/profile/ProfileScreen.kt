@@ -9,6 +9,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.voxel_review.data.profile.LocalProfileProvider
 import com.example.voxel_review.ui.screens.profile.components.*
 import com.example.voxel_review.ui.utils.DiscoverBottomNavigationBar
 import com.example.voxel_review.ui.utils.DiscoverTab
@@ -18,6 +19,9 @@ import com.example.voxel_review.ui.utils.FondoPantalla
 fun ProfileContent(
     modifier: Modifier = Modifier
 ) {
+
+    val params = LocalProfileProvider.profiles[0]
+
     Box(
         modifier = modifier.fillMaxSize()
     ) {
@@ -29,10 +33,10 @@ fun ProfileContent(
                 .padding(bottom = 70.dp)
         ) {
             TopBar()
-            Pfp()
-            UserNick()
+            Pfp(params.pfp)
+            UserNick(params.nick)
             Location()
-            StatsPanel()
+            StatsPanel(params.resenias, params.promedio, params.likes)
             GameCards()
             EditButton()
         }
@@ -66,5 +70,5 @@ fun ProfileScreen(
 @Preview
 @Composable
 fun ProfileContentPreview() {
-    ProfileContent()
+    ProfileScreen()
 }

@@ -11,10 +11,11 @@ import com.example.voxel_review.R
 
 @Composable
 fun UserNick(
+    nick: Int,
     modifier: Modifier = Modifier
 ){
     Text(
-        text = stringResource(R.string.nick),
+        text = stringResource(nick),
         fontSize = 25.sp,
         fontWeight = FontWeight.ExtraBold,
         color = Color.White,
