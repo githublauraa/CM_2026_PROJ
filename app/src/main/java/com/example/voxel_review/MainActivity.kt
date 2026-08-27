@@ -17,7 +17,7 @@ import com.example.voxel_review.ui.screens.review.ReviewDetailScreen
 import com.example.voxel_review.ui.theme.Voxel_ReviewTheme
 import com.example.voxel_review.ui.screens.settings.SettingsRoute
 import com.example.voxel_review.ui.screens.writeReview.WriteReviewScreen
-
+import com.example.voxel_review.ui.screens.crearCuenta.CreateAccountScreen
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +26,7 @@ class MainActivity : ComponentActivity() {
             Voxel_ReviewTheme() {
                 Scaffold(
                 ) {
+                    //CreateAccountScreen(modifier = Modifier.padding(it))
                     //HomeScreen(modifier = Modifier.padding(it))
                     //NovedadScreen(modifier = Modifier.padding(it))
                     //ProfileScreen(modifier = Modifier.padding(it))
@@ -34,7 +35,7 @@ class MainActivity : ComponentActivity() {
                     //DiscoverScreen(modifier= Modifier.padding(it))
                     //WriteReviewScreen(modifier = Modifier.padding(it))
                     //SettingsRoute(darkMode = true , {},modifier = Modifier.padding(it))
-                    NotificationScreen(modifier = Modifier.padding(it))
+                   NotificationScreen(modifier = Modifier.padding(it))
                 }
             }
         }
