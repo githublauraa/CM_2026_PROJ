@@ -2,6 +2,7 @@ package com.example.voxel_review.ui.screens.novedades.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
@@ -27,11 +28,15 @@ fun TarjetaJuego(
     descripcion: String,
     autor: String,
     calificacion: String,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Row(
         modifier = modifier
             .fillMaxWidth()
+            .clickable {
+                onClick()
+            }
             .height(145.dp)
             .background(
                 color = VoxelBackground,
@@ -126,6 +131,7 @@ fun TarjetaJuegoPreview() {
         nombre = "cyber",
         descripcion = "Cyber es un juego ...",
         autor = "andres",
-        calificacion = "4.5"
+        calificacion = "4.5",
+        onClick = {}
     )
 }

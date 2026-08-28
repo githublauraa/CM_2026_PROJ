@@ -1,5 +1,6 @@
 package com.example.voxel_review.ui.screens.novedades
 
+import android.app.Notification
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
@@ -13,7 +14,8 @@ import com.example.voxel_review.ui.utils.FondoPantalla
 import com.example.voxel_review.data.infoJuegosNovedades.JuegoInfo
 @Composable
 fun NovedadBody(
-    onClick: () -> Unit,
+    onClick: (JuegoInfo) -> Unit,
+    onNotificationClick : () -> Unit,
     listaJuegos: List<JuegoInfo>,
     modifier: Modifier = Modifier
 ) {
@@ -24,6 +26,7 @@ fun NovedadBody(
     ) {
         NovedadesContent(
             onClick = onClick,
+            onNotificationClick = onNotificationClick,
             listaJuegos = listaJuegos
         )
     }
@@ -31,7 +34,8 @@ fun NovedadBody(
 
 @Composable
 fun NovedadScreen(
-    onClick: () -> Unit,
+    onClick: (JuegoInfo) -> Unit,
+    onNotificationClick: () -> Unit,
     listaJuegos: List<JuegoInfo>,
     modifier: Modifier = Modifier
 ) {
@@ -44,6 +48,7 @@ fun NovedadScreen(
 
         NovedadBody(
             onClick = onClick,
+            onNotificationClick = onNotificationClick,
             listaJuegos = listaJuegos,
             modifier = Modifier.fillMaxSize()
         )
@@ -60,6 +65,7 @@ fun NovedadScreen(
 fun NovedadScreenPreview() {
     NovedadScreen(
         onClick = {},
+        onNotificationClick = {},
         listaJuegos = LocalJuegosProvider.juegos
     )
 }

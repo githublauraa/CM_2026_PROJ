@@ -1,5 +1,6 @@
 package com.example.voxel_review.ui.screens.novedades.components
 
+import android.R.attr.onClick
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,7 +21,8 @@ import com.example.voxel_review.data.infoJuegosNovedades.JuegoInfo
 
 @Composable
 fun NovedadesContent(
-    onClick: () -> Unit,
+    onClick: (JuegoInfo) -> Unit,
+    onNotificationClick: () -> Unit,
     modifier: Modifier = Modifier,
     listaJuegos: List<JuegoInfo>,
 ) {
@@ -53,7 +55,7 @@ fun NovedadesContent(
                 )
 
                 Campana(
-                    onClick = onClick
+                    onClick = onNotificationClick
                 )
             }
 
@@ -94,7 +96,10 @@ fun NovedadesContent(
                 nombre = stringResource(juego.nombre),
                 descripcion = stringResource(juego.descripcion),
                 autor = stringResource(juego.autor),
-                calificacion = stringResource(juego.calificacion)
+                calificacion = stringResource(juego.calificacion),
+                onClick = {
+                    onClick(juego)
+                }
             )
 
             Spacer(
@@ -109,6 +114,7 @@ fun NovedadesContent(
 fun NovedadesContentPreview(){
     NovedadesContent(
         onClick = {},
+        onNotificationClick = {},
         listaJuegos = LocalJuegosProvider.juegos
     )
 }
