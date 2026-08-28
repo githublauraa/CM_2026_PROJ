@@ -23,7 +23,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.voxel_review.R
-import com.example.voxel_review.ui.screens.home.components.CampoContrasena
+import com.example.voxel_review.ui.utils.CampoContrasena
 import com.example.voxel_review.ui.screens.home.components.CampoUsuario
 import com.example.voxel_review.ui.screens.home.components.LineaDivisora
 import com.example.voxel_review.ui.screens.home.components.MensajeLogin
@@ -32,10 +32,6 @@ import com.example.voxel_review.ui.screens.home.components.MensajeUsuario
 import com.example.voxel_review.ui.screens.home.components.NombreApp
 import com.example.voxel_review.ui.screens.home.components.Subtitulo
 import com.example.voxel_review.ui.theme.backgroundDark
-import com.example.voxel_review.ui.theme.onPrimaryContainerDark
-import com.example.voxel_review.ui.theme.primaryLight
-import com.example.voxel_review.ui.theme.secondaryLight
-import com.example.voxel_review.ui.theme.secondaryContainerLight
 import com.example.voxel_review.ui.theme.onTertiaryLight
 import com.example.voxel_review.ui.theme.secondaryDark
 import com.example.voxel_review.ui.theme.surfaceContainerLowestLight

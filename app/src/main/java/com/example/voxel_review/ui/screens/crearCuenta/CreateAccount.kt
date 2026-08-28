@@ -20,24 +20,19 @@ import com.example.voxel_review.ui.screens.home.components.NombreApp
 import com.example.voxel_review.ui.theme.VoxelPrimary
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.foundation.layout.size
 import com.example.voxel_review.ui.theme.VoxelSecondary
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import com.example.voxel_review.R
 import com.example.voxel_review.ui.theme.VoxelTextSecondary
-import com.example.voxel_review.ui.theme.onPrimaryDark
-import com.example.voxel_review.ui.theme.onSurfaceDark
-import android.R.attr.shape
-
+import com.example.voxel_review.ui.screens.crearCuenta.components.FormularioCreateAccount
+import com.example.voxel_review.ui.utils.CampoContrasena
+import com.example.voxel_review.ui.theme.surfaceContainerLowestLight
+import TerminosPrivacidad
 @Composable
 fun CreateAccountContent(
     modifier: Modifier = Modifier
@@ -45,6 +40,9 @@ fun CreateAccountContent(
     var userName by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    var terminosAceptados by remember {
+        mutableStateOf(false)
+    }
 
     var mostrarContrasena by remember {
         mutableStateOf(false)
@@ -58,7 +56,7 @@ fun CreateAccountContent(
         }
 
     Box(
-        modifier = modifier.fillMaxWidth()
+        modifier = modifier.fillMaxWidth().offset(y =-40.dp)
     ){
         //columna para logo y nombre app
         Column(
@@ -73,7 +71,7 @@ fun CreateAccountContent(
                 modifier = Modifier.height(47.dp)
             )
             NombreApp(
-                modifier = Modifier.width(170.dp)
+
             )
         }
         Spacer(
@@ -83,7 +81,7 @@ fun CreateAccountContent(
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
-            modifier = Modifier.offset(y = 230.dp).fillMaxWidth()
+            modifier = Modifier.offset(y = 210.dp).fillMaxWidth()
         )
         {
             Text(
@@ -104,14 +102,94 @@ fun CreateAccountContent(
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.fillMaxWidth().
-            offset(y = 380.dp)
+            offset(y = 320.dp)
         ) {
-            formularioCreateAccount(
+            Text(
+                text = "GAMER TAG / USERNAME",
+                color = VoxelTextSecondary,
+                modifier = Modifier.offset(x = -60.dp),
+                fontWeight = FontWeight.Bold
+            )
+
+            Spacer(
+                modifier = Modifier.height(8.dp)
+            )
+
+            FormularioCreateAccount(
                 userName = userName,
                 icono = R.drawable.img_username,
                 onUserChange = { userName = it },
-                modifier = Modifier.width(400.dp)
+                modifier = Modifier.width(330.dp).
+                height(50.dp)
             )
+
+            Spacer(
+                modifier = Modifier.height(16.dp)
+            )
+
+            Text(
+                text = "CORREO ELECTRÓNICO",
+                color = VoxelTextSecondary,
+                modifier = Modifier.offset(x = -70.dp),
+                fontWeight = FontWeight.Bold
+            )
+
+            Spacer(
+                modifier = Modifier.height(8.dp)
+            )
+
+            FormularioCreateAccount(
+                userName = email,
+                icono = R.drawable.img_correo,
+                onUserChange = { email = it },
+                modifier = Modifier.width(330.dp).
+                height(50.dp)
+            )
+
+            Spacer(
+                modifier = Modifier.height(16.dp)
+            )
+
+            Text(
+                text = "CONTRASEÑA",
+                color = VoxelTextSecondary,
+                modifier = Modifier.offset(x = -110.dp),
+                fontWeight = FontWeight.Bold
+            )
+
+            Spacer(
+                modifier = Modifier.height(8.dp)
+            )
+
+            CampoContrasena(
+                password = password,
+                mostrarContrasena = mostrarContrasena,
+                icono = icono,
+                onPasswordChange = { password = it },
+                onMostrarContrasenaChange = {
+                    mostrarContrasena = !mostrarContrasena
+                },
+                modifier = Modifier
+                    .width(330.dp)
+                    .height(50.dp)
+            )
+
+            if (password.isNotEmpty() && password.length < 6) {
+                Text(
+                    text = stringResource(R.string.la_contrase_a_debe_ser_mayor_a_6_caracteres),
+                    color = surfaceContainerLowestLight,
+                    modifier = modifier.size(30.dp).
+                    offset(x = 16.dp)
+                )
+            }
+
+            TerminosPrivacidad(
+                aceptado = terminosAceptados,
+                onAceptadoChange = { terminosAceptados = it }
+            )
+
+
+
         }
 
 
@@ -137,50 +215,3 @@ private fun CreateAccountScreenPreview() {
     CreateAccountScreen()
 }
 
-@Composable
-fun formularioCreateAccount(
-    userName: String,
-    icono: Int,
-    onUserChange: (String) -> Unit,
-    modifier: Modifier = Modifier
-){
-    TextField(
-        value = userName,
-        onValueChange = onUserChange,
-
-        placeholder = {
-            Text(
-                text = "username",
-                color = VoxelTextSecondary
-            )
-        },
-        colors = TextFieldDefaults.colors(
-            focusedContainerColor = onPrimaryDark,
-            unfocusedContainerColor = onPrimaryDark,
-            focusedTextColor = onSurfaceDark,
-            unfocusedTextColor = onSurfaceDark
-        ),
-
-        trailingIcon = {
-            IconButton(
-                onClick = {}
-            ) {
-                Icon(
-                    painter = painterResource(icono),
-                    contentDescription = "icono juego"
-                )
-            }
-        },
-        shape = RoundedCornerShape(10.dp),
-    )
-}
-
-@Composable
-@Preview
-fun formularioCreateAccountPreview(){
-    formularioCreateAccount(
-        userName = "",
-        icono = R.drawable.img_no_ver_contrasena,
-        onUserChange = {}
-    )
-}

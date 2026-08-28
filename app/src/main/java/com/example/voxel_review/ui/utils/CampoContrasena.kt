@@ -1,4 +1,4 @@
-package com.example.voxel_review.ui.screens.home.components
+package com.example.voxel_review.ui.utils
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.shape.RoundedCornerShape
