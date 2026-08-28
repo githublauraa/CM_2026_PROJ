@@ -120,6 +120,9 @@ fun AppNavigation(
 
         composable(route = AppScreen.Discover.route){
             DiscoverScreen(
+                onBackClick =  {
+                    navController.popBackStack()
+            },
                 onNotificationClick = {
                     navController.navigate(AppScreen.Notifications.route)
                 }
