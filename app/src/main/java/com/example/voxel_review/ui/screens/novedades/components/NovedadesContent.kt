@@ -16,13 +16,13 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import com.example.voxel_review.ui.screens.novedades.components.TarjetaJuego
 import androidx.compose.ui.res.stringResource
+import com.example.voxel_review.data.infoJuegosNovedades.JuegoInfo
 
 @Composable
 fun NovedadesContent(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    listaJuegos: List<JuegoInfo>,
 ) {
-
-    val allJuegos = LocalJuegosProvider.juegos
 
     LazyColumn(
         modifier = modifier
@@ -83,7 +83,7 @@ fun NovedadesContent(
             )
         }
 
-        items(allJuegos) { juego ->
+        items(listaJuegos) { juego ->
 
             TarjetaJuego(
                 imagen = juego.imagen,
@@ -104,5 +104,7 @@ fun NovedadesContent(
 @Composable
 @Preview
 fun NovedadesContentPreview(){
-    NovedadesContent()
+    NovedadesContent(
+        listaJuegos = LocalJuegosProvider.juegos
+    )
 }
