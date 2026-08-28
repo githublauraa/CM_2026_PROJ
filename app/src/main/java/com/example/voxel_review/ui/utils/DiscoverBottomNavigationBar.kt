@@ -58,7 +58,7 @@ val bottomNavItems = listOf(
     BottomNavItem(
         filledIcon = Icons.Filled.Star,
         outlinedIcon = Icons.Outlined.Star,
-        route = AppScreen.WriteReview.route
+        route = AppScreen.Reviews.route
     ),
 
     BottomNavItem(

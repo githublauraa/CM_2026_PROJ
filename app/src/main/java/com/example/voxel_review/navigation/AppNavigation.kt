@@ -126,9 +126,9 @@ fun AppNavigation(
             )
         }
 
-        composable(route = AppScreen.WriteReview.route){
-            WriteReviewScreen()
-        }
+//        composable(route = AppScreen.WriteReview.route){
+//            WriteReviewScreen()
+//        }
 
         composable(route = AppScreen.RankingsUser.route){
             RankingsScreen(
