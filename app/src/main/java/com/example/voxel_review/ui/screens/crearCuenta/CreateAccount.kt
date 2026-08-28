@@ -33,6 +33,13 @@ import com.example.voxel_review.ui.screens.crearCuenta.components.FormularioCrea
 import com.example.voxel_review.ui.utils.CampoContrasena
 import com.example.voxel_review.ui.theme.surfaceContainerLowestLight
 import TerminosPrivacidad
+import androidx.compose.foundation.layout.Row
+import com.example.voxel_review.ui.theme.White
+import com.example.voxel_review.ui.utils.Boton
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.text.SpanStyle
+
 @Composable
 fun CreateAccountContent(
     modifier: Modifier = Modifier
@@ -56,7 +63,7 @@ fun CreateAccountContent(
         }
 
     Box(
-        modifier = modifier.fillMaxWidth().offset(y =-40.dp)
+        modifier = modifier.fillMaxWidth().offset(y =-67.dp)
     ){
         //columna para logo y nombre app
         Column(
@@ -183,10 +190,59 @@ fun CreateAccountContent(
                 )
             }
 
+            Spacer(
+                modifier = Modifier.height(8.dp)
+            )
+
             TerminosPrivacidad(
                 aceptado = terminosAceptados,
                 onAceptadoChange = { terminosAceptados = it }
             )
+
+            Spacer(
+                modifier = Modifier.height(8.dp)
+            )
+
+            Boton(
+                textoBoton = "Unirse a la aventura",
+                colorFondo = VoxelSecondary,
+                colorBorde = VoxelSecondary,
+                colorLetra = White,
+                modifier = Modifier
+                    .width(330.dp)
+                    .height(50.dp),
+                onClick = {}
+            )
+
+            Spacer(
+                modifier = Modifier.height(8.dp)
+            )
+
+            Row(
+                modifier = Modifier.fillMaxWidth().
+                offset(x = 20.dp)
+            ) {
+                Text(
+                    buildAnnotatedString {
+                        withStyle(
+                            style = SpanStyle(
+                                color = VoxelTextSecondary
+                            )
+                        ){
+                            append("¿Ya tienes una cuenta?")
+                        }
+                        withStyle(
+                            style = SpanStyle(
+                                color = VoxelPrimary,
+                            )
+                        ){
+                            append(" Iniciar sesión")
+                        }
+                    },
+                    fontSize = 13.sp
+                )
+            }
+
 
 
 
@@ -197,7 +253,14 @@ fun CreateAccountContent(
 
 }
 
+@Composable
+fun ButtonUniverAventura(
+    modifier: Modifier = Modifier
+){
 
+
+
+}
 
 @Composable
 fun CreateAccountScreen(
@@ -205,7 +268,9 @@ fun CreateAccountScreen(
 ) {
     Box(modifier = modifier.fillMaxWidth()){
         FondoPantalla()
-        CreateAccountContent(modifier = modifier.fillMaxWidth())
+        CreateAccountContent(
+            modifier = modifier.fillMaxWidth()
+        )
     }
 }
 
