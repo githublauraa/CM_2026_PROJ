@@ -16,6 +16,7 @@ import com.example.voxel_review.ui.utils.FondoPantalla
 
 @Composable
 fun ProfileContent(
+    onBackClick: () -> Unit,
     onClickImage: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -33,6 +34,7 @@ fun ProfileContent(
                 .padding(bottom = 70.dp)
         ) {
             TopBar(
+                onBackClick = onBackClick,
                 onClickImage = onClickImage
             )
             Pfp(params.pfp)
@@ -47,6 +49,7 @@ fun ProfileContent(
 
 @Composable
 fun ProfileScreen(
+    onBackClick: () -> Unit,
     onClickImage: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -59,6 +62,7 @@ fun ProfileScreen(
         )
 
         ProfileContent(
+            onBackClick = onBackClick,
             onClickImage = onClickImage,
             modifier = Modifier.fillMaxSize()
         )
@@ -69,6 +73,7 @@ fun ProfileScreen(
 @Composable
 fun ProfileContentPreview() {
     ProfileScreen(
+        onBackClick = {},
         onClickImage = {}
     )
 }

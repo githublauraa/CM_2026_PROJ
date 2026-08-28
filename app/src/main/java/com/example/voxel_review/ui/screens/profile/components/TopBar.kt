@@ -21,6 +21,7 @@ import com.example.voxel_review.ui.theme.White
 
 @Composable
 fun TopBar(
+    onBackClick: () -> Unit,
     onClickImage: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -35,7 +36,7 @@ fun TopBar(
     ) {
 
         IconButton(
-            onClick = {},
+            onClick = onBackClick,
             modifier = Modifier.align(Alignment.CenterStart)
         ) {
             Icon(

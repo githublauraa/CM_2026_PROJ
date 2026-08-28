@@ -102,6 +102,9 @@ fun AppNavigation(
 
         composable(route = AppScreen.PerfilUser.route){
             ProfileScreen(
+                onBackClick = {
+                    navController.popBackStack()
+                },
                 onClickImage = {
                     navController.navigate(AppScreen.Configuration.route)
                 }
