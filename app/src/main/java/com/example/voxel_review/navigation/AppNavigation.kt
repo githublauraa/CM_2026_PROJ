@@ -20,11 +20,8 @@ import com.example.voxel_review.data.infoRanking.ListaRanking
 import com.example.voxel_review.ui.screens.notifications.NotificationScreen
 import com.example.voxel_review.ui.screens.review.ReviewDetailScreen
 import com.example.voxel_review.ui.screens.settings.SettingsRoute
-
-
-
-
-
+import com.example.voxel_review.ui.screens.settings.SettingsScreen
+import com.example.voxel_review.ui.screens.settings.AccentOption
 
 //sealed class
 sealed class AppScreen(val route: String){
@@ -113,9 +110,11 @@ fun AppNavigation(
 
         composable(route = AppScreen.Configuration.route) {
             SettingsRoute(
+                onBackClick = {
+                    navController.popBackStack()
+                },
                 darkMode = false,
-                onDarkModeChange = {},
-                modifier = Modifier
+                onDarkModeChange = {}
             )
         }
 
@@ -132,9 +131,6 @@ fun AppNavigation(
             )
         }
 
-//        composable(route = AppScreen.WriteReview.route){
-//            WriteReviewScreen()
-//        }
 
         composable(route = AppScreen.RankingsUser.route){
             RankingsScreen(

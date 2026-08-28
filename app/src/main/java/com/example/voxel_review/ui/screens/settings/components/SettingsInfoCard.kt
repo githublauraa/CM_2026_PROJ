@@ -10,8 +10,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.voxel_review.ui.theme.VoxelSurfaceVariant
+import com.example.voxel_review.ui.theme.VoxelTextPrimary
 import com.example.voxel_review.ui.theme.Voxel_ReviewTheme
-
+import com.example.voxel_review.ui.theme.VoxelTextSecondary
 @Composable
 fun SettingsInfoCard() {
 
@@ -20,7 +21,7 @@ fun SettingsInfoCard() {
     ) {
         Text(
             text = "Términos de servicio y privacidad",
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            color = VoxelTextSecondary,
             fontSize = 14.sp
         )
 
@@ -30,9 +31,7 @@ fun SettingsInfoCard() {
 
         Text(
             text = "Voxel Review Versión 1.4.2 · Hecho por y para apasionados del gaming",
-            color = MaterialTheme.colorScheme.onSurfaceVariant.copy(
-                alpha = 0.55f
-            ),
+            color = VoxelTextSecondary,
             fontSize = 11.sp,
             lineHeight = 15.sp
         )

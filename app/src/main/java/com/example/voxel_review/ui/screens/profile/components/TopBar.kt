@@ -40,7 +40,7 @@ fun TopBar(
             modifier = Modifier.align(Alignment.CenterStart)
         ) {
             Icon(
-                painter = painterResource(R.drawable.back_arrow),
+                painter = painterResource(R.drawable.ic_back),
                 contentDescription = "Volver",
                 tint = White,
                 modifier = Modifier.size(24.dp)

@@ -20,6 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.voxel_review.ui.theme.VoxelPrimary
+import com.example.voxel_review.ui.theme.VoxelTextPrimary
 import com.example.voxel_review.ui.theme.Voxel_ReviewTheme
 
 @Composable
@@ -59,7 +60,7 @@ fun SettingSwitch(
             Text(
                 text = title,
                 modifier = Modifier.weight(1f),
-                color = MaterialTheme.colorScheme.onSurface,
+                color = VoxelTextPrimary,
                 fontSize = 15.sp,
                 fontWeight = FontWeight.SemiBold
             )

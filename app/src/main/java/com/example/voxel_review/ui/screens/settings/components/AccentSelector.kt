@@ -14,6 +14,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.voxel_review.ui.screens.settings.AccentOption
 import com.example.voxel_review.ui.theme.VoxelSurfaceVariant
+import com.example.voxel_review.ui.theme.VoxelTextPrimary
+import com.example.voxel_review.ui.theme.VoxelTextSecondary
 import com.example.voxel_review.ui.theme.Voxel_ReviewTheme
 
 @Composable
@@ -26,7 +28,7 @@ fun AccentSelector(
     ) {
         Text(
             text = "Cambiar color de tema de la aplicación:",
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            color = VoxelTextSecondary,
             fontSize = 13.sp
         )
 

@@ -6,6 +6,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
+import com.example.voxel_review.ui.theme.VoxelTextPrimary
+import com.example.voxel_review.ui.theme.VoxelTextSecondary
 import com.example.voxel_review.ui.theme.Voxel_ReviewTheme
 
 @Composable
@@ -14,7 +16,7 @@ fun SectionTitle(
 ) {
     Text(
         text = text,
-        color = MaterialTheme.colorScheme.onSurfaceVariant,
+        color = VoxelTextSecondary,
         fontSize = 11.sp,
         fontWeight = FontWeight.Bold
     )

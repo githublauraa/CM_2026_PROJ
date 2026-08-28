@@ -19,6 +19,7 @@ import com.example.voxel_review.ui.utils.FondoPantalla
 import com.example.voxel_review.ui.theme.VoxelSurfaceVariant
 @Composable
 fun SettingsScreen(
+    onBack: () -> Unit,
     darkMode: Boolean,
     notificationsEnabled: Boolean,
     selectedAccent: AccentOption,
@@ -47,7 +48,9 @@ fun SettingsScreen(
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
 
-            SettingsHeader()
+            SettingsHeader(
+                onBack = onBack
+            )
 
             GeneralSettingsSection(
                 color = VoxelSurfaceVariant,
@@ -70,7 +73,7 @@ fun SettingsScreen(
     backgroundColor = 0xFF0F0D1F
 )
 @Composable
-private fun SettingsScreenPreview() {
+fun SettingsScreenPreview() {
 
     Voxel_ReviewTheme(
         darkTheme = false,
@@ -78,6 +81,7 @@ private fun SettingsScreenPreview() {
     ) {
 
         SettingsScreen(
+            onBack = {},
             darkMode = false,
             notificationsEnabled = true,
             selectedAccent = AccentOption.CYAN,

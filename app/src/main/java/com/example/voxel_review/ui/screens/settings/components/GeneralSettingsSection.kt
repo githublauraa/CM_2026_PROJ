@@ -11,6 +11,8 @@ import com.example.voxel_review.ui.theme.VoxelPrimary
 import com.example.voxel_review.ui.theme.VoxelSecondary
 import com.example.voxel_review.ui.theme.Voxel_ReviewTheme
 import androidx.compose.ui.graphics.Color
+import com.example.voxel_review.ui.theme.VoxelTextPrimary
+
 @Composable
 fun GeneralSettingsSection(
     color: Color,
@@ -29,7 +31,7 @@ fun GeneralSettingsSection(
             symbol = "☾",
             title = "Modo Oscuro",
             checked = darkMode,
-            accentColor = VoxelPrimary,
+            accentColor = VoxelTextPrimary,
             onCheckedChange = onDarkModeChange
         )
 

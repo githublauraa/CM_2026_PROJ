@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 
 @Composable
 fun SettingsRoute(
+    onBackClick: () -> Unit,
     darkMode: Boolean,
     onDarkModeChange: (Boolean) -> Unit,
     modifier: Modifier = Modifier
@@ -22,6 +23,7 @@ fun SettingsRoute(
     }
 
     SettingsScreen(
+        onBack = onBackClick,
         darkMode = darkMode,
         notificationsEnabled = notifications,
         selectedAccent = AccentOption.valueOf(accentName),
