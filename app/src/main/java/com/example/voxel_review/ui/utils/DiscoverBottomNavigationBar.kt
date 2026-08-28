@@ -64,7 +64,7 @@ val bottomNavItems = listOf(
     BottomNavItem(
         filledIcon = Icons.Filled.Person,
         outlinedIcon = Icons.Outlined.Person,
-        route = AppScreen.Configuration.route
+        route = AppScreen.PerfilUser.route
     )
 )
 

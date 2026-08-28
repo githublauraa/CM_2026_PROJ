@@ -115,10 +115,12 @@ fun AppNavigation(
                 rankingUsuarios = ListaRanking.rankingUsuarios
             )
         }
+
         //falta reseña completa, configuracion
         composable(route = AppScreen.Notifications.route){
             NotificationScreen()
         }
+
         composable( route = AppScreen.FullReviews.route,
             arguments = listOf(
                 navArgument("juegoIndex") {
