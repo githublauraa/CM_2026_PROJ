@@ -123,8 +123,7 @@ fun RankingsScreen(
         FondoPantalla()
 
         RankingContent(
-            rankingUsuarios = rankingUsuarios,
-            modifier = Modifier.padding(bottom = 70.dp)
+            rankingUsuarios = rankingUsuarios
         )
     }
 }

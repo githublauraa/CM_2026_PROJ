@@ -142,9 +142,13 @@ fun AppNavigation(
             )
         }
 
-        //falta reseña completa, configuracion
+
         composable(route = AppScreen.Notifications.route){
-            NotificationScreen()
+            NotificationScreen(
+                onBackClick = {
+                    navController.popBackStack()
+                }
+            )
         }
 
         composable( route = AppScreen.FullReviews.route,
