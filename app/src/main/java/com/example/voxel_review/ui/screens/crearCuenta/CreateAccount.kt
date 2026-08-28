@@ -64,7 +64,7 @@ fun CreateAccountContent(
         }
 
     Box(
-        modifier = modifier.fillMaxWidth().offset(y =-67.dp)
+        modifier = modifier.fillMaxWidth().offset(y =-55.dp)
     ){
         //columna para logo y nombre app
         Column(
