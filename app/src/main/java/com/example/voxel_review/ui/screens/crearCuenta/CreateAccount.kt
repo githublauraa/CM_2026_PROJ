@@ -42,6 +42,7 @@ import androidx.compose.ui.text.SpanStyle
 
 @Composable
 fun CreateAccountContent(
+    unirseButtonPressed: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     var userName by remember { mutableStateOf("") }
@@ -211,7 +212,7 @@ fun CreateAccountContent(
                 modifier = Modifier
                     .width(330.dp)
                     .height(50.dp),
-                onClick = {}
+                onClick = unirseButtonPressed
             )
 
             Spacer(
@@ -264,11 +265,13 @@ fun ButtonUniverAventura(
 
 @Composable
 fun CreateAccountScreen(
+    unirseButtonPressed: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Box(modifier = modifier.fillMaxWidth()){
         FondoPantalla()
         CreateAccountContent(
+            unirseButtonPressed = unirseButtonPressed,
             modifier = modifier.fillMaxWidth()
         )
     }
@@ -277,6 +280,8 @@ fun CreateAccountScreen(
 @Preview (showBackground = true)
 @Composable
 private fun CreateAccountScreenPreview() {
-    CreateAccountScreen()
+    CreateAccountScreen(
+        unirseButtonPressed = {}
+    )
 }
 

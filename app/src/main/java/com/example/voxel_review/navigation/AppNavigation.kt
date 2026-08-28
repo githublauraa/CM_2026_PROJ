@@ -10,6 +10,21 @@ import com.example.voxel_review.ui.screens.home.StartScreen
 import com.example.voxel_review.ui.screens.crearCuenta.CreateAccountScreen
 import com.example.voxel_review.ui.screens.novedades.NovedadScreen
 import com.example.voxel_review.data.LocalJuegosProvider
+import com.example.voxel_review.navigation.AppScreen
+
+//sealed class
+sealed class AppScreen(val route: String){
+    object Start : AppScreen("start")
+    object Register : AppScreen("register")
+    object Reviews : AppScreen("reviews")
+    object PerfilUser: AppScreen("perfilUser")
+    object FullReviews : AppScreen("fullReviews")
+    object Discover : AppScreen("discover")
+    object WriteReview : AppScreen("writeReview")
+    object RankingsUser : AppScreen("rankingsUser")
+    object Configuration : AppScreen("configuration")
+    object Notifications : AppScreen("notifications")
+}
 
 
 @Composable
@@ -19,26 +34,35 @@ fun AppNavigation(
 ) {
     NavHost(
         navController = navController,
-        startDestination = "start",
+        startDestination = AppScreen.Start.route,
         modifier = modifier
     ){
-        composable(route = "start"){
+        composable(route = AppScreen.Start.route){
             StartScreen(
                 logginButtonPressed = {
-                    navController.navigate("reviews"){
+                    navController.navigate(AppScreen.Reviews.route){
                         popUpTo(0){
                             inclusive = true
                         }
                     }
                 },
                 createAccountButtonPressed = {
-                    navController.navigate("register")
+                    navController.navigate(AppScreen.Register.route)
                 }
             )
         }
 
-        composable(route = "register"){
-            CreateAccountScreen()
+        composable(route = AppScreen.Register.route){
+            CreateAccountScreen(
+                unirseButtonPressed = {
+                    navController.navigate(AppScreen.Reviews.route){
+                        popUpTo(0){
+                            inclusive = true
+                        }
+                    }
+                }
+            )
+
         }
 
         composable(route = "reviews"){
