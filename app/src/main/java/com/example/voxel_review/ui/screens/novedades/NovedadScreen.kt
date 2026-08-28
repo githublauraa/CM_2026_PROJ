@@ -11,22 +11,26 @@ import com.example.voxel_review.ui.screens.novedades.components.NovedadesContent
 import com.example.voxel_review.ui.utils.DiscoverBottomNavigationBar
 import com.example.voxel_review.ui.utils.DiscoverTab
 import com.example.voxel_review.ui.utils.FondoPantalla
-
+import com.example.voxel_review.data.infoJuegosNovedades.JuegoInfo
 @Composable
 fun NovedadBody(
+    listaJuegos: List<JuegoInfo>,
     modifier: Modifier = Modifier
 ) {
-    val allJuegos = LocalJuegosProvider.juegos
+
 
     Box(
         modifier = modifier.fillMaxSize()
     ) {
-        NovedadesContent()
+        NovedadesContent(
+            listaJuegos = listaJuegos
+        )
     }
 }
 
 @Composable
 fun NovedadScreen(
+    listaJuegos: List<JuegoInfo>,
     modifier: Modifier = Modifier
 ) {
     Box(
@@ -37,6 +41,7 @@ fun NovedadScreen(
         )
 
         NovedadBody(
+            listaJuegos = listaJuegos,
             modifier = Modifier.fillMaxSize()
         )
 
@@ -55,5 +60,7 @@ fun NovedadScreen(
 )
 @Composable
 fun NovedadScreenPreview() {
-    NovedadScreen()
+    NovedadScreen(
+        listaJuegos = LocalJuegosProvider.juegos
+    )
 }

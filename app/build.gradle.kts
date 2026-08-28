@@ -47,6 +47,8 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation("androidx.compose.ui:ui-text-google-fonts:1.11.4")
+    implementation("androidx.navigationevent:navigation-compose: 2.7.2")
+    implementation("androidx.composematerial:material-icons-extended:$2024.04.01")
     implementation(libs.androidx.ui.graphics)
     testImplementation(libs.junit)
     androidTestImplementation(platform(libs.androidx.compose.bom))
