@@ -165,6 +165,20 @@ fun AppNavigation(
                 juego = juego,
                 onBackClick = {
                     navController.popBackStack()
+                },
+                onClickReview = {
+                    navController.navigate(AppScreen.WriteReview.route)
+                },
+            )
+        }
+
+        composable( route = AppScreen.WriteReview.route){
+            WriteReviewScreen(
+                onSettingsClick = {
+                    navController.navigate(AppScreen.Configuration.route)
+                },
+                onBackClick = {
+                    navController.popBackStack()
                 }
             )
         }

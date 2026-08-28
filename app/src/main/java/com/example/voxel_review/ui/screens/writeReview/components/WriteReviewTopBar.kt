@@ -17,7 +17,11 @@ import com.example.voxel_review.ui.theme.VoxelBackground
 import com.example.voxel_review.ui.theme.White
 
 @Composable
-fun TopBar(modifier: Modifier = Modifier) {
+fun TopBar(
+    onBackClick: () -> Unit,
+    onSettingsClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     Box(
         modifier =
             modifier
@@ -29,11 +33,11 @@ fun TopBar(modifier: Modifier = Modifier) {
                 ),
     ) {
         IconButton(
-            onClick = {},
+            onClick = onBackClick,
             modifier = Modifier.align(Alignment.CenterStart),
         ) {
             Icon(
-                painter = painterResource(R.drawable.back_arrow),
+                painter = painterResource(R.drawable.ic_back),
                 contentDescription = "Volver",
                 tint = White,
                 modifier = Modifier.size(24.dp),
@@ -49,7 +53,7 @@ fun TopBar(modifier: Modifier = Modifier) {
         )
 
         IconButton(
-            onClick = {},
+            onClick = onSettingsClick,
             modifier = Modifier.align(Alignment.CenterEnd),
         ) {
             Icon(

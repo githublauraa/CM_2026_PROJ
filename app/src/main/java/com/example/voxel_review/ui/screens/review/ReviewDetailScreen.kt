@@ -17,6 +17,7 @@ import com.example.voxel_review.ui.utils.FondoPantalla
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ReviewDetailScreen(
+    onClickReview: () -> Unit,
     juego: JuegoInfo,
     onBackClick: () -> Unit,
     modifier: Modifier = Modifier
@@ -34,7 +35,9 @@ fun ReviewDetailScreen(
             ReviewDetailTopBar(
                 onBackClick = onBackClick
             )
-            ReviewDetailContent()
+            ReviewDetailContent(
+                onClickReview = onClickReview
+            )
         }
     }
 }
@@ -43,6 +46,7 @@ fun ReviewDetailScreen(
 @Preview
 fun ReviewDetailScreenPreview() {
     ReviewDetailScreen(
+        onClickReview = {},
         juego = JuegoInfo (
             imagen = R.drawable.logo_fortnite,
             etiqueta = 1,

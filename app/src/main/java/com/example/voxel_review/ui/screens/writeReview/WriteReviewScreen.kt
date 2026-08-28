@@ -19,7 +19,11 @@ import com.example.voxel_review.ui.screens.writeReview.components.TopBar
 import com.example.voxel_review.ui.utils.FondoPantalla
 import androidx.compose.ui.tooling.preview.Preview
 @Composable
-fun WriteReviewScreenContent(modifier: Modifier = Modifier) {
+fun WriteReviewScreenContent(
+    onBackClick: () -> Unit,
+    onSettingsClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     Box(
         modifier = modifier.fillMaxSize(),
     ) {
@@ -29,7 +33,10 @@ fun WriteReviewScreenContent(modifier: Modifier = Modifier) {
             modifier = Modifier.align(Alignment.TopCenter)
                 .fillMaxWidth(0.9f)
         ) {
-            TopBar()
+            TopBar(
+                onBackClick = onBackClick,
+                onSettingsClick = onSettingsClick
+            )
             GameInfo(
                 imagen = R.drawable.tlouii,
                 nombre = "The Last of Us Part II",
@@ -44,7 +51,11 @@ fun WriteReviewScreenContent(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun WriteReviewScreen(modifier: Modifier = Modifier) {
+fun WriteReviewScreen(
+    onBackClick: () -> Unit,
+    onSettingsClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     Box(
         modifier = modifier.fillMaxSize(),
     ) {
@@ -52,6 +63,8 @@ fun WriteReviewScreen(modifier: Modifier = Modifier) {
             modifier = Modifier.fillMaxSize(),
         )
         WriteReviewScreenContent(
+            onBackClick = onBackClick,
+            onSettingsClick = onSettingsClick,
             modifier = Modifier.fillMaxSize(),
         )
     }
@@ -60,5 +73,8 @@ fun WriteReviewScreen(modifier: Modifier = Modifier) {
 @Composable
 @Preview
 fun WriteReviewScreenPreview() {
-    WriteReviewScreen()
+    WriteReviewScreen(
+        onBackClick = {},
+        onSettingsClick = {}
+    )
 }
