@@ -1,20 +1,17 @@
 package com.example.voxel_review.ui.screens.settings
 
-
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.voxel_review.ui.theme.Voxel_ReviewTheme
 
 @Composable
 fun SettingsRoute(
     darkMode: Boolean,
     onDarkModeChange: (Boolean) -> Unit,
-    modifier: Modifier
+    modifier: Modifier = Modifier
 ) {
     var notifications by rememberSaveable {
         mutableStateOf(true)
@@ -34,9 +31,7 @@ fun SettingsRoute(
         },
         onAccentChange = {
             accentName = it.name
-        }
+        },
+        modifier = modifier
     )
 }
-
-
-

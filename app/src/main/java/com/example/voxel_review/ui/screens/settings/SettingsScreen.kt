@@ -1,13 +1,12 @@
 package com.example.voxel_review.ui.screens.settings
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -16,7 +15,8 @@ import com.example.voxel_review.ui.screens.settings.components.GamerPreferencesS
 import com.example.voxel_review.ui.screens.settings.components.GeneralSettingsSection
 import com.example.voxel_review.ui.screens.settings.components.SettingsHeader
 import com.example.voxel_review.ui.theme.Voxel_ReviewTheme
-
+import com.example.voxel_review.ui.utils.FondoPantalla
+import com.example.voxel_review.ui.theme.VoxelSurfaceVariant
 @Composable
 fun SettingsScreen(
     darkMode: Boolean,
@@ -27,30 +27,41 @@ fun SettingsScreen(
     onAccentChange: (AccentOption) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
-            .verticalScroll(rememberScrollState())
-            .padding(
-                horizontal = 20.dp,
-                vertical = 18.dp
-            ),
-        verticalArrangement = Arrangement.spacedBy(12.dp)
+
+    Box(
+        modifier = modifier.fillMaxSize()
     ) {
-        SettingsHeader()
 
-        GeneralSettingsSection(
-            darkMode = darkMode,
-            notificationsEnabled = notificationsEnabled,
-            onDarkModeChange = onDarkModeChange,
-            onNotificationsChange = onNotificationsChange
+        FondoPantalla(
+            modifier = Modifier.fillMaxSize()
         )
 
-        GamerPreferencesSection(
-            selectedAccent = selectedAccent,
-            onAccentChange = onAccentChange
-        )
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+                .padding(
+                    horizontal = 20.dp,
+                    vertical = 18.dp
+                ),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+
+            SettingsHeader()
+
+            GeneralSettingsSection(
+                color = VoxelSurfaceVariant,
+                darkMode = darkMode,
+                notificationsEnabled = notificationsEnabled,
+                onDarkModeChange = onDarkModeChange,
+                onNotificationsChange = onNotificationsChange
+            )
+
+            GamerPreferencesSection(
+                selectedAccent = selectedAccent,
+                onAccentChange = onAccentChange
+            )
+        }
     }
 }
 
@@ -60,11 +71,12 @@ fun SettingsScreen(
 )
 @Composable
 private fun SettingsScreenPreview() {
+
     Voxel_ReviewTheme(
         darkTheme = false,
         dynamicColor = true
-
     ) {
+
         SettingsScreen(
             darkMode = false,
             notificationsEnabled = true,

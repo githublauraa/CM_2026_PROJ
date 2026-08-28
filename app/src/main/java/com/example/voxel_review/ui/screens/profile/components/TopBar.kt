@@ -1,6 +1,7 @@
 package com.example.voxel_review.ui.screens.profile.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -20,6 +21,7 @@ import com.example.voxel_review.ui.theme.White
 
 @Composable
 fun TopBar(
+    onClickImage: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Box(
@@ -41,6 +43,7 @@ fun TopBar(
                 contentDescription = "Volver",
                 tint = White,
                 modifier = Modifier.size(24.dp)
+
             )
         }
 
@@ -53,7 +56,7 @@ fun TopBar(
         )
 
         IconButton(
-            onClick = {},
+            onClick = onClickImage,
             modifier = Modifier.align(Alignment.CenterEnd)
         ) {
             Icon(

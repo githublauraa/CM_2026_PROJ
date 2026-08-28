@@ -24,6 +24,7 @@ import com.example.voxel_review.ui.theme.Voxel_ReviewTheme
 
 @Composable
 fun SettingSwitch(
+    color: Color,
     symbol: String? = null,
     iconRes: Int? = null,
     title: String,
@@ -31,7 +32,10 @@ fun SettingSwitch(
     accentColor: Color,
     onCheckedChange: (Boolean) -> Unit
 ) {
-    SettingsCard {
+    SettingsCard (
+        color = color
+    ) {
+
         Row(
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -85,6 +89,7 @@ private fun SettingSwitchPreview() {
         dynamicColor = false
     ) {
         SettingSwitch(
+            color = VoxelPrimary,
             symbol = "☾",
             title = "Modo Oscuro",
             checked = true,

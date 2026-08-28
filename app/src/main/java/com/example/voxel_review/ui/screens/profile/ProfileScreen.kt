@@ -16,6 +16,7 @@ import com.example.voxel_review.ui.utils.FondoPantalla
 
 @Composable
 fun ProfileContent(
+    onClickImage: () -> Unit,
     modifier: Modifier = Modifier
 ) {
 
@@ -31,7 +32,9 @@ fun ProfileContent(
                 .align(Alignment.TopCenter)
                 .padding(bottom = 70.dp)
         ) {
-            TopBar()
+            TopBar(
+                onClickImage = onClickImage
+            )
             Pfp(params.pfp)
             UserNick(params.nick)
             Location()
@@ -44,6 +47,7 @@ fun ProfileContent(
 
 @Composable
 fun ProfileScreen(
+    onClickImage: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Box(
@@ -55,6 +59,7 @@ fun ProfileScreen(
         )
 
         ProfileContent(
+            onClickImage = onClickImage,
             modifier = Modifier.fillMaxSize()
         )
     }
@@ -63,5 +68,7 @@ fun ProfileScreen(
 @Preview
 @Composable
 fun ProfileContentPreview() {
-    ProfileScreen()
+    ProfileScreen(
+        onClickImage = {}
+    )
 }

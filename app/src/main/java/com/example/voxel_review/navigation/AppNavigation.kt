@@ -19,6 +19,12 @@ import com.example.voxel_review.ui.screens.rankings.RankingsScreen
 import com.example.voxel_review.data.infoRanking.ListaRanking
 import com.example.voxel_review.ui.screens.notifications.NotificationScreen
 import com.example.voxel_review.ui.screens.review.ReviewDetailScreen
+import com.example.voxel_review.ui.screens.settings.SettingsRoute
+
+
+
+
+
 
 //sealed class
 sealed class AppScreen(val route: String){
@@ -95,8 +101,22 @@ fun AppNavigation(
         }
 
         composable(route = AppScreen.PerfilUser.route){
-            ProfileScreen()
+            ProfileScreen(
+                onClickImage = {
+                    navController.navigate(AppScreen.Configuration.route)
+                }
+            )
         }
+
+        composable(route = AppScreen.Configuration.route) {
+            SettingsRoute(
+                darkMode = false,
+                onDarkModeChange = {},
+                modifier = Modifier
+            )
+        }
+
+
 
         composable(route = AppScreen.Discover.route){
             DiscoverScreen(

@@ -10,9 +10,10 @@ import com.example.voxel_review.ui.screens.settings.*
 import com.example.voxel_review.ui.theme.VoxelPrimary
 import com.example.voxel_review.ui.theme.VoxelSecondary
 import com.example.voxel_review.ui.theme.Voxel_ReviewTheme
-
+import androidx.compose.ui.graphics.Color
 @Composable
 fun GeneralSettingsSection(
+    color: Color,
     darkMode: Boolean,
     notificationsEnabled: Boolean,
     onDarkModeChange: (Boolean) -> Unit,
@@ -24,6 +25,7 @@ fun GeneralSettingsSection(
         SectionTitle("AJUSTES GENERALES")
 
         SettingSwitch(
+            color = color,
             symbol = "☾",
             title = "Modo Oscuro",
             checked = darkMode,
@@ -32,6 +34,7 @@ fun GeneralSettingsSection(
         )
 
         SettingSwitch(
+            color = color,
             iconRes = R.drawable.campana_notificaciones,
             title = "Notificaciones",
             checked = notificationsEnabled,
@@ -51,6 +54,7 @@ private fun GeneralSettingsSectionPreview() {
         dynamicColor = false
     ) {
         GeneralSettingsSection(
+            color = VoxelPrimary,
             darkMode = true,
             notificationsEnabled = true,
             onDarkModeChange = {},
