@@ -30,6 +30,7 @@ import com.example.voxel_review.ui.utils.DiscoverBottomNavigationBar
 
 @Composable
 fun DiscoverScreen(
+    onNotificationClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     var searchQuery by remember {
@@ -41,6 +42,7 @@ fun DiscoverScreen(
     }
 
     DiscoverContent(
+        onNotificationClick = onNotificationClick,
         searchQuery = searchQuery,
         onSearchQueryChange = {
             searchQuery = it
@@ -54,6 +56,7 @@ fun DiscoverScreen(
 }
 @Composable
 fun DiscoverContent(
+    onNotificationClick: () -> Unit,
     searchQuery: String,
     onSearchQueryChange: (String) -> Unit,
     selectedGenre: String,
@@ -93,7 +96,9 @@ fun DiscoverContent(
                 modifier = Modifier.height(8.dp)
             )
 
-            DiscoverTopBar()
+            DiscoverTopBar(
+                onNotificationClick = onNotificationClick
+            )
 
             Spacer(
                 modifier = Modifier.height(12.dp)
@@ -135,5 +140,7 @@ fun DiscoverContent(
 )
 @Composable
 private fun DiscoverScreenPreview() {
-    DiscoverScreen()
+    DiscoverScreen(
+        onNotificationClick = {}
+    )
 }

@@ -13,6 +13,7 @@ import com.example.voxel_review.ui.utils.FondoPantalla
 import com.example.voxel_review.data.infoJuegosNovedades.JuegoInfo
 @Composable
 fun NovedadBody(
+    onClick: () -> Unit,
     listaJuegos: List<JuegoInfo>,
     modifier: Modifier = Modifier
 ) {
@@ -22,6 +23,7 @@ fun NovedadBody(
         modifier = modifier.fillMaxSize()
     ) {
         NovedadesContent(
+            onClick = onClick,
             listaJuegos = listaJuegos
         )
     }
@@ -29,6 +31,7 @@ fun NovedadBody(
 
 @Composable
 fun NovedadScreen(
+    onClick: () -> Unit,
     listaJuegos: List<JuegoInfo>,
     modifier: Modifier = Modifier
 ) {
@@ -40,6 +43,7 @@ fun NovedadScreen(
         )
 
         NovedadBody(
+            onClick = onClick,
             listaJuegos = listaJuegos,
             modifier = Modifier.fillMaxSize()
         )
@@ -55,6 +59,7 @@ fun NovedadScreen(
 @Composable
 fun NovedadScreenPreview() {
     NovedadScreen(
+        onClick = {},
         listaJuegos = LocalJuegosProvider.juegos
     )
 }

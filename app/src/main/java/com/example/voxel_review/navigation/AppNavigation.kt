@@ -72,6 +72,9 @@ fun AppNavigation(
 
         composable(route = AppScreen.Reviews.route){
             NovedadScreen(
+                onClick = {
+                    navController.navigate(AppScreen.Notifications.route)
+                },
                 listaJuegos = LocalJuegosProvider.juegos
             )
         }
@@ -85,7 +88,11 @@ fun AppNavigation(
         }
 
         composable(route = AppScreen.Discover.route){
-            DiscoverScreen()
+            DiscoverScreen(
+                onNotificationClick = {
+                    navController.navigate(AppScreen.Notifications.route)
+                }
+            )
         }
 
         composable(route = AppScreen.WriteReview.route){

@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.voxel_review.R
 import com.example.voxel_review.ui.theme.onSurfaceDark
-
+import com.example.voxel_review.ui.screens.novedades.components.Campana
 @Composable
 fun DiscoverTopBar(
     modifier: Modifier = Modifier,
@@ -63,17 +63,16 @@ fun DiscoverTopBar(
             contentAlignment = Alignment.Center
         ) {
             IconButton(onClick = onNotificationClick) {
-                Icon(
-                    painter = painterResource(R.drawable.campana_notificaciones),
-                    contentDescription = null,
-                    tint = onSurfaceDark,
+                Campana(
+                    onClick = onNotificationClick,
+                    modifier = Modifier.size(40.dp)
                 )
             }
         }
     }
 }
 
-@Preview(showBackground = true)
+@Preview
 @Composable
 private fun DiscoverTopBarPreview() {
     DiscoverTopBar()

@@ -20,6 +20,7 @@ import com.example.voxel_review.data.infoJuegosNovedades.JuegoInfo
 
 @Composable
 fun NovedadesContent(
+    onClick: () -> Unit,
     modifier: Modifier = Modifier,
     listaJuegos: List<JuegoInfo>,
 ) {
@@ -51,7 +52,9 @@ fun NovedadesContent(
                     modifier = Modifier.weight(1f)
                 )
 
-                Campana()
+                Campana(
+                    onClick = onClick
+                )
             }
 
             Spacer(
@@ -105,6 +108,7 @@ fun NovedadesContent(
 @Preview
 fun NovedadesContentPreview(){
     NovedadesContent(
+        onClick = {},
         listaJuegos = LocalJuegosProvider.juegos
     )
 }
