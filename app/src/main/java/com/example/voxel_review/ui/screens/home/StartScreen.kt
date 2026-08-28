@@ -42,6 +42,8 @@ import com.example.voxel_review.ui.utils.MostrarLogo
 
 @Composable
 fun StartScreenContent(
+    logginButtonPressed: () -> Unit,
+    createAccountButtonPressed: () -> Unit,
     modifier: Modifier = Modifier
 ) {
 
@@ -168,11 +170,7 @@ fun StartScreenContent(
                 colorFondo = tertiaryDark,
                 colorBorde = tertiaryDark,
                 colorLetra = surfaceContainerLowestLight,
-                onClick = {
-                    Log.d("HomeContent", "Iniciar sesion button")
-                    Log.d("HomeContent", "tu_usuario es $usuario")
-                    Log.d("HomeContent", "tu_contrasena es $password")
-                }
+                onClick = logginButtonPressed
             )
 
             Spacer(
@@ -202,9 +200,7 @@ fun StartScreenContent(
                 colorFondo = backgroundDark,
                 colorBorde = secondaryDark,
                 colorLetra = secondaryDark,
-                onClick = {
-                    Log.d("HomeContent", "Crear cuenta button")
-                }
+                onClick = createAccountButtonPressed
             )
 
             Spacer(
@@ -218,6 +214,8 @@ fun StartScreenContent(
 
 @Composable
 fun StartScreen(
+    logginButtonPressed: () -> Unit,
+    createAccountButtonPressed: () -> Unit,
     modifier: Modifier = Modifier
 ) {
 
@@ -228,6 +226,8 @@ fun StartScreen(
         FondoPantalla()
 
         StartScreenContent(
+            logginButtonPressed = logginButtonPressed,
+            createAccountButtonPressed = createAccountButtonPressed,
             modifier = Modifier
                 .align(Alignment.Center)
                 .offset(y = 20.dp)
@@ -238,5 +238,8 @@ fun StartScreen(
 @Composable
 @Preview
 fun StartScreenPreview() {
-    StartScreen()
+    StartScreen(
+        logginButtonPressed = {},
+        createAccountButtonPressed = {}
+    )
 }

@@ -24,19 +24,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             Voxel_ReviewTheme() {
-                Scaffold(
-                ) {
-                    //CreateAccountScreen(modifier = Modifier.padding(it))
-                    StartScreen(modifier = Modifier.padding(it))
-                    //NovedadScreen(modifier = Modifier.padding(it))
-                    //ProfileScreen(modifier = Modifier.padding(it))
-                    //ReviewDetailScreen(modifier = Modifier.padding(it))
-                    //RankingsScreen(modifier = Modifier.padding(it))
-                    //DiscoverScreen(modifier= Modifier.padding(it))
-                    //WriteReviewScreen(modifier = Modifier.padding(it))
-                    //SettingsRoute(darkMode = true , {},modifier = Modifier.padding(it))
-                   //NotificationScreen(modifier = Modifier.padding(it))
-                }
+                VoxelReviewApp()
             }
         }
     }
