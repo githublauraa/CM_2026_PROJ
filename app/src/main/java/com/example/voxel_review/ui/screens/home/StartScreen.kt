@@ -41,7 +41,7 @@ import com.example.voxel_review.ui.utils.FondoPantalla
 import com.example.voxel_review.ui.utils.MostrarLogo
 
 @Composable
-fun HomeContent(
+fun StartScreenContent(
     modifier: Modifier = Modifier
 ) {
 
@@ -217,7 +217,7 @@ fun HomeContent(
 }
 
 @Composable
-fun HomeScreen(
+fun StartScreen(
     modifier: Modifier = Modifier
 ) {
 
@@ -227,7 +227,7 @@ fun HomeScreen(
 
         FondoPantalla()
 
-        HomeContent(
+        StartScreenContent(
             modifier = Modifier
                 .align(Alignment.Center)
                 .offset(y = 20.dp)
@@ -237,6 +237,6 @@ fun HomeScreen(
 
 @Composable
 @Preview
-fun HomeScreenPreview() {
-    HomeScreen()
+fun StartScreenPreview() {
+    StartScreen()
 }

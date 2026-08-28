@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import com.example.voxel_review.ui.screens.Discover.DiscoverScreen
-import com.example.voxel_review.ui.screens.home.HomeScreen
+import com.example.voxel_review.ui.screens.home.StartScreen
 import com.example.voxel_review.ui.screens.notifications.NotificationScreen
 import com.example.voxel_review.ui.screens.novedades.NovedadScreen
 import com.example.voxel_review.ui.screens.profile.ProfileScreen
@@ -26,8 +26,8 @@ class MainActivity : ComponentActivity() {
             Voxel_ReviewTheme() {
                 Scaffold(
                 ) {
-                    CreateAccountScreen(modifier = Modifier.padding(it))
-                    //HomeScreen(modifier = Modifier.padding(it))
+                    //CreateAccountScreen(modifier = Modifier.padding(it))
+                    StartScreen(modifier = Modifier.padding(it))
                     //NovedadScreen(modifier = Modifier.padding(it))
                     //ProfileScreen(modifier = Modifier.padding(it))
                     //ReviewDetailScreen(modifier = Modifier.padding(it))
