@@ -26,7 +26,7 @@ import com.example.voxel_review.R
 import com.example.voxel_review.ui.screens.Discover.components.DiscoverSearchBar
 import com.example.voxel_review.ui.screens.Discover.components.GenreFilterSection
 import com.example.voxel_review.ui.utils.DiscoverBottomNavigationBar
-import com.example.voxel_review.ui.utils.DiscoverTab
+
 
 @Composable
 fun DiscoverScreen(
@@ -89,49 +89,44 @@ fun DiscoverContent(
             )
     ) {
 
-        Spacer(
-            modifier = Modifier.height(8.dp)
-        )
+            Spacer(
+                modifier = Modifier.height(8.dp)
+            )
 
-        DiscoverTopBar()
+            DiscoverTopBar()
 
-        Spacer(
-            modifier = Modifier.height(12.dp)
-        )
+            Spacer(
+                modifier = Modifier.height(12.dp)
+            )
 
-        DiscoverSearchBar(
-            query = searchQuery,
-            onQueryChange = onSearchQueryChange
-        )
+            DiscoverSearchBar(
+                query = searchQuery,
+                onQueryChange = onSearchQueryChange
+            )
 
-        Spacer(
-            modifier = Modifier.height(20.dp)
-        )
+            Spacer(
+                modifier = Modifier.height(20.dp)
+            )
 
-        GenreFilterSection(
-            genres = genres,
-            selectedGenre = selectedGenre,
-            onGenreSelected = onGenreSelected
-        )
+            GenreFilterSection(
+                genres = genres,
+                selectedGenre = selectedGenre,
+                onGenreSelected = onGenreSelected
+            )
 
-        Spacer(
-            modifier = Modifier.height(20.dp)
-        )
+            Spacer(
+                modifier = Modifier.height(20.dp)
+            )
 
-        TrendingSearchesSection(
-            items = trendingSearches,
-            onItemClick = {}
-        )
+            TrendingSearchesSection(
+                items = trendingSearches,
+                onItemClick = {}
+            )
 
-        Spacer(
-            modifier = Modifier.height(80.dp)
-        )
-    }
-        DiscoverBottomNavigationBar(
-            selectedTab = DiscoverTab.SEARCH,
-            onTabSelected = {},
-            modifier = Modifier.align(alignment = Alignment.BottomCenter)
-        )
+            Spacer(
+                modifier = Modifier.height(80.dp)
+            )
+        }
     }
 }
 @Preview(

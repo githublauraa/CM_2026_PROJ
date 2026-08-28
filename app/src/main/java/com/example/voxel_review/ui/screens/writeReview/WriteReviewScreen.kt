@@ -17,7 +17,7 @@ import com.example.voxel_review.ui.screens.writeReview.components.GameInfo
 import com.example.voxel_review.ui.screens.writeReview.components.ReviewText
 import com.example.voxel_review.ui.screens.writeReview.components.TopBar
 import com.example.voxel_review.ui.utils.FondoPantalla
-
+import androidx.compose.ui.tooling.preview.Preview
 @Composable
 fun WriteReviewScreenContent(modifier: Modifier = Modifier) {
     Box(
@@ -40,9 +40,6 @@ fun WriteReviewScreenContent(modifier: Modifier = Modifier) {
             ReviewText()
             BotonPublicarReview()
         }
-        ReviewBottomNavigationBar(
-            modifier = Modifier.align(Alignment.BottomCenter),
-        )
     }
 }
 
@@ -58,4 +55,10 @@ fun WriteReviewScreen(modifier: Modifier = Modifier) {
             modifier = Modifier.fillMaxSize(),
         )
     }
+}
+
+@Composable
+@Preview
+fun WriteReviewScreenPreview() {
+    WriteReviewScreen()
 }

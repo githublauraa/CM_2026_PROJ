@@ -30,9 +30,6 @@ fun ReviewDetailScreen(
             ReviewDetailTopBar()
             ReviewDetailContent()
         }
-        ReviewBottomNavigationBar(
-            modifier = Modifier.align(Alignment.BottomCenter),
-        )
     }
 }
 

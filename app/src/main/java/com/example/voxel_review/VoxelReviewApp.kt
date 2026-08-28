@@ -4,17 +4,27 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.example.voxel_review.navigation.AppNavigation
 import androidx.navigation.compose.rememberNavController
+import com.example.voxel_review.navigation.AppNavigation
+import com.example.voxel_review.ui.utils.DiscoverBottomNavigationBar
+
 @Composable
 fun VoxelReviewApp(
     modifier: Modifier = Modifier
 ) {
+
+    val navController = rememberNavController()
+
     Scaffold(
+        bottomBar = {
+            DiscoverBottomNavigationBar(
+                navController = navController
+            )
+        }
     ) {
-        var navController = rememberNavController()
         AppNavigation(
             navController = navController,
-            modifier = modifier.padding(it))
+            modifier = modifier.padding(it)
+        )
     }
 }

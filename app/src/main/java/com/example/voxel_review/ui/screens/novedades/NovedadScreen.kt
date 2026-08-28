@@ -9,7 +9,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.voxel_review.data.LocalJuegosProvider
 import com.example.voxel_review.ui.screens.novedades.components.NovedadesContent
 import com.example.voxel_review.ui.utils.DiscoverBottomNavigationBar
-import com.example.voxel_review.ui.utils.DiscoverTab
 import com.example.voxel_review.ui.utils.FondoPantalla
 import com.example.voxel_review.data.infoJuegosNovedades.JuegoInfo
 @Composable
@@ -45,11 +44,6 @@ fun NovedadScreen(
             modifier = Modifier.fillMaxSize()
         )
 
-        DiscoverBottomNavigationBar(
-            selectedTab = DiscoverTab.FAVORITES,
-            onTabSelected = {},
-            modifier = Modifier.align(Alignment.BottomCenter)
-        )
     }
 }
 

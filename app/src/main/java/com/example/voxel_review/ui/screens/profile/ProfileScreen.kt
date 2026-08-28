@@ -12,7 +12,6 @@ import androidx.compose.ui.unit.dp
 import com.example.voxel_review.data.profile.LocalProfileProvider
 import com.example.voxel_review.ui.screens.profile.components.*
 import com.example.voxel_review.ui.utils.DiscoverBottomNavigationBar
-import com.example.voxel_review.ui.utils.DiscoverTab
 import com.example.voxel_review.ui.utils.FondoPantalla
 
 @Composable
@@ -40,12 +39,6 @@ fun ProfileContent(
             GameCards()
             EditButton()
         }
-
-        DiscoverBottomNavigationBar(
-            selectedTab = DiscoverTab.PROFILE,
-            onTabSelected = {},
-            modifier = Modifier.align(Alignment.BottomCenter)
-        )
     }
 }
 

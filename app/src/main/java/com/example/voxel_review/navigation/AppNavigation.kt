@@ -10,7 +10,12 @@ import com.example.voxel_review.ui.screens.home.StartScreen
 import com.example.voxel_review.ui.screens.crearCuenta.CreateAccountScreen
 import com.example.voxel_review.ui.screens.novedades.NovedadScreen
 import com.example.voxel_review.data.LocalJuegosProvider
-import com.example.voxel_review.navigation.AppScreen
+import com.example.voxel_review.ui.screens.profile.ProfileScreen
+import com.example.voxel_review.ui.screens.Discover.DiscoverScreen
+import com.example.voxel_review.ui.screens.writeReview.WriteReviewScreen
+import com.example.voxel_review.ui.screens.rankings.RankingsScreen
+import com.example.voxel_review.data.infoRanking.ListaRanking
+import com.example.voxel_review.ui.screens.notifications.NotificationScreen
 
 //sealed class
 sealed class AppScreen(val route: String){
@@ -65,11 +70,39 @@ fun AppNavigation(
 
         }
 
-        composable(route = "reviews"){
+        composable(route = AppScreen.Reviews.route){
             NovedadScreen(
                 listaJuegos = LocalJuegosProvider.juegos
             )
         }
+
+        composable(route = AppScreen.PerfilUser.route){
+            ProfileScreen()
+        }
+
+        composable(route = AppScreen.PerfilUser.route){
+            ProfileScreen()
+        }
+
+        composable(route = AppScreen.Discover.route){
+            DiscoverScreen()
+        }
+
+        composable(route = AppScreen.WriteReview.route){
+            WriteReviewScreen()
+        }
+
+        composable(route = AppScreen.RankingsUser.route){
+            RankingsScreen(
+                rankingUsuarios = ListaRanking.rankingUsuarios
+            )
+        }
+        //falta reseña completa, configuracion
+        composable(route = AppScreen.Notifications.route){
+            NotificationScreen()
+        }
+
+
 
     }
 

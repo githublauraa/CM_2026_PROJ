@@ -24,7 +24,6 @@ import com.example.voxel_review.ui.screens.rankings.components.RankingCard
 import com.example.voxel_review.ui.theme.VoxelBackground
 import com.example.voxel_review.ui.theme.VoxelPrimary
 import com.example.voxel_review.ui.utils.DiscoverBottomNavigationBar
-import com.example.voxel_review.ui.utils.DiscoverTab
 import com.example.voxel_review.ui.utils.FondoPantalla
 
 
@@ -126,12 +125,6 @@ fun RankingsScreen(
         RankingContent(
             rankingUsuarios = rankingUsuarios,
             modifier = Modifier.padding(bottom = 70.dp)
-        )
-
-        DiscoverBottomNavigationBar(
-            selectedTab = DiscoverTab.HOME,
-            onTabSelected = {},
-            modifier = Modifier.align(Alignment.BottomCenter)
         )
     }
 }
