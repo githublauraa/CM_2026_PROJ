@@ -47,7 +47,7 @@ fun NovedadesContent(
                 Text(
                     text = stringResource(R.string.novedades_y_rese_as),
                     color = Color.White,
-                    fontSize = 25.sp
+                    fontSize = 22.sp
                 )
 
                 Spacer(
@@ -55,6 +55,7 @@ fun NovedadesContent(
                 )
 
                 Campana(
+                    modifier = Modifier.size(30.dp),
                     onClick = onNotificationClick
                 )
             }
