@@ -138,6 +138,6 @@ fun BotonPreview() {
         colorFondo = VoxelSurface,
         colorBorde = VoxelSurface,
         colorLetra = VoxelSurface,
-        onClick = {}
+        onClick = {},
     )
 }

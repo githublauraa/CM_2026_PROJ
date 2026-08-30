@@ -206,12 +206,12 @@ fun CreateAccountContent(
 
             Boton(
                 textoBoton = "Unirse a la aventura",
-                colorFondo = VoxelSecondary,
-                colorBorde = VoxelSecondary,
-                colorLetra = White,
                 modifier = Modifier
                     .width(330.dp)
                     .height(50.dp),
+                colorFondo = VoxelSecondary,
+                colorBorde = VoxelSecondary,
+                colorLetra = White,
                 onClick = unirseButtonPressed
             )
 

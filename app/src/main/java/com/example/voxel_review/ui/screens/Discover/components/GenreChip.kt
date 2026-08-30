@@ -9,10 +9,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.voxel_review.R
+import com.example.voxel_review.data.InfoDiscover.GenreInfo
 import com.example.voxel_review.ui.theme.secondaryDark
 import com.example.voxel_review.ui.theme.surfaceDark
 import com.example.voxel_review.ui.theme.onSurfaceVariantDark
@@ -20,15 +23,13 @@ import com.example.voxel_review.ui.theme.surfaceDimDark
 
 @Composable
 fun GenreChip(
-    label: String,
+    genre: GenreInfo,
     isSelected: Boolean,
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val colors = MaterialTheme.colorScheme
-
     Text(
-        text = label,
+        text = stringResource(id = genre.nombre),
         color = if (isSelected) surfaceDark else onSurfaceVariantDark,
         fontSize = 14.sp,
         fontWeight = if (isSelected) FontWeight.SemiBold else FontWeight.Normal,
@@ -43,11 +44,19 @@ fun GenreChip(
 @Preview(showBackground = true)
 @Composable
 private fun GenreChipSelectedPreview() {
-    GenreChip(label = "Todo", isSelected = true, onClick = {})
+    GenreChip(
+        genre = GenreInfo(id = "1", nombre = R.string.genero_todo),
+        isSelected = true,
+        onClick = {}
+    )
 }
 
 @Preview(showBackground = true)
 @Composable
 private fun GenreChipUnselectedPreview() {
-    GenreChip(label = "RPG", isSelected = false, onClick = {})
+    GenreChip(
+        genre = GenreInfo(id = "2", nombre = R.string.genero_rpg),
+        isSelected = false,
+        onClick = {}
+    )
 }

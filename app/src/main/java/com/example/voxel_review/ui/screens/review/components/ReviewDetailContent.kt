@@ -12,7 +12,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.foundation.layout.PaddingValues
 import com.example.voxel_review.R
 import com.example.voxel_review.ui.screens.review.DescriptionSection
 import com.example.voxel_review.ui.screens.review.HeroSection
@@ -20,7 +19,6 @@ import com.example.voxel_review.ui.screens.review.RatingCard
 import com.example.voxel_review.ui.screens.review.UserReviewsSection
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.voxel_review.ui.utils.Boton
-import com.example.voxel_review.ui.theme.VoxelSurfaceVariant
 import com.example.voxel_review.ui.theme.White
 import com.example.voxel_review.ui.theme.VoxelPrimary
 import com.example.voxel_review.ui.theme.backgroundDark
@@ -76,13 +74,13 @@ fun ReviewDetailContent(
 
         Boton(
             textoBoton = "Hacer reseña",
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
             colorFondo = backgroundDark,
             colorBorde = VoxelPrimary,
             colorLetra = White,
             onClick = onClickReview,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
         )
 
     }

@@ -16,6 +16,7 @@ fun NotificationScreen(
     onBackClick: () -> Unit = {},
     onNotificationClick: (String) -> Unit = {}
 ) {
+    //cambiar a data class Notification(val title: String, val message: String, val imageResId: Int)
     val highlightedNotifications = listOf(
         Triple(
             "GameFoxy y otros",

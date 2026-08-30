@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -15,35 +14,28 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.voxel_review.R
+import com.example.voxel_review.data.InfoDiscover.GenreInfo
 import com.example.voxel_review.ui.theme.onSurfaceVariantDark
 
 @Composable
 fun GenreFilterSection(
-    genres: List<String>,
-    selectedGenre: String,
-    onGenreSelected: (String) -> Unit,
+    genres: List<GenreInfo>,
+    selectedGenre: GenreInfo,
+    onGenreSelected: (GenreInfo) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Column(modifier = modifier.fillMaxWidth()) {
-        Text(
-            text = "GÉNEROS POPULARES",
-            color = onSurfaceVariantDark,
-            fontSize = 12.sp,
-            fontWeight = FontWeight.SemiBold,
-            modifier = Modifier.padding(horizontal = 20.dp, vertical = 8.dp)
-        )
-
-        LazyRow(
-            horizontalArrangement = Arrangement.spacedBy(10.dp),
-            contentPadding = PaddingValues(horizontal = 20.dp)
-        ) {
-            items(genres) { genre ->
-                GenreChip(
-                    label = genre,
-                    isSelected = genre == selectedGenre,
-                    onClick = { onGenreSelected(genre) }
-                )
-            }
+    LazyRow(
+        modifier = modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        contentPadding = PaddingValues(horizontal = 20.dp)
+    ) {
+        items(genres) { genre ->
+            GenreChip(
+                genre = genre,
+                isSelected = genre == selectedGenre,
+                onClick = { onGenreSelected(genre) }
+            )
         }
     }
 }
@@ -52,8 +44,15 @@ fun GenreFilterSection(
 @Composable
 private fun GenreFilterSectionPreview() {
     GenreFilterSection(
-        genres = listOf("Todo", "RPG", "Acción", "Aventura", "Estrategia", "Indie"),
-        selectedGenre = "Todo",
+        genres = listOf(
+            GenreInfo("0", nombre = R.string.genero_todo),
+            GenreInfo("1", nombre = R.string.genero_accion),
+            GenreInfo("2", nombre = R.string.genero_aventura),
+            GenreInfo("3", nombre = R.string.genero_rpg),
+            GenreInfo("4", nombre = R.string.genero_estrategia),
+            GenreInfo("5", nombre = R.string.genero_indie),
+        ),
+        selectedGenre = GenreInfo("0",nombre = R.string.genero_todo),
         onGenreSelected = {}
     )
 }

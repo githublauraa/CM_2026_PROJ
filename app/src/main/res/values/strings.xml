@@ -56,4 +56,22 @@
   <string name="resena_gamerx">Absolutamente increíble. La mejor experiencia gaming de los últimos años sin duda.</string>
   <string name="la_contrase_a_debe_ser_mayor_a_6_caracteres">La contraseña debe ser mayor a 6 caracteres</string>
   <string name="Notificaciones">Notificaciones</string>
+  <string name="JuegoDetail">Juego</string>
+  <string name="Info_juego">Información</string>
+  <string name="Nombre_juego">Fornite</string>
+  <string name="Descripcion_juego"> Fortnite es un videojuego popular y completo que ofrece una experiencia divertida y gratuita, aunque sus aspectos positivos y negativos dependen del tipo de jugador</string>
+  <string name="genero">Genero_juego\n</string>
+  <string name="accion">Ejemplo_genero\n</string>
+  <string name="genero_todo">Todo</string>
+  <string name="genero_rpg">Rcg</string>
+  <string name="genero_accion">Accion</string>
+  <string name="genero_aventura">Aventura</string>
+  <string name="genero_estrategia">Estrategia</string>
+  <string name="genero_indie">Indie</string>
+  <string name="juego_elden_ring">Elden ring</string>
+  <string name="juego_starfield">Starfield</string>
+  <string name="juego_baldurs_gate_3">Baldurs gate 3</string>
+  <string name="cat_rpg_accion">Rpg - Accion</string>
+  <string name="cat_ciencia_ficcion">ciencia - ficcion</string>
+  <string name="cat_rpg_turnos">rpg - turnos</string>
 </resources>

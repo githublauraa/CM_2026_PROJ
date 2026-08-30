@@ -1,6 +1,5 @@
 package com.example.voxel_review.ui.screens.home
 
-import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -170,7 +169,7 @@ fun StartScreenContent(
                 colorFondo = tertiaryDark,
                 colorBorde = tertiaryDark,
                 colorLetra = surfaceContainerLowestLight,
-                onClick = logginButtonPressed
+                onClick = logginButtonPressed,
             )
 
             Spacer(
@@ -200,7 +199,7 @@ fun StartScreenContent(
                 colorFondo = backgroundDark,
                 colorBorde = secondaryDark,
                 colorLetra = secondaryDark,
-                onClick = createAccountButtonPressed
+                onClick = createAccountButtonPressed,
             )
 
             Spacer(
