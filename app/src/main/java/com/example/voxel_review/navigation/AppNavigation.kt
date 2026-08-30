@@ -8,18 +8,18 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.example.voxel_review.data.InfoDiscover.LocalGenreProvider
+import com.example.voxel_review.data.InfoDiscover.LocalTrendingSearchProvider
 import com.example.voxel_review.ui.screens.home.StartScreen
 import com.example.voxel_review.ui.screens.crearCuenta.CreateAccountScreen
 import com.example.voxel_review.ui.screens.novedades.NovedadScreen
 import com.example.voxel_review.data.LocalJuegosProvider
 import com.example.voxel_review.ui.screens.profile.ProfileScreen
-import com.example.voxel_review.ui.screens.Discover.DiscoverScreen
 import com.example.voxel_review.ui.screens.writeReview.WriteReviewScreen
 import com.example.voxel_review.ui.screens.rankings.RankingsScreen
 import com.example.voxel_review.data.infoRanking.ListaRanking
 import com.example.voxel_review.ui.screens.Discover.DiscoverRoute
 import com.example.voxel_review.ui.screens.notifications.NotificationRoute
-import com.example.voxel_review.ui.screens.notifications.NotificationScreen
 import com.example.voxel_review.ui.screens.review.ReviewDetailScreen
 import com.example.voxel_review.ui.screens.settings.SettingsRoute
 
@@ -128,7 +128,10 @@ fun AppNavigation(
             },
                 onNotificationClick = {
                     navController.navigate(AppScreen.Notifications.route)
-                }
+                },
+                selectedGenre = LocalGenreProvider.generos.first(),
+                tendencias = LocalTrendingSearchProvider.tendencias,
+                generos = LocalGenreProvider.generos,
             )
         }
 

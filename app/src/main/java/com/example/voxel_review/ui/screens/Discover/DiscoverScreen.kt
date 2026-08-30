@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
@@ -22,7 +21,8 @@ import com.example.voxel_review.ui.screens.Discover.components.DiscoverTopBar
 import com.example.voxel_review.ui.screens.Discover.components.TrendingSearchesSection
 import com.example.voxel_review.R
 import com.example.voxel_review.data.InfoDiscover.GenreInfo
-import com.example.voxel_review.data.InfoDiscover.LocalDiscoverProvider
+import com.example.voxel_review.data.InfoDiscover.LocalTrendingSearchProvider
+import com.example.voxel_review.data.InfoDiscover.LocalGenreProvider
 import com.example.voxel_review.data.InfoDiscover.TrendingSearchInfo
 import com.example.voxel_review.ui.screens.Discover.components.DiscoverSearchBar
 import com.example.voxel_review.ui.screens.Discover.components.GenreFilterSection
@@ -32,12 +32,15 @@ import com.example.voxel_review.ui.screens.Discover.components.GenreFilterSectio
 fun DiscoverRoute(
     onBackClick: () -> Unit,
     onNotificationClick: () -> Unit,
+    selectedGenre: GenreInfo,
+    tendencias: List<TrendingSearchInfo>,
+    generos: List<GenreInfo>,
 
     modifier: Modifier = Modifier
 ) {
 
     var searchQuery by remember { mutableStateOf("") }
-    var selectedGenre by remember { mutableStateOf(LocalDiscoverProvider.generos.first()) }
+    var selectedGenre by remember { mutableStateOf(LocalGenreProvider.generos.first()) }
 
     DiscoverScreen(
         onBackClick = onBackClick,
@@ -58,11 +61,11 @@ fun DiscoverScreen(
     onSearchQueryChange: (String) -> Unit,
     onGenreSelected: (GenreInfo) -> Unit,
     modifier: Modifier = Modifier,
-    selectedGenre: GenreInfo = LocalDiscoverProvider.generos.first(),
-    tendencias: List<TrendingSearchInfo> = LocalDiscoverProvider.tendencias,
-    generos: List<GenreInfo> = LocalDiscoverProvider.generos,
+    selectedGenre: GenreInfo = LocalGenreProvider.generos.first(),
+    tendencias: List<TrendingSearchInfo> = LocalTrendingSearchProvider.tendencias,
+    generos: List<GenreInfo> = LocalGenreProvider.generos,
 
-) {
+    ) {
     Box(
         modifier = modifier.fillMaxSize()
     ) {
@@ -118,7 +121,7 @@ private fun DiscoverScreenPreview() {
         onBackClick = {},
         onNotificationClick = {},
         searchQuery = "",
-        selectedGenre = LocalDiscoverProvider.generos.first(),
+        selectedGenre = LocalGenreProvider.generos.first(),
         onSearchQueryChange = {},
         onGenreSelected = {}
     )
