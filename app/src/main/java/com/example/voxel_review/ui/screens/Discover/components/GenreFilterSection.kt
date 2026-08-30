@@ -45,12 +45,12 @@ fun GenreFilterSection(
 private fun GenreFilterSectionPreview() {
     GenreFilterSection(
         genres = listOf(
-            GenreInfo("0", nombre = R.string.genero_todo),
-            GenreInfo("1", nombre = R.string.genero_accion),
-            GenreInfo("2", nombre = R.string.genero_aventura),
-            GenreInfo("3", nombre = R.string.genero_rpg),
-            GenreInfo("4", nombre = R.string.genero_estrategia),
-            GenreInfo("5", nombre = R.string.genero_indie),
+            GenreInfo("1", nombre = R.string.genero_todo),
+            GenreInfo("2", nombre = R.string.genero_accion),
+            GenreInfo("3", nombre = R.string.genero_aventura),
+            GenreInfo("4", nombre = R.string.genero_rpg),
+            GenreInfo("5", nombre = R.string.genero_estrategia),
+            GenreInfo("6", nombre = R.string.genero_indie),
         ),
         selectedGenre = GenreInfo("0",nombre = R.string.genero_todo),
         onGenreSelected = {}

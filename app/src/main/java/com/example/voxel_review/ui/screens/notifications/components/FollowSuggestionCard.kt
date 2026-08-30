@@ -26,6 +26,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.voxel_review.R
+import com.example.voxel_review.data.InfoNotifications.FollowSuggestionInfo
+import com.example.voxel_review.data.InfoNotifications.LocalNotificationsProvider
 import com.example.voxel_review.ui.theme.primaryContainerDark
 import com.example.voxel_review.ui.theme.secondaryDark
 import com.example.voxel_review.ui.theme.tertiaryDark
@@ -33,8 +35,7 @@ import com.example.voxel_review.ui.theme.tertiaryDark
 
 @Composable
 fun FollowSuggestionCard(
-    username: String,
-    imageRes: Int,
+    suggestion: FollowSuggestionInfo,
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -43,9 +44,7 @@ fun FollowSuggestionCard(
             .fillMaxWidth()
             .height(56.dp)
             .clip(RoundedCornerShape(16.dp))
-            .background(
-                primaryContainerDark
-            )
+            .background(primaryContainerDark)
             .border(
                 width = 1.dp,
                 color = tertiaryDark,
@@ -55,25 +54,21 @@ fun FollowSuggestionCard(
             .padding(horizontal = 12.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-
         Image(
-            painter = painterResource(imageRes),
+            painter = painterResource(suggestion.imageResId),
             contentDescription = null,
             modifier = Modifier
                 .size(32.dp)
                 .clip(RoundedCornerShape(8.dp))
         )
 
-        Spacer(
-            modifier = Modifier.width(10.dp)
-        )
+        Spacer(modifier = Modifier.width(10.dp))
 
         Column(
             modifier = Modifier.weight(1f)
         ) {
-
             Text(
-                text = username,
+                text = suggestion.username,
                 color = tertiaryDark,
                 fontSize = 10.sp,
                 fontWeight = FontWeight.Bold
@@ -95,13 +90,12 @@ fun FollowSuggestionCard(
         )
     }
 }
-
 @Preview
 @Composable
 fun FollowSuggestionCardPreview() {
     FollowSuggestionCard(
-        username = "Vibeny",
-        imageRes = R.drawable.game_profile,
+        suggestion = LocalNotificationsProvider.sugerenciasSeguimiento.first(),
         onClick = {}
     )
+
 }

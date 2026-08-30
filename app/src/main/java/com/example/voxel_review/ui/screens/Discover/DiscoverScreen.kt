@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
@@ -31,6 +32,7 @@ import com.example.voxel_review.ui.screens.Discover.components.GenreFilterSectio
 fun DiscoverRoute(
     onBackClick: () -> Unit,
     onNotificationClick: () -> Unit,
+
     modifier: Modifier = Modifier
 ) {
 
@@ -42,6 +44,8 @@ fun DiscoverRoute(
         onNotificationClick = onNotificationClick,
         searchQuery = searchQuery,
         selectedGenre = selectedGenre,
+        onSearchQueryChange = { searchQuery = it },
+        onGenreSelected = { selectedGenre = it },
         modifier = modifier
     )
 }
@@ -50,13 +54,13 @@ fun DiscoverRoute(
 fun DiscoverScreen(
     onBackClick: () -> Unit,
     onNotificationClick: () -> Unit,
-    searchQuery: String = "",
+    searchQuery: String,
+    onSearchQueryChange: (String) -> Unit,
+    onGenreSelected: (GenreInfo) -> Unit,
+    modifier: Modifier = Modifier,
     selectedGenre: GenreInfo = LocalDiscoverProvider.generos.first(),
     tendencias: List<TrendingSearchInfo> = LocalDiscoverProvider.tendencias,
     generos: List<GenreInfo> = LocalDiscoverProvider.generos,
-    onSearchQueryChange: (String) -> Unit = {},
-    onGenreSelected: (GenreInfo) -> Unit = {},
-    modifier: Modifier = Modifier
 
 ) {
     Box(
@@ -79,7 +83,8 @@ fun DiscoverScreen(
 
             DiscoverSearchBar(
                 query = searchQuery,
-                onQueryChange = onSearchQueryChange
+                onQueryChange = onSearchQueryChange,
+
             )
 
             Spacer(modifier = Modifier.height(20.dp))
@@ -94,7 +99,9 @@ fun DiscoverScreen(
 
             TrendingSearchesSection(
                 items = tendencias,
-                onItemClick = {}
+                onItemClick = {
+
+                }
             )
 
             Spacer(modifier = Modifier.height(80.dp))
@@ -109,6 +116,10 @@ fun DiscoverScreen(
 private fun DiscoverScreenPreview() {
     DiscoverScreen(
         onBackClick = {},
-        onNotificationClick = {}
+        onNotificationClick = {},
+        searchQuery = "",
+        selectedGenre = LocalDiscoverProvider.generos.first(),
+        onSearchQueryChange = {},
+        onGenreSelected = {}
     )
 }

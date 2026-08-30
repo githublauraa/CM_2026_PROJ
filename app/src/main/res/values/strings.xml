@@ -63,7 +63,7 @@
   <string name="genero">Genero_juego\n</string>
   <string name="accion">Ejemplo_genero\n</string>
   <string name="genero_todo">Todo</string>
-  <string name="genero_rpg">Rcg</string>
+  <string name="genero_rpg">RCG</string>
   <string name="genero_accion">Accion</string>
   <string name="genero_aventura">Aventura</string>
   <string name="genero_estrategia">Estrategia</string>

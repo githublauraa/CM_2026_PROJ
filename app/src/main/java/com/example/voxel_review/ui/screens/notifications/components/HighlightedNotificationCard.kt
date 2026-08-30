@@ -25,26 +25,24 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.voxel_review.R
+import com.example.voxel_review.data.InfoNotifications.LocalNotificationsProvider
+import com.example.voxel_review.data.InfoNotifications.NotificationInfo
 import com.example.voxel_review.ui.theme.primaryContainerDark
 import com.example.voxel_review.ui.theme.primaryDark
 import com.example.voxel_review.ui.theme.tertiaryContainerDark
 
 @Composable
 fun HighlightedNotificationCard(
-    title: String,
-    subtitle: String,
+    notification: NotificationInfo,
     onClick: () -> Unit,
-    modifier: Modifier = Modifier,
-    image: Int
+    modifier: Modifier = Modifier
 ) {
     Row(
         modifier = modifier
             .fillMaxWidth()
             .height(61.dp)
             .clip(RoundedCornerShape(16.dp))
-            .background(
-                primaryContainerDark
-            )
+            .background(primaryContainerDark)
             .border(
                 width = 1.dp,
                 color = primaryDark,
@@ -54,33 +52,28 @@ fun HighlightedNotificationCard(
             .padding(horizontal = 12.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-
-
         Image(
-            painter = painterResource(image),
+            painter = painterResource(notification.imageResId),
             contentDescription = null,
             modifier = Modifier
                 .size(38.dp)
                 .clip(RoundedCornerShape(8.dp))
         )
 
-        Spacer(
-            modifier = Modifier.width(10.dp)
-        )
+        Spacer(modifier = Modifier.width(10.dp))
 
         Column(
             modifier = Modifier.weight(1f)
         ) {
-
             Text(
-                text = title,
+                text = notification.title,
                 color = Color.White,
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Bold
             )
 
             Text(
-                text = subtitle,
+                text = notification.message,
                 color = tertiaryContainerDark,
                 fontSize = 11.sp
             )
@@ -92,10 +85,7 @@ fun HighlightedNotificationCard(
 @Composable
 fun HighlightedNotificationCardPreview() {
     HighlightedNotificationCard(
-        title = "GameFoxy y otros",
-        subtitle = "Les gustó tu reseña",
-        image = R.drawable.game_profile,
+        notification = LocalNotificationsProvider.destacadas.first(),
         onClick = {}
     )
-
 }

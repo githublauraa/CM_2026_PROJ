@@ -17,6 +17,8 @@ import com.example.voxel_review.ui.screens.Discover.DiscoverScreen
 import com.example.voxel_review.ui.screens.writeReview.WriteReviewScreen
 import com.example.voxel_review.ui.screens.rankings.RankingsScreen
 import com.example.voxel_review.data.infoRanking.ListaRanking
+import com.example.voxel_review.ui.screens.Discover.DiscoverRoute
+import com.example.voxel_review.ui.screens.notifications.NotificationRoute
 import com.example.voxel_review.ui.screens.notifications.NotificationScreen
 import com.example.voxel_review.ui.screens.review.ReviewDetailScreen
 import com.example.voxel_review.ui.screens.settings.SettingsRoute
@@ -28,6 +30,7 @@ sealed class AppScreen(val route: String){
     object Reviews : AppScreen("reviews")
     object PerfilUser: AppScreen("perfilUser")
     object FullReviews : AppScreen("fullReviews/{juegoIndex}")
+
     object Discover : AppScreen("discover")
     object WriteReview : AppScreen("writeReview")
     object RankingsUser : AppScreen("rankingsUser")
@@ -119,7 +122,7 @@ fun AppNavigation(
 
 
         composable(route = AppScreen.Discover.route){
-            DiscoverScreen(
+            DiscoverRoute(
                 onBackClick =  {
                     navController.popBackStack()
             },
@@ -138,9 +141,13 @@ fun AppNavigation(
 
 
         composable(route = AppScreen.Notifications.route){
-            NotificationScreen(
+            NotificationRoute(
                 onBackClick = {
                     navController.popBackStack()
+                },
+                //especificar rutas:  destacados a reseña completa, ayer a pantalla detalle y sugerencia seguiento a perfil de otro usuario
+                 onNotificationClick = {
+                    navController.navigate(AppScreen.Discover.route)
                 }
             )
         }

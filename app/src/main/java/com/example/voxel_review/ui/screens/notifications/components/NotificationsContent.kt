@@ -4,18 +4,20 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.voxel_review.R
+import com.example.voxel_review.data.InfoNotifications.FollowSuggestionInfo
+import com.example.voxel_review.data.InfoNotifications.NotificationInfo
 
 @Composable
 fun NotificationsContent(
-    onNotificationClick: (String) -> Unit,
-    modifier: Modifier = Modifier,
-    highlightedNotifications: List<Triple<String, String, Int>>,
-    followSuggestions: List<Pair<String, Int>>
+    highlightedNotifications: List<NotificationInfo>,
+    followSuggestions: List<FollowSuggestionInfo>,
+    onNotificationClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     LazyColumn(
         modifier = modifier.fillMaxSize(),
@@ -31,31 +33,14 @@ fun NotificationsContent(
             NotificationSectionHeader(
                 title = "DESTACADOS",
                 showSeeAll = true,
-                onSeeAllClick = {
-                    // Acción ver todos
-                }
+                onSeeAllClick = {}
             )
         }
 
-        item {
+        items(highlightedNotifications) { item ->
             HighlightedNotificationCard(
-                title = "GameFoxy y otros",
-                subtitle = "Les gustó tu reseña",
-                image = R.drawable.game_profile,
-                onClick = {
-                    onNotificationClick("game_foxy")
-                }
-            )
-        }
-
-        item {
-            HighlightedNotificationCard(
-                title = "Nemesis y otros",
-                subtitle = "Comentaron tu reseña",
-                image = R.drawable.nemesis_profile,
-                onClick = {
-                    onNotificationClick("nemesis")
-                }
+                notification = item,
+                onClick = { onNotificationClick() }
             )
         }
 
@@ -68,9 +53,7 @@ fun NotificationsContent(
         item {
             NewGameNotificationCard(
                 gameName = "Resident Evil Requiem",
-                onClick = {
-                    onNotificationClick("resident_evil_requiem")
-                }
+                onClick = { onNotificationClick() }
             )
         }
 
@@ -78,29 +61,14 @@ fun NotificationsContent(
             NotificationSectionHeader(
                 title = "Sugerencias de seguimiento",
                 showSeeAll = true,
-                onSeeAllClick = {
-                    // Ver todos los usuarios
-                }
+                onSeeAllClick = { }
             )
         }
 
-        item {
+        items(followSuggestions) { item ->
             FollowSuggestionCard(
-                username = "Vibeny",
-                imageRes = R.drawable.game_profile,
-                onClick = {
-                    onNotificationClick("vibeny")
-                }
-            )
-        }
-
-        item {
-            FollowSuggestionCard(
-                username = "Vibepix",
-                imageRes = R.drawable.nemesis_profile,
-                onClick = {
-                    onNotificationClick("vibepix")
-                }
+                suggestion = item,
+                onClick = { onNotificationClick() }
             )
         }
     }
