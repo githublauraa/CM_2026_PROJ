@@ -30,6 +30,7 @@ import com.example.voxel_review.ui.screens.Discover.components.GenreFilterSectio
 
 @Composable
 fun DiscoverRoute(
+    DiscoverViewModel: DiscoverViewModel,
     onBackClick: () -> Unit,
     onNotificationClick: () -> Unit,
     selectedGenre: GenreInfo,
@@ -39,16 +40,13 @@ fun DiscoverRoute(
     modifier: Modifier = Modifier
 ) {
 
-    var searchQuery by remember { mutableStateOf("") }
-    var selectedGenre by remember { mutableStateOf(LocalGenreProvider.generos.first()) }
-
     DiscoverScreen(
         onBackClick = onBackClick,
         onNotificationClick = onNotificationClick,
-        searchQuery = searchQuery,
-        selectedGenre = selectedGenre,
-        onSearchQueryChange = { searchQuery = it },
-        onGenreSelected = { selectedGenre = it },
+        searchQuery = DiscoverViewModel.searchQuery,
+        selectedGenre = DiscoverViewModel.selectedGenre,
+        onSearchQueryChange = {DiscoverViewModel.updateSearchQuery(it)},
+        onGenreSelected = { DiscoverViewModel.updateSelectedGenre(it)},
         modifier = modifier
     )
 }

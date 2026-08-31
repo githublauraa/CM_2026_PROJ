@@ -4,11 +4,11 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.voxel_review.data.InfoNotifications.FollowSuggestionInfo
-import com.example.voxel_review.data.InfoNotifications.LocalNotificationsProvider
 import com.example.voxel_review.data.InfoNotifications.NotificationInfo
 import com.example.voxel_review.ui.screens.notifications.components.NotificationsContent
 import com.example.voxel_review.ui.screens.notifications.components.NotificationsTopBar
@@ -16,30 +16,29 @@ import com.example.voxel_review.ui.utils.FondoPantalla
 
 @Composable
 fun NotificationRoute(
+    NotificationsViewModel: NotificationsViewModel,
     onBackClick: () -> Unit,
     onNotificationClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
 
-    val highlightedNotifications = remember { LocalNotificationsProvider.destacadas }
-    val followSuggestions = remember { LocalNotificationsProvider.sugerenciasSeguimiento }
+
+    //val followSuggestions = remember { LocalNotificationsProvider.sugerenciasSeguimiento }
 
     NotificationScreen(
         onBackClick = onBackClick,
         onNotificationClick = onNotificationClick,
-        highlightedNotifications = highlightedNotifications,
-        followSuggestions = followSuggestions,
+        NotificationsViewModel = NotificationsViewModel,
         modifier = modifier
     )
 }
 
 @Composable
 fun NotificationScreen(
+    NotificationsViewModel: NotificationsViewModel,
     onBackClick: () -> Unit,
     onNotificationClick: () -> Unit,
     modifier: Modifier = Modifier,
-    highlightedNotifications: List<NotificationInfo> = LocalNotificationsProvider.destacadas,
-    followSuggestions: List<FollowSuggestionInfo> = LocalNotificationsProvider.sugerenciasSeguimiento,
 ) {
     Box(
         modifier = modifier.fillMaxSize()
@@ -56,19 +55,21 @@ fun NotificationScreen(
             )
 
             NotificationsContent(
-                highlightedNotifications = highlightedNotifications,
-                followSuggestions = followSuggestions,
+                highlightedNotifications = NotificationsViewModel.highlightedNotifications,
+                followSuggestions = NotificationsViewModel.followSuggestions,
                 onNotificationClick = onNotificationClick,
             )
         }
     }
 }
 
-@Preview
+/*@Preview
 @Composable
 fun NotificationSreenPreview() {
     NotificationScreen(
         onBackClick = {},
-        onNotificationClick = {}
+        onNotificationClick = {},
+        NotificationsViewModel = ViewModel(),
+
     )
-}
+}*/

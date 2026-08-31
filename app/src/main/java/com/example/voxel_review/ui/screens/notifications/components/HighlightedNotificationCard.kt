@@ -24,8 +24,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.voxel_review.R
-import com.example.voxel_review.data.InfoNotifications.LocalNotificationsProvider
+import com.example.voxel_review.data.InfoNotifications.LocalDestacadasProvider
+import com.example.voxel_review.data.InfoNotifications.LocalSugerenciasProvider
 import com.example.voxel_review.data.InfoNotifications.NotificationInfo
 import com.example.voxel_review.ui.theme.primaryContainerDark
 import com.example.voxel_review.ui.theme.primaryDark
@@ -85,7 +85,7 @@ fun HighlightedNotificationCard(
 @Composable
 fun HighlightedNotificationCardPreview() {
     HighlightedNotificationCard(
-        notification = LocalNotificationsProvider.destacadas.first(),
+        notification = LocalDestacadasProvider.destacadas.first(),
         onClick = {}
     )
 }

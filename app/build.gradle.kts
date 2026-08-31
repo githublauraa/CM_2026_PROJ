@@ -48,19 +48,18 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
 
-    implementation("androidx.compose.ui:ui-text-google-fonts")
-    implementation("androidx.compose.material:material-icons-extended:1.6.7")
-    implementation("androidx.navigation:navigation-compose:2.7.2")
+    implementation("androidx.compose.ui:ui-text-google-fonts") //fonts
+    implementation("androidx.compose.material:material-icons-extended:1.6.7") //icons
+    implementation("androidx.navigation:navigation-compose:2.7.2") //navigation
+    implementation("androidx.compose.runtime:runtime-livedata:1.8.3") //livedata
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1") //viewmodel
 
     implementation(libs.androidx.ui.graphics)
-
     testImplementation(libs.junit)
-
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.junit)
-
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     debugImplementation(libs.androidx.compose.ui.tooling)
 }

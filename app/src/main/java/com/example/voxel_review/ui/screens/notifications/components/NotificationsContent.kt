@@ -11,6 +11,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.voxel_review.data.InfoNotifications.FollowSuggestionInfo
 import com.example.voxel_review.data.InfoNotifications.NotificationInfo
+import kotlin.collections.emptyList
 
 @Composable
 fun NotificationsContent(

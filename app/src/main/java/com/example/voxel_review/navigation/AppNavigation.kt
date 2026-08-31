@@ -4,6 +4,7 @@ package com.example.voxel_review.navigation
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -19,7 +20,9 @@ import com.example.voxel_review.ui.screens.writeReview.WriteReviewScreen
 import com.example.voxel_review.ui.screens.rankings.RankingsScreen
 import com.example.voxel_review.data.infoRanking.ListaRanking
 import com.example.voxel_review.ui.screens.Discover.DiscoverRoute
+import com.example.voxel_review.ui.screens.Discover.DiscoverViewModel
 import com.example.voxel_review.ui.screens.notifications.NotificationRoute
+import com.example.voxel_review.ui.screens.notifications.NotificationsViewModel
 import com.example.voxel_review.ui.screens.review.ReviewDetailScreen
 import com.example.voxel_review.ui.screens.settings.SettingsRoute
 
@@ -122,7 +125,9 @@ fun AppNavigation(
 
 
         composable(route = AppScreen.Discover.route){
+            val DiscoverViewModel: DiscoverViewModel = viewModel()
             DiscoverRoute(
+                DiscoverViewModel = DiscoverViewModel,
                 onBackClick =  {
                     navController.popBackStack()
             },
@@ -144,7 +149,9 @@ fun AppNavigation(
 
 
         composable(route = AppScreen.Notifications.route){
+            val NotificationsViewModel: NotificationsViewModel = viewModel()
             NotificationRoute(
+                NotificationsViewModel = NotificationsViewModel,
                 onBackClick = {
                     navController.popBackStack()
                 },

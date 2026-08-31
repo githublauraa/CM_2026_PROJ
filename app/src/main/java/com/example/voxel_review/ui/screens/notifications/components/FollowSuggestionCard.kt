@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.voxel_review.R
 import com.example.voxel_review.data.InfoNotifications.FollowSuggestionInfo
-import com.example.voxel_review.data.InfoNotifications.LocalNotificationsProvider
+import com.example.voxel_review.data.InfoNotifications.LocalSugerenciasProvider
 import com.example.voxel_review.ui.theme.primaryContainerDark
 import com.example.voxel_review.ui.theme.secondaryDark
 import com.example.voxel_review.ui.theme.tertiaryDark
@@ -94,7 +94,7 @@ fun FollowSuggestionCard(
 @Composable
 fun FollowSuggestionCardPreview() {
     FollowSuggestionCard(
-        suggestion = LocalNotificationsProvider.sugerenciasSeguimiento.first(),
+        suggestion = LocalSugerenciasProvider.sugerenciasSeguimiento.first(),
         onClick = {}
     )
 
