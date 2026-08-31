@@ -45,10 +45,10 @@ fun ProfileScreen(
                 onBackClick = onBackClick,
                 onClickImage = onClickImage
             )
-            Pfp(state.profile.pfp)
-            UserNick(state.profile.nick)
+            Pfp(state.profiles[0].pfp)
+            UserNick(state.profiles[0].nick)
             Location()
-            StatsPanel(state.profile.resenias, state.profile.promedio, state.profile.likes)
+            StatsPanel(state.profiles[0].resenias, state.profiles[0].promedio, state.profiles[0].likes)
             GameCards()
             EditButton()
         }
