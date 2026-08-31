@@ -4,6 +4,7 @@ package com.example.voxel_review.navigation
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -20,6 +21,7 @@ import com.example.voxel_review.ui.screens.rankings.RankingsScreen
 import com.example.voxel_review.data.infoRanking.ListaRanking
 import com.example.voxel_review.ui.screens.Discover.DiscoverRoute
 import com.example.voxel_review.ui.screens.notifications.NotificationRoute
+import com.example.voxel_review.ui.screens.profile.ProfileViewModel
 import com.example.voxel_review.ui.screens.review.ReviewDetailScreen
 import com.example.voxel_review.ui.screens.settings.SettingsRoute
 
@@ -99,7 +101,9 @@ fun AppNavigation(
         }
 
         composable(route = AppScreen.PerfilUser.route){
+            val profileViewModel: ProfileViewModel = viewModel()
             ProfileScreen(
+                profileViewModel = profileViewModel,
                 onBackClick = {
                     navController.popBackStack()
                 },
