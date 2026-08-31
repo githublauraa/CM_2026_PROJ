@@ -25,6 +25,7 @@ import com.example.voxel_review.ui.screens.notifications.NotificationRoute
 import com.example.voxel_review.ui.screens.notifications.NotificationsViewModel
 import com.example.voxel_review.ui.screens.review.ReviewDetailScreen
 import com.example.voxel_review.ui.screens.settings.SettingsRoute
+import  com.example.voxel_review.ui.screens.profile.ProfileViewModel
 
 //sealed class
 sealed class AppScreen(val route: String){
@@ -102,7 +103,9 @@ fun AppNavigation(
         }
 
         composable(route = AppScreen.PerfilUser.route){
+            val profileViewModel: ProfileViewModel = viewModel()
             ProfileScreen(
+                profileViewModel = profileViewModel,
                 onBackClick = {
                     navController.popBackStack()
                 },
