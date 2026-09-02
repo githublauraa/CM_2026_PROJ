@@ -26,7 +26,7 @@ import com.example.voxel_review.ui.screens.notifications.NotificationsViewModel
 import com.example.voxel_review.ui.screens.review.ReviewDetailScreen
 import com.example.voxel_review.ui.screens.settings.SettingsRoute
 import  com.example.voxel_review.ui.screens.profile.ProfileViewModel
-
+import com.example.voxel_review.ui.screens.home.StartViewModel
 //sealed class
 sealed class AppScreen(val route: String){
     object Start : AppScreen("start")
@@ -53,7 +53,9 @@ fun AppNavigation(
         modifier = modifier
     ){
         composable(route = AppScreen.Start.route){
+            val startViewModel: StartViewModel = viewModel()
             StartScreen(
+                startViewModel = startViewModel,
                 logginButtonPressed = {
                     navController.navigate(AppScreen.Reviews.route){
                         popUpTo(0){
