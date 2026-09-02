@@ -1,4 +1,4 @@
-package com.example.voxel_review.ui.screens.home
+package com.example.voxel_review.ui.screens.start
 
 data class StartState(
     val usuario: String = "",

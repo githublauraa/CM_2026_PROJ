@@ -1,4 +1,4 @@
-package com.example.voxel_review.ui.screens.home.components
+package com.example.voxel_review.ui.screens.start.components
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -10,22 +10,22 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import com.example.voxel_review.R
 
-
 @Composable
-fun MensajeLogin(
+fun NombreApp(
     modifier: Modifier = Modifier
 ){
     Text(
-        text = stringResource(R.string.login_registro),
-        fontSize = 23.sp,
+        text = stringResource(R.string.voxel_review),
+        fontSize = 30.sp,
         fontWeight = FontWeight.Bold,
-        color =  Color.White,
+        color = Color.White,
         modifier = modifier
+
     )
 }
 
 @Composable
 @Preview
-fun MensajeLoginPreview(){
-    MensajeLogin()
+fun NombreAppPreview(){
+    NombreApp()
 }

@@ -1,4 +1,4 @@
-package com.example.voxel_review.ui.screens.home.components
+package com.example.voxel_review.ui.screens.start.components
 
 import androidx.compose.runtime.Composable
 import com.example.voxel_review.ui.utils.Boton
@@ -11,10 +11,8 @@ import com.example.voxel_review.ui.theme.tertiaryDark
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.R
 import androidx.compose.foundation.layout.Spacer
 import com.example.voxel_review.ui.theme.surfaceContainerLowestLight
-import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material3.Text

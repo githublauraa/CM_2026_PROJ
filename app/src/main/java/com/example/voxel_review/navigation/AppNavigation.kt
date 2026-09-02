@@ -9,9 +9,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.example.voxel_review.data.InfoDiscover.LocalGenreProvider
-import com.example.voxel_review.data.InfoDiscover.LocalTrendingSearchProvider
-import com.example.voxel_review.ui.screens.home.StartScreen
+import com.example.voxel_review.ui.screens.start.StartScreen
 import com.example.voxel_review.ui.screens.crearCuenta.CreateAccountScreen
 import com.example.voxel_review.ui.screens.novedades.NovedadScreen
 import com.example.voxel_review.data.LocalJuegosProvider
@@ -26,7 +24,7 @@ import com.example.voxel_review.ui.screens.notifications.NotificationsViewModel
 import com.example.voxel_review.ui.screens.review.ReviewDetailScreen
 import com.example.voxel_review.ui.screens.settings.SettingsRoute
 import  com.example.voxel_review.ui.screens.profile.ProfileViewModel
-import com.example.voxel_review.ui.screens.home.StartViewModel
+import com.example.voxel_review.ui.screens.start.StartViewModel
 //sealed class
 sealed class AppScreen(val route: String){
     object Start : AppScreen("start")

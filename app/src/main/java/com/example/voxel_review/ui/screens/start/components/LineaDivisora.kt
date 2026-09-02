@@ -1,4 +1,4 @@
-package com.example.voxel_review.ui.screens.home.components
+package com.example.voxel_review.ui.screens.start.components
 
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.HorizontalDivider

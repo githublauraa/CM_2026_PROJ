@@ -16,7 +16,7 @@ import com.example.voxel_review.ui.utils.MostrarLogo
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.dp
-import com.example.voxel_review.ui.screens.home.components.NombreApp
+import com.example.voxel_review.ui.screens.start.components.NombreApp
 import com.example.voxel_review.ui.theme.VoxelPrimary
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.foundation.layout.Arrangement
