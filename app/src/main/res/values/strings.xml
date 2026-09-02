@@ -63,15 +63,15 @@
   <string name="genero">Genero_juego\n</string>
   <string name="accion">Ejemplo_genero\n</string>
   <string name="genero_todo">Todo</string>
-  <string name="genero_rpg">RCG</string>
-  <string name="genero_accion">Accion</string>
+  <string name="genero_rpg">RPG</string>
+  <string name="genero_accion">Acción</string>
   <string name="genero_aventura">Aventura</string>
   <string name="genero_estrategia">Estrategia</string>
   <string name="genero_indie">Indie</string>
-  <string name="juego_elden_ring">Elden ring</string>
+  <string name="juego_elden_ring">Elden Ring</string>
   <string name="juego_starfield">Starfield</string>
-  <string name="juego_baldurs_gate_3">Baldurs gate 3</string>
-  <string name="cat_rpg_accion">Rpg - Accion</string>
-  <string name="cat_ciencia_ficcion">ciencia - ficcion</string>
-  <string name="cat_rpg_turnos">rpg - turnos</string>
+  <string name="juego_baldurs_gate_3">Baldurs Gate 3</string>
+  <string name="cat_rpg_accion">RPG - Acción</string>
+  <string name="cat_ciencia_ficcion">Ciencia Ficción</string>
+  <string name="cat_rpg_turnos">RPG - Turnos</string>
 </resources>

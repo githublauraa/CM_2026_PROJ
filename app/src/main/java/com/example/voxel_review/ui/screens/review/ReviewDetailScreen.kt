@@ -18,7 +18,6 @@ import com.example.voxel_review.ui.utils.FondoPantalla
 @Composable
 fun ReviewDetailScreen(
     onClickReview: () -> Unit,
-    juego: JuegoInfo,
     onBackClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -47,14 +46,6 @@ fun ReviewDetailScreen(
 fun ReviewDetailScreenPreview() {
     ReviewDetailScreen(
         onClickReview = {},
-        juego = JuegoInfo (
-            imagen = R.drawable.logo_fortnite,
-            etiqueta = 1,
-            nombre = 1,
-            descripcion = 1,
-            autor = 1,
-            calificacion = 1
-        ),
         onBackClick = {}
     )
 

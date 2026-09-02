@@ -33,8 +33,7 @@ sealed class AppScreen(val route: String){
     object Register : AppScreen("register")
     object Reviews : AppScreen("reviews")
     object PerfilUser: AppScreen("perfilUser")
-    object FullReviews : AppScreen("fullReviews/{juegoIndex}")
-
+    object FullReviews : AppScreen("fullReviews")
     object Discover : AppScreen("discover")
     object WriteReview : AppScreen("writeReview")
     object RankingsUser : AppScreen("rankingsUser")
@@ -90,7 +89,7 @@ fun AppNavigation(
                         LocalJuegosProvider.juegos.indexOf(juego)
 
                     navController.navigate(
-                        "fullReviews/$juegoIndex"
+                        "${AppScreen.FullReviews.route}?juegoIndex=$juegoIndex"
                     )
                 },
                 onNotificationClick = {
@@ -128,18 +127,15 @@ fun AppNavigation(
 
 
         composable(route = AppScreen.Discover.route){
-            val DiscoverViewModel: DiscoverViewModel = viewModel()
+            val discoverViewModel: DiscoverViewModel = viewModel()
             DiscoverRoute(
-                DiscoverViewModel = DiscoverViewModel,
+                discoverViewModel = discoverViewModel,
                 onBackClick =  {
                     navController.popBackStack()
             },
                 onNotificationClick = {
                     navController.navigate(AppScreen.Notifications.route)
                 },
-                selectedGenre = LocalGenreProvider.generos.first(),
-                tendencias = LocalTrendingSearchProvider.tendencias,
-                generos = LocalGenreProvider.generos,
             )
         }
 
@@ -152,9 +148,9 @@ fun AppNavigation(
 
 
         composable(route = AppScreen.Notifications.route){
-            val NotificationsViewModel: NotificationsViewModel = viewModel()
+            val notificationsViewModel: NotificationsViewModel = viewModel()
             NotificationRoute(
-                NotificationsViewModel = NotificationsViewModel,
+                notificationsViewModel = notificationsViewModel,
                 onBackClick = {
                     navController.popBackStack()
                 },
@@ -165,28 +161,20 @@ fun AppNavigation(
             )
         }
 
-        composable( route = AppScreen.FullReviews.route,
+        composable( route = "${AppScreen.FullReviews.route}?juegoIndex={juegoIndex}",
             arguments = listOf(
                 navArgument("juegoIndex") {
                     type = NavType.IntType
                 }
             )
-        ) { backStackEntry ->
-
-            val juegoIndex =
-                backStackEntry.arguments?.getInt("juegoIndex") ?: 0
-
-            val juego =
-                LocalJuegosProvider.juegos[juegoIndex]
-
+        ) {
             ReviewDetailScreen(
-                juego = juego,
                 onBackClick = {
                     navController.popBackStack()
                 },
                 onClickReview = {
                     navController.navigate(AppScreen.WriteReview.route)
-                },
+                }
             )
         }
 

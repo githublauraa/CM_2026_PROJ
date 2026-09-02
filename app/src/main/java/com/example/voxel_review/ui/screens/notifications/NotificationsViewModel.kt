@@ -1,21 +1,26 @@
 package com.example.voxel_review.ui.screens.notifications
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import androidx.compose.runtime.setValue
-import com.example.voxel_review.data.InfoNotifications.FollowSuggestionInfo
 import com.example.voxel_review.data.InfoNotifications.LocalDestacadasProvider
 import com.example.voxel_review.data.InfoNotifications.LocalSugerenciasProvider
-import com.example.voxel_review.data.InfoNotifications.NotificationInfo
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 
 
-class NotificationsViewModel: ViewModel() {
+class NotificationsViewModel : ViewModel() {
 
-    var highlightedNotifications by mutableStateOf(LocalDestacadasProvider.destacadas)
-        private set
+    private val _uiState = MutableStateFlow(NotificationsState())
 
-    var followSuggestions by mutableStateOf(LocalSugerenciasProvider.sugerenciasSeguimiento)
-        private set
+    val uiState: StateFlow<NotificationsState> = _uiState
 
+    fun getAllNotifications() {
+        _uiState.value = NotificationsState(
+            highlightedNotifications = LocalDestacadasProvider.destacadas,
+            followSuggestions = LocalSugerenciasProvider.sugerenciasSeguimiento
+        )
+    }
+
+    init {
+        getAllNotifications()
+    }
 }
