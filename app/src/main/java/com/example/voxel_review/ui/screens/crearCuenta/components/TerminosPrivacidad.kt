@@ -1,18 +1,20 @@
+package com.example.voxel_review.ui.screens.crearCuenta.components
+
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.unit.sp
 import com.example.voxel_review.ui.theme.VoxelPrimary
 import com.example.voxel_review.ui.theme.VoxelTextSecondary
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.Alignment
-import androidx.compose.material3.Text
-import androidx.compose.ui.unit.sp
 
 @Composable
 fun TerminosPrivacidad(
@@ -68,7 +70,7 @@ fun TerminosPrivacidad(
 }
 
 @Composable
-fun TerminosPrivacidadPreview(){
+fun TerminosPrivacidadPreview() {
     TerminosPrivacidad(
         aceptado = true,
         onAceptadoChange = {}

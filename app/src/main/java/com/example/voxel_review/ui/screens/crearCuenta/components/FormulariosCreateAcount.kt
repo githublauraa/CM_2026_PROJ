@@ -26,9 +26,8 @@ import com.example.voxel_review.ui.theme.White
 import com.example.voxel_review.ui.utils.Boton
 import com.example.voxel_review.ui.utils.CampoContrasena
 
-
 @Composable
-fun FomulariosCreateAcount (
+fun FomulariosCreateAcount(
     state: CreateAccountState,
     onUserNameChange: (String) -> Unit,
     onEmailChange: (String) -> Unit,
@@ -37,22 +36,22 @@ fun FomulariosCreateAcount (
     onTerminosAceptadosChange: () -> Unit,
     unirseButtonPressed: () -> Unit,
     modifier: Modifier = Modifier
-){
+) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = androidx.compose.ui.Modifier.fillMaxWidth().
-        offset(y = 320.dp)
+        modifier = modifier
+            .fillMaxWidth()
+            .offset(y = 320.dp)
     ) {
+
         Text(
             text = "GAMER TAG / USERNAME",
             color = VoxelTextSecondary,
-            modifier = androidx.compose.ui.Modifier.offset(x = -60.dp),
+            modifier = Modifier.offset(x = (-60).dp),
             fontWeight = FontWeight.Bold
         )
 
-        Spacer(
-            modifier = androidx.compose.ui.Modifier.height(8.dp)
-        )
+        Spacer(modifier = Modifier.height(8.dp))
 
         FormularioCreateAccount(
             value = state.userName,
@@ -64,20 +63,16 @@ fun FomulariosCreateAcount (
                 .height(50.dp)
         )
 
-        Spacer(
-            modifier = Modifier.height(16.dp)
-        )
+        Spacer(modifier = Modifier.height(16.dp))
 
         Text(
             text = "CORREO ELECTRÓNICO",
             color = VoxelTextSecondary,
-            modifier = Modifier.offset(x = -70.dp),
+            modifier = Modifier.offset(x = (-70).dp),
             fontWeight = FontWeight.Bold
         )
 
-        Spacer(
-            modifier = Modifier.height(8.dp)
-        )
+        Spacer(modifier = Modifier.height(8.dp))
 
         FormularioCreateAccount(
             value = state.email,
@@ -89,36 +84,35 @@ fun FomulariosCreateAcount (
                 .height(50.dp)
         )
 
-        Spacer(
-            modifier = Modifier.height(16.dp)
-        )
+        Spacer(modifier = Modifier.height(16.dp))
 
         Text(
             text = "CONTRASEÑA",
             color = VoxelTextSecondary,
-            modifier = Modifier.offset(x = -110.dp),
+            modifier = Modifier.offset(x = (-110).dp),
             fontWeight = FontWeight.Bold
         )
 
-        Spacer(
-            modifier = Modifier.height(8.dp)
-        )
+        Spacer(modifier = Modifier.height(8.dp))
 
         CampoContrasena(
             password = state.password,
             mostrarContrasena = state.mostrarContrasena,
             onPasswordChange = onPasswordChange,
             onMostrarContrasenaChange = onMostrarContrasenaChange,
+            icono = if (state.mostrarContrasena) {
+                R.drawable.visible
+            } else {
+                R.drawable.img_no_ver_contrasena
+            },
             modifier = Modifier
                 .width(330.dp)
                 .height(50.dp)
         )
 
-        Spacer(
-            modifier = Modifier.height(8.dp)
-        )
+        Spacer(modifier = Modifier.height(8.dp))
 
-        if (state.errorMessage.isNotEmpty()){
+        if (state.errorMessage.isNotEmpty()) {
             Text(
                 text = state.errorMessage,
                 color = VoxelTextSecondary,
@@ -127,9 +121,7 @@ fun FomulariosCreateAcount (
             )
         }
 
-        Spacer(
-            modifier = Modifier.height(8.dp)
-        )
+        Spacer(modifier = Modifier.height(8.dp))
 
         TerminosPrivacidad(
             aceptado = state.terminosAceptados,
@@ -138,9 +130,7 @@ fun FomulariosCreateAcount (
             }
         )
 
-        Spacer(
-            modifier = Modifier.height(8.dp)
-        )
+        Spacer(modifier = Modifier.height(8.dp))
 
         Boton(
             textoBoton = "Unirse a la aventura",
@@ -153,13 +143,12 @@ fun FomulariosCreateAcount (
             onClick = unirseButtonPressed
         )
 
-        Spacer(
-            modifier = Modifier.height(8.dp)
-        )
+        Spacer(modifier = Modifier.height(8.dp))
 
         Row(
-            modifier = Modifier.fillMaxWidth().
-            offset(x = 20.dp)
+            modifier = Modifier
+                .fillMaxWidth()
+                .offset(x = 20.dp)
         ) {
             Text(
                 buildAnnotatedString {
@@ -167,23 +156,20 @@ fun FomulariosCreateAcount (
                         style = SpanStyle(
                             color = VoxelTextSecondary
                         )
-                    ){
+                    ) {
                         append("¿Ya tienes una cuenta?")
                     }
+
                     withStyle(
                         style = SpanStyle(
-                            color = VoxelPrimary,
+                            color = VoxelPrimary
                         )
-                    ){
+                    ) {
                         append(" Iniciar sesión")
                     }
                 },
                 fontSize = 13.sp
             )
         }
-
-
-
-
     }
 }

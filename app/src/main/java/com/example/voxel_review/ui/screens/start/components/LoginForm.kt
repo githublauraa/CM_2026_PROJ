@@ -72,13 +72,16 @@ fun LoginForm(
 
         CampoContrasena(
             password = state.password,
-            onPasswordChange = onPasswordChange,
             mostrarContrasena = state.mostrarContrasena,
-            onMostrarContrasenaChange = {
-                onMostrarContrasenaChange()
+            onPasswordChange = onPasswordChange,
+            onMostrarContrasenaChange = onMostrarContrasenaChange,
+            icono = if (state.mostrarContrasena) {
+                R.drawable.visible
+            } else {
+                R.drawable.img_no_ver_contrasena
             },
             modifier = Modifier
-                .width(320.dp)
+                .width(330.dp)
                 .height(50.dp)
         )
 
