@@ -12,6 +12,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.voxel_review.R
+import com.example.voxel_review.data.InfoDiscover.LocalTrendingSearchProvider
 import com.example.voxel_review.data.InfoDiscover.TrendingSearchInfo
 import com.example.voxel_review.ui.theme.onSurfaceVariantDark
 
@@ -48,12 +49,9 @@ fun TrendingSearchesSection(
 @Composable
 private fun TrendingSearchesSectionPreview() {
     TrendingSearchesSection(
-        items = listOf(
-            TrendingSearchInfo(R.string.juego_elden_ring, R.string.cat_rpg_accion),
-            TrendingSearchInfo(R.string.juego_starfield, R.string.cat_ciencia_ficcion),
-            TrendingSearchInfo(R.string.juego_baldurs_gate_3, R.string.cat_rpg_turnos)
-        ),
+        items = LocalTrendingSearchProvider.tendencias,
         onItemClick = { /*pantalla detalle juego*/
         }
     )
 }
+

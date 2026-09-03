@@ -24,6 +24,7 @@ import com.example.voxel_review.data.InfoDiscover.LocalGenreProvider
 import com.example.voxel_review.data.InfoDiscover.TrendingSearchInfo
 import com.example.voxel_review.ui.screens.Discover.components.DiscoverSearchBar
 import com.example.voxel_review.ui.screens.Discover.components.GenreFilterSection
+import com.example.voxel_review.ui.screens.GameDetail.GameDetailScreen
 
 
 @Composable
@@ -31,6 +32,7 @@ fun DiscoverRoute(
     discoverViewModel: DiscoverViewModel,
     onBackClick: () -> Unit,
     onNotificationClick: () -> Unit,
+    onItemClick: (TrendingSearchInfo) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     val state by discoverViewModel.uiState.collectAsState()
@@ -42,6 +44,7 @@ fun DiscoverRoute(
         selectedGenre = state.selectedGenre,
         onSearchQueryChange = {discoverViewModel.updateSearchQuery(it)},
         onGenreSelected = { discoverViewModel.updateSelectedGenre(it)},
+        onItemClick = onItemClick,
         modifier = modifier
     )
 }
@@ -54,6 +57,7 @@ fun DiscoverScreen(
     onSearchQueryChange: (String) -> Unit,
     onGenreSelected: (GenreInfo) -> Unit,
     modifier: Modifier = Modifier,
+    onItemClick: (TrendingSearchInfo) -> Unit = {},
     selectedGenre: GenreInfo = LocalGenreProvider.generos.first(),
     tendencias: List<TrendingSearchInfo> = LocalTrendingSearchProvider.tendencias,
     generos: List<GenreInfo> = LocalGenreProvider.generos,
@@ -81,7 +85,7 @@ fun DiscoverScreen(
                 query = searchQuery,
                 onQueryChange = onSearchQueryChange,
 
-            )
+                )
 
             Spacer(modifier = Modifier.height(20.dp))
 
@@ -95,9 +99,7 @@ fun DiscoverScreen(
 
             TrendingSearchesSection(
                 items = tendencias,
-                onItemClick = {
-
-                }
+                onItemClick = onItemClick
             )
 
             Spacer(modifier = Modifier.height(80.dp))

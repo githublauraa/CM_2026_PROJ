@@ -74,4 +74,11 @@
   <string name="cat_rpg_accion">RPG - Acción</string>
   <string name="cat_ciencia_ficcion">Ciencia Ficción</string>
   <string name="cat_rpg_turnos">RPG - Turnos</string>
+  <string name="detalle_juego">Detalle Juego</string>
+  <string name="nombre_reco1">Mass Effect</string>
+  <string name="nombre_reco2">Outer Wilds</string>
+  <string name="nombre_reco3">No Mans Sky</string>
+  <string name="nombre_juego1">ELDEN RING</string>
+  <string name="nombre_juego2">STARFIELD</string>
+  <string name="nombre_juego3">BALDURS GATE 3</string>
 </resources>

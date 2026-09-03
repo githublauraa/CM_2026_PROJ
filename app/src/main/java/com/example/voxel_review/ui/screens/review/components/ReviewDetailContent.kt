@@ -18,10 +18,6 @@ import com.example.voxel_review.ui.screens.review.HeroSection
 import com.example.voxel_review.ui.screens.review.RatingCard
 import com.example.voxel_review.ui.screens.review.UserReviewsSection
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.voxel_review.ui.utils.Boton
-import com.example.voxel_review.ui.theme.White
-import com.example.voxel_review.ui.theme.VoxelPrimary
-import com.example.voxel_review.ui.theme.backgroundDark
 
 @Composable
 fun ReviewDetailContent(
@@ -70,17 +66,6 @@ fun ReviewDetailContent(
 
         Spacer(
             modifier = Modifier.height(16.dp)
-        )
-
-        Boton(
-            textoBoton = "Hacer reseña",
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            colorFondo = backgroundDark,
-            colorBorde = VoxelPrimary,
-            colorLetra = White,
-            onClick = onClickReview,
         )
 
     }

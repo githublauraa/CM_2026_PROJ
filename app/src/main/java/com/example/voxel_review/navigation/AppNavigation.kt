@@ -9,6 +9,9 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.example.voxel_review.data.InfoDiscover.LocalTrendingSearchProvider
+import com.example.voxel_review.data.InfoGame.LocalGameProvider
+import com.example.voxel_review.data.InfoGame.LocalGameRecomendedProvider
 import com.example.voxel_review.ui.screens.start.StartScreen
 import com.example.voxel_review.ui.screens.crearCuenta.CreateAccountScreen
 import com.example.voxel_review.ui.screens.novedades.NovedadScreen
@@ -19,6 +22,8 @@ import com.example.voxel_review.ui.screens.rankings.RankingsScreen
 import com.example.voxel_review.data.infoRanking.ListaRanking
 import com.example.voxel_review.ui.screens.Discover.DiscoverRoute
 import com.example.voxel_review.ui.screens.Discover.DiscoverViewModel
+import com.example.voxel_review.ui.screens.GameDetail.GameDetailRoute
+import com.example.voxel_review.ui.screens.GameDetail.GameDetailViewModel
 import com.example.voxel_review.ui.screens.notifications.NotificationRoute
 import com.example.voxel_review.ui.screens.notifications.NotificationsViewModel
 import com.example.voxel_review.ui.screens.review.ReviewDetailScreen
@@ -39,6 +44,7 @@ sealed class AppScreen(val route: String){
     object PerfilUser: AppScreen("perfilUser")
     object FullReviews : AppScreen("fullReviews")
     object Discover : AppScreen("discover")
+    object GameDetail : AppScreen("gameDetail")
     object WriteReview : AppScreen("writeReview")
     object RankingsUser : AppScreen("rankingsUser")
     object Configuration : AppScreen("configuration")
@@ -140,10 +146,45 @@ fun AppNavigation(
                 discoverViewModel = discoverViewModel,
                 onBackClick =  {
                     navController.popBackStack()
-            },
+                },
                 onNotificationClick = {
                     navController.navigate(AppScreen.Notifications.route)
                 },
+                onItemClick = { item ->
+                    val gameIndex = LocalTrendingSearchProvider.tendencias.indexOf(item)
+
+                    navController.navigate(
+                        "${AppScreen.GameDetail.route}?gameIndex=$gameIndex"
+                    )
+                },
+            )
+        }
+
+        composable(route = "${AppScreen.GameDetail.route}?gameIndex={gameIndex}",
+            arguments = listOf(
+                navArgument("gameIndex") {
+                    type = NavType.IntType
+                    defaultValue = 0
+                }
+            )
+        ) { backStackEntry ->
+            val gameDetailViewModel: GameDetailViewModel = viewModel()
+            val gameIndex = backStackEntry.arguments?.getInt("gameIndex") ?: 0
+
+            GameDetailRoute(
+                gameDetailViewModel = gameDetailViewModel,
+                game = LocalGameProvider.games.getOrElse(gameIndex) { LocalGameProvider.games.first() },
+                recommendedGames = LocalGameRecomendedProvider.recommendedGames,
+                navController = navController,
+                onBackPressed = {
+                    navController.popBackStack()
+                },
+                onSearchPressed = {
+                    navController.navigate(AppScreen.Discover.route)
+                },
+                onWriteReviewPressed = {
+                    navController.navigate(AppScreen.WriteReview.route)
+                }
             )
         }
 
