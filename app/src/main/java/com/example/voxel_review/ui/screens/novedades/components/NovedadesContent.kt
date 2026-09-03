@@ -1,6 +1,6 @@
 package com.example.voxel_review.ui.screens.novedades.components
 
-import android.R.attr.onClick
+import com.example.voxel_review.ui.screens.novedades.NovedadesState
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,11 +21,10 @@ import com.example.voxel_review.data.infoJuegosNovedades.JuegoInfo
 
 @Composable
 fun NovedadesContent(
+    state: NovedadesState,
     onClick: (JuegoInfo) -> Unit,
     onNotificationClick: () -> Unit,
     modifier: Modifier = Modifier,
-    listaJuegos: List<JuegoInfo>,
-    categoriaSeleccionada: String,
     onCategoriaSeleccionada: (String) -> Unit
 ) {
     val todo = "Todo"
@@ -75,7 +74,7 @@ fun NovedadesContent(
             ) {
                 FiltroCategoria(
                     texto = stringResource(R.string.todo),
-                    seleccionado = categoriaSeleccionada == todo,
+                    seleccionado = state.categoriaSeleccionada == todo,
                     onClick = {
                         onCategoriaSeleccionada(todo)
                     }
@@ -83,7 +82,7 @@ fun NovedadesContent(
 
                 FiltroCategoria(
                     texto = stringResource(R.string.rpg),
-                    seleccionado = categoriaSeleccionada == rpg,
+                    seleccionado = state.categoriaSeleccionada == rpg,
                     onClick = {
                         onCategoriaSeleccionada(rpg)
                     }
@@ -91,7 +90,7 @@ fun NovedadesContent(
 
                 FiltroCategoria(
                     texto = stringResource(R.string.acci_n),
-                    seleccionado = categoriaSeleccionada == accion,
+                    seleccionado = state.categoriaSeleccionada == accion,
                     onClick = {
                         onCategoriaSeleccionada(accion)
                     }
@@ -99,7 +98,7 @@ fun NovedadesContent(
 
                 FiltroCategoria(
                     texto = stringResource(R.string.aventura),
-                    seleccionado = categoriaSeleccionada == aventura,
+                    seleccionado = state.categoriaSeleccionada == aventura,
                     onClick = {
                         onCategoriaSeleccionada(aventura)
                     }
@@ -111,7 +110,7 @@ fun NovedadesContent(
             )
         }
 
-        items(listaJuegos) { juego ->
+        items(state.listaJuegos) { juego ->
 
             TarjetaJuego(
                 imagen = juego.imagen,
@@ -136,10 +135,9 @@ fun NovedadesContent(
 @Preview
 fun NovedadesContentPreview(){
     NovedadesContent(
-        categoriaSeleccionada = "Todo",
+        state = NovedadesState(),
         onCategoriaSeleccionada = {},
         onClick = {},
-        onNotificationClick = {},
-        listaJuegos = LocalJuegosProvider.juegos
+        onNotificationClick = {}
     )
 }

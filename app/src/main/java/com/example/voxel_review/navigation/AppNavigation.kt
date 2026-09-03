@@ -105,8 +105,7 @@ fun AppNavigation(
                     navController.navigate(
                         AppScreen.Notifications.route
                     )
-                },
-                listaJuegos = LocalJuegosProvider.juegos
+                }
             )
         }
 

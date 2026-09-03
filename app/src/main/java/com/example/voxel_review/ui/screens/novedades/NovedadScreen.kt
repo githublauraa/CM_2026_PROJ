@@ -9,6 +9,8 @@ import androidx.compose.ui.Modifier
 import com.example.voxel_review.data.infoJuegosNovedades.JuegoInfo
 import com.example.voxel_review.ui.screens.novedades.components.NovedadesContent
 import com.example.voxel_review.ui.utils.FondoPantalla
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
 fun NovedadBody(
@@ -16,7 +18,6 @@ fun NovedadBody(
     onCategoriaSeleccionada: (String) -> Unit,
     onClick: (JuegoInfo) -> Unit,
     onNotificationClick: () -> Unit,
-    listaJuegos: List<JuegoInfo>,
     modifier: Modifier = Modifier
 ) {
 
@@ -24,12 +25,9 @@ fun NovedadBody(
         modifier = modifier.fillMaxSize()
     ) {
         NovedadesContent(
+            state = state,
             onClick = onClick,
             onNotificationClick = onNotificationClick,
-            listaJuegos = listaJuegos,
-
-            categoriaSeleccionada = state.categoriaSeleccionada,
-
             onCategoriaSeleccionada = onCategoriaSeleccionada
         )
     }
@@ -40,7 +38,6 @@ fun NovedadScreen(
     novedadesViewModel: NovedadesViewModel,
     onClick: (JuegoInfo) -> Unit,
     onNotificationClick: () -> Unit,
-    listaJuegos: List<JuegoInfo>,
     modifier: Modifier = Modifier
 ) {
 
@@ -56,15 +53,22 @@ fun NovedadScreen(
 
         NovedadBody(
             state = state,
-
             onCategoriaSeleccionada = {
                 novedadesViewModel.updateSelectedCategory(it)
             },
-
             onClick = onClick,
             onNotificationClick = onNotificationClick,
-            listaJuegos = listaJuegos,
             modifier = Modifier.fillMaxSize()
         )
     }
+}
+
+@Composable
+@Preview(showBackground = true)
+fun NovedadScreenPreview(){
+    NovedadScreen(
+        novedadesViewModel = viewModel(),
+        onClick = {},
+        onNotificationClick = {}
+    )
 }
