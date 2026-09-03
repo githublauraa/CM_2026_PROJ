@@ -40,7 +40,7 @@ class CreateAccountViewModel : ViewModel(){
         }
     }
 
-    fun login() : Boolean{
+    fun createAcount() : Boolean{
         if (
             _uiState.value.userName.isEmpty() ||
             _uiState.value.email.isEmpty()

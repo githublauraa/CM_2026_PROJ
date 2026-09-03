@@ -64,7 +64,7 @@ fun CreateAccountScreen(
             onTerminosAceptadosChange = createAccountViewModel::updateTerminosAceptados,
             onMostrarContrasenaChange = createAccountViewModel::updateMostrarContrasena,
             unirseButtonPressed = {
-                if (createAccountViewModel.login()){
+                if (createAccountViewModel.createAcount()){
                     unirseButtonPressed()
                 }
             },
