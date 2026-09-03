@@ -26,6 +26,7 @@ import com.example.voxel_review.ui.screens.settings.SettingsRoute
 import  com.example.voxel_review.ui.screens.profile.ProfileViewModel
 import com.example.voxel_review.ui.screens.start.StartViewModel
 import com.example.voxel_review.ui.screens.crearCuenta.CreateAccountViewModel
+import com.example.voxel_review.ui.screens.novedades.NovedadesViewModel
 
 
 
@@ -88,8 +89,9 @@ fun AppNavigation(
         }
 
         composable(route = AppScreen.Reviews.route) {
-
+            val novedadesViewModel: NovedadesViewModel = viewModel()
             NovedadScreen(
+                novedadesViewModel,
                 onClick = { juego ->
 
                     val juegoIndex =

@@ -13,10 +13,15 @@ import androidx.compose.ui.unit.sp
 import com.example.voxel_review.ui.theme.backgroundDark
 import com.example.voxel_review.ui.theme.onPrimaryDark
 import com.example.voxel_review.ui.theme.onSurfaceVariantDark
+import androidx.compose.foundation.clickable
+
+
 
 @Composable
 fun FiltroCategoria(
     texto: String,
+    seleccionado: Boolean,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Text(
@@ -25,14 +30,17 @@ fun FiltroCategoria(
         fontSize = 10.sp,
         modifier = modifier
             .background(
-                color = backgroundDark,
+                color = if (seleccionado) onPrimaryDark else backgroundDark,
                 shape = RoundedCornerShape(20.dp)
             )
             .border(
                 width = 1.dp,
-                color = onPrimaryDark,
+                color = if (seleccionado) onPrimaryDark else backgroundDark,
                 shape = RoundedCornerShape(20.dp)
             )
+            .clickable {
+                onClick()
+            }
             .padding(
                 horizontal = 17.dp,
                 vertical = 8.dp
@@ -43,5 +51,9 @@ fun FiltroCategoria(
 @Composable
 @Preview
 fun FiltroCategoriaPreview() {
-    FiltroCategoria("Categoria")
+    FiltroCategoria(
+        texto = "Categoria",
+        seleccionado = true,
+        onClick = {}
+    )
 }

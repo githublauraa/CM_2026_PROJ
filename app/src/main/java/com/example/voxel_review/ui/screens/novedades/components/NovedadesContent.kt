@@ -25,7 +25,13 @@ fun NovedadesContent(
     onNotificationClick: () -> Unit,
     modifier: Modifier = Modifier,
     listaJuegos: List<JuegoInfo>,
+    categoriaSeleccionada: String,
+    onCategoriaSeleccionada: (String) -> Unit
 ) {
+    val todo = "Todo"
+    val rpg = "RPG"
+    val accion = "Acción"
+    val aventura = "Aventura"
 
     LazyColumn(
         modifier = modifier
@@ -68,19 +74,35 @@ fun NovedadesContent(
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 FiltroCategoria(
-                    texto = stringResource(R.string.todo)
+                    texto = stringResource(R.string.todo),
+                    seleccionado = categoriaSeleccionada == todo,
+                    onClick = {
+                        onCategoriaSeleccionada(todo)
+                    }
                 )
 
                 FiltroCategoria(
-                    texto = stringResource(R.string.rpg)
+                    texto = stringResource(R.string.rpg),
+                    seleccionado = categoriaSeleccionada == rpg,
+                    onClick = {
+                        onCategoriaSeleccionada(rpg)
+                    }
                 )
 
                 FiltroCategoria(
-                    texto = stringResource(R.string.acci_n)
+                    texto = stringResource(R.string.acci_n),
+                    seleccionado = categoriaSeleccionada == accion,
+                    onClick = {
+                        onCategoriaSeleccionada(accion)
+                    }
                 )
 
                 FiltroCategoria(
-                    texto = stringResource(R.string.aventura)
+                    texto = stringResource(R.string.aventura),
+                    seleccionado = categoriaSeleccionada == aventura,
+                    onClick = {
+                        onCategoriaSeleccionada(aventura)
+                    }
                 )
             }
 
@@ -114,6 +136,8 @@ fun NovedadesContent(
 @Preview
 fun NovedadesContentPreview(){
     NovedadesContent(
+        categoriaSeleccionada = "Todo",
+        onCategoriaSeleccionada = {},
         onClick = {},
         onNotificationClick = {},
         listaJuegos = LocalJuegosProvider.juegos

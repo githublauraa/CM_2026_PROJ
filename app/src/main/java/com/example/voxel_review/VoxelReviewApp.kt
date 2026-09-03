@@ -20,7 +20,12 @@ fun VoxelReviewApp(
 
     val currentBackStackEntry = navController.currentBackStackEntryAsState()
     val currentRoute = currentBackStackEntry.value?.destination?.route
-    val showBar = currentRoute != AppScreen.Start.route && currentRoute != AppScreen.Register.route
+    val showBar = currentRoute != AppScreen.Start.route &&
+            currentRoute != AppScreen.Register.route &&
+            currentRoute != AppScreen.Notifications.route &&
+            currentRoute?.startsWith(AppScreen.FullReviews.route) != true &&
+            currentRoute != AppScreen.WriteReview.route &&
+            currentRoute != AppScreen.Configuration.route
 
     Scaffold(
 
