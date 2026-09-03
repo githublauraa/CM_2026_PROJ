@@ -17,10 +17,8 @@ import com.example.voxel_review.data.InfoNotifications.NotificationInfo
 import com.example.voxel_review.ui.screens.notifications.components.NotificationsContent
 import com.example.voxel_review.ui.screens.notifications.components.NotificationsTopBar
 import com.example.voxel_review.ui.utils.FondoPantalla
-
-
 @Composable
-fun NotificationRoute(
+fun NotificationScreen(
     notificationsViewModel: NotificationsViewModel,
     onBackClick: () -> Unit,
     onNotificationClick: () -> Unit,
@@ -29,26 +27,10 @@ fun NotificationRoute(
 
     val state by notificationsViewModel.uiState.collectAsState()
 
-    NotificationScreen(
-        highlightedNotifications = state.highlightedNotifications,
-        followSuggestions = state.followSuggestions,
-        onBackClick = onBackClick,
-        onNotificationClick = onNotificationClick,
-        modifier = modifier
-    )
-}
-
-@Composable
-fun NotificationScreen(
-    highlightedNotifications: List<NotificationInfo>,
-    followSuggestions: List<FollowSuggestionInfo>,
-    onBackClick: () -> Unit,
-    onNotificationClick: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
     Box(
         modifier = modifier.fillMaxSize()
     ) {
+
         FondoPantalla(
             modifier = Modifier.fillMaxSize()
         )
@@ -56,23 +38,38 @@ fun NotificationScreen(
         Column(
             modifier = Modifier.fillMaxSize()
         ) {
+
             NotificationsTopBar(
                 onBackClick = onBackClick
             )
 
             NotificationsContent(
-                highlightedNotifications = highlightedNotifications,
-                followSuggestions = followSuggestions,
-                onNotificationClick = onNotificationClick,
+                highlightedNotifications = state.highlightedNotifications,
+                followSuggestions = state.followSuggestions,
+                onNotificationClick = onNotificationClick
             )
         }
     }
 }
+@Composable
+fun NotificationRoute(
+    notificationsViewModel: NotificationsViewModel,
+    onBackClick: () -> Unit,
+    onNotificationClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    NotificationScreen(
+        notificationsViewModel = notificationsViewModel,
+        onBackClick = onBackClick,
+        onNotificationClick = onNotificationClick,
+        modifier = modifier
+    )
+}
 
 @Preview(showBackground = true)
 @Composable fun NotificationScreenPreview() {
-    NotificationScreen( highlightedNotifications = LocalDestacadasProvider.destacadas,
-        followSuggestions = LocalSugerenciasProvider.sugerenciasSeguimiento,
+    NotificationScreen(
+        notificationsViewModel = viewModel(),
         onBackClick = {},
         onNotificationClick = {}
     )

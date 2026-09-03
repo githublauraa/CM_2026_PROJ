@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.voxel_review.ui.screens.Discover.components.DiscoverTopBar
 import com.example.voxel_review.ui.screens.Discover.components.TrendingSearchesSection
 import com.example.voxel_review.R
@@ -26,98 +27,105 @@ import com.example.voxel_review.ui.screens.Discover.components.DiscoverSearchBar
 import com.example.voxel_review.ui.screens.Discover.components.GenreFilterSection
 import com.example.voxel_review.ui.screens.GameDetail.GameDetailScreen
 
-
 @Composable
-fun DiscoverRoute(
+fun DiscoverScreen(
     discoverViewModel: DiscoverViewModel,
     onBackClick: () -> Unit,
     onNotificationClick: () -> Unit,
-    onItemClick: (TrendingSearchInfo) -> Unit = {},
+    onItemClick: (TrendingSearchInfo) -> Unit,
     modifier: Modifier = Modifier
 ) {
+
     val state by discoverViewModel.uiState.collectAsState()
 
-    DiscoverScreen(
-        onBackClick = onBackClick,
-        onNotificationClick = onNotificationClick,
-        searchQuery = state.searchQuery,
-        selectedGenre = state.selectedGenre,
-        onSearchQueryChange = {discoverViewModel.updateSearchQuery(it)},
-        onGenreSelected = { discoverViewModel.updateSelectedGenre(it)},
-        onItemClick = onItemClick,
-        modifier = modifier
-    )
-}
-
-@Composable
-fun DiscoverScreen(
-    onBackClick: () -> Unit,
-    onNotificationClick: () -> Unit,
-    searchQuery: String,
-    onSearchQueryChange: (String) -> Unit,
-    onGenreSelected: (GenreInfo) -> Unit,
-    modifier: Modifier = Modifier,
-    onItemClick: (TrendingSearchInfo) -> Unit = {},
-    selectedGenre: GenreInfo = LocalGenreProvider.generos.first(),
-    tendencias: List<TrendingSearchInfo> = LocalTrendingSearchProvider.tendencias,
-    generos: List<GenreInfo> = LocalGenreProvider.generos,
-
-    ) {
     Box(
         modifier = modifier.fillMaxSize()
     ) {
+
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(colorResource(R.color.voxel_background))
-                .verticalScroll(rememberScrollState())
+                .background(
+                    colorResource(R.color.voxel_background)
+                )
+                .verticalScroll(
+                    rememberScrollState()
+                )
         ) {
-            Spacer(modifier = Modifier.height(8.dp))
+
+            Spacer(
+                modifier = Modifier.height(8.dp)
+            )
 
             DiscoverTopBar(
                 onBackClick = onBackClick,
                 onNotificationClick = onNotificationClick
             )
 
-            Spacer(modifier = Modifier.height(12.dp))
-
-            DiscoverSearchBar(
-                query = searchQuery,
-                onQueryChange = onSearchQueryChange,
-
-                )
-
-            Spacer(modifier = Modifier.height(20.dp))
-
-            GenreFilterSection(
-                genres = generos,
-                selectedGenre = selectedGenre,
-                onGenreSelected = onGenreSelected
+            Spacer(
+                modifier = Modifier.height(12.dp)
             )
 
-            Spacer(modifier = Modifier.height(20.dp))
+            DiscoverSearchBar(
+                query = state.searchQuery,
+                onQueryChange = {
+                    discoverViewModel.updateSearchQuery(it)
+                }
+            )
+
+            Spacer(
+                modifier = Modifier.height(20.dp)
+            )
+
+            GenreFilterSection(
+                genres = LocalGenreProvider.generos,
+                selectedGenre = state.selectedGenre,
+                onGenreSelected = {
+                    discoverViewModel.updateSelectedGenre(it)
+                }
+            )
+
+            Spacer(
+                modifier = Modifier.height(20.dp)
+            )
 
             TrendingSearchesSection(
-                items = tendencias,
+                items = LocalTrendingSearchProvider.tendencias,
                 onItemClick = onItemClick
             )
 
-            Spacer(modifier = Modifier.height(80.dp))
+            Spacer(
+                modifier = Modifier.height(80.dp)
+            )
         }
     }
 }
-@Preview(
-    showBackground = true,
-    showSystemUi = true
-)
+
 @Composable
-private fun DiscoverScreenPreview() {
+fun DiscoverRoute(
+    discoverViewModel: DiscoverViewModel,
+    onBackClick: () -> Unit,
+    onNotificationClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    onItemClick: (TrendingSearchInfo) -> Unit,
+
+) {
+
     DiscoverScreen(
+        discoverViewModel = discoverViewModel,
+        onBackClick = onBackClick,
+        onNotificationClick = onNotificationClick,
+        onItemClick = onItemClick,
+        modifier = modifier
+    )
+}
+@Preview
+@Composable
+fun DiscoverScreenPreview() {
+    DiscoverScreen(
+        discoverViewModel = viewModel(),
         onBackClick = {},
         onNotificationClick = {},
-        searchQuery = "",
-        selectedGenre = LocalGenreProvider.generos.first(),
-        onSearchQueryChange = {},
-        onGenreSelected = {}
+        onItemClick = {}
     )
 }

@@ -2,19 +2,18 @@ package com.example.voxel_review.ui.screens.GameDetail
 
 import android.annotation.SuppressLint
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.voxel_review.data.InfoGame.GameDetailInfo
-import com.example.voxel_review.data.InfoGame.GameDetailState
 import com.example.voxel_review.data.InfoGame.LocalGameProvider
 import com.example.voxel_review.data.InfoGame.LocalGameRecomendedProvider
 import com.example.voxel_review.ui.screens.GameDetail.components.GameDetailContent
-@SuppressLint("RememberReturnType")
+
 @Composable
 fun GameDetailRoute(
     gameDetailViewModel: GameDetailViewModel,
@@ -24,17 +23,18 @@ fun GameDetailRoute(
     modifier: Modifier = Modifier,
     onBackPressed: () -> Unit,
     onSearchPressed: () -> Unit,
-    onWriteReviewPressed: () -> Unit = {},
+    onWriteReviewPressed: () -> Unit
 ) {
 
-    val state by gameDetailViewModel.uiState.collectAsState()
-
-    remember(game, recommendedGames) {
-        gameDetailViewModel.loadGame(game, recommendedGames)
+    LaunchedEffect(game, recommendedGames) {
+        gameDetailViewModel.loadGame(
+            game = game,
+            recommendedGames = recommendedGames
+        )
     }
 
     GameDetailScreen(
-        state = state,
+        gameDetailViewModel = gameDetailViewModel,
         navController = navController,
         onBackPressed = onBackPressed,
         onSearchPressed = onSearchPressed,
@@ -44,7 +44,7 @@ fun GameDetailRoute(
 }
 @Composable
 fun GameDetailScreen(
-    state: GameDetailState,
+    gameDetailViewModel: GameDetailViewModel,
     navController: NavHostController,
     onBackPressed: () -> Unit,
     onSearchPressed: () -> Unit,
@@ -52,24 +52,23 @@ fun GameDetailScreen(
     modifier: Modifier = Modifier
 ) {
 
+    val state by gameDetailViewModel.uiState.collectAsState()
+
     GameDetailContent(
         state = state,
         navController = navController,
         onBackPressed = onBackPressed,
         onSearchPressed = onSearchPressed,
-        onWriteReviewPressed = onWriteReviewPressed
+        onWriteReviewPressed = onWriteReviewPressed,
+        modifier = modifier
     )
 }
 
-@Preview(
-    showBackground = false,
-    showSystemUi = false,
-    name = "Game Detail Screen"
-)
+@Preview
 @Composable
 fun GameDetailScreenPreview() {
 
-    GameDetailScreen(
+    GameDetailContent(
         state = GameDetailState(
             game = LocalGameProvider.starfield,
             recommendedGames = LocalGameRecomendedProvider.recommendedGames
