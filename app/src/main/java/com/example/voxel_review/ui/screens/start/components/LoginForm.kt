@@ -77,7 +77,6 @@ fun LoginForm(
             onMostrarContrasenaChange = {
                 onMostrarContrasenaChange()
             },
-            icono = icono,
             modifier = Modifier
                 .width(320.dp)
                 .height(50.dp)

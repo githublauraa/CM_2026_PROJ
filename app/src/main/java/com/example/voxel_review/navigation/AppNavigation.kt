@@ -25,6 +25,11 @@ import com.example.voxel_review.ui.screens.review.ReviewDetailScreen
 import com.example.voxel_review.ui.screens.settings.SettingsRoute
 import  com.example.voxel_review.ui.screens.profile.ProfileViewModel
 import com.example.voxel_review.ui.screens.start.StartViewModel
+import com.example.voxel_review.ui.screens.crearCuenta.CreateAccountViewModel
+
+
+
+
 //sealed class
 sealed class AppScreen(val route: String){
     object Start : AppScreen("start")
@@ -68,7 +73,9 @@ fun AppNavigation(
         }
 
         composable(route = AppScreen.Register.route){
+            val createAccountViewModel: CreateAccountViewModel = viewModel()
             CreateAccountScreen(
+                createAccountViewModel = createAccountViewModel,
                 unirseButtonPressed = {
                     navController.navigate(AppScreen.Reviews.route){
                         popUpTo(0){

@@ -15,7 +15,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.voxel_review.ui.screens.start.components.StartHeader
 import com.example.voxel_review.ui.utils.FondoPantalla
 import com.example.voxel_review.ui.screens.start.components.LoginForm
-import kotlin.math.log
 
 
 @Composable
