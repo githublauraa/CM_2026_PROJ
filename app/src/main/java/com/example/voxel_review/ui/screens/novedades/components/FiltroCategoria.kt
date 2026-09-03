@@ -11,7 +11,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.voxel_review.ui.theme.backgroundDark
-import com.example.voxel_review.ui.theme.onPrimaryDark
+import com.example.voxel_review.ui.theme.VoxelPrimary
 import com.example.voxel_review.ui.theme.onSurfaceVariantDark
 import androidx.compose.foundation.clickable
 
@@ -30,12 +30,12 @@ fun FiltroCategoria(
         fontSize = 10.sp,
         modifier = modifier
             .background(
-                color = if (seleccionado) onPrimaryDark else backgroundDark,
+                color = if (seleccionado) VoxelPrimary else backgroundDark,
                 shape = RoundedCornerShape(20.dp)
             )
             .border(
                 width = 1.dp,
-                color = if (seleccionado) onPrimaryDark else backgroundDark,
+                color = if (seleccionado) VoxelPrimary else backgroundDark,
                 shape = RoundedCornerShape(20.dp)
             )
             .clickable {
