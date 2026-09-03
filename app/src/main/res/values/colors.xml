@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <!-- Colores básicos -->
+  <color name="black">#FF000000</color>
+  <color name="white">#FFFFFFFF</color>
+
+  <!-- Colores principales de Voxel Review -->
+  <color name="voxel_primary">#00F0FF</color>
+  <color name="voxel_secondary">#FF2E93</color>
+  <color name="voxel_accent_purple">#8F00FF</color>
+  <color name="voxel_accent_yellow">#FFD700</color>
+
+  <!-- Fondos -->
+  <color name="voxel_background">#0F0D1F</color>
+  <color name="voxel_surface">#191430</color>
+  <color name="voxel_surface_variant">#2A2254</color>
+  <color name="voxel_background_dark">#040C15</color>
+
+  <!-- Texto -->
+  <color name="voxel_text_primary">#FFFFFFFF</color>
+  <color name="voxel_text_secondary">#A09EBC</color>
+
+</resources>
