@@ -32,8 +32,7 @@ import  com.example.voxel_review.ui.screens.profile.ProfileViewModel
 import com.example.voxel_review.ui.screens.start.StartViewModel
 import com.example.voxel_review.ui.screens.crearCuenta.CreateAccountViewModel
 import com.example.voxel_review.ui.screens.novedades.NovedadesViewModel
-
-
+import com.example.voxel_review.ui.screens.rankings.RankingsViewModel
 
 
 //sealed class
@@ -190,8 +189,9 @@ fun AppNavigation(
 
 
         composable(route = AppScreen.RankingsUser.route){
+            val rankingsViewModel: RankingsViewModel = viewModel()
             RankingsScreen(
-                rankingUsuarios = ListaRanking.rankingUsuarios
+                rankingsViewModel = rankingsViewModel
             )
         }
 
