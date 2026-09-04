@@ -15,9 +15,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.voxel_review.R
 import com.example.voxel_review.ui.theme.onPrimaryDark
-import com.example.voxel_review.ui.theme.onSurfaceVariantDark
 import com.example.voxel_review.ui.theme.onSurfaceDark
+import com.example.voxel_review.ui.theme.onSurfaceVariantDark
 
+/**
+ * Campo de texto utilizado para ingresar el nombre de usuario.
+ *
+ * @param usuario Nombre de usuario ingresado actualmente.
+ * @param icono Recurso drawable mostrado al final del campo.
+ * @param onUserChange Acción ejecutada cuando cambia el nombre de usuario.
+ * @param modifier Modificador para personalizar el componente.
+ */
 @Composable
 fun CampoUsuario(
     usuario: String,
@@ -66,6 +74,9 @@ fun CampoUsuario(
     )
 }
 
+/**
+ * Vista previa del campo de nombre de usuario.
+ */
 @Composable
 @Preview
 fun CampoUsuarioPreview() {

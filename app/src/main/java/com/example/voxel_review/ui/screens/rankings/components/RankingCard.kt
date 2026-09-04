@@ -36,6 +36,16 @@ import com.example.voxel_review.ui.theme.VoxelSurfaceVariant
 import com.example.voxel_review.ui.theme.VoxelTextPrimary
 import com.example.voxel_review.ui.theme.VoxelTextSecondary
 
+/**
+ * Muestra la información de un usuario dentro del ranking.
+ * Incluye su posición, imagen de perfil, nombre, cantidad de reseñas y porcentaje.
+ *
+ * @param posicion Posición que ocupa el usuario en el ranking.
+ * @param nombre Nombre del usuario.
+ * @param reseñas Cantidad de reseñas realizadas por el usuario.
+ * @param porcentaje Porcentaje asociado al desempeño del usuario.
+ * @param modifier Modificador para personalizar el componente.
+ */
 @Composable
 fun RankingCard(
     posicion: String,
@@ -48,28 +58,23 @@ fun RankingCard(
         modifier = modifier
             .fillMaxWidth()
             .height(80.dp),
-
         shape = RoundedCornerShape(16.dp),
-
         border = BorderStroke(
             width = 1.dp,
             color = VoxelBorder
         ),
-
         colors = CardDefaults.cardColors(
             containerColor = VoxelSurface
         )
     ) {
-
         Row(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(horizontal = 12.dp),
-
             verticalAlignment = Alignment.CenterVertically
         ) {
 
-            // Posición
+            // Posición del usuario dentro del ranking.
             Box(
                 modifier = Modifier
                     .size(35.dp)
@@ -91,7 +96,6 @@ fun RankingCard(
                 modifier = Modifier.width(10.dp)
             )
 
-            // Imagen
             Image(
                 painter = painterResource(
                     R.drawable.imagen_review_persona
@@ -107,7 +111,7 @@ fun RankingCard(
                 modifier = Modifier.width(10.dp)
             )
 
-            // Nombre y reseñas
+            // Información principal del usuario.
             Column(
                 modifier = Modifier.weight(1f)
             ) {
@@ -125,7 +129,7 @@ fun RankingCard(
                 )
             }
 
-            // Porcentaje
+            // Porcentaje destacado del usuario.
             Box(
                 modifier = Modifier
                     .background(
@@ -147,6 +151,10 @@ fun RankingCard(
         }
     }
 }
+
+/**
+ * Vista previa de una tarjeta del ranking.
+ */
 @Preview(showBackground = true)
 @Composable
 fun RankingCardPreview() {

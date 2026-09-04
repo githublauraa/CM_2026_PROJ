@@ -10,22 +10,29 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import com.example.voxel_review.R
 
+/**
+ * Muestra el nombre de la aplicación Voxel Review.
+ *
+ * @param modifier Modificador para personalizar el componente.
+ */
 @Composable
 fun NombreApp(
     modifier: Modifier = Modifier
-){
+) {
     Text(
         text = stringResource(R.string.voxel_review),
         fontSize = 30.sp,
         fontWeight = FontWeight.Bold,
         color = Color.White,
         modifier = modifier
-
     )
 }
 
+/**
+ * Vista previa del nombre de la aplicación.
+ */
 @Composable
 @Preview
-fun NombreAppPreview(){
+fun NombreAppPreview() {
     NombreApp()
 }

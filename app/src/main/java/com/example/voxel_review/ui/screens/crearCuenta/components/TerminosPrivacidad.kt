@@ -16,6 +16,14 @@ import androidx.compose.ui.unit.sp
 import com.example.voxel_review.ui.theme.VoxelPrimary
 import com.example.voxel_review.ui.theme.VoxelTextSecondary
 
+/**
+ * Componente para aceptar los términos de servicio y privacidad.
+ * Muestra un checkbox junto con el texto informativo correspondiente.
+ *
+ * @param aceptado Indica si los términos han sido aceptados.
+ * @param onAceptadoChange Acción ejecutada cuando cambia el estado del checkbox.
+ * @param modifier Modificador para personalizar el componente.
+ */
 @Composable
 fun TerminosPrivacidad(
     aceptado: Boolean,
@@ -26,7 +34,6 @@ fun TerminosPrivacidad(
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
     ) {
-
         Checkbox(
             checked = aceptado,
             onCheckedChange = onAceptadoChange,
@@ -37,6 +44,7 @@ fun TerminosPrivacidad(
             )
         )
 
+        // Permite aplicar diferentes estilos a partes específicas del texto.
         Text(
             buildAnnotatedString {
                 withStyle(
@@ -69,6 +77,9 @@ fun TerminosPrivacidad(
     }
 }
 
+/**
+ * Vista previa del componente de términos y privacidad.
+ */
 @Composable
 fun TerminosPrivacidadPreview() {
     TerminosPrivacidad(

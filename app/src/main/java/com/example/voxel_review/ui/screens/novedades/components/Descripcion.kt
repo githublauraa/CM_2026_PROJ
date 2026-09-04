@@ -8,6 +8,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import com.example.voxel_review.ui.theme.onSurfaceVariantDark
 
+/**
+ * Muestra la descripción de un elemento dentro de la pantalla de novedades.
+ *
+ * @param descripcion Texto de la descripción que se desea mostrar.
+ * @param modifier Modificador para personalizar el componente.
+ */
 @Composable
 fun Descripcion(
     descripcion: String,
@@ -22,6 +28,9 @@ fun Descripcion(
     )
 }
 
+/**
+ * Vista previa del componente de descripción.
+ */
 @Composable
 @Preview
 fun DescripcionPreview() {

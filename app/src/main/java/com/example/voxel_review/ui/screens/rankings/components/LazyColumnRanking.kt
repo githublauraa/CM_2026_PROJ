@@ -10,10 +10,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.voxel_review.ui.screens.rankings.RankingsState
 
+/**
+ * Muestra la lista de usuarios del ranking mediante una lista desplazable.
+ * Cada elemento del estado se representa utilizando un RankingCard.
+ *
+ * @param state Estado que contiene la información de los usuarios del ranking.
+ * @param modifier Modificador para personalizar la lista.
+ */
 @Composable
 fun LazyColumnRanking(
     modifier: Modifier = Modifier,
-    state : RankingsState
+    state: RankingsState
 ) {
     LazyColumn(
         modifier = modifier
@@ -25,9 +32,7 @@ fun LazyColumnRanking(
             ),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-
         items(state.rankingsUser) { usuario ->
-
             RankingCard(
                 posicion = usuario.posicion,
                 nombre = usuario.nombre,

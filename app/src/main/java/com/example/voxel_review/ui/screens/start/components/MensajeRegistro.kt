@@ -7,6 +7,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import com.example.voxel_review.ui.theme.VoxelTextSecondary
 
+/**
+ * Muestra una etiqueta para identificar un campo del formulario.
+ *
+ * @param tipo Texto que identifica el campo.
+ * @param modifier Modificador para personalizar el componente.
+ */
 @Composable
 fun MensajeUsuario(
     modifier: Modifier = Modifier,
@@ -20,6 +26,9 @@ fun MensajeUsuario(
     )
 }
 
+/**
+ * Vista previa de la etiqueta de usuario.
+ */
 @Composable
 @Preview
 fun MensajeUsuarioPreview() {

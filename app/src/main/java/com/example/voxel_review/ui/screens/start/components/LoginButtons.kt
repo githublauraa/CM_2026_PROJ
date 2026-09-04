@@ -1,39 +1,43 @@
 package com.example.voxel_review.ui.screens.start.components
 
-import androidx.compose.runtime.Composable
-import com.example.voxel_review.ui.utils.Boton
-import androidx.compose.ui.Modifier
-
 import androidx.compose.foundation.layout.Column
-import androidx.compose.ui.Alignment
-
-import com.example.voxel_review.ui.theme.tertiaryDark
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.ui.unit.dp
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.Spacer
-import com.example.voxel_review.ui.theme.surfaceContainerLowestLight
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
-import com.example.voxel_review.ui.theme.onTertiaryLight
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import com.example.voxel_review.ui.theme.backgroundDark
+import com.example.voxel_review.ui.theme.onTertiaryLight
 import com.example.voxel_review.ui.theme.secondaryDark
+import com.example.voxel_review.ui.theme.surfaceContainerLowestLight
+import com.example.voxel_review.ui.theme.tertiaryDark
+import com.example.voxel_review.ui.utils.Boton
 
+/**
+ * Muestra las opciones principales de acceso a la aplicación.
+ * Incluye los botones para iniciar sesión y crear una cuenta.
+ *
+ * @param logginButtonPressed Acción ejecutada al presionar el botón de inicio de sesión.
+ * @param createAccountButtonPressed Acción ejecutada al presionar el botón de creación de cuenta.
+ * @param modifier Modificador para personalizar el componente.
+ */
 @Composable
 fun LoginButtons(
     logginButtonPressed: () -> Unit,
     createAccountButtonPressed: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
             .fillMaxWidth()
             .padding(bottom = 80.dp)
     ) {
-
         Boton(
             textoBoton = "iniciar sesión",
             colorFondo = tertiaryDark,
@@ -49,7 +53,6 @@ fun LoginButtons(
         Row(
             verticalAlignment = Alignment.CenterVertically
         ) {
-
             LineaDivisora()
 
             Text(

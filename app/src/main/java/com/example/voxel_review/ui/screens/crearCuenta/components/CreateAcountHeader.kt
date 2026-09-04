@@ -19,36 +19,48 @@ import com.example.voxel_review.ui.theme.VoxelPrimary
 import com.example.voxel_review.ui.theme.VoxelSecondary
 import com.example.voxel_review.ui.utils.MostrarLogo
 
+/**
+ * Encabezado de la pantalla de creación de cuenta.
+ * Muestra el logo, el nombre de la aplicación y el título de la pantalla.
+ *
+ * @param modifier Modificador para personalizar la distribución del componente.
+ */
 @Composable
 fun CreateAcountHeader(
     modifier: Modifier = Modifier
-){
-//columna para logo y nombre app
+) {
+
+    // Sección superior con el logo y el nombre de la aplicación.
     Column(
         modifier = modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
         MostrarLogo(
-            modifier = Modifier.width(120.dp).
-            offset(y = 50.dp)
+            modifier = Modifier
+                .width(120.dp)
+                .offset(y = 50.dp)
         )
+
         Spacer(
             modifier = Modifier.height(47.dp)
         )
-        NombreApp(
 
-        )
+        NombreApp()
     }
+
     Spacer(
         modifier = Modifier.height(100.dp)
     )
+
+    // Título principal de la pantalla.
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
-        modifier = Modifier.offset(y = 210.dp).fillMaxWidth()
-    )
-    {
+        modifier = Modifier
+            .offset(y = 210.dp)
+            .fillMaxWidth()
+    ) {
         Text(
             text = "Crear",
             color = VoxelPrimary,

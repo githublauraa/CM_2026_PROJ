@@ -17,6 +17,15 @@ import com.example.voxel_review.ui.theme.VoxelTextSecondary
 import com.example.voxel_review.ui.theme.onPrimaryDark
 import com.example.voxel_review.ui.theme.onSurfaceDark
 
+/**
+ * Campo de texto reutilizable para el formulario de creación de cuenta.
+ *
+ * @param value Texto actual del campo.
+ * @param icono Recurso drawable que se muestra al final del campo.
+ * @param placeholder Texto mostrado cuando el campo está vacío.
+ * @param onValueChange Acción ejecutada cuando el usuario modifica el texto.
+ * @param modifier Modificador para personalizar el componente.
+ */
 @Composable
 fun FormularioCreateAccount(
     value: String,
@@ -36,6 +45,7 @@ fun FormularioCreateAccount(
             )
         },
 
+        // Personaliza los colores y elimina el indicador inferior del TextField.
         colors = TextFieldDefaults.colors(
             focusedContainerColor = onPrimaryDark,
             unfocusedContainerColor = onPrimaryDark,
@@ -47,6 +57,7 @@ fun FormularioCreateAccount(
 
         modifier = modifier,
 
+        // Muestra el icono correspondiente al tipo de campo.
         trailingIcon = {
             IconButton(
                 onClick = {}
@@ -63,6 +74,9 @@ fun FormularioCreateAccount(
     )
 }
 
+/**
+ * Vista previa del campo del formulario.
+ */
 @Preview(showBackground = true)
 @Composable
 fun FormularioCreateAccountPreview() {

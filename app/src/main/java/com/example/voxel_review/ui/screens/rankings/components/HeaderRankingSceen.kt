@@ -8,10 +8,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.example.voxel_review.ui.theme.VoxelBackground
 import com.example.voxel_review.ui.theme.VoxelPrimary
 import com.example.voxel_review.ui.theme.VoxelSurface
-import com.example.voxel_review.ui.theme.onPrimaryDark
+
+/**
+ * Encabezado de la pantalla de rankings.
+ * Muestra el título, el icono de estrella y los botones para cambiar
+ * entre el ranking de críticos y el ranking de juegos.
+ *
+ * @param seleccionado Indica si la opción de críticos está seleccionada.
+ * @param onChangeSeleccionado Acción ejecutada al cambiar la opción seleccionada.
+ * @param modifier Modificador para personalizar el componente.
+ */
 @Composable
 fun HeaderRankingSceen(
     seleccionado: Boolean,
@@ -21,7 +29,6 @@ fun HeaderRankingSceen(
     Box(
         modifier = modifier.fillMaxSize()
     ) {
-
         MensajeSuperior(
             modifier = Modifier.align(Alignment.TopStart)
         )

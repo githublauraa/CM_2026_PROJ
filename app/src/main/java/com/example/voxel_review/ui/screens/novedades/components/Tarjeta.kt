@@ -20,6 +20,18 @@ import com.example.voxel_review.ui.theme.VoxelSurfaceVariant
 import com.example.voxel_review.ui.theme.VoxelTextSecondary
 import com.example.voxel_review.ui.theme.White
 
+/**
+ * Muestra la información principal de un juego dentro de una tarjeta seleccionable.
+ *
+ * @param imagen Recurso drawable correspondiente a la imagen del juego.
+ * @param etiqueta Tipo de contenido mostrado en la tarjeta.
+ * @param nombre Nombre del juego.
+ * @param descripcion Descripción breve del juego.
+ * @param autor Nombre del autor de la reseña.
+ * @param calificacion Calificación del juego.
+ * @param onClick Acción ejecutada al presionar la tarjeta.
+ * @param modifier Modificador para personalizar el componente.
+ */
 @Composable
 fun TarjetaJuego(
     imagen: Int,
@@ -70,7 +82,6 @@ fun TarjetaJuego(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-
                 Text(
                     text = etiqueta,
                     color = VoxelSecondary,
@@ -122,6 +133,9 @@ fun TarjetaJuego(
     }
 }
 
+/**
+ * Vista previa de la tarjeta de juego.
+ */
 @Composable
 @Preview
 fun TarjetaJuegoPreview() {

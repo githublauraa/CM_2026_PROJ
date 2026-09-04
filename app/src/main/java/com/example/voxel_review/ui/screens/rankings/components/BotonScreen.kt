@@ -12,6 +12,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
+/**
+ * Botón reutilizable utilizado para seleccionar una opción en la pantalla de rankings.
+ * Su color de fondo cambia dependiendo de su estado de selección.
+ *
+ * @param textoBoton Texto mostrado dentro del botón.
+ * @param seleccionado Indica si el botón se encuentra seleccionado.
+ * @param colorFondo Color utilizado cuando el botón no está seleccionado.
+ * @param colorSeleccionado Color utilizado cuando el botón está seleccionado.
+ * @param colorTexto Color del texto del botón.
+ * @param colorBorde Color utilizado para el borde del botón.
+ * @param onClick Acción ejecutada al presionar el botón.
+ * @param modifier Modificador para personalizar el componente.
+ */
 @Composable
 fun BotonScreen(
     textoBoton: String,

@@ -1,24 +1,39 @@
 package com.example.voxel_review.ui.screens.novedades.components
 
-import com.example.voxel_review.ui.screens.novedades.NovedadesState
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.voxel_review.R
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.voxel_review.data.LocalJuegosProvider
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import com.example.voxel_review.ui.screens.novedades.components.TarjetaJuego
-import androidx.compose.ui.res.stringResource
 import com.example.voxel_review.data.infoJuegosNovedades.JuegoInfo
+import com.example.voxel_review.ui.screens.novedades.NovedadesState
 
+/**
+ * Contenido principal de la pantalla de novedades.
+ * Muestra los filtros de categoría, el acceso a notificaciones y la lista de juegos.
+ *
+ * @param state Estado actual de la pantalla de novedades.
+ * @param onClick Acción ejecutada al seleccionar un juego.
+ * @param onNotificationClick Acción ejecutada al presionar el icono de notificaciones.
+ * @param modifier Modificador para personalizar el contenido.
+ * @param onCategoriaSeleccionada Acción ejecutada al seleccionar una categoría.
+ */
 @Composable
 fun NovedadesContent(
     state: NovedadesState,
@@ -27,6 +42,7 @@ fun NovedadesContent(
     modifier: Modifier = Modifier,
     onCategoriaSeleccionada: (String) -> Unit
 ) {
+    // Categorías utilizadas para identificar el filtro seleccionado.
     val todo = "Todo"
     val rpg = "RPG"
     val accion = "Acción"
@@ -41,14 +57,11 @@ fun NovedadesContent(
             bottom = 70.dp
         )
     ) {
-
         item {
-
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-
                 Text(
                     text = stringResource(R.string.novedades_y_rese_as),
                     color = Color.White,
@@ -111,7 +124,6 @@ fun NovedadesContent(
         }
 
         items(state.listaJuegos) { juego ->
-
             TarjetaJuego(
                 imagen = juego.imagen,
                 etiqueta = stringResource(juego.etiqueta),
@@ -131,9 +143,12 @@ fun NovedadesContent(
     }
 }
 
+/**
+ * Vista previa del contenido de la pantalla de novedades.
+ */
 @Composable
 @Preview
-fun NovedadesContentPreview(){
+fun NovedadesContentPreview() {
     NovedadesContent(
         state = NovedadesState(),
         onCategoriaSeleccionada = {},

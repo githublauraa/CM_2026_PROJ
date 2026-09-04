@@ -10,8 +10,14 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.example.voxel_review.R
 
+/**
+ * Muestra la imagen de un juego con un tamaño y bordes redondeados definidos.
+ *
+ * @param imagen Recurso drawable correspondiente a la imagen del juego.
+ * @param descripcion Descripción utilizada para accesibilidad.
+ * @param modifier Modificador para personalizar el componente.
+ */
 @Composable
 fun ImagenJuego(
     imagen: Int,
@@ -28,8 +34,3 @@ fun ImagenJuego(
         contentScale = ContentScale.Crop
     )
 }
-
-//@Composable
-//7fun ImagenJuegoPreview(){
-//    ImagenJuego(R.drawable.logo_fortnite, "Juego ....")
-//}

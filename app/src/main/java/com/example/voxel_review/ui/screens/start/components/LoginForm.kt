@@ -1,20 +1,30 @@
 package com.example.voxel_review.ui.screens.start.components
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.runtime.Composable
-import com.example.voxel_review.ui.screens.start.StartState
-import androidx.compose.ui.Modifier
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.ui.unit.dp
-import com.example.voxel_review.R
-import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
-import com.example.voxel_review.ui.utils.CampoContrasena
 import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.voxel_review.R
+import com.example.voxel_review.ui.screens.start.StartState
 import com.example.voxel_review.ui.theme.surfaceContainerLowestLight
+import com.example.voxel_review.ui.utils.CampoContrasena
 
+/**
+ * Formulario de inicio de sesión.
+ * Muestra los campos de usuario y contraseña utilizando el estado recibido.
+ *
+ * @param state Estado actual de la pantalla de inicio.
+ * @param onUserNameChange Acción ejecutada cuando cambia el nombre de usuario.
+ * @param onPasswordChange Acción ejecutada cuando cambia la contraseña.
+ * @param onMostrarContrasenaChange Acción para mostrar u ocultar la contraseña.
+ * @param modifier Modificador para personalizar el componente.
+ */
 @Composable
 fun LoginForm(
     state: StartState,
@@ -23,18 +33,9 @@ fun LoginForm(
     onMostrarContrasenaChange: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-
-    val icono =
-        if (state.mostrarContrasena) {
-            R.drawable.visible
-        } else {
-            R.drawable.img_no_ver_contrasena
-        }
-
     Column(
         modifier = modifier
     ) {
-
         MensajeLogin()
 
         Spacer(
@@ -85,9 +86,8 @@ fun LoginForm(
                 .height(50.dp)
         )
 
-        if (
-            state.errorMessage.isNotEmpty()
-        ) {
+        // Muestra el mensaje generado durante la validación, si existe.
+        if (state.errorMessage.isNotEmpty()) {
             Text(
                 text = state.errorMessage,
                 color = surfaceContainerLowestLight,

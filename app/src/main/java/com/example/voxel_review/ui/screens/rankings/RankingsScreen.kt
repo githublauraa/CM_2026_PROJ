@@ -18,6 +18,14 @@ import com.example.voxel_review.ui.screens.rankings.components.HeaderRankingScee
 import com.example.voxel_review.ui.screens.rankings.components.LazyColumnRanking
 import com.example.voxel_review.ui.utils.FondoPantalla
 
+/**
+ * Contenido visual de la pantalla de rankings.
+ * Recibe el estado y los eventos necesarios sin acceder directamente al ViewModel.
+ *
+ * @param state Estado actual de la pantalla de rankings.
+ * @param onChangeSeleccionado Acción ejecutada al cambiar el tipo de ranking seleccionado.
+ * @param modifier Modificador para personalizar el contenido.
+ */
 @Composable
 fun RankingContent(
     state: RankingsState,
@@ -27,12 +35,12 @@ fun RankingContent(
     Box(
         modifier = modifier.fillMaxSize()
     ) {
-
         HeaderRankingSceen(
             seleccionado = state.seleccionado,
             onChangeSeleccionado = onChangeSeleccionado
         )
 
+        // El título cambia de acuerdo con el tipo de ranking seleccionado.
         Text(
             text = if (state.seleccionado) {
                 "TOP CRÍTICOS"
@@ -55,17 +63,24 @@ fun RankingContent(
     }
 }
 
+/**
+ * Pantalla de rankings conectada al ViewModel.
+ * Observa el estado y conecta los eventos de la interfaz con la lógica correspondiente.
+ *
+ * @param rankingsViewModel ViewModel encargado del estado y la lógica de rankings.
+ * @param modifier Modificador para personalizar la pantalla.
+ */
 @Composable
 fun RankingsScreen(
     rankingsViewModel: RankingsViewModel = viewModel(),
     modifier: Modifier = Modifier
 ) {
+    // Convierte el StateFlow del ViewModel en un estado observable por Compose.
     val state by rankingsViewModel.uiState.collectAsState()
 
     Box(
         modifier = modifier.fillMaxSize()
     ) {
-
         FondoPantalla()
 
         RankingContent(
@@ -75,6 +90,9 @@ fun RankingsScreen(
     }
 }
 
+/**
+ * Vista previa de la pantalla de rankings.
+ */
 @Preview(showBackground = true)
 @Composable
 fun RankingScreenPreview() {

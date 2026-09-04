@@ -26,6 +26,19 @@ import com.example.voxel_review.ui.theme.White
 import com.example.voxel_review.ui.utils.Boton
 import com.example.voxel_review.ui.utils.CampoContrasena
 
+/**
+ * Formulario principal para el registro de un nuevo usuario.
+ * Muestra los campos de usuario, correo, contraseña, términos y el botón de registro.
+ *
+ * @param state Estado actual de la pantalla de creación de cuenta.
+ * @param onUserNameChange Acción ejecutada cuando cambia el nombre de usuario.
+ * @param onEmailChange Acción ejecutada cuando cambia el correo electrónico.
+ * @param onPasswordChange Acción ejecutada cuando cambia la contraseña.
+ * @param onMostrarContrasenaChange Acción para mostrar u ocultar la contraseña.
+ * @param onTerminosAceptadosChange Acción para cambiar la aceptación de los términos.
+ * @param unirseButtonPressed Acción ejecutada al presionar el botón de registro.
+ * @param modifier Modificador para personalizar el componente.
+ */
 @Composable
 fun FomulariosCreateAcount(
     state: CreateAccountState,
@@ -100,11 +113,14 @@ fun FomulariosCreateAcount(
             mostrarContrasena = state.mostrarContrasena,
             onPasswordChange = onPasswordChange,
             onMostrarContrasenaChange = onMostrarContrasenaChange,
+
+            // Cambia el icono según el estado de visibilidad de la contraseña.
             icono = if (state.mostrarContrasena) {
                 R.drawable.visible
             } else {
                 R.drawable.img_no_ver_contrasena
             },
+
             modifier = Modifier
                 .width(330.dp)
                 .height(50.dp)
@@ -112,6 +128,7 @@ fun FomulariosCreateAcount(
 
         Spacer(modifier = Modifier.height(8.dp))
 
+        // El mensaje solo se muestra cuando existe un error de validación.
         if (state.errorMessage.isNotEmpty()) {
             Text(
                 text = state.errorMessage,
@@ -150,6 +167,8 @@ fun FomulariosCreateAcount(
                 .fillMaxWidth()
                 .offset(x = 20.dp)
         ) {
+
+            // Permite aplicar diferentes estilos dentro de un mismo texto.
             Text(
                 buildAnnotatedString {
                     withStyle(

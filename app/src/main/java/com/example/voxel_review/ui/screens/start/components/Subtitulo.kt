@@ -10,6 +10,11 @@ import androidx.compose.ui.unit.dp
 import com.example.voxel_review.R
 import com.example.voxel_review.ui.theme.onSurfaceVariantDark
 
+/**
+ * Muestra el subtítulo de la aplicación en la pantalla de inicio.
+ *
+ * @param modifier Modificador para personalizar el componente.
+ */
 @Composable
 fun Subtitulo(
     modifier: Modifier = Modifier
@@ -21,6 +26,9 @@ fun Subtitulo(
     )
 }
 
+/**
+ * Vista previa del subtítulo de la aplicación.
+ */
 @Composable
 @Preview
 fun SubtituloPreview() {

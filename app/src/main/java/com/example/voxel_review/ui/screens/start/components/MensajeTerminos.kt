@@ -9,6 +9,11 @@ import androidx.compose.ui.unit.sp
 import com.example.voxel_review.R
 import com.example.voxel_review.ui.theme.onSurfaceVariantDark
 
+/**
+ * Muestra el mensaje informativo sobre los términos de servicio.
+ *
+ * @param modifier Modificador para personalizar el componente.
+ */
 @Composable
 fun MensajeTerminos(
     modifier: Modifier = Modifier
@@ -23,6 +28,9 @@ fun MensajeTerminos(
     )
 }
 
+/**
+ * Vista previa del mensaje de términos de servicio.
+ */
 @Composable
 @Preview
 fun MensajeTerminosPreview() {
