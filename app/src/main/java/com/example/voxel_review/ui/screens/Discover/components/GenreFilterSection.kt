@@ -1,22 +1,16 @@
 package com.example.voxel_review.ui.screens.Discover.components
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.example.voxel_review.R
 import com.example.voxel_review.data.InfoDiscover.GenreInfo
-import com.example.voxel_review.ui.theme.onSurfaceVariantDark
 
 /**
  * Lista horizontal desplazable que muestra las opciones de filtro por género.
@@ -29,7 +23,7 @@ import com.example.voxel_review.ui.theme.onSurfaceVariantDark
 @Composable
 fun GenreFilterSection(
     genres: List<GenreInfo>,
-    selectedGenre: GenreInfo,
+    selectedGenre: GenreInfo?,
     onGenreSelected: (GenreInfo) -> Unit,
     modifier: Modifier = Modifier
 ) {

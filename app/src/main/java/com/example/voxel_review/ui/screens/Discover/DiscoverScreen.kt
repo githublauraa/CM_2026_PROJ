@@ -19,13 +19,9 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.voxel_review.ui.screens.Discover.components.DiscoverTopBar
 import com.example.voxel_review.ui.screens.Discover.components.TrendingSearchesSection
 import com.example.voxel_review.R
-import com.example.voxel_review.data.InfoDiscover.GenreInfo
-import com.example.voxel_review.data.InfoDiscover.LocalTrendingSearchProvider
-import com.example.voxel_review.data.InfoDiscover.LocalGenreProvider
 import com.example.voxel_review.data.InfoDiscover.TrendingSearchInfo
 import com.example.voxel_review.ui.screens.Discover.components.DiscoverSearchBar
 import com.example.voxel_review.ui.screens.Discover.components.GenreFilterSection
-import com.example.voxel_review.ui.screens.GameDetail.GameDetailScreen
 
 /**
  * Contenido visual principal de la pantalla de descubrimiento.
@@ -88,7 +84,7 @@ fun DiscoverScreen(
             )
 
             GenreFilterSection(
-                genres = LocalGenreProvider.generos,
+                genres = state.genres,
                 selectedGenre = state.selectedGenre,
                 onGenreSelected = {
                     discoverViewModel.updateSelectedGenre(it)
@@ -100,7 +96,7 @@ fun DiscoverScreen(
             )
 
             TrendingSearchesSection(
-                items = LocalTrendingSearchProvider.tendencias,
+                items = state.trendingSearches,
                 onItemClick = onItemClick
             )
 
@@ -110,33 +106,7 @@ fun DiscoverScreen(
         }
     }
 }
-/**
- * Punto de entrada y contenedor de navegación para la pantalla de Discover.
- *
- * @param discoverViewModel ViewModel que administra la lógica de la pantalla.
- * @param onBackClick Acción ejecutada al presionar el botón de regresar.
- * @param onNotificationClick Acción ejecutada al presionar el icono de notificaciones.
- * @param modifier Modificador para personalizar el contenedor de la ruta.
- * @param onItemClick Acción ejecutada al presionar un elemento en tendencia.
- */
-@Composable
-fun DiscoverRoute(
-    discoverViewModel: DiscoverViewModel,
-    onBackClick: () -> Unit,
-    onNotificationClick: () -> Unit,
-    modifier: Modifier = Modifier,
-    onItemClick: (TrendingSearchInfo) -> Unit,
 
-) {
-
-    DiscoverScreen(
-        discoverViewModel = discoverViewModel,
-        onBackClick = onBackClick,
-        onNotificationClick = onNotificationClick,
-        onItemClick = onItemClick,
-        modifier = modifier
-    )
-}
 @Preview
 @Composable
 fun DiscoverScreenPreview() {

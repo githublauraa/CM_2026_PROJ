@@ -81,4 +81,5 @@
   <string name="nombre_juego1">ELDEN RING</string>
   <string name="nombre_juego2">STARFIELD</string>
   <string name="nombre_juego3">BALDURS GATE 3</string>
+  <string name="Descripcion">DESCRIPCIÓN</string>
 </resources>

@@ -11,6 +11,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.voxel_review.data.InfoNotifications.FollowSuggestionInfo
 import com.example.voxel_review.data.InfoNotifications.NotificationInfo
+import com.example.voxel_review.ui.screens.notifications.NotificationsViewModel
 import kotlin.collections.emptyList
 
 /**
@@ -27,7 +28,7 @@ fun NotificationsContent(
     highlightedNotifications: List<NotificationInfo>,
     followSuggestions: List<FollowSuggestionInfo>,
     onNotificationClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     LazyColumn(
         modifier = modifier.fillMaxSize(),
@@ -88,8 +89,8 @@ fun NotificationsContent(
 @Composable
 fun NotificationsContentPreview() {
     NotificationsContent(
-        onNotificationClick = {},
         highlightedNotifications = emptyList(),
-        followSuggestions = emptyList()
+        followSuggestions = emptyList(),
+        onNotificationClick = {},
     )
 }

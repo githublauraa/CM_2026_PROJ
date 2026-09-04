@@ -9,26 +9,26 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.voxel_review.data.InfoDiscover.LocalTrendingSearchProvider
-import com.example.voxel_review.data.InfoGame.LocalGameProvider
 import com.example.voxel_review.ui.screens.start.StartScreen
 import com.example.voxel_review.ui.screens.crearCuenta.CreateAccountScreen
 import com.example.voxel_review.ui.screens.novedades.NovedadScreen
 import com.example.voxel_review.data.LocalJuegosProvider
+import com.example.voxel_review.ui.screens.Discover.DiscoverScreen
 import com.example.voxel_review.ui.screens.profile.ProfileScreen
 import com.example.voxel_review.ui.screens.writeReview.WriteReviewRoute
 import com.example.voxel_review.ui.screens.writeReview.WriteReviewViewModel
 import com.example.voxel_review.ui.screens.rankings.RankingsScreen
-import com.example.voxel_review.ui.screens.Discover.DiscoverRoute
 import com.example.voxel_review.ui.screens.Discover.DiscoverViewModel
-import com.example.voxel_review.ui.screens.GameDetail.GameDetailRoute
+import com.example.voxel_review.ui.screens.GameDetail.GameDetailContent
 import com.example.voxel_review.ui.screens.GameDetail.GameDetailViewModel
-import com.example.voxel_review.ui.screens.notifications.NotificationRoute
 import com.example.voxel_review.ui.screens.notifications.NotificationsViewModel
 import com.example.voxel_review.ui.screens.review.ReviewDetailScreen
 import com.example.voxel_review.ui.screens.settings.SettingsRoute
 import com.example.voxel_review.ui.screens.profile.ProfileViewModel
 import com.example.voxel_review.ui.screens.start.StartViewModel
 import com.example.voxel_review.ui.screens.crearCuenta.CreateAccountViewModel
+import com.example.voxel_review.ui.screens.notifications.NotificationContent
+import com.example.voxel_review.ui.screens.notifications.components.NotificationsContent
 import com.example.voxel_review.ui.screens.novedades.NovedadesViewModel
 import com.example.voxel_review.ui.screens.rankings.RankingsViewModel
 import com.example.voxel_review.ui.screens.review.ReviewViewModel
@@ -155,7 +155,7 @@ fun AppNavigation(
         composable(route = AppScreen.Discover.route) {
             val discoverViewModel: DiscoverViewModel = viewModel()
 
-            DiscoverRoute(
+            DiscoverScreen(
                 discoverViewModel = discoverViewModel,
                 onBackClick = {
                     navController.popBackStack()
@@ -190,7 +190,7 @@ fun AppNavigation(
             val gameIndex =
                 backStackEntry.arguments?.getInt("gameIndex") ?: 0
 
-            GameDetailRoute(
+            GameDetailContent(
                 gameDetailViewModel = gameDetailViewModel,
                 gameIndex = gameIndex,
                 onBackPressed = {
@@ -216,7 +216,7 @@ fun AppNavigation(
         composable(route = AppScreen.Notifications.route) {
             val notificationsViewModel: NotificationsViewModel = viewModel()
 
-            NotificationRoute(
+            NotificationContent(
                 notificationsViewModel = notificationsViewModel,
                 onBackClick = {
                     navController.popBackStack()

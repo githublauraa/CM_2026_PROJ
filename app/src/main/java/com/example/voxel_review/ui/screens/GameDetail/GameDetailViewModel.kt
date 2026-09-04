@@ -5,7 +5,6 @@ import com.example.voxel_review.data.InfoGame.LocalGameProvider
 import com.example.voxel_review.data.InfoGame.LocalGameRecomendedProvider
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
 /**
@@ -14,8 +13,7 @@ import kotlinx.coroutines.flow.update
 class GameDetailViewModel : ViewModel() {
 
     private val _uiState = MutableStateFlow(GameDetailState())
-
-    val uiState: StateFlow<GameDetailState> = _uiState.asStateFlow()
+    val uiState: StateFlow<GameDetailState> = _uiState
 
     fun loadGame(gameIndex: Int) {
         val game = LocalGameProvider.games.getOrElse(gameIndex) {
