@@ -23,7 +23,6 @@ fun SettingsScreen(
     darkMode: Boolean,
     notificationsEnabled: Boolean,
     selectedAccent: AccentOption,
-    onDarkModeChange: (Boolean) -> Unit,
     onNotificationsChange: (Boolean) -> Unit,
     onAccentChange: (AccentOption) -> Unit,
     modifier: Modifier = Modifier
@@ -57,7 +56,6 @@ fun SettingsScreen(
                 color = VoxelSurfaceVariant,
                 darkMode = darkMode,
                 notificationsEnabled = notificationsEnabled,
-                onDarkModeChange = onDarkModeChange,
                 onNotificationsChange = onNotificationsChange
             )
 
@@ -86,7 +84,6 @@ fun SettingsScreenPreview() {
             darkMode = false,
             notificationsEnabled = true,
             selectedAccent = AccentOption.CYAN,
-            onDarkModeChange = {},
             onNotificationsChange = {},
             onAccentChange = {}
         )

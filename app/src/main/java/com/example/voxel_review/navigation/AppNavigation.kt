@@ -31,6 +31,7 @@ import com.example.voxel_review.ui.screens.start.StartViewModel
 import com.example.voxel_review.ui.screens.crearCuenta.CreateAccountViewModel
 import com.example.voxel_review.ui.screens.novedades.NovedadesViewModel
 import com.example.voxel_review.ui.screens.rankings.RankingsViewModel
+import com.example.voxel_review.ui.screens.settings.SettingsViewModel
 
 /**
  * Define las rutas disponibles dentro de la navegación de la aplicación.
@@ -141,12 +142,12 @@ fun AppNavigation(
         }
 
         composable(route = AppScreen.Configuration.route) {
+            val settingsViewModel: SettingsViewModel = viewModel()
             SettingsRoute(
+                settingsViewModel = settingsViewModel,
                 onBackClick = {
                     navController.popBackStack()
-                },
-                darkMode = false,
-                onDarkModeChange = {}
+                }
             )
         }
 

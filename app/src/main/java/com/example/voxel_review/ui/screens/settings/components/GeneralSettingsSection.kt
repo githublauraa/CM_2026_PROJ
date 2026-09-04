@@ -18,7 +18,6 @@ fun GeneralSettingsSection(
     color: Color,
     darkMode: Boolean,
     notificationsEnabled: Boolean,
-    onDarkModeChange: (Boolean) -> Unit,
     onNotificationsChange: (Boolean) -> Unit
 ) {
     Column(
@@ -32,7 +31,7 @@ fun GeneralSettingsSection(
             title = "Modo Oscuro",
             checked = darkMode,
             accentColor = VoxelTextPrimary,
-            onCheckedChange = onDarkModeChange
+            onCheckedChange = {}
         )
 
         SettingSwitch(
@@ -59,7 +58,6 @@ private fun GeneralSettingsSectionPreview() {
             color = VoxelPrimary,
             darkMode = true,
             notificationsEnabled = true,
-            onDarkModeChange = {},
             onNotificationsChange = {}
         )
     }
