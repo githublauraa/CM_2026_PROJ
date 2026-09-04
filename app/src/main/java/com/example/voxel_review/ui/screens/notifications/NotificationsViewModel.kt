@@ -6,7 +6,9 @@ import com.example.voxel_review.data.InfoNotifications.LocalSugerenciasProvider
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
-
+/**
+ * ViewModel encargado de la lógica de negocio y gestión de estado para las notificaciones.
+ */
 class NotificationsViewModel : ViewModel() {
 
     private val _uiState = MutableStateFlow(NotificationsState())

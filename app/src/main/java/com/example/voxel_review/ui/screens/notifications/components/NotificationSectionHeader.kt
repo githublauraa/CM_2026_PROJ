@@ -15,6 +15,14 @@ import androidx.compose.ui.unit.sp
 import com.example.voxel_review.ui.theme.secondaryDark
 import com.example.voxel_review.ui.theme.tertiaryContainerDark
 
+/**
+ * Encabezado para separar y clasificar las distintas secciones dentro del centro de notificaciones.
+ *
+ * @param title Texto del título de la sección.
+ * @param showSeeAll Controla la visibilidad del botón de acción "Ver todos".
+ * @param onSeeAllClick Acción ejecutada al hacer clic en el botón "Ver todos".
+ * @param modifier Modificador para personalizar el encabezado.
+ */
 @Composable
 fun NotificationSectionHeader(
     title: String,

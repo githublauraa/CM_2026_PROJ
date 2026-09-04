@@ -20,6 +20,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.voxel_review.R
 
+/**
+ * Barra superior para la pantalla de detalles que incluye botón de regreso, título y acceso a búsqueda.
+ *
+ * @param onBackPressed Acción ejecutada al presionar el botón de regreso.
+ * @param onSearchPressed Acción ejecutada al presionar el botón de búsqueda.
+ */
 @Composable
 fun GameDetailTopBar(
     onBackPressed: () -> Unit,

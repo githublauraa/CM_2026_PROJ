@@ -18,6 +18,14 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.voxel_review.R
 
+/**
+ * Gráfico circular que representa el puntaje numérico obtenido por un videojuego.
+ *
+ * @param rating Valor del puntaje actual.
+ * @param maxRating Puntaje máximo alcanzable.
+ * @param color Color representativo de la barra circular.
+ * @param modifier Modificador para personalizar las dimensiones o posición.
+ */
 @Composable
 fun CircularRating(
     rating: Float,

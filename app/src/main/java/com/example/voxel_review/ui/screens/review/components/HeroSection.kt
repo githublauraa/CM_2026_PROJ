@@ -26,6 +26,11 @@ import com.example.voxel_review.R
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.voxel_review.ui.theme.Voxel_ReviewTheme
 
+/**
+ * Sección principal visual con imagen promocional, degradado y etiquetas del juego evaluado.
+ *
+ * @param modifier Modificador para personalizar el contenedor de la sección.
+ */
 @Composable
 fun HeroSection(
     modifier: Modifier = Modifier

@@ -12,6 +12,11 @@ import com.example.voxel_review.R
 import com.example.voxel_review.ui.theme.VoxelAccentYellow
 import androidx.compose.ui.graphics.Color.Companion.Gray
 
+/**
+ * Indicador visual compuesto por 5 estrellas para representar una calificación cuantitativa.
+ *
+ * @param rating Cantidad de estrellas rellenas a renderizar (0 a 5).
+ */
 @Composable
 fun StarRating(
     rating: Int

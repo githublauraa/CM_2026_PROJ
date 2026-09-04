@@ -18,7 +18,11 @@ import com.example.voxel_review.data.InfoDiscover.LocalGenreProvider
 import com.example.voxel_review.ui.theme.onSurfaceVariantDark
 import com.example.voxel_review.ui.theme.surfaceDimDark
 
-
+/**
+ * Etiqueta visual individual utilizada para representar un género en la pantalla de detalle.
+ *
+ * @param genre Información del género a renderizar.
+ */
 @Composable
 fun GenreChip(
     genre: GenreInfo

@@ -18,6 +18,14 @@ import com.example.voxel_review.R
 import com.example.voxel_review.data.InfoDiscover.GenreInfo
 import com.example.voxel_review.ui.theme.onSurfaceVariantDark
 
+/**
+ * Lista horizontal desplazable que muestra las opciones de filtro por género.
+ *
+ * @param genres Lista de géneros disponibles para filtrar.
+ * @param selectedGenre Género actualmente seleccionado por el usuario.
+ * @param onGenreSelected Acción ejecutada al seleccionar un género de la lista.
+ * @param modifier Modificador para personalizar la lista horizontal.
+ */
 @Composable
 fun GenreFilterSection(
     genres: List<GenreInfo>,

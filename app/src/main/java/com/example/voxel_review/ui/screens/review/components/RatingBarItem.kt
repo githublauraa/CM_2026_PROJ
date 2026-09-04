@@ -16,6 +16,15 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
+/**
+ * Indicador de progreso lineal con texto para desglose de aspectos de calificación (Jugabilidad, Gráficos, etc.).
+ *
+ * @param label Nombre de la categoría a evaluar.
+ * @param value Valor numérico de la calificación actual.
+ * @param maxValue Valor numérico máximo posible.
+ * @param color Color para identificar la barra de progreso.
+ * @param modifier Modificador para personalizar la barra.
+ */
 @Composable
 fun RatingBarItem(
     label: String,

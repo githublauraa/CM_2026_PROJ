@@ -17,6 +17,11 @@ import androidx.compose.ui.unit.sp
 import com.example.voxel_review.R
 import com.example.voxel_review.data.InfoGame.GameDetailInfo
 
+/**
+ * Sección horizontal que muestra una lista deslizable con juegos recomendados similares.
+ *
+ * @param games Lista de juegos recomendados a mostrar.
+ */
 @Composable
 fun RecommendedGames(
     games: List<GameDetailInfo>

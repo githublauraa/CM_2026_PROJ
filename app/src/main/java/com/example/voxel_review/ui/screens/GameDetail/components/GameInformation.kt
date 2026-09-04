@@ -15,6 +15,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.voxel_review.ui.theme.backgroundDark
 
+/**
+ * Contenedor estructurado para mostrar datos técnicos del juego (desarrollador, fecha de lanzamiento).
+ *
+ * @param developer Nombre del estudio desarrollador del videojuego.
+ * @param releaseDate Fecha oficial de lanzamiento del videojuego.
+ */
 @Composable
 fun GameInformation(
     developer: String,

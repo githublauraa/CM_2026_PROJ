@@ -16,6 +16,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import com.example.voxel_review.R
 
+/**
+ * Barra de navegación superior con opciones de regresar y compartir el detalle de la reseña.
+ *
+ * @param modifier Modificador para personalizar la barra superior.
+ * @param onBackClick Acción ejecutada al presionar el botón de regreso.
+ * @param onShareClick Acción ejecutada al presionar el icono de compartir.
+ */
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ReviewDetailTopBar(

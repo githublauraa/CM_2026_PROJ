@@ -21,6 +21,14 @@ import com.example.voxel_review.ui.theme.surfaceDark
 import com.example.voxel_review.ui.theme.onSurfaceVariantDark
 import com.example.voxel_review.ui.theme.surfaceDimDark
 
+/**
+ * Chip individual que representa una categoría o género de videojuego seleccionable.
+ *
+ * @param genre Información del género que se va a mostrar.
+ * @param isSelected Indica si el chip se encuentra en estado seleccionado.
+ * @param onClick Acción ejecutada al seleccionar o hacer clic en el chip.
+ * @param modifier Modificador para personalizar la apariencia del chip.
+ */
 @Composable
 fun GenreChip(
     genre: GenreInfo,

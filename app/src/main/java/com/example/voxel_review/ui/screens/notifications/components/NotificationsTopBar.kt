@@ -17,6 +17,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import com.example.voxel_review.R
 
+/**
+ * Barra superior alineada al centro para la pantalla de notificaciones.
+ *
+ * @param modifier Modificador para personalizar la barra superior.
+ * @param onBackClick Acción ejecutada al presionar el botón de regresar.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NotificationsTopBar(

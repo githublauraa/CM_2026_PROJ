@@ -16,6 +16,13 @@ import com.example.voxel_review.data.InfoDiscover.LocalTrendingSearchProvider
 import com.example.voxel_review.data.InfoDiscover.TrendingSearchInfo
 import com.example.voxel_review.ui.theme.onSurfaceVariantDark
 
+/**
+ * Secciona vertical que agrupa y despliega la lista de búsquedas en tendencia.
+ *
+ * @param items Lista de elementos en tendencia de búsqueda que se van a renderizar.
+ * @param onItemClick Acción ejecutada al presionar un elemento en tendencia específico.
+ * @param modifier Modificador para personalizar el contenedor de la sección.
+ */
 @Composable
 fun TrendingSearchesSection(
     items: List<TrendingSearchInfo>,

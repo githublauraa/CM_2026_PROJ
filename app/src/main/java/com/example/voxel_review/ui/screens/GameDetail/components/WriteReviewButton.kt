@@ -10,6 +10,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.voxel_review.ui.theme.tertiaryDark
 
+/**
+ * Botón flotante de acción rápida que permite al usuario redactar una nueva reseña.
+ *
+ * @param onClick Acción ejecutada al presionar el botón.
+ * @param modifier Modificador para posicionar y personalizar el botón.
+ */
+
 @Composable
 fun WriteReviewButton(
     onClick: () -> Unit,

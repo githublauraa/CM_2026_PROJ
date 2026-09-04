@@ -22,6 +22,16 @@ import com.example.voxel_review.data.InfoGame.LocalGameRecomendedProvider
 import com.example.voxel_review.ui.screens.GameDetail.GameDetailState
 import com.example.voxel_review.ui.theme.backgroundDark
 
+/**
+ * Estructura y contenido visual completo de la pantalla de detalles de un juego.
+ *
+ * @param state Estado actual con los datos del juego y recomendados.
+ * @param navController Controlador de navegación de Jetpack Compose.
+ * @param onBackPressed Acción ejecutada al presionar el botón de regreso.
+ * @param onSearchPressed Acción ejecutada al presionar el icono de búsqueda.
+ * @param onWriteReviewPressed Acción ejecutada al presionar el botón de crear reseña.
+ * @param modifier Modificador para personalizar el contenedor principal.
+ */
 @Composable
 fun GameDetailContent(
     state: GameDetailState,

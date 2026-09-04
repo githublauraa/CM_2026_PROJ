@@ -19,6 +19,12 @@ import com.example.voxel_review.ui.screens.review.RatingCard
 import com.example.voxel_review.ui.screens.review.UserReviewsSection
 import androidx.compose.ui.tooling.preview.Preview
 
+/**
+ * Contenido estructurado deslizable que integra las secciones de la reseña detallada de un juego.
+ *
+ * @param onClickReview Callback ejecutado al interactuar con las reseñas.
+ * @param modifier Modificador para personalizar el scroll o layout principal.
+ */
 @Composable
 fun ReviewDetailContent(
     onClickReview: () -> Unit,

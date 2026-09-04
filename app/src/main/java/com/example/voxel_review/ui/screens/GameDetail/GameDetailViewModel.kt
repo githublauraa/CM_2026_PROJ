@@ -7,6 +7,9 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
+/**
+ * ViewModel que administra la carga de datos y el estado de la pantalla de detalles de un juego.
+ */
 class GameDetailViewModel : ViewModel() {
 
     private val _uiState = MutableStateFlow(GameDetailState())

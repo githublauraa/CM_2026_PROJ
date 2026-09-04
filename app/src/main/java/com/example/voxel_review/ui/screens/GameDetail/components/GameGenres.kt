@@ -8,6 +8,11 @@ import androidx.compose.ui.unit.dp
 import com.example.voxel_review.data.InfoDiscover.GenreInfo
 import com.example.voxel_review.data.InfoDiscover.LocalGenreProvider
 
+/**
+ * Disposición fluida que agrupa la lista de chips de géneros asociados al juego.
+ *
+ * @param genres Lista de géneros asignados al juego.
+ */
 @Composable
 fun GameGenres(
     genres: List<GenreInfo>

@@ -19,6 +19,12 @@ import com.example.voxel_review.ui.theme.VoxelAccentPurple
 import com.example.voxel_review.ui.theme.VoxelPrimary
 import com.example.voxel_review.ui.theme.VoxelSecondary
 
+/**
+ * Tarjeta contenedora que muestra el desglose del puntaje general e indicadores específicos del juego.
+ *
+ * @param modifier Modificador para personalizar la tarjeta.
+ * @param cardBackgroundColor Color de fondo asignado a la tarjeta.
+ */
 @Composable
 fun RatingCard(
     modifier: Modifier = Modifier,

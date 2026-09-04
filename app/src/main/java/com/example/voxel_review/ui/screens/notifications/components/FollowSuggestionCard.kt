@@ -32,7 +32,13 @@ import com.example.voxel_review.ui.theme.primaryContainerDark
 import com.example.voxel_review.ui.theme.secondaryDark
 import com.example.voxel_review.ui.theme.tertiaryDark
 
-
+/**
+ * Tarjeta que muestra la sugerencia de un usuario para seguir dentro de la aplicación.
+ *
+ * @param suggestion Datos e información del usuario sugerido para seguir.
+ * @param onClick Acción ejecutada al presionar la tarjeta de sugerencia.
+ * @param modifier Modificador para personalizar la apariencia o disposición de la tarjeta.
+ */
 @Composable
 fun FollowSuggestionCard(
     suggestion: FollowSuggestionInfo,

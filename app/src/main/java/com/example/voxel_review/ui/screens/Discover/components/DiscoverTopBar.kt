@@ -24,6 +24,15 @@ import androidx.compose.ui.unit.sp
 import com.example.voxel_review.R
 import com.example.voxel_review.ui.theme.onSurfaceDark
 import com.example.voxel_review.ui.screens.novedades.components.Campana
+
+/**
+ * Barra superior de navegación para la pantalla de Discover que incluye botón de retorno,
+ * título principal y acceso a las notificaciones.
+ *
+ * @param modifier Modificador para personalizar la apariencia o disposición de la barra superior.
+ * @param onNotificationClick Acción ejecutada al presionar el icono de notificaciones.
+ * @param onBackClick Acción ejecutada al presionar el botón de regresar.
+ */
 @Composable
 fun DiscoverTopBar(
     modifier: Modifier = Modifier,

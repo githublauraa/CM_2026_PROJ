@@ -7,6 +7,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 
+/**
+ * ViewModel que gestiona el estado de la pantalla de Discover y las interacciones del usuario.
+ */
 class DiscoverViewModel: ViewModel() {
 
     private val _uiState = MutableStateFlow(DiscoverState())

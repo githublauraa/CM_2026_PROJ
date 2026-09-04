@@ -14,6 +14,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.voxel_review.R
 
+/**
+ * Sección descriptiva sobre la reseña de un videojuego.
+ *
+ * @param modifier Modificador para personalizar el contenedor de texto.
+ */
 @Composable
 fun DescriptionSection(
     modifier: Modifier = Modifier

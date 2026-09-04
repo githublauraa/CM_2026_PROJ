@@ -12,6 +12,11 @@ import com.example.voxel_review.R
 import com.example.voxel_review.data.InfoDiscover.LocalGenreProvider
 import com.example.voxel_review.data.InfoGame.GameDetailInfo
 
+/**
+ * Encabezado de la pantalla de detalle que combina el banner e indicadores de géneros.
+ *
+ * @param game Información del juego utilizada para construir el encabezado.
+ */
 @Composable
 fun GameHeader(
     game: GameDetailInfo
@@ -35,9 +40,7 @@ fun GameHeader(
     }
 }
 
-@Preview(
-
-)
+@Preview
 @Composable
 fun GameHeaderPreview() {
 

@@ -16,6 +16,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.voxel_review.ui.theme.backgroundDark
 
+/**
+ * Tarjeta indicadora con contador para representar juegos adicionales en la lista de recomendados.
+ */
 @Composable
 fun MoreGamesCard() {
 

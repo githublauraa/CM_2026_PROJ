@@ -12,6 +12,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
+/**
+ * Sección que despliega el texto descriptivo del juego.
+ *
+ * @param description Texto explicativo detallado sobre el juego.
+ * @param text Título o encabezado de la sección.
+ */
 @Composable
 fun GameDescription(
     description: String,

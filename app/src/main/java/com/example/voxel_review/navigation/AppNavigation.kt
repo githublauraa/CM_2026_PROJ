@@ -176,8 +176,7 @@ fun AppNavigation(
         }
 
         // Ruta que recibe el índice del juego seleccionado como argumento.
-        composable(
-            route = "${AppScreen.GameDetail.route}?gameIndex={gameIndex}",
+        composable( route = "${AppScreen.GameDetail.route}?gameIndex={gameIndex}",
             arguments = listOf(
                 navArgument("gameIndex") {
                     type = NavType.IntType

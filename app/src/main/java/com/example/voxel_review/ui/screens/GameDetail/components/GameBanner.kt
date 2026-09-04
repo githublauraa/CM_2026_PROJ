@@ -23,6 +23,11 @@ import androidx.compose.ui.unit.sp
 import com.example.voxel_review.R
 import com.example.voxel_review.data.InfoGame.GameDetailInfo
 
+/**
+ * Componente visual que muestra el banner promocional del juego con su nombre superpuesto.
+ *
+ * @param game Información detallada del juego actual.
+ */
 @Composable
 fun GameBanner(
     game: GameDetailInfo

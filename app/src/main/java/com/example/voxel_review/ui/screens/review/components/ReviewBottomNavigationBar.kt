@@ -18,6 +18,11 @@ import com.example.voxel_review.R
 import com.example.voxel_review.ui.theme.VoxelSurfaceVariant
 import com.example.voxel_review.ui.theme.White
 
+/**
+ * Barra de navegación inferior diseñada para la pantalla de reseñas.
+ *
+ * @param modifier Modificador para personalizar la barra inferior.
+ */
 @Composable
 fun ReviewBottomNavigationBar(
     modifier: Modifier = Modifier

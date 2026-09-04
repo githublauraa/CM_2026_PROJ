@@ -32,6 +32,13 @@ import com.example.voxel_review.ui.theme.onSurfaceDark
 import com.example.voxel_review.ui.theme.onSurfaceVariantDark
 import com.example.voxel_review.ui.theme.secondaryDark
 
+/**
+ * Elemento de lista que muestra la información de un elemento en tendencia de búsqueda.
+ *
+ * @param item Información de la tendencia de búsqueda a mostrar.
+ * @param onClick Acción ejecutada al hacer clic sobre el elemento.
+ * @param modifier Modificador para personalizar la tarjeta o contenedor del elemento.
+ */
 @Composable
 fun TrendingSearchItem(
     item: TrendingSearchInfo,

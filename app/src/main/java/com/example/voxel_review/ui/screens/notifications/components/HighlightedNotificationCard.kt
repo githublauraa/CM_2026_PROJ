@@ -31,6 +31,13 @@ import com.example.voxel_review.ui.theme.primaryContainerDark
 import com.example.voxel_review.ui.theme.primaryDark
 import com.example.voxel_review.ui.theme.tertiaryContainerDark
 
+/**
+ * Tarjeta destacada para visualizar una notificación importante en la lista.
+ *
+ * @param notification Información de la notificación a mostrar.
+ * @param onClick Acción ejecutada al presionar sobre la notificación.
+ * @param modifier Modificador para personalizar la tarjeta.
+ */
 @Composable
 fun HighlightedNotificationCard(
     notification: NotificationInfo,

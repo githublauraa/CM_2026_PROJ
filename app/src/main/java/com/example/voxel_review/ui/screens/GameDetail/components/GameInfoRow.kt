@@ -8,7 +8,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 
-
+/**
+ * Fila de datos con formato clave/valor utilizada en la sección de información técnica.
+ *
+ * @param title Etiqueta o título del dato.
+ * @param value Valor correspondiente a la etiqueta.
+ */
 @Composable
 fun GameInfoRow(
     title: String,

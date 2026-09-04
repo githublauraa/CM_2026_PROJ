@@ -27,6 +27,16 @@ import com.example.voxel_review.ui.screens.Discover.components.DiscoverSearchBar
 import com.example.voxel_review.ui.screens.Discover.components.GenreFilterSection
 import com.example.voxel_review.ui.screens.GameDetail.GameDetailScreen
 
+/**
+ * Contenido visual principal de la pantalla de descubrimiento.
+ * Renderiza la barra superior, la barra de búsqueda, los filtros por género y las tendencias.
+ *
+ * @param discoverViewModel ViewModel que administra el estado e interacciones de la pantalla.
+ * @param onBackClick Acción ejecutada al presionar el botón de regresar.
+ * @param onNotificationClick Acción ejecutada al presionar el icono de notificaciones.
+ * @param onItemClick Acción ejecutada al presionar un elemento en tendencia.
+ * @param modifier Modificador para personalizar el contenedor principal.
+ */
 @Composable
 fun DiscoverScreen(
     discoverViewModel: DiscoverViewModel,
@@ -100,7 +110,15 @@ fun DiscoverScreen(
         }
     }
 }
-
+/**
+ * Punto de entrada y contenedor de navegación para la pantalla de Discover.
+ *
+ * @param discoverViewModel ViewModel que administra la lógica de la pantalla.
+ * @param onBackClick Acción ejecutada al presionar el botón de regresar.
+ * @param onNotificationClick Acción ejecutada al presionar el icono de notificaciones.
+ * @param modifier Modificador para personalizar el contenedor de la ruta.
+ * @param onItemClick Acción ejecutada al presionar un elemento en tendencia.
+ */
 @Composable
 fun DiscoverRoute(
     discoverViewModel: DiscoverViewModel,

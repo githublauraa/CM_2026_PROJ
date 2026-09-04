@@ -33,6 +33,12 @@ import com.example.voxel_review.ui.theme.VoxelPrimary
 import com.example.voxel_review.ui.theme.VoxelTextSecondary
 import com.example.voxel_review.ui.theme.White
 
+/**
+ * Sección que recopila las opiniones y puntuaciones dejadas por la comunidad de usuarios.
+ *
+ * @param modifier Modificador para personalizar el contenedor de comentarios.
+ * @param cardBackgroundColor Color de fondo aplicado a la tarjeta de comentario.
+ */
 @Composable
 fun UserReviewsSection(
     modifier: Modifier = Modifier,

@@ -13,6 +13,11 @@ import androidx.compose.ui.unit.dp
 import com.example.voxel_review.R
 import com.example.voxel_review.data.InfoGame.GameDetailInfo
 
+/**
+ * Tarjeta individual que muestra la imagen de portada de un juego recomendado.
+ *
+ * @param game Información del juego recomendado.
+ */
 @Composable
 fun RecommendedGameCard(
     game: GameDetailInfo

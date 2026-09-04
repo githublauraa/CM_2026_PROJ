@@ -31,7 +31,13 @@ import com.example.voxel_review.ui.theme.primaryDark
 import com.example.voxel_review.ui.theme.secondaryDark
 import com.example.voxel_review.ui.theme.tertiaryDark
 
-
+/**
+ * Tarjeta que informa al usuario sobre la adición de un nuevo videojuego a la plataforma.
+ *
+ * @param gameName Nombre del videojuego añadido.
+ * @param onClick Acción ejecutada al interactuar con la tarjeta.
+ * @param modifier Modificador para personalizar la tarjeta.
+ */
 @Composable
 fun NewGameNotificationCard(
     gameName: String,

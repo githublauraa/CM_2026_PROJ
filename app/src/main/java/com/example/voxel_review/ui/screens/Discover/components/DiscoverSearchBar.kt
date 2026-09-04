@@ -17,13 +17,18 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.voxel_review.R
-import com.example.voxel_review.ui.theme.VoxelBackgroundDark
-import com.example.voxel_review.ui.theme.VoxelSecondary
-import com.example.voxel_review.ui.theme.onPrimaryDark
 import com.example.voxel_review.ui.theme.onSurfaceDark
 import com.example.voxel_review.ui.theme.onSurfaceVariantDark
 import com.example.voxel_review.ui.theme.primaryDark
+import com.example.voxel_review.ui.theme.tertiaryDark
 
+/**
+ * Campo de texto personalizado para realizar búsquedas dentro de la sección de descubrimiento.
+ *
+ * @param query Texto actual introducido en el buscador.
+ * @param onQueryChange Callback que se ejecuta cuando el texto del buscador cambia.
+ * @param modifier Modificador para personalizar la apariencia o disposición del componente.
+ */
 @Composable
 fun DiscoverSearchBar(
     query: String,
@@ -62,8 +67,9 @@ fun DiscoverSearchBar(
             disabledIndicatorColor = Color.Transparent,
             focusedTextColor = onSurfaceDark,
             unfocusedTextColor = onSurfaceDark,
-            cursorColor = VoxelSecondary
-        )
+            cursorColor = tertiaryDark,
+
+    )
     )
 }
 

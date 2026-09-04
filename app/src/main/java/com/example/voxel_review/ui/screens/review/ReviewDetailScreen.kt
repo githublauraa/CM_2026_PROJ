@@ -12,6 +12,13 @@ import com.example.voxel_review.ui.screens.review.components.ReviewDetailContent
 import com.example.voxel_review.ui.screens.review.components.ReviewDetailTopBar
 import com.example.voxel_review.ui.utils.FondoPantalla
 
+/**
+ * Pantalla principal que muestra el desglose completo y detallado de una reseña de juego.
+ *
+ * @param onClickReview Callback para interactuar con la sección de reseñas.
+ * @param onBackClick Acción ejecutada al presionar el botón de navegación hacia atrás.
+ * @param modifier Modificador para personalizar el contenedor global.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ReviewDetailScreen(

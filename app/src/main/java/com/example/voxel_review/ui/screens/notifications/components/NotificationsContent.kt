@@ -13,6 +13,15 @@ import com.example.voxel_review.data.InfoNotifications.FollowSuggestionInfo
 import com.example.voxel_review.data.InfoNotifications.NotificationInfo
 import kotlin.collections.emptyList
 
+/**
+ * Contenido principal y estructurado para la pantalla de notificaciones.
+ * Organiza las notificaciones destacadas, avisos de nuevos juegos y sugerencias mediante una lista.
+ *
+ * @param highlightedNotifications Lista de notificaciones destacadas a mostrar.
+ * @param followSuggestions Lista de sugerencias de usuarios a seguir.
+ * @param onNotificationClick Callback ejecutado al presionar cualquier elemento de notificación.
+ * @param modifier Modificador para el contenedor de la lista.
+ */
 @Composable
 fun NotificationsContent(
     highlightedNotifications: List<NotificationInfo>,
