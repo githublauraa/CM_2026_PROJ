@@ -31,6 +31,7 @@ import com.example.voxel_review.ui.screens.start.StartViewModel
 import com.example.voxel_review.ui.screens.crearCuenta.CreateAccountViewModel
 import com.example.voxel_review.ui.screens.novedades.NovedadesViewModel
 import com.example.voxel_review.ui.screens.rankings.RankingsViewModel
+import com.example.voxel_review.ui.screens.review.ReviewViewModel
 import com.example.voxel_review.ui.screens.settings.SettingsViewModel
 
 /**
@@ -231,16 +232,16 @@ fun AppNavigation(
             )
         }
 
-        // Ruta que recibe el índice del juego asociado a la reseña seleccionada.
-        composable(
-            route = "${AppScreen.FullReviews.route}?juegoIndex={juegoIndex}",
+        composable( route = "${AppScreen.FullReviews.route}?juegoIndex={juegoIndex}",
             arguments = listOf(
                 navArgument("juegoIndex") {
                     type = NavType.IntType
                 }
             )
         ) {
+            val reviewViewModel: ReviewViewModel = viewModel()
             ReviewDetailScreen(
+                reviewViewModel = reviewViewModel,
                 onBackClick = {
                     navController.popBackStack()
                 },
