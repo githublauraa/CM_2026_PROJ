@@ -31,6 +31,7 @@ import com.example.voxel_review.ui.screens.start.StartViewModel
 import com.example.voxel_review.ui.screens.crearCuenta.CreateAccountViewModel
 import com.example.voxel_review.ui.screens.novedades.NovedadesViewModel
 import com.example.voxel_review.ui.screens.rankings.RankingsViewModel
+import com.example.voxel_review.ui.screens.review.ReviewViewModel
 import com.example.voxel_review.ui.screens.settings.SettingsViewModel
 
 /**
@@ -233,7 +234,9 @@ fun AppNavigation(
                 }
             )
         ) {
+            val reviewViewModel: ReviewViewModel = viewModel()
             ReviewDetailScreen(
+                reviewViewModel = reviewViewModel,
                 onBackClick = {
                     navController.popBackStack()
                 },
