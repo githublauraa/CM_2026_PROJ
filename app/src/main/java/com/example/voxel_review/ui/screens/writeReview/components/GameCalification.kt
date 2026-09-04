@@ -16,7 +16,11 @@ import com.example.voxel_review.R
 import com.example.voxel_review.ui.theme.*
 
 @Composable
-fun GameCalification(modifier: Modifier = Modifier) {
+fun GameCalification(
+    rating: Int,
+    onRatingChange: (Int) -> Unit,
+    modifier: Modifier = Modifier
+) {
     Column(
         modifier =
             modifier

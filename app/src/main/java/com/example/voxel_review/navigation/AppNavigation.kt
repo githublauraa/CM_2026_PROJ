@@ -15,7 +15,8 @@ import com.example.voxel_review.ui.screens.crearCuenta.CreateAccountScreen
 import com.example.voxel_review.ui.screens.novedades.NovedadScreen
 import com.example.voxel_review.data.LocalJuegosProvider
 import com.example.voxel_review.ui.screens.profile.ProfileScreen
-import com.example.voxel_review.ui.screens.writeReview.WriteReviewScreen
+import com.example.voxel_review.ui.screens.writeReview.WriteReviewRoute
+import com.example.voxel_review.ui.screens.writeReview.WriteReviewViewModel
 import com.example.voxel_review.ui.screens.rankings.RankingsScreen
 import com.example.voxel_review.ui.screens.Discover.DiscoverRoute
 import com.example.voxel_review.ui.screens.Discover.DiscoverViewModel
@@ -198,7 +199,7 @@ fun AppNavigation(
                     navController.navigate(AppScreen.Discover.route)
                 },
                 onWriteReviewPressed = {
-                    navController.navigate(AppScreen.WriteReview.route)
+                    navController.navigate("${AppScreen.WriteReview.route}?gameIndex=$gameIndex")
                 }
             )
         }
@@ -242,8 +243,21 @@ fun AppNavigation(
             )
         }
 
-        composable(route = AppScreen.WriteReview.route) {
-            WriteReviewScreen(
+        composable(
+            route = "${AppScreen.WriteReview.route}?gameIndex={gameIndex}",
+            arguments = listOf(
+                navArgument("gameIndex") {
+                    type = NavType.IntType
+                    defaultValue = 0
+                }
+            )
+        ) { backStackEntry ->
+            val writeReviewViewModel: WriteReviewViewModel = viewModel()
+            val gameIndex = backStackEntry.arguments?.getInt("gameIndex") ?: 0
+
+            WriteReviewRoute(
+                writeReviewViewModel = writeReviewViewModel,
+                gameIndex = gameIndex,
                 onSettingsClick = {
                     navController.navigate(AppScreen.Configuration.route)
                 },
