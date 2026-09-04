@@ -8,9 +8,6 @@ import androidx.compose.ui.Modifier
  * Punto de entrada para la ruta de detalle de juego. Se encarga del ciclo de vida y carga de datos.
  *
  * @param gameDetailViewModel ViewModel que gestiona los datos de detalle.
- * @param game Juego que se cargará en la vista.
- * @param recommendedGames Lista de juegos recomendados asociados.
- * @param navController Controlador de navegación.
  * @param modifier Modificador para el contenedor.
  * @param onBackPressed Callback para evento de regreso.
  * @param onSearchPressed Callback para apertura de buscador.

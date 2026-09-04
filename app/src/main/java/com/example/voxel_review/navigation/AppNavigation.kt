@@ -78,7 +78,7 @@ fun AppNavigation(
             StartScreen(
                 startViewModel = startViewModel,
                 logginButtonPressed = {
-                    navController.navigate(AppScreen.Reviews.route) {
+                    navController.navigate(AppScreen.RankingsUser.route) {
                         popUpTo(0) {
                             inclusive = true
                         }
@@ -96,7 +96,7 @@ fun AppNavigation(
             CreateAccountScreen(
                 createAccountViewModel = createAccountViewModel,
                 unirseButtonPressed = {
-                    navController.navigate(AppScreen.Reviews.route) {
+                    navController.navigate(AppScreen.RankingsUser.route) {
                         popUpTo(0) {
                             inclusive = true
                         }
