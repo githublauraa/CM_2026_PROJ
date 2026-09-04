@@ -1,15 +1,11 @@
 package com.example.voxel_review.ui.screens.GameDetail
 
-import android.annotation.SuppressLint
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
-import com.example.voxel_review.data.InfoGame.GameDetailInfo
 import com.example.voxel_review.data.InfoGame.LocalGameProvider
 import com.example.voxel_review.data.InfoGame.LocalGameRecomendedProvider
 import com.example.voxel_review.ui.screens.GameDetail.components.GameDetailContent
@@ -29,26 +25,19 @@ import com.example.voxel_review.ui.screens.GameDetail.components.GameDetailConte
 @Composable
 fun GameDetailRoute(
     gameDetailViewModel: GameDetailViewModel,
-    game: GameDetailInfo,
-    recommendedGames: List<GameDetailInfo>,
-    navController: NavHostController,
+    gameIndex: Int,
     modifier: Modifier = Modifier,
     onBackPressed: () -> Unit,
     onSearchPressed: () -> Unit,
     onWriteReviewPressed: () -> Unit
 ) {
-    // Carga los detalles del juego en segundo plano al iniciar la pantalla.
-    // Se reinicia automáticamente si cambian 'game' o 'recommendedGames'
-    LaunchedEffect(game, recommendedGames) {
-        gameDetailViewModel.loadGame(
-            game = game,
-            recommendedGames = recommendedGames
-        )
+
+    LaunchedEffect(gameIndex) {
+        gameDetailViewModel.loadGame(gameIndex)
     }
 
     GameDetailScreen(
         gameDetailViewModel = gameDetailViewModel,
-        navController = navController,
         onBackPressed = onBackPressed,
         onSearchPressed = onSearchPressed,
         onWriteReviewPressed = onWriteReviewPressed,
@@ -69,7 +58,6 @@ fun GameDetailRoute(
 @Composable
 fun GameDetailScreen(
     gameDetailViewModel: GameDetailViewModel,
-    navController: NavHostController,
     onBackPressed: () -> Unit,
     onSearchPressed: () -> Unit,
     onWriteReviewPressed: () -> Unit,
@@ -80,7 +68,6 @@ fun GameDetailScreen(
 
     GameDetailContent(
         state = state,
-        navController = navController,
         onBackPressed = onBackPressed,
         onSearchPressed = onSearchPressed,
         onWriteReviewPressed = onWriteReviewPressed,
@@ -97,7 +84,6 @@ fun GameDetailScreenPreview() {
             game = LocalGameProvider.starfield,
             recommendedGames = LocalGameRecomendedProvider.recommendedGames
         ),
-        navController = rememberNavController(),
         onBackPressed = {},
         onSearchPressed = {},
         onWriteReviewPressed = {}

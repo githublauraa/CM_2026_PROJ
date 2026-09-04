@@ -15,8 +15,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.example.voxel_review.data.InfoGame.LocalGameProvider
 import com.example.voxel_review.data.InfoGame.LocalGameRecomendedProvider
 import com.example.voxel_review.ui.screens.GameDetail.GameDetailState
@@ -35,7 +33,6 @@ import com.example.voxel_review.ui.theme.backgroundDark
 @Composable
 fun GameDetailContent(
     state: GameDetailState,
-    navController: NavHostController,
     onBackPressed: () -> Unit,
     onSearchPressed: () -> Unit,
     onWriteReviewPressed: () -> Unit,
@@ -130,7 +127,6 @@ fun GameDetailContentPreview() {
             game = LocalGameProvider.starfield,
             recommendedGames = LocalGameRecomendedProvider.recommendedGames
         ),
-        navController = rememberNavController(),
         onBackPressed = {},
         onSearchPressed = {},
         onWriteReviewPressed = {}

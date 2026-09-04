@@ -11,6 +11,7 @@ import com.example.voxel_review.data.InfoGame.GameDetailInfo
 data class GameDetailState(
 
     val game: GameDetailInfo? = null,
+    val allGames: List<GameDetailInfo> = emptyList(),
     val recommendedGames: List<GameDetailInfo> = emptyList()
 )
 

@@ -10,7 +10,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.voxel_review.data.InfoDiscover.LocalTrendingSearchProvider
 import com.example.voxel_review.data.InfoGame.LocalGameProvider
-import com.example.voxel_review.data.InfoGame.LocalGameRecomendedProvider
 import com.example.voxel_review.ui.screens.start.StartScreen
 import com.example.voxel_review.ui.screens.crearCuenta.CreateAccountScreen
 import com.example.voxel_review.ui.screens.novedades.NovedadScreen
@@ -191,11 +190,7 @@ fun AppNavigation(
 
             GameDetailRoute(
                 gameDetailViewModel = gameDetailViewModel,
-                game = LocalGameProvider.games.getOrElse(gameIndex) {
-                    LocalGameProvider.games.first()
-                },
-                recommendedGames = LocalGameRecomendedProvider.recommendedGames,
-                navController = navController,
+                gameIndex = gameIndex,
                 onBackPressed = {
                     navController.popBackStack()
                 },

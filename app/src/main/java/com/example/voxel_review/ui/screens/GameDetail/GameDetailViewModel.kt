@@ -1,7 +1,8 @@
 package com.example.voxel_review.ui.screens.GameDetail
 
 import androidx.lifecycle.ViewModel
-import com.example.voxel_review.data.InfoGame.GameDetailInfo
+import com.example.voxel_review.data.InfoGame.LocalGameProvider
+import com.example.voxel_review.data.InfoGame.LocalGameRecomendedProvider
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -16,28 +17,21 @@ class GameDetailViewModel : ViewModel() {
 
     val uiState: StateFlow<GameDetailState> = _uiState.asStateFlow()
 
-    fun loadGame(
-        game: GameDetailInfo,
-        recommendedGames: List<GameDetailInfo>
-    ) {
+    fun loadGame(gameIndex: Int) {
+        val game = LocalGameProvider.games.getOrElse(gameIndex) {
+            LocalGameProvider.games.first()
+        }
         _uiState.update {
             it.copy(
                 game = game,
-                recommendedGames = recommendedGames
+                recommendedGames = LocalGameRecomendedProvider.recommendedGames
             )
         }
     }
 
     fun getAllGames() {
         _uiState.update {
-            it.copy(
-                game = null,
-                recommendedGames = emptyList()
-            )
+            it.copy(allGames = LocalGameProvider.games)
         }
-    }
-
-    init {
-        getAllGames()
     }
 }
