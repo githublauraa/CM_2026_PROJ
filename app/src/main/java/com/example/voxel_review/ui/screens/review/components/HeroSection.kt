@@ -5,8 +5,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,19 +20,23 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.voxel_review.R
-import androidx.compose.ui.tooling.preview.Preview
 import com.example.voxel_review.ui.theme.Voxel_ReviewTheme
 
 /**
  * Sección principal visual con imagen promocional, degradado y etiquetas del juego evaluado.
  *
+ * @param tituloJuego Nombre del juego mostrado.
+ * @param desarrollador Nombre del desarrollador del juego.
  * @param modifier Modificador para personalizar el contenedor de la sección.
  */
 @Composable
 fun HeroSection(
+    tituloJuego: String,
+    desarrollador: String,
     modifier: Modifier = Modifier
 ) {
     Box(
@@ -90,14 +94,14 @@ fun HeroSection(
             }
 
             Text(
-                text = stringResource(R.string.chrono_sphere),
+                text = tituloJuego,
                 color = Color.White,
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold
             )
 
             Text(
-                text = stringResource(R.string.desarrollado_por),
+                text = desarrollador,
                 color = Color.LightGray,
                 fontSize = 12.sp
             )
@@ -109,6 +113,9 @@ fun HeroSection(
 @Composable
 fun HeroSectionPreview() {
     Voxel_ReviewTheme {
-        HeroSection()
+        HeroSection(
+            tituloJuego = "Chrono Sphere",
+            desarrollador = "Desarrollado por Voxel Studios"
+        )
     }
 }

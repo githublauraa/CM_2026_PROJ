@@ -2,6 +2,8 @@ package com.example.voxel_review.ui.screens.review
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -36,22 +38,30 @@ import com.example.voxel_review.ui.theme.White
 /**
  * Sección que recopila las opiniones y puntuaciones dejadas por la comunidad de usuarios.
  *
+ * @param username Nombre del usuario que realizó la reseña.
+ * @param comentario Comentario realizado por el usuario.
+ * @param rating Calificación dada por el usuario.
+ * @param onClickReview Acción ejecutada al presionar "Ver todas".
  * @param modifier Modificador para personalizar el contenedor de comentarios.
  * @param cardBackgroundColor Color de fondo aplicado a la tarjeta de comentario.
  */
 @Composable
 fun UserReviewsSection(
+    username: String,
+    comentario: String,
+    rating: Int,
+    onClickReview: () -> Unit,
     modifier: Modifier = Modifier,
     cardBackgroundColor: Color
 ) {
+
     Column(
         modifier = modifier
     ) {
 
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement =
-                androidx.compose.foundation.layout.Arrangement.SpaceBetween,
+            horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
 
@@ -65,7 +75,10 @@ fun UserReviewsSection(
             Text(
                 text = stringResource(R.string.ver_todas),
                 color = VoxelPrimary,
-                fontSize = 14.sp
+                fontSize = 14.sp,
+                modifier = Modifier.clickable {
+                    onClickReview()
+                }
             )
         }
 
@@ -111,20 +124,19 @@ fun UserReviewsSection(
 
                     Row(
                         modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement =
-                            androidx.compose.foundation.layout.Arrangement.SpaceBetween,
+                        horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
 
                         Text(
-                            text = stringResource(R.string.gamerx_pro),
+                            text = username,
                             color = White,
                             fontWeight = FontWeight.Bold,
                             fontSize = 14.sp
                         )
 
                         StarRating(
-                            rating = 4
+                            rating = rating
                         )
                     }
 
@@ -133,7 +145,7 @@ fun UserReviewsSection(
                     )
 
                     Text(
-                        text = stringResource(R.string.resena_gamerx),
+                        text = comentario,
                         color = VoxelTextSecondary,
                         fontSize = 12.sp,
                         lineHeight = 18.sp
@@ -143,10 +155,16 @@ fun UserReviewsSection(
         }
     }
 }
-@Composable
+
 @Preview
+@Composable
 fun UserReviewsSectionPreview() {
+
     UserReviewsSection(
-    cardBackgroundColor = Color.LightGray
+        username = "GamerX Pro",
+        comentario = "Una experiencia increíble. La historia y la jugabilidad destacan bastante.",
+        rating = 4,
+        onClickReview = {},
+        cardBackgroundColor = Color.LightGray
     )
 }

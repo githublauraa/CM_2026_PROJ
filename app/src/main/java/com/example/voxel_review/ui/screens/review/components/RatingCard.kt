@@ -27,9 +27,14 @@ import com.example.voxel_review.ui.theme.VoxelSecondary
  */
 @Composable
 fun RatingCard(
+    ratingGeneral: Float,
+    ratingJugabilidad: Float,
+    ratingGraficos: Float,
+    ratingHistoria: Float,
     modifier: Modifier = Modifier,
     cardBackgroundColor: Color
 ) {
+
     Card(
         modifier = modifier,
         shape = RoundedCornerShape(24.dp),
@@ -47,7 +52,7 @@ fun RatingCard(
         ) {
 
             CircularRating(
-                rating = 4.2f,
+                rating = ratingGeneral,
                 maxRating = 5,
                 color = VoxelPrimary
             )
@@ -61,21 +66,21 @@ fun RatingCard(
 
                 RatingBarItem(
                     label = stringResource(R.string.jugabilidad),
-                    value = 4.5f,
+                    value = ratingJugabilidad,
                     maxValue = 5f,
                     color = VoxelPrimary
                 )
 
                 RatingBarItem(
                     label = stringResource(R.string.graficos),
-                    value = 4.0f,
+                    value = ratingGraficos,
                     maxValue = 5f,
                     color = VoxelSecondary
                 )
 
                 RatingBarItem(
                     label = stringResource(R.string.historia),
-                    value = 4.1f,
+                    value = ratingHistoria,
                     maxValue = 5f,
                     color = VoxelAccentPurple
                 )

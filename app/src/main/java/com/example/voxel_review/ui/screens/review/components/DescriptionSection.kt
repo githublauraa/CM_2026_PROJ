@@ -21,6 +21,8 @@ import com.example.voxel_review.R
  */
 @Composable
 fun DescriptionSection(
+    titulo: String,
+    descripcion: String,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -28,7 +30,7 @@ fun DescriptionSection(
     ) {
 
         Text(
-            text = stringResource(R.string.obra_maestra),
+            text = titulo,
             color = Color.White,
             fontSize = 16.sp,
             fontWeight = FontWeight.Bold
@@ -39,7 +41,7 @@ fun DescriptionSection(
         )
 
         Text(
-            text = stringResource(R.string.descripcion_juego),
+            text = descripcion,
             color = Color.LightGray,
             fontSize = 14.sp,
             lineHeight = 20.sp
@@ -47,9 +49,12 @@ fun DescriptionSection(
     }
 }
 
-@Composable
 @Preview
+@Composable
 fun DescriptionSectionPreview() {
-    DescriptionSection()
+    DescriptionSection(
+        titulo = "Una obra maestra",
+        descripcion = "Una experiencia increíble."
+    )
 }
 
