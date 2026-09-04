@@ -31,8 +31,9 @@ fun VoxelReviewApp(
             currentRoute != AppScreen.Register.route &&
             currentRoute != AppScreen.Notifications.route &&
             currentRoute?.startsWith(AppScreen.FullReviews.route) != true &&
-            currentRoute != AppScreen.WriteReview.route &&
-            currentRoute != AppScreen.Configuration.route
+            currentRoute ?.startsWith(AppScreen.WriteReview.route) != true &&
+            currentRoute != AppScreen.Configuration.route &&
+            currentRoute ?.startsWith(AppScreen.GameDetail.route) != true
 
     Scaffold(
         bottomBar = {
