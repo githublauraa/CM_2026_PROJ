@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -21,6 +22,7 @@ import com.example.voxel_review.ui.utils.FondoPantalla
 
 @Composable
 fun ProfileScreen(
+    profileId: Int,
     profileViewModel: ProfileViewModel,
     onBackClick: () -> Unit,
     onClickImage: () -> Unit,
@@ -29,6 +31,11 @@ fun ProfileScreen(
 
     val state by profileViewModel.uiState.collectAsState()
 
+    LaunchedEffect(Unit) {
+        profileViewModel.getProfileById(profileId)
+    }
+
+    val profile = state.profile ?: return
     Box(
         modifier = modifier
         .fillMaxSize()
@@ -45,10 +52,10 @@ fun ProfileScreen(
                 onBackClick = onBackClick,
                 onClickImage = onClickImage
             )
-            Pfp(state.profiles[0].pfp)
-            UserNick(state.profiles[0].nick)
+            Pfp(profile.pfp)
+            UserNick(profile.nick)
             Location()
-            StatsPanel(state.profiles[0].resenias, state.profiles[0].promedio, state.profiles[0].likes)
+            StatsPanel(profile.resenias, profile.promedio, profile.likes)
             GameCards()
             EditButton()
         }
@@ -59,6 +66,7 @@ fun ProfileScreen(
 @Composable
 fun ProfileContentPreview() {
     ProfileScreen(
+        profileId = 1,
         profileViewModel = viewModel(),
         onBackClick = {},
         onClickImage = {}

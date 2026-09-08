@@ -13,12 +13,19 @@ class ProfileViewModel: ViewModel() {
 	private val _uiState = MutableStateFlow(ProfileState())
 	val uiState: StateFlow<ProfileState> = _uiState
 
+	fun getProfileById(id: Int) {
+		val profile = LocalProfileProvider.profiles.find {
+			it.id == id
+		}
+		_uiState.update {
+			it.copy(profile = profile)
+		}
+	}
+
 	fun getAllProfiles() {
 		_uiState.update { it.copy(profiles = LocalProfileProvider.profiles) }
 	}
 
-	init {
-		getAllProfiles()
-	}
+
 
 }

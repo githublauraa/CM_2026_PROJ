@@ -128,17 +128,25 @@ fun AppNavigation(
             )
         }
 
-        composable(route = AppScreen.PerfilUser.route) {
-            val profileViewModel: ProfileViewModel = viewModel()
+        composable(
+            route = AppScreen.PerfilUser.route,
+            arguments = listOf(
+                navArgument("profileId") {
+                    type = NavType.IntType
+                    defaultValue = 1
+                }
+            )
+        ) { backStackEntry ->
+
+            val profileId = backStackEntry.arguments?.getInt("profileId") ?: return@composable
 
             ProfileScreen(
-                profileViewModel = profileViewModel,
+                profileViewModel = viewModel(),
+                profileId = profileId,
                 onBackClick = {
                     navController.popBackStack()
                 },
-                onClickImage = {
-                    navController.navigate(AppScreen.Configuration.route)
-                }
+                onClickImage = {}
             )
         }
 
