@@ -1,10 +1,24 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
+
+    // Hilt
+    alias(libs.plugins.dagger)
+
+    // Serialization
+    alias(libs.plugins.kotlin.serialization)
+
+    // KSP
+    alias(libs.plugins.google.ksp)
+
+    // Firebase
+    alias(libs.plugins.google.services)
+    alias(libs.plugins.firebase.crashlytics)
 }
 
 android {
     namespace = "com.example.voxel_review"
+
     compileSdk {
         version = release(37)
     }
@@ -16,7 +30,8 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner =
+            "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -26,18 +41,21 @@ android {
             }
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+
     buildFeatures {
         compose = true
     }
 }
 
 dependencies {
-    implementation(platform(libs.androidx.compose.bom))
 
+    // Compose
+    implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.compose.foundation)
     implementation(libs.androidx.compose.foundation.layout)
@@ -46,25 +64,54 @@ dependencies {
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
+
+
+    // AndroidX
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
 
-    implementation("androidx.compose.ui:ui-text-google-fonts") //fonts
-    implementation("androidx.compose.material:material-icons-extended:1.6.7") //icons
-    implementation("androidx.navigation:navigation-compose:2.7.2") //navigation
-    implementation("androidx.compose.runtime:runtime-livedata:1.8.3") //livedata
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1")
+
+    // Navigation
+    implementation(libs.androidx.navigation.compose)
+
+
+    // Fonts
+    implementation("androidx.compose.ui:ui-text-google-fonts")
+
+
+    // Icons
+    implementation("androidx.compose.material:material-icons-extended")
+
+
+    // Room
     implementation(libs.androidx.room.ktx)
-    implementation(libs.androidx.ui) //viewmodel
 
-    implementation(libs.androidx.ui.graphics)
-    implementation(libs.androidx.ui.tooling.preview)
+
+    // Hilt
+    implementation(libs.dagger.hilt)
+    implementation(libs.hilt.compose.navigation)
+
+    // Hilt Compiler con KSP
+    ksp(libs.dagger.compiler)
+
+
+    // Firebase
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.firestore)
+    implementation(libs.firebase.auth)
+    implementation(libs.firebase.crashlytics)
+    implementation(libs.firebase.analytics)
+
+
+    // Tests
     testImplementation(libs.junit)
+
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.junit)
+
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     debugImplementation(libs.androidx.compose.ui.tooling)
-    debugImplementation(libs.androidx.ui.tooling)
 }

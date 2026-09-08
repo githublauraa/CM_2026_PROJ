@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "235871661737",
+    "project_id": "voxelreview-78caf",
+    "storage_bucket": "voxelreview-78caf.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:235871661737:android:f01bcd96100e539651c3b8",
+        "android_client_info": {
+          "package_name": "com.example.voxel_review"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAevSnyAu-9zmdFXK4xxNLjkkEUy6EsX48"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
