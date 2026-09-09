@@ -92,7 +92,7 @@ fun StartScreen(
 
         StartScreenContent(
             state = state,
-            onUserNameChange = startViewModel::updateUsername,
+            onUserNameChange = startViewModel::updateCorreo,
             onPasswordChange = startViewModel::updatePassword,
             onMostrarContrasenaChange = startViewModel::updateMostrarContrasena,
             logginButtonPressed = {

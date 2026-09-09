@@ -43,7 +43,7 @@ fun LoginForm(
         )
 
         MensajeUsuario(
-            tipo = stringResource(R.string.usuario)
+            tipo = "Correo electrónico"
         )
 
         Spacer(
@@ -51,7 +51,7 @@ fun LoginForm(
         )
 
         CampoUsuario(
-            usuario = state.usuario,
+            usuario = state.correo,
             onUserChange = onUserNameChange,
             icono = R.drawable.imagen_login_user,
             modifier = Modifier

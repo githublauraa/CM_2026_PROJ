@@ -3,6 +3,7 @@ package com.example.voxel_review.navigation
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.compose.ui.Modifier
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -73,7 +74,7 @@ fun AppNavigation(
     ) {
 
         composable(route = AppScreen.Start.route) {
-            val startViewModel: StartViewModel = viewModel()
+            val startViewModel: StartViewModel = hiltViewModel()
 
             StartScreen(
                 startViewModel = startViewModel,
@@ -91,7 +92,7 @@ fun AppNavigation(
         }
 
         composable(route = AppScreen.Register.route) {
-            val createAccountViewModel: CreateAccountViewModel = viewModel()
+            val createAccountViewModel: CreateAccountViewModel = hiltViewModel()
 
             CreateAccountScreen(
                 createAccountViewModel = createAccountViewModel,
@@ -106,7 +107,7 @@ fun AppNavigation(
         }
 
         composable(route = AppScreen.Reviews.route) {
-            val novedadesViewModel: NovedadesViewModel = viewModel()
+            val novedadesViewModel: NovedadesViewModel = hiltViewModel()
 
             NovedadScreen(
                 novedadesViewModel,
@@ -141,7 +142,7 @@ fun AppNavigation(
             val profileId = backStackEntry.arguments?.getInt("profileId") ?: return@composable
 
             ProfileScreen(
-                profileViewModel = viewModel(),
+                profileViewModel = hiltViewModel(),
                 profileId = profileId,
                 onBackClick = {
                     navController.popBackStack()
@@ -151,7 +152,7 @@ fun AppNavigation(
         }
 
         composable(route = AppScreen.Configuration.route) {
-            val settingsViewModel: SettingsViewModel = viewModel()
+            val settingsViewModel: SettingsViewModel = hiltViewModel()
             SettingsRoute(
                 settingsViewModel = settingsViewModel,
                 onBackClick = {
@@ -161,7 +162,7 @@ fun AppNavigation(
         }
 
         composable(route = AppScreen.Discover.route) {
-            val discoverViewModel: DiscoverViewModel = viewModel()
+            val discoverViewModel: DiscoverViewModel = hiltViewModel()
 
             DiscoverScreen(
                 discoverViewModel = discoverViewModel,
@@ -194,7 +195,7 @@ fun AppNavigation(
             )
         ) { backStackEntry ->
 
-            val gameDetailViewModel: GameDetailViewModel = viewModel()
+            val gameDetailViewModel: GameDetailViewModel = hiltViewModel()
             val gameIndex =
                 backStackEntry.arguments?.getInt("gameIndex") ?: 0
 
@@ -214,7 +215,7 @@ fun AppNavigation(
         }
 
         composable(route = AppScreen.RankingsUser.route) {
-            val rankingsViewModel: RankingsViewModel = viewModel()
+            val rankingsViewModel: RankingsViewModel = hiltViewModel()
 
             RankingsScreen(
                 rankingsViewModel = rankingsViewModel
@@ -222,7 +223,7 @@ fun AppNavigation(
         }
 
         composable(route = AppScreen.Notifications.route) {
-            val notificationsViewModel: NotificationsViewModel = viewModel()
+            val notificationsViewModel: NotificationsViewModel = hiltViewModel()
 
             NotificationContent(
                 notificationsViewModel = notificationsViewModel,
@@ -242,7 +243,7 @@ fun AppNavigation(
                 }
             )
         ) {
-            val reviewViewModel: ReviewViewModel = viewModel()
+            val reviewViewModel: ReviewViewModel = hiltViewModel()
             ReviewDetailScreen(
                 reviewViewModel = reviewViewModel,
                 onBackClick = {
@@ -263,7 +264,7 @@ fun AppNavigation(
                 }
             )
         ) { backStackEntry ->
-            val writeReviewViewModel: WriteReviewViewModel = viewModel()
+            val writeReviewViewModel: WriteReviewViewModel = hiltViewModel()
             val gameIndex = backStackEntry.arguments?.getInt("gameIndex") ?: 0
 
             WriteReviewRoute(

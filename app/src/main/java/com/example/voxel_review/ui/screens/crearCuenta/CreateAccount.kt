@@ -30,7 +30,6 @@ import com.example.voxel_review.ui.screens.crearCuenta.components.FomulariosCrea
 @Composable
 fun CreateAccountContent(
     state: CreateAccountState,
-    onUserNameChange: (String) -> Unit,
     onEmailChange: (String) -> Unit,
     onPasswordChange: (String) -> Unit,
     onTerminosAceptadosChange: () -> Unit,
@@ -47,7 +46,6 @@ fun CreateAccountContent(
 
         FomulariosCreateAcount(
             state = state,
-            onUserNameChange = onUserNameChange,
             onEmailChange = onEmailChange,
             onPasswordChange = onPasswordChange,
             onMostrarContrasenaChange = onMostrarContrasenaChange,
@@ -82,7 +80,6 @@ fun CreateAccountScreen(
 
         CreateAccountContent(
             state = state,
-            onUserNameChange = createAccountViewModel::updateUsername,
             onEmailChange = createAccountViewModel::updateEmail,
             onPasswordChange = createAccountViewModel::updatePassword,
             onTerminosAceptadosChange = createAccountViewModel::updateTerminosAceptados,

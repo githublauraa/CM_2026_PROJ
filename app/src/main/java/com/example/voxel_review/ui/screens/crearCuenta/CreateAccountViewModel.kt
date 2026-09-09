@@ -1,15 +1,22 @@
 package com.example.voxel_review.ui.screens.crearCuenta
 
 import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
-
+import jakarta.inject.Inject
+import com.example.voxel_review.data.repository.AuthRepository
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
 /**
  * ViewModel encargado de administrar el estado y la lógica
  * de la pantalla de creación de cuenta.
  */
-class CreateAccountViewModel : ViewModel() {
+@HiltViewModel
+class CreateAccountViewModel @Inject constructor(
+    private val authRepository: AuthRepository
+): ViewModel() {
 
     // Estado interno modificable únicamente desde el ViewModel.
     private val _uiState = MutableStateFlow(CreateAccountState())
@@ -17,14 +24,6 @@ class CreateAccountViewModel : ViewModel() {
     // Estado público de solo lectura que puede observar la interfaz.
     val uiState: StateFlow<CreateAccountState> = _uiState
 
-    /**
-     * Actualiza el nombre de usuario ingresado.
-     */
-    fun updateUsername(input: String) {
-        _uiState.update {
-            it.copy(userName = input)
-        }
-    }
 
     /**
      * Actualiza el correo electrónico ingresado.
@@ -72,7 +71,6 @@ class CreateAccountViewModel : ViewModel() {
 
         // Verifica que los campos obligatorios tengan información.
         if (
-            _uiState.value.userName.isEmpty() ||
             _uiState.value.email.isEmpty()
         ) {
             _uiState.update {
@@ -102,12 +100,16 @@ class CreateAccountViewModel : ViewModel() {
             }
             return false
         }
+        viewModelScope.launch {
+            try {
+                authRepository.signUp(_uiState.value.email, _uiState.value.password)
+            }catch (e: Exception){
+                _uiState.update{
+                    it.copy(errorMessage = e.message.toString())
+                }
+            }
 
-        // Si todas las validaciones son correctas, elimina cualquier error anterior.
-        _uiState.update {
-            it.copy(errorMessage = "")
         }
-
         return true
     }
 }

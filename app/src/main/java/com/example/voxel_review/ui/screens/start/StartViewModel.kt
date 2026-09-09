@@ -1,15 +1,17 @@
 package com.example.voxel_review.ui.screens.start
 
 import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
-
+import jakarta.inject.Inject
 /**
  * ViewModel encargado de administrar el estado y la lógica
  * de la pantalla de inicio de sesión.
  */
-class StartViewModel : ViewModel() {
+@HiltViewModel
+class StartViewModel @Inject constructor(): ViewModel() {
 
     // Estado interno modificable únicamente desde el ViewModel.
     private val _uiState = MutableStateFlow(StartState())
@@ -22,9 +24,9 @@ class StartViewModel : ViewModel() {
      *
      * @param input Nuevo valor del nombre de usuario.
      */
-    fun updateUsername(input: String) {
+    fun updateCorreo(input: String) {
         _uiState.update {
-            it.copy(usuario = input)
+            it.copy(correo = input)
         }
     }
 
@@ -55,7 +57,7 @@ class StartViewModel : ViewModel() {
      */
     fun login(): Boolean {
         if (
-            _uiState.value.usuario.isEmpty() ||
+            _uiState.value.correo.isEmpty() ||
             _uiState.value.password.isEmpty()
         ) {
             _uiState.update {

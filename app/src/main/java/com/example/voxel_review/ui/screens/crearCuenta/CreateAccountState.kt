@@ -13,7 +13,6 @@ package com.example.voxel_review.ui.screens.crearCuenta
  * @param errorMessage Mensaje de error generado durante la validación.
  */
 data class CreateAccountState(
-    val userName: String = "",
     val email: String = "",
     val password: String = "",
     val mostrarContrasena: Boolean = false,

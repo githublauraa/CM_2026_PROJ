@@ -31,7 +31,6 @@ import com.example.voxel_review.ui.utils.CampoContrasena
  * Muestra los campos de usuario, correo, contraseña, términos y el botón de registro.
  *
  * @param state Estado actual de la pantalla de creación de cuenta.
- * @param onUserNameChange Acción ejecutada cuando cambia el nombre de usuario.
  * @param onEmailChange Acción ejecutada cuando cambia el correo electrónico.
  * @param onPasswordChange Acción ejecutada cuando cambia la contraseña.
  * @param onMostrarContrasenaChange Acción para mostrar u ocultar la contraseña.
@@ -42,7 +41,6 @@ import com.example.voxel_review.ui.utils.CampoContrasena
 @Composable
 fun FomulariosCreateAcount(
     state: CreateAccountState,
-    onUserNameChange: (String) -> Unit,
     onEmailChange: (String) -> Unit,
     onPasswordChange: (String) -> Unit,
     onMostrarContrasenaChange: () -> Unit,
@@ -66,15 +64,6 @@ fun FomulariosCreateAcount(
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        FormularioCreateAccount(
-            value = state.userName,
-            icono = R.drawable.img_username,
-            placeholder = "username",
-            onValueChange = onUserNameChange,
-            modifier = Modifier
-                .width(330.dp)
-                .height(50.dp)
-        )
 
         Spacer(modifier = Modifier.height(16.dp))
 

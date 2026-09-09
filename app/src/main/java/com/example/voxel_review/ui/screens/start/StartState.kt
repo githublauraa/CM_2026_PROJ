@@ -11,7 +11,7 @@ package com.example.voxel_review.ui.screens.start
  * @param errorMessage Mensaje de error generado durante la validación.
  */
 data class StartState(
-    val usuario: String = "",
+    val correo: String = "",
     val password: String = "",
     val mostrarContrasena: Boolean = false,
     val errorMessage: String = ""

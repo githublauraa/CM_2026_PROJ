@@ -2,12 +2,14 @@ package com.example.voxel_review.ui.screens.writeReview
 
 import androidx.lifecycle.ViewModel
 import com.example.voxel_review.data.InfoGame.LocalGameProvider
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
-
-class WriteReviewViewModel : ViewModel() {
+import jakarta.inject.Inject
+@HiltViewModel
+class WriteReviewViewModel @Inject constructor(): ViewModel() {
 
     private val _uiState = MutableStateFlow(WriteReviewState())
     val uiState: StateFlow<WriteReviewState> = _uiState.asStateFlow()
