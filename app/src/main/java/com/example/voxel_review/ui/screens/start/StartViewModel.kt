@@ -1,17 +1,23 @@
 package com.example.voxel_review.ui.screens.start
 
 import androidx.lifecycle.ViewModel
+import com.example.voxel_review.data.repository.AuthRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import jakarta.inject.Inject
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
+
 /**
  * ViewModel encargado de administrar el estado y la lógica
  * de la pantalla de inicio de sesión.
  */
 @HiltViewModel
-class StartViewModel @Inject constructor(): ViewModel() {
+class StartViewModel @Inject constructor(
+    private val authRepository: AuthRepository
+): ViewModel() {
 
     // Estado interno modificable únicamente desde el ViewModel.
     private val _uiState = MutableStateFlow(StartState())
@@ -72,12 +78,16 @@ class StartViewModel @Inject constructor(): ViewModel() {
             }
             return false
         }
+        viewModelScope.launch{
+            try{
+                authRepository.signIn(_uiState.value.correo, _uiState.value.password)
+            }catch (e: Exception){
+                _uiState.update {
+                    it.copy(errorMessage = e.message.toString())
+                }
 
-        // Limpia cualquier mensaje de error cuando la validación es correcta.
-        _uiState.update {
-            it.copy(errorMessage = "")
+            }
         }
-
         return true
     }
 }

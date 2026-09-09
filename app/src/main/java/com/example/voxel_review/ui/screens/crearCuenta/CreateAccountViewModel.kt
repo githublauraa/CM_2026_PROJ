@@ -103,6 +103,7 @@ class CreateAccountViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 authRepository.signUp(_uiState.value.email, _uiState.value.password)
+
             }catch (e: Exception){
                 _uiState.update{
                     it.copy(errorMessage = e.message.toString())
