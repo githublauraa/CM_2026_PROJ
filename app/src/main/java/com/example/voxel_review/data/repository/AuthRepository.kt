@@ -17,7 +17,7 @@ class AuthRepository @Inject constructor(
         authRemoteDataSource.signUp(email,password)
     }
 
-    fun singOut(){
+    fun logOut(){
         authRemoteDataSource.signOut()
     }
 }

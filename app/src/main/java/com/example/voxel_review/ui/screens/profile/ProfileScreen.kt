@@ -14,18 +14,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.voxel_review.data.profile.LocalProfileProvider
+import androidx.compose.foundation.rememberScrollState
 import com.example.voxel_review.ui.screens.profile.components.*
 import com.example.voxel_review.ui.theme.VoxelBackground
-import com.example.voxel_review.ui.utils.DiscoverBottomNavigationBar
-import com.example.voxel_review.ui.utils.FondoPantalla
-
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.verticalScroll
 @Composable
 fun ProfileScreen(
     profileId: Int,
     profileViewModel: ProfileViewModel,
     onBackClick: () -> Unit,
     onClickImage: () -> Unit,
+    buttonLogOutPressed: () -> Unit,
     modifier: Modifier = Modifier
 ) {
 
@@ -38,15 +39,16 @@ fun ProfileScreen(
     val profile = state.profile ?: return
     Box(
         modifier = modifier
-        .fillMaxSize()
-        .background(VoxelBackground)
+            .fillMaxSize()
+            .background(VoxelBackground)
     ) {
 
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .align(Alignment.TopCenter)
-                .padding(bottom = 70.dp)
+                .padding(bottom = 70.dp).
+                verticalScroll(rememberScrollState())
         ) {
             TopBar(
                 onBackClick = onBackClick,
@@ -58,6 +60,13 @@ fun ProfileScreen(
             StatsPanel(profile.resenias, profile.promedio, profile.likes)
             GameCards()
             EditButton()
+            Spacer(modifier = Modifier.height(5.dp))
+            ButtonLogOut(
+                buttonLogOutPressed = {
+                    profileViewModel.logOut()
+                    buttonLogOutPressed()
+                }
+            )
         }
     }
 }
@@ -69,6 +78,7 @@ fun ProfileContentPreview() {
         profileId = 1,
         profileViewModel = viewModel(),
         onBackClick = {},
-        onClickImage = {}
+        onClickImage = {},
+        buttonLogOutPressed = {}
     )
 }

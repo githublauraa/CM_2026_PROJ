@@ -22,6 +22,7 @@ import com.example.voxel_review.ui.screens.rankings.RankingsScreen
 import com.example.voxel_review.ui.screens.Discover.DiscoverViewModel
 import com.example.voxel_review.ui.screens.GameDetail.GameDetailContent
 import com.example.voxel_review.ui.screens.GameDetail.GameDetailViewModel
+import com.example.voxel_review.ui.screens.Splash.SplashScreen
 import com.example.voxel_review.ui.screens.notifications.NotificationsViewModel
 import com.example.voxel_review.ui.screens.review.ReviewDetailScreen
 import com.example.voxel_review.ui.screens.settings.SettingsRoute
@@ -34,13 +35,14 @@ import com.example.voxel_review.ui.screens.novedades.NovedadesViewModel
 import com.example.voxel_review.ui.screens.rankings.RankingsViewModel
 import com.example.voxel_review.ui.screens.review.ReviewViewModel
 import com.example.voxel_review.ui.screens.settings.SettingsViewModel
-
+import com.example.voxel_review.ui.screens.Splash.SplashViewModel
 /**
  * Define las rutas disponibles dentro de la navegación de la aplicación.
  *
  * @param route Identificador utilizado por Navigation Compose para cada pantalla.
  */
 sealed class AppScreen(val route: String) {
+    object Splash : AppScreen("splash")
     object Start : AppScreen("start")
     object Register : AppScreen("register")
     object Reviews : AppScreen("reviews")
@@ -69,9 +71,29 @@ fun AppNavigation(
 ) {
     NavHost(
         navController = navController,
-        startDestination = AppScreen.Start.route,
+        startDestination = AppScreen.Splash.route,
         modifier = modifier
     ) {
+
+        composable(route = AppScreen.Splash.route){
+            SplashScreen(
+                splashViewModel = hiltViewModel(),
+                onNavigateHome = {
+                    navController.navigate(AppScreen.RankingsUser.route) {
+                        popUpTo(0) {
+                            inclusive = true
+                        }
+                    }
+                },
+                onNavigateStart = {
+                    navController.navigate(AppScreen.Start.route) {
+                        popUpTo(0) {
+                            inclusive = true
+                        }
+                    }
+                }
+            )
+        }
 
         composable(route = AppScreen.Start.route) {
             val startViewModel: StartViewModel = hiltViewModel()
@@ -147,7 +169,15 @@ fun AppNavigation(
                 onBackClick = {
                     navController.popBackStack()
                 },
-                onClickImage = {}
+                onClickImage = {
+                },
+                buttonLogOutPressed = {
+                    navController.navigate(AppScreen.Start.route){
+                        popUpTo(0) {
+                            inclusive = true
+                        }
+                    }
+                }
             )
         }
 

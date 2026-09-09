@@ -6,5 +6,6 @@ import com.example.voxel_review.data.profile.Profile
 
 data class ProfileState(
 	val profiles: List<Profile> = emptyList(),
-	val profile: Profile? = null
+	val profile: Profile? = null,
+	val email: String =""
 )
