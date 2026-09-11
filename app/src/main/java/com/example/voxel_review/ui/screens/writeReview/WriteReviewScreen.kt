@@ -13,6 +13,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.voxel_review.data.InfoGame.LocalGameProvider
 import com.example.voxel_review.ui.screens.writeReview.components.BotonPublicarReview
 import com.example.voxel_review.ui.screens.writeReview.components.GameCalification
@@ -99,7 +101,7 @@ fun WriteReviewScreen(
 @Preview
 fun WriteReviewScreenPreview() {
     WriteReviewScreen(
-        writeReviewViewModel = WriteReviewViewModel(),
+        writeReviewViewModel = viewModel(),
         onBackClick = {},
         onSettingsClick = {}
     )

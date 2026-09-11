@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import com.example.voxel_review.ui.utils.FondoPantalla
 import androidx.compose.ui.unit.dp
@@ -73,6 +74,13 @@ fun CreateAccountScreen(
     // Convierte el StateFlow del ViewModel en un estado observable por Compose.
     val state by createAccountViewModel.uiState.collectAsState()
 
+    // Navega automáticamente cuando el registro es exitoso.
+    LaunchedEffect(state.isRegistrationSuccessful) {
+        if (state.isRegistrationSuccessful) {
+            unirseButtonPressed()
+        }
+    }
+
     Box(
         modifier = modifier.fillMaxWidth()
     ) {
@@ -84,14 +92,7 @@ fun CreateAccountScreen(
             onPasswordChange = createAccountViewModel::updatePassword,
             onTerminosAceptadosChange = createAccountViewModel::updateTerminosAceptados,
             onMostrarContrasenaChange = createAccountViewModel::updateMostrarContrasena,
-
-            // Solo continúa con la acción externa si la validación es correcta.
-            unirseButtonPressed = {
-                if (createAccountViewModel.createAcount()) {
-                    unirseButtonPressed()
-                }
-            },
-
+            unirseButtonPressed = { createAccountViewModel.createAcount() },
             modifier = modifier.fillMaxWidth()
         )
     }
