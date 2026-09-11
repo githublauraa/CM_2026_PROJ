@@ -64,9 +64,10 @@ class CreateAccountViewModel @Inject constructor(
     /**
      * Valida los datos necesarios para crear una cuenta.
      * Si encuentra un error, actualiza el mensaje mostrado en la interfaz.
-     * Si es exitoso, actualiza el estado de registro exitoso.
+     *
+     * @return `true` si los datos son válidos, `false` en caso contrario.
      */
-    fun createAcount() {
+    fun createAcount(): Boolean {
 
         // Verifica que los campos obligatorios tengan información.
         if (
@@ -77,7 +78,7 @@ class CreateAccountViewModel @Inject constructor(
                     errorMessage = "Por favor, completa todos los campos"
                 )
             }
-            return
+            return false
         }
 
         // Verifica la longitud mínima de la contraseña.
@@ -87,7 +88,7 @@ class CreateAccountViewModel @Inject constructor(
                     errorMessage = "La contraseña debe tener al menos 6 caracteres"
                 )
             }
-            return
+            return false
         }
 
         // Verifica que el usuario haya aceptado los términos y condiciones.
@@ -97,20 +98,19 @@ class CreateAccountViewModel @Inject constructor(
                     errorMessage = "Por favor, acepta los términos y condiciones"
                 )
             }
-            return
+            return false
         }
         viewModelScope.launch {
             try {
                 authRepository.signUp(_uiState.value.email, _uiState.value.password)
-                _uiState.update {
-                    it.copy(isRegistrationSuccessful = true)
-                }
-            } catch (e: Exception){
+
+            }catch (e: Exception){
                 _uiState.update{
                     it.copy(errorMessage = e.message.toString())
                 }
             }
 
         }
+        return true
     }
 }

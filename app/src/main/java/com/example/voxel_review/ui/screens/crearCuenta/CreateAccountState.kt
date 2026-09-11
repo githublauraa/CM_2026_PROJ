@@ -17,6 +17,5 @@ data class CreateAccountState(
     val password: String = "",
     val mostrarContrasena: Boolean = false,
     val terminosAceptados: Boolean = false,
-    val errorMessage: String = "",
-    val isRegistrationSuccessful: Boolean = false
+    val errorMessage: String = ""
 )
