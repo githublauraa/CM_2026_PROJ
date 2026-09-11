@@ -96,8 +96,7 @@ fun StartScreen(
             onPasswordChange = startViewModel::updatePassword,
             onMostrarContrasenaChange = startViewModel::updateMostrarContrasena,
             logginButtonPressed = {
-                // Solo continúa si los datos de inicio de sesión son válidos.
-                if (startViewModel.login()) {
+                startViewModel.login {
                     logginButtonPressed()
                 }
             },

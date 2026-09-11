@@ -67,50 +67,52 @@ class CreateAccountViewModel @Inject constructor(
      *
      * @return `true` si los datos son válidos, `false` en caso contrario.
      */
-    fun createAcount(): Boolean {
+    fun createAcount(onSuccess: () -> Unit) {
 
-        // Verifica que los campos obligatorios tengan información.
-        if (
-            _uiState.value.email.isEmpty()
-        ) {
+        if (_uiState.value.email.isEmpty()) {
             _uiState.update {
                 it.copy(
                     errorMessage = "Por favor, completa todos los campos"
                 )
             }
-            return false
+            return
         }
 
-        // Verifica la longitud mínima de la contraseña.
         if (_uiState.value.password.length < 6) {
             _uiState.update {
                 it.copy(
                     errorMessage = "La contraseña debe tener al menos 6 caracteres"
                 )
             }
-            return false
+            return
         }
 
-        // Verifica que el usuario haya aceptado los términos y condiciones.
         if (!_uiState.value.terminosAceptados) {
             _uiState.update {
                 it.copy(
                     errorMessage = "Por favor, acepta los términos y condiciones"
                 )
             }
-            return false
+            return
         }
+
         viewModelScope.launch {
             try {
-                authRepository.signUp(_uiState.value.email, _uiState.value.password)
+                authRepository.signUp(
+                    _uiState.value.email,
+                    _uiState.value.password
+                )
 
-            }catch (e: Exception){
-                _uiState.update{
-                    it.copy(errorMessage = e.message.toString())
+                // Solo navega si Firebase respondió correctamente
+                onSuccess()
+
+            } catch (e: Exception) {
+                _uiState.update {
+                    it.copy(
+                        errorMessage = e.message ?: "Error al crear la cuenta"
+                    )
                 }
             }
-
         }
-        return true
     }
 }

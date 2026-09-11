@@ -61,7 +61,7 @@ class StartViewModel @Inject constructor(
      *
      * @return `true` si los datos son válidos o `false` si existe algún error.
      */
-    fun login(): Boolean {
+    fun login(onSuccess: () -> Unit) {
         if (
             _uiState.value.correo.isEmpty() ||
             _uiState.value.password.isEmpty()
@@ -69,25 +69,32 @@ class StartViewModel @Inject constructor(
             _uiState.update {
                 it.copy(errorMessage = "Por favor, completa todos los campos")
             }
-            return false
+            return
         }
 
         if (_uiState.value.password.length < 6) {
             _uiState.update {
                 it.copy(errorMessage = "La contraseña debe ser minimo de 6 caracteres")
             }
-            return false
+            return
         }
-        viewModelScope.launch{
-            try{
-                authRepository.signIn(_uiState.value.correo, _uiState.value.password)
-            }catch (e: Exception){
-                _uiState.update {
-                    it.copy(errorMessage = e.message.toString())
-                }
 
+        viewModelScope.launch {
+            try {
+                authRepository.signIn(
+                    _uiState.value.correo,
+                    _uiState.value.password
+                )
+
+                onSuccess()
+
+            } catch (e: Exception) {
+                _uiState.update {
+                    it.copy(
+                        errorMessage = e.message ?: "Credenciales incorrectas"
+                    )
+                }
             }
         }
-        return true
     }
 }

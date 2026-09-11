@@ -87,7 +87,7 @@ fun CreateAccountScreen(
 
             // Solo continúa con la acción externa si la validación es correcta.
             unirseButtonPressed = {
-                if (createAccountViewModel.createAcount()) {
+                createAccountViewModel.createAcount {
                     unirseButtonPressed()
                 }
             },
