@@ -19,7 +19,7 @@ import com.example.voxel_review.R
 import com.example.voxel_review.ui.screens.profile.ProfileState
 @Composable
 fun Pfp(
-    profileImage: Uri?,
+    profileImage: String?,
     modifier: Modifier = Modifier
 ){
     AsyncImage(
@@ -28,9 +28,14 @@ fun Pfp(
             .data(profileImage)
             .crossfade(true)
             .build(),
-        error = painterResource(id = R.drawable.ic_broken_image),
+
+        fallback = painterResource(id = R.drawable.imagen_login_user),
         placeholder = painterResource(id = R.drawable.loading_img),
+        error = painterResource(id = R.drawable.imagen_login_user),
+
         contentScale = ContentScale.Crop,
-        modifier = Modifier.size(200.dp).clip(CircleShape)
+        modifier = Modifier
+            .size(200.dp)
+            .clip(CircleShape)
     )
 }

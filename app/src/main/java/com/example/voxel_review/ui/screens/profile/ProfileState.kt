@@ -9,5 +9,5 @@ data class ProfileState(
 	val profiles: List<Profile> = emptyList(),
 	val profile: Profile? = null,
 	val email: String ="",
-	val profileImageUrl: Uri ? = null
+	val profileImageUrl: String ? = null
 )

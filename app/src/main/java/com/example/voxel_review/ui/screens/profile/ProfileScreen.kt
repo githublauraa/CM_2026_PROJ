@@ -45,7 +45,7 @@ fun ProfileScreen(
 
     ProfileContent(
         state = state,
-        onImageSelected = { profileViewModel.updateProfileImage(it) },
+        onImageSelected = { profileViewModel.uploadImageFireBase(it) },
         onBackClick = onBackClick,
         onClickImage = onClickImage,
         buttonLogOutPressed = {
