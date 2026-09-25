@@ -15,4 +15,6 @@ object FirebaseHiltModule {
 
     @Provides
     fun auth(): FirebaseAuth = Firebase.auth
+
+
 }
