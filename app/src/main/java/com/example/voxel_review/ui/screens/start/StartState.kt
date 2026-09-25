@@ -14,5 +14,6 @@ data class StartState(
     val correo: String = "",
     val password: String = "",
     val mostrarContrasena: Boolean = false,
-    val errorMessage: String = ""
+    val errorMessage: String = "",
+    val mostrarMensaje: Boolean = false
 )

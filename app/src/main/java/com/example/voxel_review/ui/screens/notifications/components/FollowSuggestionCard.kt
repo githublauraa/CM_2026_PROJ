@@ -1,6 +1,5 @@
 package com.example.voxel_review.ui.screens.notifications.components
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -31,6 +30,7 @@ import com.example.voxel_review.data.InfoNotifications.LocalSugerenciasProvider
 import com.example.voxel_review.ui.theme.primaryContainerDark
 import com.example.voxel_review.ui.theme.secondaryDark
 import com.example.voxel_review.ui.theme.tertiaryDark
+import com.example.voxel_review.ui.utils.ProfileImage
 
 /**
  * Tarjeta que muestra la sugerencia de un usuario para seguir dentro de la aplicación.
@@ -60,12 +60,10 @@ fun FollowSuggestionCard(
             .padding(horizontal = 12.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Image(
-            painter = painterResource(suggestion.imageResId),
-            contentDescription = null,
-            modifier = Modifier
-                .size(32.dp)
-                .clip(RoundedCornerShape(8.dp))
+
+        ProfileImage(
+            profileImage = suggestion.imageUrl,
+            size = 32
         )
 
         Spacer(modifier = Modifier.width(10.dp))
@@ -96,6 +94,7 @@ fun FollowSuggestionCard(
         )
     }
 }
+
 @Preview
 @Composable
 fun FollowSuggestionCardPreview() {
@@ -103,5 +102,4 @@ fun FollowSuggestionCardPreview() {
         suggestion = LocalSugerenciasProvider.sugerenciasSeguimiento.first(),
         onClick = {}
     )
-
 }

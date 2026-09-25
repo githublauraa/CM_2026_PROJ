@@ -8,7 +8,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.voxel_review.R
 import com.example.voxel_review.data.InfoDiscover.LocalGenreProvider
 import com.example.voxel_review.data.InfoGame.GameDetailInfo
 
@@ -45,7 +44,7 @@ fun GameHeader(
 fun GameHeaderPreview() {
 
     val game = GameDetailInfo(
-        banner = R.drawable.banner_games,
+        banner = "",
         nombre = "STARFIELD",
         descripcion = "",
         desarrollador = "Bethesda",
@@ -55,7 +54,7 @@ fun GameHeaderPreview() {
             LocalGenreProvider.generos.first { it.id == "2" },
             LocalGenreProvider.generos.first { it.id == "3" },
         ),
-        imagen = R.drawable.banner_games
+        imagen = ""
     )
 
     GameHeader(

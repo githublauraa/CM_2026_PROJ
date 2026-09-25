@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.update
 import jakarta.inject.Inject
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-
+import android.util.Log.e
 /**
  * ViewModel encargado de administrar el estado y la lógica
  * de la pantalla de inicio de sesión.
@@ -80,21 +80,22 @@ class StartViewModel @Inject constructor(
         }
 
         viewModelScope.launch {
-            try {
-                authRepository.signIn(
+
+            val result = authRepository.signIn(
                     _uiState.value.correo,
                     _uiState.value.password
                 )
 
+            if (result.isSuccess) {
                 onSuccess()
-
-            } catch (e: Exception) {
+            }else{
                 _uiState.update {
-                    it.copy(
-                        errorMessage = e.message ?: "Credenciales incorrectas"
-                    )
+                    val mensaje = result.exceptionOrNull()?.message?: "Error al inciar sesión"
+                    it.copy(errorMessage = mensaje, mostrarMensaje = true)
                 }
+
             }
+
         }
     }
 }

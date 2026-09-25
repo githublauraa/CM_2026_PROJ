@@ -2,6 +2,8 @@ package com.example.voxel_review.data.repository
 
 import jakarta.inject.Inject
 import com.example.voxel_review.data.dataSource.AuthRemoteDataSource
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.auth.FirebaseUser
 
 class AuthRepository @Inject constructor(
@@ -9,12 +11,32 @@ class AuthRepository @Inject constructor(
 ) {
     val currentUser: FirebaseUser? = authRemoteDataSource.currentUser
 
-    suspend fun signIn(email:String, password: String){
-        authRemoteDataSource.signIn(email,password)
+    suspend fun signIn(email:String, password: String): Result<Unit>{
+        try {
+            authRemoteDataSource.signIn(email,password)
+            return Result.success(Unit)
+        }
+        catch (e: FirebaseAuthInvalidCredentialsException){
+            return Result.failure(Exception("Credenciales incorrectas"))
+        }
+        catch (e: FirebaseAuthInvalidUserException){
+            return Result.failure(Exception("Usuario no existe"))
+        }
+        catch (e: Exception){
+            return Result.failure(e)
+        }
+
     }
 
-    suspend fun signUp(email: String, password: String){
-        authRemoteDataSource.signUp(email,password)
+    suspend fun signUp(email: String, password: String): Result<Unit>{
+        try{
+            authRemoteDataSource.signUp(email,password)
+            return Result.success(Unit)
+        }
+        catch (e: Exception){
+            return Result.failure(Exception("Error al iniciar sesion"))
+        }
+
     }
 
     fun logOut(){

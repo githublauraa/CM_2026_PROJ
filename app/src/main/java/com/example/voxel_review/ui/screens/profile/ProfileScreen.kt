@@ -13,13 +13,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.foundation.rememberScrollState
 import com.example.voxel_review.ui.screens.profile.components.*
 import com.example.voxel_review.ui.theme.VoxelBackground
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.verticalScroll
+import com.example.voxel_review.R
+import com.example.voxel_review.data.profile.Profile
+import android.net.Uri
+import com.example.voxel_review.ui.utils.ProfileImage
 @Composable
 fun ProfileScreen(
     profileId: Int,
@@ -32,11 +35,35 @@ fun ProfileScreen(
 
     val state by profileViewModel.uiState.collectAsState()
 
-    LaunchedEffect(Unit) {
+    LaunchedEffect(profileId) {
         profileViewModel.getProfileById(profileId)
     }
 
+    ProfileContent(
+        state = state,
+        onImageSelected = { profileViewModel.uploadImageFireBase(it) },
+        onBackClick = onBackClick,
+        onClickImage = onClickImage,
+        buttonLogOutPressed = {
+            profileViewModel.logOut()
+            buttonLogOutPressed()
+        },
+        modifier = modifier
+    )
+}
+
+@Composable
+fun ProfileContent(
+    state: ProfileState,
+    onBackClick: () -> Unit,
+    onClickImage: () -> Unit,
+    buttonLogOutPressed: () -> Unit,
+    onImageSelected: (Uri) -> Unit,
+    modifier: Modifier = Modifier
+) {
+
     val profile = state.profile ?: return
+
     Box(
         modifier = modifier
             .fillMaxSize()
@@ -47,38 +74,71 @@ fun ProfileScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .align(Alignment.TopCenter)
-                .padding(bottom = 70.dp).
-                verticalScroll(rememberScrollState())
+                .padding(bottom = 70.dp)
+                .verticalScroll(rememberScrollState())
         ) {
+
             TopBar(
                 onBackClick = onBackClick,
                 onClickImage = onClickImage
             )
-            Pfp(profile.pfp)
+
+            ProfileImage(
+                profileImage = state.profileImageUrl?: "",
+                size = 200,
+                modifier = Modifier
+                    .padding(16.dp)
+                    .align(Alignment.CenterHorizontally)
+            )
+
+            pickImageButton(onImageSelected = onImageSelected)
+
             UserNick(profile.nick)
+
             Location()
-            StatsPanel(profile.resenias, profile.promedio, profile.likes)
+
+            StatsPanel(
+                profile.resenias,
+                profile.promedio,
+                profile.likes
+            )
+
             GameCards()
+
             EditButton()
+
             Spacer(modifier = Modifier.height(5.dp))
+
             ButtonLogOut(
-                buttonLogOutPressed = {
-                    profileViewModel.logOut()
-                    buttonLogOutPressed()
-                }
+                buttonLogOutPressed = buttonLogOutPressed
             )
         }
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun ProfileContentPreview() {
-    ProfileScreen(
-        profileId = 1,
-        profileViewModel = viewModel(),
+
+    val fakeState = ProfileState(
+        profile = Profile(
+            id = 1,
+            pfp = R.drawable.profile_picture,
+            nick = R.string.nick,
+            resenias = 15,
+            promedio = 4.5f,
+            likes = 120
+        ),
+        profileImageUrl = null
+    )
+
+    ProfileContent(
+        state = fakeState,
         onBackClick = {},
         onClickImage = {},
-        buttonLogOutPressed = {}
+        buttonLogOutPressed = {},
+        onImageSelected = {}
     )
 }
+
+

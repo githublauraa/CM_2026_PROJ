@@ -1,7 +1,7 @@
 package com.example.voxel_review.data.infoJuegosNovedades
 
 data class JuegoInfo(
-    val imagen: Int,
+    val imagen: String,
     val etiqueta: Int,
     val nombre: Int,
     val descripcion: Int,

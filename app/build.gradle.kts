@@ -103,8 +103,13 @@ dependencies {
     implementation(libs.firebase.crashlytics)
     implementation(libs.firebase.analytics)
 
+    //storage
+    implementation("com.google.firebase:firebase-storage")
+
     //coil
     implementation("io.coil-kt:coil-compose:2.4.0")
+
+
 
     // Tests
     testImplementation(libs.junit)
