@@ -16,6 +16,8 @@ class StorageRepository @Inject constructor(
 
          val path: String = "profile/$userId.jpg"
          val url = storage.uploadImage(path, uri)
+         //actualizar url del usuario
+         auth.updateProfileImage(url)
          Result.success(url)
      }
      catch (e: Exception){
