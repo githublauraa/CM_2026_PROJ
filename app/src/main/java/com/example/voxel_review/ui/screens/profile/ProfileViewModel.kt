@@ -1,5 +1,6 @@
 package com.example.voxel_review.ui.screens.profile
 
+import android.net.Uri
 import androidx.compose.ui.platform.LocalProvidableLocaleList
 import androidx.lifecycle.ViewModel
 import com.example.voxel_review.data.profile.LocalProfileProvider
@@ -37,6 +38,11 @@ class ProfileViewModel @Inject constructor(
 		authRepository.logOut()
 	}
 
+	fun updateProfileImage(profileImageUrl: Uri) {
+		_uiState.update {
+			it.copy(profileImageUrl = profileImageUrl)
+		}
+	}
 
 
 }
