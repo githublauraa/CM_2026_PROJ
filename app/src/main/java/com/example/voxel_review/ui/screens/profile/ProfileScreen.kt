@@ -1,6 +1,5 @@
 package com.example.voxel_review.ui.screens.profile
 
-import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,7 +13,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.material3.Text
 import androidx.compose.foundation.rememberScrollState
 import com.example.voxel_review.ui.screens.profile.components.*
 import com.example.voxel_review.ui.theme.VoxelBackground
@@ -23,10 +21,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.verticalScroll
 import com.example.voxel_review.R
 import com.example.voxel_review.data.profile.Profile
-import androidx.compose.material3.Button
-import android.util.Log
 import android.net.Uri
-import androidx.activity.result.contract.ActivityResultContracts
+import com.example.voxel_review.ui.utils.ProfileImage
 @Composable
 fun ProfileScreen(
     profileId: Int,
@@ -87,7 +83,13 @@ fun ProfileContent(
                 onClickImage = onClickImage
             )
 
-            Pfp(state.profileImageUrl)
+            ProfileImage(
+                profileImage = state.profileImageUrl?: "",
+                size = 200,
+                modifier = Modifier
+                    .padding(16.dp)
+                    .align(Alignment.CenterHorizontally)
+            )
 
             pickImageButton(onImageSelected = onImageSelected)
 
