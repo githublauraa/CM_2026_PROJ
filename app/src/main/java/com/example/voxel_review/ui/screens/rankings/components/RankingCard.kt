@@ -1,7 +1,6 @@
 package com.example.voxel_review.ui.screens.rankings.components
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -21,29 +20,28 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.voxel_review.R
 import com.example.voxel_review.ui.theme.VoxelBorder
 import com.example.voxel_review.ui.theme.VoxelPrimary
 import com.example.voxel_review.ui.theme.VoxelSurface
 import com.example.voxel_review.ui.theme.VoxelSurfaceVariant
 import com.example.voxel_review.ui.theme.VoxelTextPrimary
 import com.example.voxel_review.ui.theme.VoxelTextSecondary
+import com.example.voxel_review.ui.utils.ProfileImage
 
 /**
  * Muestra la información de un usuario dentro del ranking.
- * Incluye su posición, imagen de perfil, nombre, cantidad de reseñas y porcentaje.
+ * Incluye su posición, imagen de perfil, nombre,
+ * cantidad de reseñas y porcentaje.
  *
  * @param posicion Posición que ocupa el usuario en el ranking.
  * @param nombre Nombre del usuario.
  * @param reseñas Cantidad de reseñas realizadas por el usuario.
  * @param porcentaje Porcentaje asociado al desempeño del usuario.
+ * @param imagen URL de la imagen del usuario.
  * @param modifier Modificador para personalizar el componente.
  */
 @Composable
@@ -52,6 +50,7 @@ fun RankingCard(
     nombre: String,
     reseñas: String,
     porcentaje: String,
+    imagen: String,
     modifier: Modifier = Modifier
 ) {
     Card(
@@ -67,6 +66,7 @@ fun RankingCard(
             containerColor = VoxelSurface
         )
     ) {
+
         Row(
             modifier = Modifier
                 .fillMaxSize()
@@ -84,6 +84,7 @@ fun RankingCard(
                     ),
                 contentAlignment = Alignment.Center
             ) {
+
                 Text(
                     text = posicion,
                     color = VoxelTextPrimary,
@@ -96,15 +97,10 @@ fun RankingCard(
                 modifier = Modifier.width(10.dp)
             )
 
-            Image(
-                painter = painterResource(
-                    R.drawable.imagen_review_persona
-                ),
-                contentDescription = null,
-                modifier = Modifier
-                    .size(45.dp)
-                    .clip(CircleShape),
-                contentScale = ContentScale.Crop
+            // Imagen del usuario.
+            ProfileImage(
+                profileImage = imagen,
+                size = 45
             )
 
             Spacer(
@@ -115,6 +111,7 @@ fun RankingCard(
             Column(
                 modifier = Modifier.weight(1f)
             ) {
+
                 Text(
                     text = nombre,
                     color = VoxelTextPrimary,
@@ -141,6 +138,7 @@ fun RankingCard(
                         vertical = 6.dp
                     )
             ) {
+
                 Text(
                     text = porcentaje,
                     color = VoxelPrimary,
@@ -158,10 +156,12 @@ fun RankingCard(
 @Preview(showBackground = true)
 @Composable
 fun RankingCardPreview() {
+
     RankingCard(
         posicion = "2",
         nombre = "VoxelMaster",
         reseñas = "120 reseñas",
-        porcentaje = "94%"
+        porcentaje = "94%",
+        imagen = ""
     )
 }

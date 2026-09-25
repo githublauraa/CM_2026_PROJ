@@ -168,7 +168,7 @@ fun ProfileImage(
 
         contentScale = ContentScale.Crop,
         modifier = Modifier
-            .size(200.dp)
+            .size(size.dp)
             .clip(CircleShape)
     )
 }

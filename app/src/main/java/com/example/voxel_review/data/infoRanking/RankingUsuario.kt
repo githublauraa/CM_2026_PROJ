@@ -4,5 +4,6 @@ data class RankingUsuario(
     val posicion: String,
     val nombre: String,
     val reseñas: String,
-    val porcentaje: String
+    val porcentaje: String,
+    val imagen: String
 )
