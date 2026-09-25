@@ -15,7 +15,7 @@ import com.example.voxel_review.ui.theme.*
 
 @Composable
 fun GameInfo(
-    imagen: Int,
+    imagen: String,
     nombre: String,
     desarrollador: String,
     anio: String,
@@ -29,11 +29,13 @@ fun GameInfo(
                 .background(
                     color = VoxelSurface,
                     shape = RoundedCornerShape(18.dp),
-                ).border(
+                )
+                .border(
                     width = 1.dp,
                     color = VoxelSurfaceVariant,
                     shape = RoundedCornerShape(18.dp),
-                ).padding(12.dp),
+                )
+                .padding(12.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         GameImage(
@@ -57,6 +59,7 @@ fun GameInfo(
                 fontWeight = FontWeight.Bold,
                 fontSize = 15.sp,
             )
+
             Text(
                 text = "$desarrollador • $anio",
                 color = VoxelTextSecondary,

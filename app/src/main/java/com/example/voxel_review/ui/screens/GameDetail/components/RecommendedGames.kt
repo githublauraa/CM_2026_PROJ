@@ -14,7 +14,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.voxel_review.R
 import com.example.voxel_review.data.InfoGame.GameDetailInfo
 
 /**
@@ -62,34 +61,35 @@ fun RecommendedGames(
 fun RecommendedGamesPreview() {
 
     val games = listOf(
+
         GameDetailInfo(
-            banner = R.drawable.reco_game,
+            banner = "",
             nombre = "Mass Effect",
             descripcion = "",
             desarrollador = "",
             lanzamiento = "",
             generos = emptyList(),
-            imagen = R.drawable.reco_game
+            imagen = ""
         ),
 
         GameDetailInfo(
-            banner = R.drawable.reco2_game,
+            banner = "",
             nombre = "Outer Wilds",
             descripcion = "",
             desarrollador = "",
             lanzamiento = "",
             generos = emptyList(),
-            imagen = R.drawable.reco2_game
+            imagen = ""
         ),
 
         GameDetailInfo(
-            banner = R.drawable.reco3_game,
+            banner = "",
             nombre = "No Man's Sky",
             descripcion = "",
             desarrollador = "",
             lanzamiento = "",
             generos = emptyList(),
-            imagen = R.drawable.reco3_game
+            imagen = ""
         )
     )
 

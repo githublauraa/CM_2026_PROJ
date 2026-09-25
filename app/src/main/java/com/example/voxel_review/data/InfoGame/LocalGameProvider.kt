@@ -1,13 +1,11 @@
 package com.example.voxel_review.data.InfoGame
 
-
-import com.example.voxel_review.R
 import com.example.voxel_review.data.InfoDiscover.LocalGenreProvider
 
 object LocalGameProvider {
 
     val eldenRing = GameDetailInfo(
-        banner = R.drawable.tlouii,
+        banner = "URL_BANNER_ELDEN_RING",
         nombre = "Elden Ring",
         descripcion = "Un vasto mundo abierto creado por FromSoftware y George R. R. Martin. " +
                 "Explora las Tierras Intermedias, enfréntate a jefes brutales y descubre " +
@@ -19,11 +17,11 @@ object LocalGameProvider {
             LocalGenreProvider.generos.first { it.id == "3" },
             LocalGenreProvider.generos.first { it.id == "4" }
         ),
-        imagen = R.drawable.tlouii
+        imagen = "URL_IMAGEN_ELDEN_RING"
     )
 
     val starfield = GameDetailInfo(
-        banner = R.drawable.banner_games,
+        banner = "URL_BANNER_STARFIELD",
         nombre = "Starfield",
         descripcion = "Explora un vasto universo de Bethesda Game Studios. " +
                 "Crea tu personaje, navega por mil planetas y descubre misterios " +
@@ -37,11 +35,11 @@ object LocalGameProvider {
             LocalGenreProvider.generos.first { it.id == "4" },
             LocalGenreProvider.generos.first { it.id == "5" }
         ),
-        imagen = R.drawable.banner_games
+        imagen = "URL_IMAGEN_STARFIELD"
     )
 
     val baldursGate3 = GameDetailInfo(
-        banner = R.drawable.logo_games,
+        banner = "URL_BANNER_BALDURS_GATE_3",
         nombre = "Baldur's Gate 3",
         descripcion = "Un RPG por turnos de Larian Studios ambientado en el universo de " +
                 "Dungeons & Dragons. Reúne tu grupo y decide el destino de las Tierras " +
@@ -52,7 +50,7 @@ object LocalGameProvider {
             LocalGenreProvider.generos.first { it.id == "2" },
             LocalGenreProvider.generos.first { it.id == "5" }
         ),
-        imagen = R.drawable.logo_games
+        imagen = "URL_IMAGEN_BALDURS_GATE_3"
     )
 
     val games = listOf(
