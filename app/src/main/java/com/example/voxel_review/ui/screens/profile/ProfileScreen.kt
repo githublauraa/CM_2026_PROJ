@@ -139,25 +139,4 @@ fun ProfileContentPreview() {
     )
 }
 
-@Composable
-fun pickImageButton(
-    onImageSelected: (Uri) -> Unit,
-    modifier: Modifier = Modifier
-){
-    val launcher = rememberLauncherForActivityResult (
-        contract =
-            ActivityResultContracts.GetContent()
-    ){ uri: Uri? ->
-        uri?.let {
-            Log.d("ProfileScreen", uri.toString())
-            onImageSelected(uri)
-        }
-    }
-    Button(
-        onClick = {
-            launcher.launch("image/*")
-        }
-    ){
-        Text(text = "Pick Image")
-    }
-}
+
