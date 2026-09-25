@@ -5,7 +5,7 @@ import com.example.voxel_review.data.dataSource.AuthRemoteDataSource
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.auth.FirebaseUser
-
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
 class AuthRepository @Inject constructor(
     private val authRemoteDataSource: AuthRemoteDataSource
 ) {
@@ -16,11 +16,11 @@ class AuthRepository @Inject constructor(
             authRemoteDataSource.signIn(email,password)
             return Result.success(Unit)
         }
-        catch (e: FirebaseAuthInvalidCredentialsException){
-            return Result.failure(Exception("Credenciales incorrectas"))
-        }
         catch (e: FirebaseAuthInvalidUserException){
             return Result.failure(Exception("Usuario no existe"))
+        }
+        catch (e: FirebaseAuthInvalidCredentialsException){
+            return Result.failure(Exception("Credenciales incorrectas"))
         }
         catch (e: Exception){
             return Result.failure(e)
@@ -32,6 +32,8 @@ class AuthRepository @Inject constructor(
         try{
             authRemoteDataSource.signUp(email,password)
             return Result.success(Unit)
+        }catch (e: FirebaseAuthUserCollisionException) {
+            return Result.failure(Exception("Ya existe una cuenta con este correo"))
         }
         catch (e: Exception){
             return Result.failure(Exception("Error al iniciar sesion"))

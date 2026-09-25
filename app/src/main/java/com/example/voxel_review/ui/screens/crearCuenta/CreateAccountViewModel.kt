@@ -97,22 +97,21 @@ class CreateAccountViewModel @Inject constructor(
         }
 
         viewModelScope.launch {
-            try {
-                authRepository.signUp(
-                    _uiState.value.email,
-                    _uiState.value.password
-                )
+            val result = authRepository.signUp(
+                _uiState.value.email,
+                _uiState.value.password
+            )
 
-                // Solo navega si Firebase respondió correctamente
+            if (result.isSuccess) {
                 onSuccess()
-
-            } catch (e: Exception) {
+            }else{
                 _uiState.update {
-                    it.copy(
-                        errorMessage = e.message ?: "Error al crear la cuenta"
-                    )
+                    val mensaje = result.exceptionOrNull()?.message?: "Error al inciar sesión"
+                    it.copy(errorMessage = mensaje, mostrarMensaje = true)
                 }
+
             }
+
         }
     }
 }
