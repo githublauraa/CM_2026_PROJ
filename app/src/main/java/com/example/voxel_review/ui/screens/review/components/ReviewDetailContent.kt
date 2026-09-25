@@ -44,6 +44,7 @@ fun ReviewDetailContent(
     ) {
 
         HeroSection(
+            imagenJuego = state.imagenJuego,
             tituloJuego = state.tituloJuego,
             desarrollador = state.desarrollador,
             modifier = Modifier
@@ -71,6 +72,7 @@ fun ReviewDetailContent(
         )
 
         UserReviewsSection(
+            imagenUsuario = state.imagenUsuario,
             username = state.usernameReview,
             comentario = state.comentarioReview,
             rating = state.ratingUsuario,
@@ -96,6 +98,7 @@ fun ReviewDetailContentPreview() {
 
     ReviewDetailContent(
         state = ReviewDetailState(
+            imagenJuego = "",
             tituloJuego = "Chrono Sphere",
             desarrollador = "Desarrollado por Voxel Studios",
             tituloDescripcion = "Una obra maestra",
@@ -104,6 +107,7 @@ fun ReviewDetailContentPreview() {
             ratingJugabilidad = 4.5f,
             ratingGraficos = 4.0f,
             ratingHistoria = 4.1f,
+            imagenUsuario = "",
             usernameReview = "GamerX Pro",
             comentarioReview = "Una experiencia increíble.",
             ratingUsuario = 4

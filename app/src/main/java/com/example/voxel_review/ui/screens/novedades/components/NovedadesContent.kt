@@ -24,16 +24,6 @@ import com.example.voxel_review.R
 import com.example.voxel_review.data.infoJuegosNovedades.JuegoInfo
 import com.example.voxel_review.ui.screens.novedades.NovedadesState
 
-/**
- * Contenido principal de la pantalla de novedades.
- * Muestra los filtros de categoría, el acceso a notificaciones y la lista de juegos.
- *
- * @param state Estado actual de la pantalla de novedades.
- * @param onClick Acción ejecutada al seleccionar un juego.
- * @param onNotificationClick Acción ejecutada al presionar el icono de notificaciones.
- * @param modifier Modificador para personalizar el contenido.
- * @param onCategoriaSeleccionada Acción ejecutada al seleccionar una categoría.
- */
 @Composable
 fun NovedadesContent(
     state: NovedadesState,
@@ -42,7 +32,6 @@ fun NovedadesContent(
     modifier: Modifier = Modifier,
     onCategoriaSeleccionada: (String) -> Unit
 ) {
-    // Categorías utilizadas para identificar el filtro seleccionado.
     val todo = "Todo"
     val rpg = "RPG"
     val accion = "Acción"
@@ -143,9 +132,6 @@ fun NovedadesContent(
     }
 }
 
-/**
- * Vista previa del contenido de la pantalla de novedades.
- */
 @Composable
 @Preview
 fun NovedadesContentPreview() {

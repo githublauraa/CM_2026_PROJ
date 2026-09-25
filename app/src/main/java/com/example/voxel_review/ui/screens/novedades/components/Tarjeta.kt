@@ -34,7 +34,7 @@ import com.example.voxel_review.ui.theme.White
  */
 @Composable
 fun TarjetaJuego(
-    imagen: Int,
+    imagen: String,
     etiqueta: String,
     nombre: String,
     descripcion: String,
@@ -140,7 +140,7 @@ fun TarjetaJuego(
 @Preview
 fun TarjetaJuegoPreview() {
     TarjetaJuego(
-        imagen = R.drawable.logo_fortnite,
+        imagen = "",
         etiqueta = "Reseña",
         nombre = "cyber",
         descripcion = "Cyber es un juego ...",

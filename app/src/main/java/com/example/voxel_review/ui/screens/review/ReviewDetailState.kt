@@ -1,6 +1,7 @@
 package com.example.voxel_review.ui.screens.review
 
 data class ReviewDetailState(
+    val imagenJuego: String = "",
     val tituloJuego: String = "",
     val desarrollador: String = "",
     val tituloDescripcion: String = "",
@@ -11,6 +12,7 @@ data class ReviewDetailState(
     val ratingGraficos: Float = 0f,
     val ratingHistoria: Float = 0f,
 
+    val imagenUsuario: String = "",
     val usernameReview: String = "",
     val comentarioReview: String = "",
     val ratingUsuario: Int = 0,

@@ -1,6 +1,6 @@
 package com.example.voxel_review.ui.screens.review
 
-import androidx.compose.foundation.Image
+import com.example.voxel_review.ui.utils.ProfileImage
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -15,9 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -35,6 +33,7 @@ import com.example.voxel_review.ui.theme.Voxel_ReviewTheme
  */
 @Composable
 fun HeroSection(
+    imagenJuego: String,
     tituloJuego: String,
     desarrollador: String,
     modifier: Modifier = Modifier
@@ -47,11 +46,10 @@ fun HeroSection(
             )
     ) {
 
-        Image(
-            painter = painterResource(R.drawable.logo_app),
-            contentDescription = null,
-            modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.Crop
+        ProfileImage(
+            profileImage = imagenJuego,
+            size = 180,
+            modifier = Modifier.fillMaxSize()
         )
 
         Box(
@@ -114,8 +112,10 @@ fun HeroSection(
 fun HeroSectionPreview() {
     Voxel_ReviewTheme {
         HeroSection(
+            imagenJuego = "",
             tituloJuego = "Chrono Sphere",
             desarrollador = "Desarrollado por Voxel Studios"
         )
+
     }
 }
