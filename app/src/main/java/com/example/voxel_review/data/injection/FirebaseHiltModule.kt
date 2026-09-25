@@ -7,7 +7,8 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.storage
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -17,4 +18,6 @@ object FirebaseHiltModule {
     fun auth(): FirebaseAuth = Firebase.auth
 
 
+    @Provides
+    fun storage(): FirebaseStorage = Firebase.storage
 }
