@@ -1,5 +1,6 @@
 package com.example.voxel_review.data.injection
 
+import com.example.voxel_review.data.dataSource.services.ReviewRetrofitService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,5 +21,11 @@ object AppModule {
 		.addConverterFactory(GsonConverterFactory.create())
 		.addConverterFactory(ScalarsConverterFactory.create())
 		.build()
+	}
+
+	@Singleton
+	@Provides
+	fun providesRetrofitReviewServie(retrofit: Retrofit): ReviewRetrofitService {
+		return retrofit.create(ReviewRetrofitService::class.java)
 	}
 }
