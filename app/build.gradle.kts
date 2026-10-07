@@ -65,28 +65,22 @@ dependencies {
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
 
-
     // AndroidX
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
 
-
     // Navigation
     implementation(libs.androidx.navigation.compose)
-
 
     // Fonts
     implementation("androidx.compose.ui:ui-text-google-fonts")
 
-
     // Icons
     implementation("androidx.compose.material:material-icons-extended")
 
-
     // Room
     implementation(libs.androidx.room.ktx)
-
 
     // Hilt
     implementation(libs.dagger.hilt)
@@ -95,7 +89,6 @@ dependencies {
     // Hilt Compiler con KSP
     ksp(libs.dagger.compiler)
 
-
     // Firebase
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.firestore)
@@ -103,13 +96,16 @@ dependencies {
     implementation(libs.firebase.crashlytics)
     implementation(libs.firebase.analytics)
 
-    //storage
+    // storage
     implementation("com.google.firebase:firebase-storage")
 
-    //coil
+    // coil
     implementation("io.coil-kt:coil-compose:2.4.0")
 
-
+    // Retrofit
+    implementation("com.squareup.retrofit2:retrofit:3.0.0")
+    implementation("com.squareup.retrofit2:converter-gson:3.0.0")
+    implementation("com.squareup.retrofit2:converter-scalars:3.0.0")
 
     // Tests
     testImplementation(libs.junit)

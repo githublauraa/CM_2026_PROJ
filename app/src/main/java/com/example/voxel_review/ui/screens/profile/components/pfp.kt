@@ -30,7 +30,7 @@ fun Pfp(
             .build(),
 
         fallback = painterResource(id = R.drawable.imagen_login_user),
-        placeholder = painterResource(id = R.drawable.loading_img),
+        placeholder = painterResource(id = R.drawable.imagen_login_user),
         error = painterResource(id = R.drawable.imagen_login_user),
 
         contentScale = ContentScale.Crop,
