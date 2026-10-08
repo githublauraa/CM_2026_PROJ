@@ -1,7 +1,7 @@
 package com.example.voxel_review.ui.screens.review
 
 import androidx.lifecycle.ViewModel
-import com.example.voxel_review.data.review.LocalReviewProvider
+//import com.example.voxel_review.data.review.LocalReviewProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,41 +15,41 @@ class ReviewViewModel @Inject constructor(): ViewModel() {
     private val _uiState = MutableStateFlow(ReviewDetailState())
     val uiState: StateFlow<ReviewDetailState> = _uiState.asStateFlow()
 
-    init {
-        loadReview()
-    }
+//    init {
+//        loadReview()
+//    }
 
-    private fun loadReview() {
-
-        val review = LocalReviewProvider.reviews.firstOrNull()
-
-        if (review != null) {
-
-            _uiState.update {
-                it.copy(
-                    tituloJuego = review.tituloJuego,
-                    desarrollador = review.desarrollador,
-                    tituloDescripcion = review.tituloDescripcion,
-                    descripcion = review.descripcion,
-
-                    ratingGeneral = review.ratingGeneral,
-                    ratingJugabilidad = review.ratingJugabilidad,
-                    ratingGraficos = review.ratingGraficos,
-                    ratingHistoria = review.ratingHistoria,
-
-                    isLoading = false,
-                    errorMessage = null
-                )
-            }
-
-        } else {
-
-            _uiState.update {
-                it.copy(
-                    isLoading = false,
-                    errorMessage = "No se pudo encontrar la reseña"
-                )
-            }
-        }
-    }
+//    private fun loadReview() {
+//
+//        val review = LocalReviewProvider.reviews.firstOrNull()
+//
+//        if (review != null) {
+//
+////            _uiState.update {
+////                it.copy(
+////                    tituloJuego = review.tituloJuego,
+////                    desarrollador = review.desarrollador,
+////                    tituloDescripcion = review.tituloDescripcion,
+////                    descripcion = review.descripcion,
+////
+////                    ratingGeneral = review.ratingGeneral,
+////                    ratingJugabilidad = review.ratingJugabilidad,
+////                    ratingGraficos = review.ratingGraficos,
+////                    ratingHistoria = review.ratingHistoria,
+////
+////                    isLoading = false,
+////                    errorMessage = null
+////                )
+////            }
+//
+//        } else {
+//
+//            _uiState.update {
+//                it.copy(
+//                    isLoading = false,
+//                    errorMessage = "No se pudo encontrar la reseña"
+//                )
+//            }
+//        }
+//    }
 }

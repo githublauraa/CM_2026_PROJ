@@ -6,10 +6,13 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.create
+import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Module
@@ -17,9 +20,25 @@ import javax.inject.Singleton
 object AppModule {
 	@Singleton
 	@Provides
-	fun providesRetrofit(): Retrofit {
+	fun providesOkHttpClient(): OkHttpClient {
+		val logging = HttpLoggingInterceptor().apply {
+			level = HttpLoggingInterceptor.Level.BODY
+		}
+		return OkHttpClient.Builder()
+		.connectTimeout(10, TimeUnit.SECONDS)
+		.readTimeout(20, TimeUnit.SECONDS)
+		.writeTimeout(20, TimeUnit.SECONDS)
+		.retryOnConnectionFailure(true)
+		.addInterceptor(logging)
+		.build()
+	}
+
+	@Singleton
+	@Provides
+	fun providesRetrofit(okHttpClient: OkHttpClient): Retrofit {
 		return Retrofit.Builder()
 		.baseUrl("http://10.0.2.2:3000/")
+		.client(okHttpClient)
 		.addConverterFactory(GsonConverterFactory.create())
 		.addConverterFactory(ScalarsConverterFactory.create())
 		.build()

@@ -1,5 +1,6 @@
 package com.example.voxel_review.data.repository
 
+import android.util.Log
 import com.example.voxel_review.data.dataSource.impl.UserRetrofitDataSourceImpl
 import com.example.voxel_review.data.dtos.toProfileInfo
 import com.example.voxel_review.data.profile.ProfileInfo
@@ -12,6 +13,7 @@ class UserRepository @Inject constructor(private val userRemoteDataSource: UserR
 			val userProfileInfo = user.toProfileInfo()
 			Result.success(userProfileInfo)
 		} catch(e: Exception){
+			e.printStackTrace()
 			Result.failure(e)
 		}
 	}

@@ -4,18 +4,27 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.rememberScrollState
 import com.example.voxel_review.ui.screens.profile.components.*
 import com.example.voxel_review.ui.theme.VoxelBackground
+import com.example.voxel_review.ui.theme.VoxelPrimary
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.verticalScroll
@@ -44,6 +53,7 @@ fun ProfileScreen(
         onImageSelected = { profileViewModel.uploadImageFireBase(it) },
         onBackClick = onBackClick,
         onClickImage = onClickImage,
+        onRetry = { profileViewModel.retry() },
         buttonLogOutPressed = {
             profileViewModel.logOut()
             buttonLogOutPressed()
@@ -59,10 +69,25 @@ fun ProfileContent(
     onClickImage: () -> Unit,
     buttonLogOutPressed: () -> Unit,
     onImageSelected: (Uri) -> Unit,
+    onRetry: () -> Unit,
     modifier: Modifier = Modifier
 ) {
 
-    val profile = state.profile ?: return
+    val profile = state.profile
+
+    if (profile == null) {
+        if (state.isLoading) {
+            Box(
+                modifier = modifier
+                    .fillMaxSize()
+                    .background(VoxelBackground),
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator(color = VoxelPrimary)
+            }
+        }
+        return
+    }
 
     Box(
         modifier = modifier
@@ -82,6 +107,31 @@ fun ProfileContent(
                 onBackClick = onBackClick,
                 onClickImage = onClickImage
             )
+
+            state.errorMessage?.let { message ->
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp, vertical = 8.dp)
+                ) {
+                    Text(
+                        text = message,
+                        color = Color.White,
+                        fontSize = 14.sp
+                    )
+
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    Button(
+                        onClick = onRetry,
+                        colors = ButtonDefaults.buttonColors(containerColor = VoxelPrimary),
+                        shape = RoundedCornerShape(16.dp),
+                    ) {
+                        Text("Reintentar")
+                    }
+                }
+            }
 
             ProfileImage(
                 profileImage = state.profileImageUrl?: "",
@@ -138,7 +188,8 @@ fun ProfileContentPreview() {
         onBackClick = {},
         onClickImage = {},
         buttonLogOutPressed = {},
-        onImageSelected = {}
+        onImageSelected = {},
+        onRetry = {}
     )
 }
 

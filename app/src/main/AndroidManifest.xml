@@ -3,6 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <!-- Desde targetSdk 37 (Android 16/17) el sistema bloquea el tráfico TCP hacia la
+         red local (10.0.2.2, IP LAN) con timeouts salvo que se conceda este permiso.
+         NEARBY_WIFI_DEVICES es el que aplica en Android 16. -->
+    <uses-permission android:name="android.permission.ACCESS_LOCAL_NETWORK" />
+    <uses-permission android:name="android.permission.NEARBY_WIFI_DEVICES" />
     <application
         android:networkSecurityConfig="@xml/network_security_config"
         android:name=".BaseApplication"
@@ -13,7 +18,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Voxel_Review">
+        android:theme="@style/Theme.Voxel_Review"
+        android:usesCleartextTraffic="true">
         <activity
             android:name=".MainActivity"
             android:exported="true"
