@@ -15,9 +15,6 @@ object LocalReviewProvider {
             ratingGraficos = 4.0f,
             ratingHistoria = 4.1f,
             imagenUsuario = "URL_IMAGEN_USUARIO",
-            usernameReview = "GamerX Pro",
-            comentarioReview = "Una experiencia increíble. La historia y la jugabilidad destacan bastante.",
-            ratingUsuario = 4
         ),
 
         ReviewInfo(
@@ -31,9 +28,6 @@ object LocalReviewProvider {
             ratingGraficos = 4.4f,
             ratingHistoria = 4.3f,
             imagenUsuario = "URL_IMAGEN_USUARIO",
-            usernameReview = "PixelKing",
-            comentarioReview = "El combate es excelente y la ambientación está muy bien lograda.",
-            ratingUsuario = 5
         )
     )
 }

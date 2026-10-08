@@ -37,10 +37,6 @@ class ReviewViewModel @Inject constructor(): ViewModel() {
                     ratingGraficos = review.ratingGraficos,
                     ratingHistoria = review.ratingHistoria,
 
-                    usernameReview = review.usernameReview,
-                    comentarioReview = review.comentarioReview,
-                    ratingUsuario = review.ratingUsuario,
-
                     isLoading = false,
                     errorMessage = null
                 )

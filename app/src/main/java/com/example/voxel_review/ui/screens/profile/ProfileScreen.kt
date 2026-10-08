@@ -20,7 +20,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.verticalScroll
 import com.example.voxel_review.R
-import com.example.voxel_review.data.profile.Profile
+import com.example.voxel_review.data.profile.ProfileInfo
 import android.net.Uri
 import com.example.voxel_review.ui.utils.ProfileImage
 @Composable
@@ -98,7 +98,7 @@ fun ProfileContent(
             Location()
 
             StatsPanel(
-                profile.resenias,
+                profile.numResenias,
                 profile.promedio,
                 profile.likes
             )
@@ -121,13 +121,14 @@ fun ProfileContent(
 fun ProfileContentPreview() {
 
     val fakeState = ProfileState(
-        profile = Profile(
+        profile = ProfileInfo(
             id = "1",
-            pfp = R.drawable.profile_picture,
-            nick = R.string.nick,
-            resenias = 15,
+            pfp = "",
+            nick = "juanchoAngara",
+            numResenias = 15,
             promedio = 4.5f,
-            likes = 120
+            likes = 120,
+            biografia = ""
         ),
         profileImageUrl = null
     )
