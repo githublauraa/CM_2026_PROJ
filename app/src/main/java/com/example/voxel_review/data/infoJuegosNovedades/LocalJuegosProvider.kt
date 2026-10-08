@@ -8,6 +8,7 @@ object LocalJuegosProvider {
     val juegos = listOf(
 
         JuegoInfo(
+            id = "1",
             imagen = "https://cdn2.unrealengine.com/fortnite-og-social-1920x1080-a5adda66fab9.jpg",
             etiqueta = R.string.rese_a,
             nombre = R.string.cyber_rpg_2077,
@@ -17,6 +18,7 @@ object LocalJuegosProvider {
         ),
 
         JuegoInfo(
+            id = "2",
             imagen = "",
             etiqueta = R.string.novedad,
             nombre = R.string.blockworld_adventure,
@@ -26,6 +28,7 @@ object LocalJuegosProvider {
         ),
 
         JuegoInfo(
+            id = "3",
             imagen = "",
             etiqueta = R.string.cl_sico,
             nombre = R.string.uber_rpg_2017,
@@ -35,6 +38,7 @@ object LocalJuegosProvider {
         ),
 
         JuegoInfo(
+            id = "4",
             imagen = "",
             etiqueta = R.string.cl_sico,
             nombre = R.string.uber_rpg_2017,
@@ -44,6 +48,7 @@ object LocalJuegosProvider {
         ),
 
         JuegoInfo(
+            id = "5",
             imagen = "",
             etiqueta = R.string.cl_sico,
             nombre = R.string.uber_rpg_2017,

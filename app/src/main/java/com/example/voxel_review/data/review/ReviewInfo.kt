@@ -11,4 +11,7 @@ data class ReviewInfo(
     val ratingGraficos: Float,
     val ratingHistoria: Float,
     val imagenUsuario: String,
+    val usernameReview: String,
+    val comentarioReview: String,
+    val ratingUsuario: Int
 )

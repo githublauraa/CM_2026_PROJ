@@ -65,6 +65,7 @@ fun GameBanner(
 fun GameBannerPreview() {
 
     val game = GameDetailInfo(
+        id = "1",
         banner = "",
         nombre = "STARFIELD",
         descripcion = "",

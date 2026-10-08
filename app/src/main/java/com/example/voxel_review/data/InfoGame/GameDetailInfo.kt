@@ -3,6 +3,7 @@ package com.example.voxel_review.data.InfoGame
 import com.example.voxel_review.data.InfoDiscover.GenreInfo
 
 data class GameDetailInfo(
+    val id: String,
     val banner: String,
     val nombre: String,
     val descripcion: String,

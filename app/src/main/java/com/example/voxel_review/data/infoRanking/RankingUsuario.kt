@@ -1,6 +1,7 @@
 package com.example.voxel_review.data.infoRanking
 
 data class RankingUsuario(
+    val id: String,
     val posicion: String,
     val nombre: String,
     val reseñas: String,

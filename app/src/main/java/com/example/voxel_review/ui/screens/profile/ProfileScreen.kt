@@ -25,7 +25,7 @@ import android.net.Uri
 import com.example.voxel_review.ui.utils.ProfileImage
 @Composable
 fun ProfileScreen(
-    profileId: Int,
+    profileId: String,
     profileViewModel: ProfileViewModel,
     onBackClick: () -> Unit,
     onClickImage: () -> Unit,
@@ -122,7 +122,7 @@ fun ProfileContentPreview() {
 
     val fakeState = ProfileState(
         profile = Profile(
-            id = 1,
+            id = "1",
             pfp = R.drawable.profile_picture,
             nick = R.string.nick,
             resenias = 15,

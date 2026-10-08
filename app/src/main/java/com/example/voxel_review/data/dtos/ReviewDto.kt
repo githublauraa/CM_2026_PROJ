@@ -39,5 +39,8 @@ fun ReviewDto.toReviewInfo(): ReviewInfo {
 		ratingGraficos = ratingGraficos.toFloat(),
 		ratingHistoria = ratingHistoria.toFloat(),
 		imagenUsuario = user.fotoUrl ?: "",
+		usernameReview = user.nombreUsuario,
+		comentarioReview = contenido,
+		ratingUsuario = ((ratingJugabilidad + ratingGraficos + ratingHistoria) / 3.0f).toInt()
 	)
 }

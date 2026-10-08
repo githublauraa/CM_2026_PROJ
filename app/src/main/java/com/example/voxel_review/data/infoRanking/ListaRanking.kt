@@ -5,6 +5,7 @@ object ListaRanking {
     val rankingUsuarios = listOf(
 
         RankingUsuario(
+            id = "1",
             "1",
             "PixelKing",
             "150 reseñas",
@@ -13,6 +14,7 @@ object ListaRanking {
         ),
 
         RankingUsuario(
+            id = "2",
             "2",
             "VoxelMaster",
             "120 reseñas",
@@ -21,6 +23,7 @@ object ListaRanking {
         ),
 
         RankingUsuario(
+            id = "3",
             "3",
             "GameHunter",
             "105 reseñas",
@@ -29,6 +32,7 @@ object ListaRanking {
         ),
 
         RankingUsuario(
+            id = "4",
             "4",
             "DarkPlayer",
             "89 reseñas",
@@ -37,6 +41,7 @@ object ListaRanking {
         ),
 
         RankingUsuario(
+            id = "5",
             "5",
             "RetroGamer",
             "72 reseñas",
@@ -44,6 +49,7 @@ object ListaRanking {
             ""
         ) ,
         RankingUsuario(
+            id ="6",
             "1",
             "PixelKing",
             "150 reseñas",
@@ -52,6 +58,7 @@ object ListaRanking {
         ),
 
         RankingUsuario(
+            id = "7",
             "2",
             "VoxelMaster",
             "120 reseñas",
@@ -60,6 +67,7 @@ object ListaRanking {
         ),
 
         RankingUsuario(
+            id = "8",
             "3",
             "GameHunter",
             "105 reseñas",
@@ -68,6 +76,7 @@ object ListaRanking {
         ),
 
         RankingUsuario(
+            id = "9",
             "4",
             "DarkPlayer",
             "89 reseñas",
@@ -76,12 +85,12 @@ object ListaRanking {
         ),
 
         RankingUsuario(
+            id = "10",
             "5",
             "RetroGamer",
             "72 reseñas",
             "84%",
             ""
         )
-
     )
 }

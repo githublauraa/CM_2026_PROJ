@@ -5,6 +5,7 @@ import com.example.voxel_review.data.InfoDiscover.LocalGenreProvider
 object LocalGameProvider {
 
     val eldenRing = GameDetailInfo(
+        id = "1",
         banner = "URL_BANNER_ELDEN_RING",
         nombre = "Elden Ring",
         descripcion = "Un vasto mundo abierto creado por FromSoftware y George R. R. Martin. " +
@@ -21,6 +22,7 @@ object LocalGameProvider {
     )
 
     val starfield = GameDetailInfo(
+        id = "2",
         banner = "URL_BANNER_STARFIELD",
         nombre = "Starfield",
         descripcion = "Explora un vasto universo de Bethesda Game Studios. " +
@@ -39,6 +41,7 @@ object LocalGameProvider {
     )
 
     val baldursGate3 = GameDetailInfo(
+        id = "3",
         banner = "URL_BANNER_BALDURS_GATE_3",
         nombre = "Baldur's Gate 3",
         descripcion = "Un RPG por turnos de Larian Studios ambientado en el universo de " +

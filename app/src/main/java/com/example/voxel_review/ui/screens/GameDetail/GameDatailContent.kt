@@ -16,15 +16,15 @@ import androidx.compose.ui.Modifier
 @Composable
 fun GameDetailContent(
     gameDetailViewModel: GameDetailViewModel,
-    gameIndex: Int,
+    gameId: String,
     modifier: Modifier = Modifier,
     onBackPressed: () -> Unit,
     onSearchPressed: () -> Unit,
     onWriteReviewPressed: () -> Unit
 ) {
 
-    LaunchedEffect(gameIndex) {
-        gameDetailViewModel.loadGame(gameIndex)
+    LaunchedEffect(gameId) {
+        gameDetailViewModel.loadGame(gameId)
     }
 
     GameDetailScreen(

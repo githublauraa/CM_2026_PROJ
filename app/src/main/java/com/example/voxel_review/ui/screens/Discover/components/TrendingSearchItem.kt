@@ -91,6 +91,7 @@ fun TrendingSearchItem(
 private fun TrendingSearchItemPreview() {
     TrendingSearchItem(
         item = TrendingSearchInfo(
+            id = "1",
             nombre = R.string.juego_elden_ring,
             categoria = R.string.cat_rpg_accion,
         ),

@@ -4,7 +4,7 @@ import androidx.annotation.DrawableRes
 
 data class Profile(
     @DrawableRes val pfp: Int,
-    val id: Int,
+    val id: String,
     val nick: Int,
     val resenias: Int,
     val promedio: Float,

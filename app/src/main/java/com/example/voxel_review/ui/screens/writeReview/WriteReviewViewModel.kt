@@ -13,11 +13,10 @@ class WriteReviewViewModel @Inject constructor(): ViewModel() {
 
     private val _uiState = MutableStateFlow(WriteReviewState())
     val uiState: StateFlow<WriteReviewState> = _uiState.asStateFlow()
+    fun loadGame(gameId: String) {
+        val game = LocalGameProvider.games.firstOrNull { it.id == gameId }
+            ?: LocalGameProvider.games.first()
 
-    fun loadGame(gameIndex: Int) {
-        val game = LocalGameProvider.games.getOrElse(gameIndex) {
-            LocalGameProvider.games.first()
-        }
         _uiState.update { it.copy(game = game) }
     }
 

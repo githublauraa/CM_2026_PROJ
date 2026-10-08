@@ -75,21 +75,17 @@ fun AppNavigation(
         modifier = modifier
     ) {
 
-        composable(route = AppScreen.Splash.route){
+        composable(route = AppScreen.Splash.route) {
             SplashScreen(
                 splashViewModel = hiltViewModel(),
                 onNavigateHome = {
                     navController.navigate(AppScreen.RankingsUser.route) {
-                        popUpTo(0) {
-                            inclusive = true
-                        }
+                        popUpTo(0) { inclusive = true }
                     }
                 },
                 onNavigateStart = {
                     navController.navigate(AppScreen.Start.route) {
-                        popUpTo(0) {
-                            inclusive = true
-                        }
+                        popUpTo(0) { inclusive = true }
                     }
                 }
             )
@@ -102,9 +98,7 @@ fun AppNavigation(
                 startViewModel = startViewModel,
                 logginButtonPressed = {
                     navController.navigate(AppScreen.RankingsUser.route) {
-                        popUpTo(0) {
-                            inclusive = true
-                        }
+                        popUpTo(0) { inclusive = true }
                     }
                 },
                 createAccountButtonPressed = {
@@ -120,9 +114,7 @@ fun AppNavigation(
                 createAccountViewModel = createAccountViewModel,
                 unirseButtonPressed = {
                     navController.navigate(AppScreen.RankingsUser.route) {
-                        popUpTo(0) {
-                            inclusive = true
-                        }
+                        popUpTo(0) { inclusive = true }
                     }
                 }
             )
@@ -134,34 +126,29 @@ fun AppNavigation(
             NovedadScreen(
                 novedadesViewModel,
                 onClick = { juego ->
-
-                    // Obtiene el índice del juego para enviarlo como argumento a la siguiente pantalla.
-                    val juegoIndex =
-                        LocalJuegosProvider.juegos.indexOf(juego)
-
+                    // CORREGIDO: Se envía directamente el id de tipo String en lugar de usar indexOf
                     navController.navigate(
-                        "${AppScreen.FullReviews.route}?juegoIndex=$juegoIndex"
+                        "${AppScreen.FullReviews.route}?juegoId=${juego.id}"
                     )
                 },
                 onNotificationClick = {
-                    navController.navigate(
-                        AppScreen.Notifications.route
-                    )
+                    navController.navigate(AppScreen.Notifications.route)
                 }
             )
         }
 
+        // CORREGIDO: Se incluye ?profileId={profileId} en la ruta y defaultValue en String "1"
         composable(
-            route = AppScreen.PerfilUser.route,
+            route = "${AppScreen.PerfilUser.route}?profileId={profileId}",
             arguments = listOf(
                 navArgument("profileId") {
-                    type = NavType.IntType
-                    defaultValue = 1
+                    type = NavType.StringType
+                    defaultValue = "1"
                 }
             )
         ) { backStackEntry ->
 
-            val profileId = backStackEntry.arguments?.getInt("profileId") ?: return@composable
+            val profileId = backStackEntry.arguments?.getString("profileId") ?: "1"
 
             ProfileScreen(
                 profileViewModel = hiltViewModel(),
@@ -169,13 +156,10 @@ fun AppNavigation(
                 onBackClick = {
                     navController.popBackStack()
                 },
-                onClickImage = {
-                },
+                onClickImage = {},
                 buttonLogOutPressed = {
-                    navController.navigate(AppScreen.Start.route){
-                        popUpTo(0) {
-                            inclusive = true
-                        }
+                    navController.navigate(AppScreen.Start.route) {
+                        popUpTo(0) { inclusive = true }
                     }
                 }
             )
@@ -203,35 +187,30 @@ fun AppNavigation(
                     navController.navigate(AppScreen.Notifications.route)
                 },
                 onItemClick = { item ->
-
-                    // Envía la posición del juego seleccionado a la pantalla de detalle.
-                    val gameIndex =
-                        LocalTrendingSearchProvider.tendencias.indexOf(item)
-
+                    // CORREGIDO: Se envía el id de tipo String en lugar de indexOf
                     navController.navigate(
-                        "${AppScreen.GameDetail.route}?gameIndex=$gameIndex"
+                        "${AppScreen.GameDetail.route}?gameId=${item.id}"
                     )
                 }
             )
         }
 
-        // Ruta que recibe el índice del juego seleccionado como argumento.
-        composable( route = "${AppScreen.GameDetail.route}?gameIndex={gameIndex}",
+        composable(
+            route = "${AppScreen.GameDetail.route}?gameId={gameId}",
             arguments = listOf(
-                navArgument("gameIndex") {
-                    type = NavType.IntType
-                    defaultValue = 0
+                navArgument("gameId") {
+                    type = NavType.StringType
+                    defaultValue = "1"
                 }
             )
         ) { backStackEntry ->
 
             val gameDetailViewModel: GameDetailViewModel = hiltViewModel()
-            val gameIndex =
-                backStackEntry.arguments?.getInt("gameIndex") ?: 0
+            val gameId = backStackEntry.arguments?.getString("gameId") ?: "1"
 
             GameDetailContent(
                 gameDetailViewModel = gameDetailViewModel,
-                gameIndex = gameIndex,
+                gameId = gameId,
                 onBackPressed = {
                     navController.popBackStack()
                 },
@@ -239,7 +218,7 @@ fun AppNavigation(
                     navController.navigate(AppScreen.Discover.route)
                 },
                 onWriteReviewPressed = {
-                    navController.navigate("${AppScreen.WriteReview.route}?gameIndex=$gameIndex")
+                    navController.navigate("${AppScreen.WriteReview.route}?gameId=$gameId")
                 }
             )
         }
@@ -266,40 +245,47 @@ fun AppNavigation(
             )
         }
 
-        composable( route = "${AppScreen.FullReviews.route}?juegoIndex={juegoIndex}",
+        // CORREGIDO: Renombrado juegoIndex a juegoId y agregado defaultValue "1"
+        composable(
+            route = "${AppScreen.FullReviews.route}?juegoId={juegoId}",
             arguments = listOf(
-                navArgument("juegoIndex") {
-                    type = NavType.IntType
+                navArgument("juegoId") {
+                    type = NavType.StringType
+                    defaultValue = "1"
                 }
             )
-        ) {
+        ) { backStackEntry ->
             val reviewViewModel: ReviewViewModel = hiltViewModel()
+            val juegoId = backStackEntry.arguments?.getString("juegoId") ?: "1"
+
             ReviewDetailScreen(
                 reviewViewModel = reviewViewModel,
+                juegoId = juegoId,
                 onBackClick = {
                     navController.popBackStack()
                 },
                 onClickReview = {
-                    navController.navigate(AppScreen.WriteReview.route)
+                    navController.navigate("${AppScreen.WriteReview.route}?gameId=$juegoId")
                 }
             )
         }
 
+        // CORREGIDO: defaultValue = "1" en lugar de defaultValue = 1
         composable(
-            route = "${AppScreen.WriteReview.route}?gameIndex={gameIndex}",
+            route = "${AppScreen.WriteReview.route}?gameId={gameId}",
             arguments = listOf(
-                navArgument("gameIndex") {
-                    type = NavType.IntType
-                    defaultValue = 0
+                navArgument("gameId") {
+                    type = NavType.StringType
+                    defaultValue = "1"
                 }
             )
         ) { backStackEntry ->
             val writeReviewViewModel: WriteReviewViewModel = hiltViewModel()
-            val gameIndex = backStackEntry.arguments?.getInt("gameIndex") ?: 0
+            val gameId = backStackEntry.arguments?.getString("gameId") ?: "1"
 
             WriteReviewRoute(
                 writeReviewViewModel = writeReviewViewModel,
-                gameIndex = gameIndex,
+                gameId = gameId,
                 onSettingsClick = {
                     navController.navigate(AppScreen.Configuration.route)
                 },

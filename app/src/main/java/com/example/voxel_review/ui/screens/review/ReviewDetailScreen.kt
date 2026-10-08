@@ -8,6 +8,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 @Composable
 fun ReviewDetailScreen(
     reviewViewModel: ReviewViewModel,
+    juegoId: String,
     onClickReview: () -> Unit,
     onBackClick: () -> Unit,
 ) {
@@ -26,7 +27,9 @@ fun ReviewDetailScreen(
 fun ReviewDetailScreenPreview() {
     ReviewDetailScreen(
         reviewViewModel = viewModel(),
+        juegoId = "1",
         onClickReview = {},
         onBackClick = {}
     )
 }
+

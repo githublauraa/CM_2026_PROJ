@@ -44,6 +44,7 @@ fun GameHeader(
 fun GameHeaderPreview() {
 
     val game = GameDetailInfo(
+        id = "1",
         banner = "",
         nombre = "STARFIELD",
         descripcion = "",

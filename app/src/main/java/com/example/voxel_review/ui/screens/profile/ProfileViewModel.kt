@@ -28,7 +28,7 @@ class ProfileViewModel @Inject constructor(
 
 	val uiState: StateFlow<ProfileState> = _uiState
 
-	fun getProfileById(id: Int) {
+	fun getProfileById(id: String) {
 		val profile = LocalProfileProvider.profiles.find {
 			it.id == id
 		}

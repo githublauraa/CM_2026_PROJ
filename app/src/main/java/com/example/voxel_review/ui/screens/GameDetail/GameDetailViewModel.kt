@@ -17,10 +17,9 @@ class GameDetailViewModel @Inject constructor(): ViewModel() {
     private val _uiState = MutableStateFlow(GameDetailState())
     val uiState: StateFlow<GameDetailState> = _uiState
 
-    fun loadGame(gameIndex: Int) {
-        val game = LocalGameProvider.games.getOrElse(gameIndex) {
-            LocalGameProvider.games.first()
-        }
+    fun loadGame(gameId: String) {
+        val game = LocalGameProvider.games.firstOrNull { it.id == gameId }
+            ?: LocalGameProvider.games.first()
         _uiState.update {
             it.copy(
                 game = game,
@@ -35,3 +34,4 @@ class GameDetailViewModel @Inject constructor(): ViewModel() {
         }
     }
 }
+

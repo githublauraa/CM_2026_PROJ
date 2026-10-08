@@ -24,14 +24,14 @@ import com.example.voxel_review.ui.utils.FondoPantalla
 @Composable
 fun WriteReviewRoute(
     writeReviewViewModel: WriteReviewViewModel,
-    gameIndex: Int,
+    gameId: String,
     onBackClick: () -> Unit,
     onSettingsClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
 
-    LaunchedEffect(gameIndex) {
-        writeReviewViewModel.loadGame(gameIndex)
+    LaunchedEffect(gameId) {
+        writeReviewViewModel.loadGame(gameId = gameId)
     }
 
     WriteReviewScreen(

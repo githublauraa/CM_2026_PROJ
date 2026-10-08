@@ -5,6 +5,7 @@ object LocalGameRecomendedProvider {
     val recommendedGames = listOf(
 
         GameDetailInfo(
+            id = "1",
             banner = "",
             nombre = "Mass Effect",
             descripcion = "",
@@ -15,6 +16,7 @@ object LocalGameRecomendedProvider {
         ),
 
         GameDetailInfo(
+            id = "2",
             banner = "",
             nombre = "Outer Wilds",
             descripcion = "",
@@ -25,6 +27,7 @@ object LocalGameRecomendedProvider {
         ),
 
         GameDetailInfo(
+            id = "3",
             banner = "",
             nombre = "No Man's Sky",
             descripcion = "",

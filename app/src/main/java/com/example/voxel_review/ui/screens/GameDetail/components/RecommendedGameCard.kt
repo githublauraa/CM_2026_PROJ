@@ -37,6 +37,7 @@ fun RecommendedGameCard(
 fun RecommendedGameCardPreview() {
 
     val game = GameDetailInfo(
+        id = "1",
         banner = "",
         nombre = "Mass Effect",
         descripcion = "",

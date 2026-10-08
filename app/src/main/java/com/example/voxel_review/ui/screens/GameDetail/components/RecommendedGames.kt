@@ -63,6 +63,7 @@ fun RecommendedGamesPreview() {
     val games = listOf(
 
         GameDetailInfo(
+            id = "1",
             banner = "",
             nombre = "Mass Effect",
             descripcion = "",
@@ -73,6 +74,7 @@ fun RecommendedGamesPreview() {
         ),
 
         GameDetailInfo(
+            id = "2",
             banner = "",
             nombre = "Outer Wilds",
             descripcion = "",
@@ -83,6 +85,7 @@ fun RecommendedGamesPreview() {
         ),
 
         GameDetailInfo(
+            id = "3",
             banner = "",
             nombre = "No Man's Sky",
             descripcion = "",
