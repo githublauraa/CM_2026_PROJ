@@ -27,7 +27,7 @@ object AppModule {
 
 	@Singleton
 	@Provides
-	fun providesRetrofitReviewServie(retrofit: Retrofit): ReviewRetrofitService {
+	fun providesRetrofitReviewService(retrofit: Retrofit): ReviewRetrofitService {
 		return retrofit.create(ReviewRetrofitService::class.java)
 	}
 

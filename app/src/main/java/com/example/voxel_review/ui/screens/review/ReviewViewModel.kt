@@ -1,6 +1,8 @@
 package com.example.voxel_review.ui.screens.review
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.voxel_review.data.repository.ReviewRepository
 import com.example.voxel_review.data.review.LocalReviewProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
@@ -8,51 +10,35 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
 @HiltViewModel
-class ReviewViewModel @Inject constructor(): ViewModel() {
+class ReviewViewModel @Inject constructor(
+    private val ReviewRepository: ReviewRepository
+): ViewModel() {
 
     private val _uiState = MutableStateFlow(ReviewDetailState())
     val uiState: StateFlow<ReviewDetailState> = _uiState.asStateFlow()
-    /*
-        init {
-            loadReview()
-        }
 
-        private fun loadReview() {
-
-            val review = LocalReviewProvider.reviews.firstOrNull()
-
-            if (review != null) {
-
-                _uiState.update {
-                    it.copy(
-                        tituloJuego = review.tituloJuego,
-                        desarrollador = review.desarrollador,
-                        tituloDescripcion = review.tituloDescripcion,
-                        descripcion = review.descripcion,
-
-                        ratingGeneral = review.ratingGeneral,
-                        ratingJugabilidad = review.ratingJugabilidad,
-                        ratingGraficos = review.ratingGraficos,
-                        ratingHistoria = review.ratingHistoria,
-
-                        isLoading = false,
-                        errorMessage = null
-                    )
-                }
-
+    fun getGameReviews() {
+        viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true, errorMessage = null) }
+            val result = ReviewRepository.getGameReviews(1)
+            if (result.isSuccess) {
+                _uiState.update { it.copy(reviews = result.getOrNull() ?: emptyList()) }
             } else {
-
                 _uiState.update {
                     it.copy(
-                        isLoading = false,
-                        errorMessage = "No se pudo encontrar la reseña"
+                        errorMessage = result.exceptionOrNull()?.message,
+                        isLoading = false
                     )
                 }
+
             }
         }
+    }
 
-     */
-
+    init {
+        getGameReviews()
+    }
 }

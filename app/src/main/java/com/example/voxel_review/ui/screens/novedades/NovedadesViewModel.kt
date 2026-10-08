@@ -2,6 +2,7 @@ package com.example.voxel_review.ui.screens.novedades
 
 import androidx.lifecycle.ViewModel
 import com.example.voxel_review.data.LocalJuegosProvider
+import com.example.voxel_review.data.repository.ReviewRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

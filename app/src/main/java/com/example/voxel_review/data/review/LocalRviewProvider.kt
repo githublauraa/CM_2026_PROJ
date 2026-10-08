@@ -2,20 +2,23 @@ package com.example.voxel_review.data.review
 
 
 object LocalReviewProvider {
-/**
+
     val reviews = listOf(
         ReviewInfo(
             imagenJuego = "URL_IMAGEN_JUEGO",
             tituloJuego = "Chrono Sphere",
-            desarrollador = "Desarrollado por Voxel Studios",
+            desarrollador = "Voxel Studios",
             tituloDescripcion = "Una obra maestra",
-            descripcion = "Una experiencia única que combina una historia profunda, excelente jugabilidad y un apartado visual impresionante.",
+            descripcion = "Una experiencia única que combina " +
+                    "una historia profunda y excelente jugabilidad.",
             ratingGeneral = 4.2f,
             ratingJugabilidad = 4.5f,
             ratingGraficos = 4.0f,
             ratingHistoria = 4.1f,
             imagenUsuario = "URL_IMAGEN_USUARIO",
-
+            usernameReview = "jugador1",
+            comentarioReview = "Una experiencia única.",
+            ratingUsuario = 4
         ),
 
         ReviewInfo(
@@ -29,7 +32,9 @@ object LocalReviewProvider {
             ratingGraficos = 4.4f,
             ratingHistoria = 4.3f,
             imagenUsuario = "URL_IMAGEN_USUARIO",
+            usernameReview = "jugador2",
+            comentarioReview = "Me encantó la historia y los gráficos.",
+            ratingUsuario = 5
         )
     )
-    */
 }
