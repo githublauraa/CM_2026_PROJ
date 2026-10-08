@@ -14,42 +14,45 @@ class ReviewViewModel @Inject constructor(): ViewModel() {
 
     private val _uiState = MutableStateFlow(ReviewDetailState())
     val uiState: StateFlow<ReviewDetailState> = _uiState.asStateFlow()
+    /*
+        init {
+            loadReview()
+        }
 
-    init {
-        loadReview()
-    }
+        private fun loadReview() {
 
-    private fun loadReview() {
+            val review = LocalReviewProvider.reviews.firstOrNull()
 
-        val review = LocalReviewProvider.reviews.firstOrNull()
+            if (review != null) {
 
-        if (review != null) {
+                _uiState.update {
+                    it.copy(
+                        tituloJuego = review.tituloJuego,
+                        desarrollador = review.desarrollador,
+                        tituloDescripcion = review.tituloDescripcion,
+                        descripcion = review.descripcion,
 
-            _uiState.update {
-                it.copy(
-                    tituloJuego = review.tituloJuego,
-                    desarrollador = review.desarrollador,
-                    tituloDescripcion = review.tituloDescripcion,
-                    descripcion = review.descripcion,
+                        ratingGeneral = review.ratingGeneral,
+                        ratingJugabilidad = review.ratingJugabilidad,
+                        ratingGraficos = review.ratingGraficos,
+                        ratingHistoria = review.ratingHistoria,
 
-                    ratingGeneral = review.ratingGeneral,
-                    ratingJugabilidad = review.ratingJugabilidad,
-                    ratingGraficos = review.ratingGraficos,
-                    ratingHistoria = review.ratingHistoria,
+                        isLoading = false,
+                        errorMessage = null
+                    )
+                }
 
-                    isLoading = false,
-                    errorMessage = null
-                )
-            }
+            } else {
 
-        } else {
-
-            _uiState.update {
-                it.copy(
-                    isLoading = false,
-                    errorMessage = "No se pudo encontrar la reseña"
-                )
+                _uiState.update {
+                    it.copy(
+                        isLoading = false,
+                        errorMessage = "No se pudo encontrar la reseña"
+                    )
+                }
             }
         }
-    }
+
+     */
+
 }

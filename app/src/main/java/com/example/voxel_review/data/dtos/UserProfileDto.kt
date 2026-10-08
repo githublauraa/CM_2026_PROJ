@@ -5,8 +5,8 @@ import com.example.voxel_review.data.profile.ProfileInfo
 data class UserProfileDto(
 	val userId: Int,
 	val username: String,
-	val biography: String,
-	val photoUrl: String,
+	val biography: String? = null,
+	val photoUrl: String? = null,
 	val numReviews: Int,
 	val likes: Int,
 	val avgRating: Float,
@@ -15,11 +15,11 @@ data class UserProfileDto(
 fun UserProfileDto.toProfileInfo(): ProfileInfo {
 	return ProfileInfo(
 		id = userId.toString(),
-		pfp = photoUrl,
+		pfp = photoUrl ?: "",
 		nick = username,
 		numResenias = numReviews,
 		promedio = avgRating,
 		likes = likes,
-		biografia = biography,
+		biografia = biography ?: "",
 	)
 }

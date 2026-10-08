@@ -143,7 +143,7 @@ fun AppNavigation(
             arguments = listOf(
                 navArgument("profileId") {
                     type = NavType.StringType
-                    defaultValue = "1"
+                    defaultValue = "2"
                 }
             )
         ) { backStackEntry ->

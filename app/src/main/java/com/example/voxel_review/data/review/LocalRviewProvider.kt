@@ -2,7 +2,7 @@ package com.example.voxel_review.data.review
 
 
 object LocalReviewProvider {
-
+/**
     val reviews = listOf(
         ReviewInfo(
             imagenJuego = "URL_IMAGEN_JUEGO",
@@ -15,6 +15,7 @@ object LocalReviewProvider {
             ratingGraficos = 4.0f,
             ratingHistoria = 4.1f,
             imagenUsuario = "URL_IMAGEN_USUARIO",
+
         ),
 
         ReviewInfo(
@@ -30,4 +31,5 @@ object LocalReviewProvider {
             imagenUsuario = "URL_IMAGEN_USUARIO",
         )
     )
+    */
 }
