@@ -44,19 +44,19 @@ fun ReviewDetailContent(
     ) {
 
         HeroSection(
-            imagenJuego = state.imagenJuego,
-            tituloJuego = state.tituloJuego,
-            desarrollador = state.desarrollador,
+            imagenJuego = state.reviews[0].imagenJuego,
+            tituloJuego = state.reviews[0].tituloJuego,
+            desarrollador = state.reviews[0].desarrollador,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp)
         )
 
         RatingCard(
-            ratingGeneral = state.ratingGeneral,
-            ratingJugabilidad = state.ratingJugabilidad,
-            ratingGraficos = state.ratingGraficos,
-            ratingHistoria = state.ratingHistoria,
+            ratingGeneral = state.reviews[0].ratingGeneral,
+            ratingJugabilidad = state.reviews[0].ratingJugabilidad,
+            ratingGraficos = state.reviews[0].ratingGraficos,
+            ratingHistoria = state.reviews[0].ratingHistoria,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp),
@@ -64,26 +64,11 @@ fun ReviewDetailContent(
         )
 
         DescriptionSection(
-            titulo = state.tituloDescripcion,
-            descripcion = state.descripcion,
+            titulo = state.reviews[0].tituloDescripcion,
+            descripcion = state.reviews[0].descripcion,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp)
-        )
-
-        UserReviewsSection(
-            imagenUsuario = state.imagenUsuario,
-            username = state.usernameReview,
-            comentario = state.comentarioReview,
-            rating = state.ratingUsuario,
-            onClickReview = onClickReview,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(
-                    horizontal = 16.dp,
-                    vertical = 8.dp
-                ),
-            cardBackgroundColor = cardBackground
         )
 
         Spacer(
@@ -108,9 +93,6 @@ fun ReviewDetailContentPreview() {
             ratingGraficos = 4.0f,
             ratingHistoria = 4.1f,
             imagenUsuario = "",
-            usernameReview = "GamerX Pro",
-            comentarioReview = "Una experiencia increíble.",
-            ratingUsuario = 4
         ),
         onClickReview = {}
     )

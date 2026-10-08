@@ -37,6 +37,7 @@ fun ProfileScreen(
 
     LaunchedEffect(profileId) {
         profileViewModel.getProfileById(profileId)
+        profileViewModel.getUserReviews(profileId)
     }
 
     ProfileContent(
@@ -63,6 +64,7 @@ fun ProfileContent(
 ) {
 
     val profile = state.profile ?: return
+    val reviews = state.reviews ?: return
 
     Box(
         modifier = modifier
@@ -103,7 +105,7 @@ fun ProfileContent(
                 profile.likes
             )
 
-            GameCards()
+            GameCards(reviews)
 
             EditButton()
 

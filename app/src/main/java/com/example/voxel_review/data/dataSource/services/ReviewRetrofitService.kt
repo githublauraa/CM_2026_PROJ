@@ -11,18 +11,18 @@ import retrofit2.http.Path
 
 interface ReviewRetrofitService {
 	@GET("reviews/video-game/{id}")
-	suspend fun getGameReviews(@Path("id") id: Int): List<ReviewDto>
+	suspend fun getGameReviews(@Path("id") id: String): List<ReviewDto>
 
 	@GET("reviews/user/{id}")
-	suspend fun getUserReviews(@Path("id") id: Int): List<ReviewDto>
+	suspend fun getUserReviews(@Path("id") id: String): List<ReviewDto>
 
 	@POST("reviews/user/{userId}/video-game/{video-gameId}")
-	suspend fun createReview(@Path("userId") userId: Int, @Path("video-gameId") videoGameId: Int, @Body review: CreateReviewDto): Unit
+	suspend fun createReview(@Path("userId") userId: String, @Path("video-gameId") videoGameId: String, @Body review: CreateReviewDto): Unit
 
 	@DELETE("reviews/{id}")
-	suspend fun deleteReview(@Path("id") id: Int) : Boolean
+	suspend fun deleteReview(@Path("id") id: String) : Boolean
 
 	@PUT("reviews/{id}")
-	suspend fun updateReview(@Path("id") id: Int, @Body review: CreateReviewDto) : Unit
+	suspend fun updateReview(@Path("id") id: String, @Body review: CreateReviewDto) : Unit
 }
 	

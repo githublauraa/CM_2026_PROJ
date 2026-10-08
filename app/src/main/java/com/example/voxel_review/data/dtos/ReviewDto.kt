@@ -3,13 +3,13 @@ package com.example.voxel_review.data.dtos
 import com.example.voxel_review.data.review.ReviewInfo
 
 data class ReviewDto(
-	val idResenia: Int,
-	val idUsuario: Int,
-	val idVideoJuego: Int,
-	val ratingJugabilidad: Int,
-	val ratingGraficos: Int,
-	val ratingHistoria: Int,
-	val contenido: String,
+	val reviewId: Int,
+	val userId: Int,
+	val videoGameId: Int,
+	val gameplayRating: Int,
+	val graphicsRating: Int,
+	val storyRating: Int,
+	val content: String,
 	val createdAt: String,
 	val updatedAt: String,
 	val user: UserDto,
@@ -17,30 +17,28 @@ data class ReviewDto(
 )
 
 data class UserDto(
-	val nombreUsuario: String,
-	val fotoUrl: String?
+	val username: String,
+	val photoUrl: String?
 )
 
 data class VideoGameDto(
-	val nombre: String,
-	val desarrollador: String,
-	val fotoUrl: String?
+	val name: String,
+	val developer: String,
+	val imageUrl: String?
 )
 
 fun ReviewDto.toReviewInfo(): ReviewInfo {
 	return ReviewInfo(
-		imagenJuego = videoGame.fotoUrl ?: "",
-		tituloJuego = videoGame.nombre,
-		desarrollador = videoGame.desarrollador,
-		tituloDescripcion = "Reseña por ${user.nombreUsuario}",
-		descripcion = contenido,
-		ratingGeneral = ((ratingJugabilidad + ratingGraficos + ratingHistoria) / 3.0f),
-		ratingJugabilidad = ratingJugabilidad.toFloat(),
-		ratingGraficos = ratingGraficos.toFloat(),
-		ratingHistoria = ratingHistoria.toFloat(),
-		imagenUsuario = user.fotoUrl ?: "",
-		usernameReview = user.nombreUsuario,
-		comentarioReview = contenido,
-		ratingUsuario = ((ratingJugabilidad + ratingGraficos + ratingHistoria) / 3.0f).toInt()
+		idResenia = reviewId.toString(),
+		imagenJuego = videoGame.imageUrl ?: "",
+		tituloJuego = videoGame.name,
+		desarrollador = videoGame.developer,
+		tituloDescripcion = "Reseña por ${user.username}",
+		descripcion = content,
+		ratingGeneral = ((gameplayRating + graphicsRating + storyRating) / 3.0f),
+		ratingJugabilidad = gameplayRating.toFloat(),
+		ratingGraficos = graphicsRating.toFloat(),
+		ratingHistoria = storyRating.toFloat(),
+		imagenUsuario = user.photoUrl ?: "",
 	)
 }

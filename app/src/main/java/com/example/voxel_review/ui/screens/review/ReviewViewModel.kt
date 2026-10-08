@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel
 class ReviewViewModel @Inject constructor(
-    private val ReviewRepository: ReviewRepository
+    private val reviewRepository: ReviewRepository
 ): ViewModel() {
 
     private val _uiState = MutableStateFlow(ReviewDetailState())
@@ -23,9 +23,12 @@ class ReviewViewModel @Inject constructor(
     fun getGameReviews() {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, errorMessage = null) }
-            val result = ReviewRepository.getGameReviews(1)
+            val result = reviewRepository.getGameReviews("1")
             if (result.isSuccess) {
-                _uiState.update { it.copy(reviews = result.getOrNull() ?: emptyList()) }
+                _uiState.update { it.copy(reviews = result.getOrNull() ?: emptyList(),
+                isLoading = false
+                )
+                }
             } else {
                 _uiState.update {
                     it.copy(

@@ -18,11 +18,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.voxel_review.data.review.ReviewInfo
 import com.example.voxel_review.ui.theme.White
 import com.example.voxel_review.ui.utils.ProfileImage
 
 @Composable
 fun GameCards(
+    reviews: List<ReviewInfo>,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -82,11 +84,11 @@ fun GameCard(
     }
 }
 
-@Preview
-@Composable
-fun GameCardsPreview() {
-    GameCards()
-}
+//@Preview
+//@Composable
+//fun GameCardsPreview() {
+//    GameCards()
+//}
 
 @Preview
 @Composable

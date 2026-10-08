@@ -11,19 +11,21 @@ import javax.inject.Inject
 class ReviewRepository @Inject constructor(
         private val reviewRemoteDataSource: ReviewRetrofitDataSourceImpl,
     ) {
-        suspend fun getGameReviews(id: Int): Result<List<ReviewInfo>> =
-            try {
+        suspend fun getGameReviews(id: String): Result<List<ReviewInfo>> {
+            return try {
                 val reviews = reviewRemoteDataSource.getGameReviews(id)
                 val reviewsInfo = reviews.map { it.toReviewInfo() }
                 Result.success(reviewsInfo)
             } catch (e: HttpException) {
+                e.printStackTrace()
                 Result.failure(e)
             } catch (e: Exception) {
+                e.printStackTrace()
                 Result.failure(e)
             }
-
-        suspend fun getUserReviews(id: Int): Result<List<ReviewInfo>> =
-            try {
+        }
+        suspend fun getUserReviews(id: String): Result<List<ReviewInfo>> {
+            return try {
                 val reviews = reviewRemoteDataSource.getUserReviews(id)
                 val reviewsInfo = reviews.map { it.toReviewInfo() }
                 Result.success(reviewsInfo)
@@ -32,4 +34,5 @@ class ReviewRepository @Inject constructor(
             } catch (e: Exception) {
                 Result.failure(e)
             }
+        }
     }

@@ -15,9 +15,6 @@ data class ReviewDetailState(
     val ratingHistoria: Float = 0f,
 
     val imagenUsuario: String = "",
-    val usernameReview: String = "",
-    val comentarioReview: String = "",
-    val ratingUsuario: Int = 0,
 
     val reviews: List<ReviewInfo> = emptyList(),
     val isLoading: Boolean = false,

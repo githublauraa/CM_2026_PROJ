@@ -31,7 +31,7 @@ fun ReviewDetailScreen(
         state.errorMessage != null -> {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                 Text(text =state.errorMessage ?: "Error desconocido")
-            }
+}
         }
 
         else -> {

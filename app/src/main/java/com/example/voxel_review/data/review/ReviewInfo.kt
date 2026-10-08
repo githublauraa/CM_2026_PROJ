@@ -1,6 +1,7 @@
 package com.example.voxel_review.data.review
 
 data class ReviewInfo(
+    val idResenia: String,
     val imagenJuego: String,
     val tituloJuego: String,
     val desarrollador: String,
@@ -11,7 +12,4 @@ data class ReviewInfo(
     val ratingGraficos: Float,
     val ratingHistoria: Float,
     val imagenUsuario: String,
-    val usernameReview: String,
-    val comentarioReview: String,
-    val ratingUsuario: Int
 )

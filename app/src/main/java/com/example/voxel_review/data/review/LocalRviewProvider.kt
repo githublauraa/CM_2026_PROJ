@@ -5,6 +5,7 @@ object LocalReviewProvider {
 
     val reviews = listOf(
         ReviewInfo(
+            idResenia = "1",
             imagenJuego = "URL_IMAGEN_JUEGO",
             tituloJuego = "Chrono Sphere",
             desarrollador = "Voxel Studios",
@@ -16,12 +17,10 @@ object LocalReviewProvider {
             ratingGraficos = 4.0f,
             ratingHistoria = 4.1f,
             imagenUsuario = "URL_IMAGEN_USUARIO",
-            usernameReview = "jugador1",
-            comentarioReview = "Una experiencia única.",
-            ratingUsuario = 4
         ),
 
         ReviewInfo(
+            idResenia = "2",
             imagenJuego = "URL_IMAGEN_JUEGO",
             tituloJuego = "Shadow Realm",
             desarrollador = "Desarrollado por Dark Pixel",
@@ -32,9 +31,6 @@ object LocalReviewProvider {
             ratingGraficos = 4.4f,
             ratingHistoria = 4.3f,
             imagenUsuario = "URL_IMAGEN_USUARIO",
-            usernameReview = "jugador2",
-            comentarioReview = "Me encantó la historia y los gráficos.",
-            ratingUsuario = 5
         )
     )
 }

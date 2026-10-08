@@ -4,6 +4,7 @@ import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.voxel_review.data.repository.AuthRepository
+import com.example.voxel_review.data.repository.ReviewRepository
 import com.example.voxel_review.data.repository.StorageRepository
 import com.example.voxel_review.data.repository.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,7 +18,8 @@ import kotlinx.coroutines.launch
 class ProfileViewModel @Inject constructor(
 	private val authRepository: AuthRepository,
 	private val storageRepository: StorageRepository,
-	private val userRepository: UserRepository
+	private val userRepository: UserRepository,
+	private val reviewRepository: ReviewRepository,
 ) : ViewModel() {
 
 	private val _uiState = MutableStateFlow(
@@ -41,6 +43,17 @@ class ProfileViewModel @Inject constructor(
 		}
 	}
 
+	fun getUserReviews(userId: String) {
+		viewModelScope.launch {
+			val result = reviewRepository.getUserReviews(userId)
+			if (result.isSuccess){
+				val userReviews = result.getOrNull()!!
+				_uiState.value = _uiState.value.copy(
+					reviews = userReviews
+				)
+			}
+		}
+	}
 	// fun getAllProfiles() {
 	// 	_uiState.update {
 	// 		it.copy(profiles = LocalProfileProvider.profiles)
