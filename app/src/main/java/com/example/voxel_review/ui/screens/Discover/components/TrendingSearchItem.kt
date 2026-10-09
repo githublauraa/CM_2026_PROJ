@@ -57,14 +57,14 @@ fun TrendingSearchItem(
     ) {
         Column {
             Text(
-                text = stringResource(id = item.nombre),
+                text = item.nombre,
                 color = onSurfaceDark,
                 fontSize = 16.sp,
                 fontWeight = FontWeight.SemiBold
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(
-                text = stringResource(id = item.categoria),
+                text = item.categoria,
                 color = onSurfaceVariantDark,
                 fontSize = 13.sp
             )
@@ -92,8 +92,8 @@ private fun TrendingSearchItemPreview() {
     TrendingSearchItem(
         item = TrendingSearchInfo(
             id = "1",
-            nombre = R.string.juego_elden_ring,
-            categoria = R.string.cat_rpg_accion,
+            nombre = "Elden Ring",
+            categoria = "RPG de acción"
         ),
         onClick = {}
     )

@@ -22,5 +22,7 @@ data class DiscoverState(
     val followSuggestions: List<FollowSuggestionInfo> = emptyList(),
     val trendingSearches: List<TrendingSearchInfo> = emptyList(),
     val searchQuery: String = "",
-    val selectedGenre: GenreInfo? = null
+    val selectedGenre: GenreInfo? = null,
+    val isLoading: Boolean = false,
+    val error: String? = null
 )

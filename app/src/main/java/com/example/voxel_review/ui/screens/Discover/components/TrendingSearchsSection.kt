@@ -55,10 +55,13 @@ fun TrendingSearchesSection(
 @Preview()
 @Composable
 private fun TrendingSearchesSectionPreview() {
+    /*
     TrendingSearchesSection(
         items = LocalTrendingSearchProvider.tendencias,
         onItemClick = { /*pantalla detalle juego*/
         }
     )
+
+     */
 }
 

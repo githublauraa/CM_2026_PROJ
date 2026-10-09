@@ -11,7 +11,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.create
 import javax.inject.Singleton
-
+import com.example.voxel_review.data.dataSource.services.VideoGameRetrofitService
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
@@ -35,5 +35,13 @@ object AppModule {
 	@Provides
 	fun providesUserRetrofitService(retrofit: Retrofit): UserRetrofitService {
 		return retrofit.create(UserRetrofitService::class.java)
+	}
+
+	@Singleton
+	@Provides
+	fun providesVideoGameRetrofitService(
+		retrofit: Retrofit
+	): VideoGameRetrofitService {
+		return retrofit.create(VideoGameRetrofitService::class.java)
 	}
 }

@@ -1,6 +1,6 @@
 package com.example.voxel_review.data.dtos
 
-import android.media.Rating
+import com.example.voxel_review.data.InfoDiscover.TrendingSearchInfo
 import com.example.voxel_review.data.review.ReviewInfo
 
 data class ReviewDto(
@@ -24,8 +24,12 @@ data class UserDto(
 )
 
 data class VideoGameDto(
+	val videoGameId: Int,
 	val name: String,
+	val description: String,
 	val developer: String,
+	val platform: String,
+	val releaseDate: String,
 	val imageUrl: String?
 )
 
@@ -44,5 +48,13 @@ fun ReviewDto.toReviewInfo(): ReviewInfo {
 		imagenUsuario = user.photoUrl ?: "",
 		userId = userId.toString(),
 		videoGameId = videoGameId.toString(),
+	)
+}
+
+fun VideoGameDto.toTrendingSearchInfo(): TrendingSearchInfo {
+	return TrendingSearchInfo(
+		id = videoGameId.toString(),
+		nombre = name,
+		categoria = platform
 	)
 }
