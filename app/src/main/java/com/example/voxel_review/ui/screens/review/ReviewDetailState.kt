@@ -8,14 +8,12 @@ data class ReviewDetailState(
     val desarrollador: String = "",
     val tituloDescripcion: String = "",
     val descripcion: String = "",
-
     val ratingGeneral: Float = 0f,
     val ratingJugabilidad: Float = 0f,
     val ratingGraficos: Float = 0f,
     val ratingHistoria: Float = 0f,
-
+    val comments: List<ReviewInfo> = emptyList(),
     val imagenUsuario: String = "",
-
     val reviews: List<ReviewInfo> = emptyList(),
     val isLoading: Boolean = false,
     val errorMessage: String? = null

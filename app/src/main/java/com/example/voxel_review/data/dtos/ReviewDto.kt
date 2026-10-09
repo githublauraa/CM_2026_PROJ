@@ -13,7 +13,8 @@ data class ReviewDto(
 	val createdAt: String,
 	val updatedAt: String,
 	val user: UserDto,
-	val videoGame: VideoGameDto
+	val videoGame: VideoGameDto,
+	val comments: Int
 )
 
 data class UserDto(
@@ -40,5 +41,6 @@ fun ReviewDto.toReviewInfo(): ReviewInfo {
 		ratingGraficos = graphicsRating.toFloat(),
 		ratingHistoria = storyRating.toFloat(),
 		imagenUsuario = user.photoUrl ?: "",
+		comments = comments.toString()
 	)
 }

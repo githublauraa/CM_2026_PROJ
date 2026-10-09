@@ -41,6 +41,18 @@ class ReviewViewModel @Inject constructor(
         }
     }
 
+    fun getReviewComments(id: String){
+        viewModelScope.launch {
+            val result = reviewRepository.getReviewComments(id)
+            if (result.isSuccess) {
+                val ReviewComments = result.getOrNull()
+                if (ReviewComments != null) {
+                    _uiState.update { it.copy(comments = ReviewComments) }
+                }
+            }
+        }
+    }
+
     init {
         getGameReviews()
     }

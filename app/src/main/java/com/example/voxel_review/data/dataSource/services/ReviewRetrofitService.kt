@@ -24,5 +24,8 @@ interface ReviewRetrofitService {
 
 	@PUT("reviews/{id}")
 	suspend fun updateReview(@Path("id") id: String, @Body review: CreateReviewDto) : Unit
+
+	@GET("reviews/{id}/comments")
+	suspend fun getReviewComments(@Path("id") id: String): List<ReviewDto>
 }
 	

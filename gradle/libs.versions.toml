@@ -31,6 +31,7 @@ googleServices = "4.5.0"
 firebaseCrashlytics = "3.0.8"
 firebaseBom = "34.18.0"
 material3 = "1.4.0"
+foundationVersion = "1.12.1"
 
 
 [libraries]
@@ -112,6 +113,7 @@ androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "j
 
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "material3" }
+androidx-foundation = { group = "androidx.compose.foundation", name = "foundation", version.ref = "foundationVersion" }
 
 
 [plugins]

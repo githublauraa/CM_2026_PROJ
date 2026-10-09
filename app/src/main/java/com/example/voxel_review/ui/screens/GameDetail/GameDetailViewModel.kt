@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.voxel_review.data.InfoGame.LocalGameProvider
 import com.example.voxel_review.data.InfoGame.LocalGameRecomendedProvider
+import com.example.voxel_review.data.dtos.CreateReviewDto
 import com.example.voxel_review.data.repository.ReviewRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,7 +18,9 @@ import kotlinx.coroutines.launch
  * ViewModel que administra la carga de datos y el estado de la pantalla de detalles de un juego.
  */
 @HiltViewModel
-class GameDetailViewModel @Inject constructor(): ViewModel() {
+class GameDetailViewModel @Inject constructor(
+    private val reviewRepository: ReviewRepository
+): ViewModel() {
 
     private val _uiState = MutableStateFlow(GameDetailState())
     val uiState: StateFlow<GameDetailState> = _uiState
