@@ -22,6 +22,13 @@ import androidx.compose.ui.unit.dp
 import com.example.voxel_review.data.profile.ProfileInfo
 import com.example.voxel_review.ui.screens.profile.components.*
 import com.example.voxel_review.ui.theme.VoxelBackground
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.verticalScroll
+import com.example.voxel_review.R
+import com.example.voxel_review.data.profile.ProfileInfo
+import com.example.voxel_review.data.review.ReviewInfo
+import android.net.Uri
 import com.example.voxel_review.ui.utils.ProfileImage
 
 @Composable
@@ -31,7 +38,7 @@ fun ProfileScreen(
     onBackClick: () -> Unit,
     onClickImage: () -> Unit,
     buttonLogOutPressed: () -> Unit,
-    onEditReview: (String) -> Unit = {},
+    onReviewClick: (ReviewInfo) -> Unit,
     modifier: Modifier = Modifier
 ) {
 
@@ -49,10 +56,7 @@ fun ProfileScreen(
         },
         onBackClick = onBackClick,
         onClickImage = onClickImage,
-        onEditReview = onEditReview,
-        onDeleteReview = { reviewId ->
-            profileViewModel.deleteReview(reviewId, profileId)
-        },
+        onReviewClick = onReviewClick,
         buttonLogOutPressed = {
             profileViewModel.logOut()
             buttonLogOutPressed()
@@ -68,8 +72,7 @@ fun ProfileContent(
     onClickImage: () -> Unit,
     buttonLogOutPressed: () -> Unit,
     onImageSelected: (Uri) -> Unit,
-    onEditReview: (String) -> Unit,
-    onDeleteReview: (String) -> Unit,
+    onReviewClick: (ReviewInfo) -> Unit,
     modifier: Modifier = Modifier
 ) {
 
@@ -112,11 +115,10 @@ fun ProfileContent(
 
                     Location()
 
-                    StatsPanel(
-                        profile.numResenias,
-                        profile.promedio,
-                        profile.likes
-                    )
+            GameCards(
+                reviews = reviews,
+                onReviewClick = onReviewClick
+            )
 
                     GameCards(reviews)
 
@@ -166,7 +168,6 @@ fun ProfileContentPreview() {
         onClickImage = {},
         buttonLogOutPressed = {},
         onImageSelected = {},
-        onEditReview = {},
-        onDeleteReview = {}
+        onReviewClick = {}
     )
 }

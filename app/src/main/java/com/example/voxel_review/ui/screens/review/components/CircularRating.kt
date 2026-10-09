@@ -81,7 +81,7 @@ fun CircularRating(
         ) {
 
             Text(
-                text = rating.toString(),
+                text = "%.1f".format(rating),
                 color = Color.White,
                 fontSize = 36.sp,
                 fontWeight = FontWeight.ExtraBold
