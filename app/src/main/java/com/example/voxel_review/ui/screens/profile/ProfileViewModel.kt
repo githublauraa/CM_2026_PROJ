@@ -46,11 +46,21 @@ class ProfileViewModel @Inject constructor(
 	fun getUserReviews(userId: String) {
 		viewModelScope.launch {
 			val result = reviewRepository.getUserReviews(userId)
-			if (result.isSuccess){
-				val userReviews = result.getOrNull()!!
-				_uiState.value = _uiState.value.copy(
-					reviews = userReviews
-				)
+
+			if (result.isSuccess) {
+				val userReviews = result.getOrNull() ?: emptyList()
+
+				_uiState.update {
+					it.copy(
+						reviews = userReviews
+					)
+				}
+			} else {
+				_uiState.update {
+					it.copy(
+						errorMessage = "Error al cargar las reseñas"
+					)
+				}
 			}
 		}
 	}
@@ -73,6 +83,29 @@ class ProfileViewModel @Inject constructor(
 				_uiState.update {
 					it.copy(
 						profileImageUrl = result.getOrNull()
+					)
+				}
+			}
+		}
+	}
+
+	fun deleteReview(reviewId: String, profileId: String) {
+		viewModelScope.launch {
+			val result = reviewRepository.deleteReview(reviewId)
+
+			if (result.isSuccess) {
+				_uiState.update { state ->
+					state.copy(
+						reviews = state.reviews?.filter { review ->
+							review.idResenia != reviewId
+						} ?: emptyList(),
+						errorMessage = null
+					)
+				}
+			} else {
+				_uiState.update {
+					it.copy(
+						errorMessage = "Error al eliminar la reseña"
 					)
 				}
 			}

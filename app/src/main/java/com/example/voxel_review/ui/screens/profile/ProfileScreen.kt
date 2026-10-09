@@ -1,10 +1,16 @@
+
 package com.example.voxel_review.ui.screens.profile
 
+import android.net.Uri
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -13,16 +19,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.foundation.rememberScrollState
+import com.example.voxel_review.data.profile.ProfileInfo
 import com.example.voxel_review.ui.screens.profile.components.*
 import com.example.voxel_review.ui.theme.VoxelBackground
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.verticalScroll
-import com.example.voxel_review.R
-import com.example.voxel_review.data.profile.ProfileInfo
-import android.net.Uri
 import com.example.voxel_review.ui.utils.ProfileImage
+
 @Composable
 fun ProfileScreen(
     profileId: String,
@@ -30,6 +31,7 @@ fun ProfileScreen(
     onBackClick: () -> Unit,
     onClickImage: () -> Unit,
     buttonLogOutPressed: () -> Unit,
+    onEditReview: (String) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
 
@@ -42,9 +44,15 @@ fun ProfileScreen(
 
     ProfileContent(
         state = state,
-        onImageSelected = { profileViewModel.uploadImageFireBase(it) },
+        onImageSelected = {
+            profileViewModel.uploadImageFireBase(it)
+        },
         onBackClick = onBackClick,
         onClickImage = onClickImage,
+        onEditReview = onEditReview,
+        onDeleteReview = { reviewId ->
+            profileViewModel.deleteReview(reviewId, profileId)
+        },
         buttonLogOutPressed = {
             profileViewModel.logOut()
             buttonLogOutPressed()
@@ -60,11 +68,13 @@ fun ProfileContent(
     onClickImage: () -> Unit,
     buttonLogOutPressed: () -> Unit,
     onImageSelected: (Uri) -> Unit,
+    onEditReview: (String) -> Unit,
+    onDeleteReview: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
 
     val profile = state.profile ?: return
-    val reviews = state.reviews ?: return
+    val reviews = state.reviews ?: emptyList()
 
     Box(
         modifier = modifier
@@ -72,48 +82,63 @@ fun ProfileContent(
             .background(VoxelBackground)
     ) {
 
-        Column(
+        LazyColumn(
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier
-                .align(Alignment.TopCenter)
-                .padding(bottom = 70.dp)
-                .verticalScroll(rememberScrollState())
+            modifier = Modifier.fillMaxSize(),
+            contentPadding = PaddingValues(bottom = 70.dp)
         ) {
 
-            TopBar(
-                onBackClick = onBackClick,
-                onClickImage = onClickImage
-            )
+            item {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
 
-            ProfileImage(
-                profileImage = state.profileImageUrl?: "",
-                size = 200,
-                modifier = Modifier
-                    .padding(16.dp)
-                    .align(Alignment.CenterHorizontally)
-            )
+                    TopBar(
+                        onBackClick = onBackClick,
+                        onClickImage = onClickImage
+                    )
 
-            pickImageButton(onImageSelected = onImageSelected)
+                    ProfileImage(
+                        profileImage = state.profileImageUrl ?: "",
+                        size = 200,
+                        modifier = Modifier.padding(16.dp)
+                    )
 
-            UserNick(profile.nick)
+                    pickImageButton(
+                        onImageSelected = onImageSelected
+                    )
 
-            Location()
+                    UserNick(profile.nick)
 
-            StatsPanel(
-                profile.numResenias,
-                profile.promedio,
-                profile.likes
-            )
+                    Location()
 
-            GameCards(reviews)
+                    StatsPanel(
+                        profile.numResenias,
+                        profile.promedio,
+                        profile.likes
+                    )
 
-            EditButton()
+                    GameCards(reviews)
 
-            Spacer(modifier = Modifier.height(5.dp))
+                    EditButton()
 
-            ButtonLogOut(
-                buttonLogOutPressed = buttonLogOutPressed
-            )
+                    Spacer(
+                        modifier = Modifier.height(5.dp)
+                    )
+
+                    ButtonLogOut(
+                        buttonLogOutPressed = buttonLogOutPressed
+                    )
+                }
+            }
+
+            item {
+                ProfileReviews(
+                    reviews = reviews,
+                    onEditReview = onEditReview,
+                    onDeleteReview = onDeleteReview
+                )
+            }
         }
     }
 }
@@ -140,8 +165,8 @@ fun ProfileContentPreview() {
         onBackClick = {},
         onClickImage = {},
         buttonLogOutPressed = {},
-        onImageSelected = {}
+        onImageSelected = {},
+        onEditReview = {},
+        onDeleteReview = {}
     )
 }
-
-

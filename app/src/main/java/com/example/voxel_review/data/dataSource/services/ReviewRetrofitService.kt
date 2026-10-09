@@ -20,7 +20,7 @@ interface ReviewRetrofitService {
 	suspend fun createReview(@Path("userId") userId: String, @Path("video-gameId") videoGameId: String, @Body review: CreateReviewDto): Unit
 
 	@DELETE("reviews/{id}")
-	suspend fun deleteReview(@Path("id") id: String) : Boolean
+	suspend fun deleteReview(@Path("id") id: String) : Unit
 
 	@PUT("reviews/{id}")
 	suspend fun updateReview(@Path("id") id: String, @Body review: CreateReviewDto) : Unit

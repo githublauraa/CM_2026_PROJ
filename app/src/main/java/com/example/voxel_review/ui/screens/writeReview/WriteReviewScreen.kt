@@ -113,7 +113,7 @@ fun WriteReviewScreen(
             BotonPublicarReview(
                 onClick = {
                     writeReviewViewModel.publishReview(
-                        userId = "1",//modificar de acuerdo al usuario logueado
+                        userId = "2",//modificar de acuerdo al usuario logueado
                         videoGameId = gameId
                     )
                 }
