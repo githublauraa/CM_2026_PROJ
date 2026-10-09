@@ -2,6 +2,8 @@ package com.example.voxel_review.ui.screens.rankings
 
 import com.example.voxel_review.data.infoRanking.ListaRanking
 import com.example.voxel_review.data.infoRanking.RankingUsuario
+import com.example.voxel_review.data.profile.ProfileInfo
+import com.google.firebase.auth.UserInfo
 
 /**
  * Representa el estado de la interfaz de la pantalla de rankings.
@@ -11,6 +13,6 @@ import com.example.voxel_review.data.infoRanking.RankingUsuario
  * @param seleccionado Indica si está seleccionado el ranking de críticos.
  */
 data class RankingsState(
-    val rankingsUser: List<RankingUsuario> = ListaRanking.rankingUsuarios,
+    val users: List<ProfileInfo> = emptyList(),
     val seleccionado: Boolean = true
 )

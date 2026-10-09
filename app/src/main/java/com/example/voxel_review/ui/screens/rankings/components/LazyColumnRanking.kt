@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -24,14 +25,14 @@ fun LazyColumnRanking(
             )
     ) {
 
-        items(state.rankingsUser) { usuario ->
+        itemsIndexed(state.users.sortedByDescending { it.numResenias }) { posicion, usuario ->
 
             RankingCard(
-                posicion = usuario.posicion,
-                nombre = usuario.nombre,
-                reseñas = usuario.reseñas,
-                porcentaje = usuario.porcentaje,
-                imagen = usuario.imagen,
+                posicion = (posicion + 1).toString(),
+                nombre = usuario.nick,
+                reseñas = "${usuario.numResenias.toString()} reseñas",
+                porcentaje = 0.toString(),
+                imagen = usuario.pfp,
                 modifier = Modifier.padding(vertical = 5.dp)
             )
         }
