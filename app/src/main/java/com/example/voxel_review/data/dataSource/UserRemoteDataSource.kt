@@ -4,4 +4,5 @@ import com.example.voxel_review.data.dtos.UserProfileDto
 
 interface UserRemoteDataSource {
 	suspend fun getUserById(id: String): UserProfileDto
+	suspend fun getAllUsers(): List<UserProfileDto>
 }

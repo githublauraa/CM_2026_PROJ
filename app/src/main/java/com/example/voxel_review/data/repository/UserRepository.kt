@@ -15,4 +15,14 @@ class UserRepository @Inject constructor(private val userRemoteDataSource: UserR
 			Result.failure(e)
 		}
 	}
+
+	suspend fun getAllUsers(): Result<List<ProfileInfo>> {
+		return try {
+			val users = userRemoteDataSource.getAllUsers()
+			val userProfileInfo = users.map { it.toProfileInfo() }
+			Result.success(userProfileInfo)
+		} catch(e: Exception){
+			Result.failure(e)
+		}
+	}
 }

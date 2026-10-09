@@ -9,4 +9,6 @@ interface UserRetrofitService {
 	@GET("users/{userId}")
 	suspend fun getUserById(@Path("userId") userId: String): UserProfileDto
 
+	@GET("users/")
+	suspend fun getAllUsers(): List<UserProfileDto>
 }

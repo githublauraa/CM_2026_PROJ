@@ -9,5 +9,8 @@ data class ProfileState(
     val profile: ProfileInfo? = null,
     val reviews: List<ReviewInfo> = emptyList(),
     val email: String ="",
-    val profileImageUrl: String ? = null
+    val profileImageUrl: String ? = null,
+    val isReviewDeleted: Boolean = false,
+    val isReviewUpdated: Boolean = false,
+    val errorMessage: String? = null
 )

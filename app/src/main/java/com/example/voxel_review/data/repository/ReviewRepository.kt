@@ -46,31 +46,10 @@ class ReviewRepository @Inject constructor(
             Result.failure(e)
         }
     }
-    suspend fun getReviewComments(id: String): Result<List<ReviewInfo>> {
-        return try {
-            val comments = reviewRemoteDataSource.getReviewComments(id)
-            val commentsInfo = comments.map { it.toReviewInfo() }
-            Result.success(commentsInfo)
-        } catch (e: HttpException) {
-            Result.failure(e)
-        } catch (e: Exception) {
-            Result.failure(e)
-        }
-    }
-     suspend fun  deleteReview(id: String): Result<Unit> {
-         return try {
-             reviewRemoteDataSource.deleteReview(id)
-             Result.success(Unit)
-         } catch (e: HttpException) {
-             Result.failure(e)
-         } catch (e: Exception) {
-             Result.failure(e)
-         }
-     }
 
-    suspend fun updateReview(id: String, review: CreateReviewDto): Result<Unit> {
-        return try {
-            reviewRemoteDataSource.updateReview(id, review)
+    suspend fun deleteReview(reviewId: String): Result<Unit>{
+        return try{
+            reviewRemoteDataSource.deleteReview(reviewId)
             Result.success(Unit)
         } catch (e: HttpException) {
             Result.failure(e)
@@ -79,5 +58,17 @@ class ReviewRepository @Inject constructor(
         }
     }
 
+    suspend fun updateReview(id: String, review: CreateReviewDto): Result<Unit>{
+        return try {
+            reviewRemoteDataSource.updateReview(id, review)
+            Result.success(Unit)
+        }catch (e: HttpException) {
+            Result.failure(e)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
 
-}
+
+
+    }

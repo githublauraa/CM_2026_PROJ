@@ -17,11 +17,11 @@ import androidx.compose.ui.unit.sp
 import com.example.voxel_review.R
 
 /**
- * Barra de navegación superior con opciones de regresar y compartir el detalle de la reseña.
+ * Barra de navegación superior con opciones de regresar y eliminar el detalle de la reseña.
  *
  * @param modifier Modificador para personalizar la barra superior.
  * @param onBackClick Acción ejecutada al presionar el botón de regreso.
- * @param onShareClick Acción ejecutada al presionar el icono de compartir.
+ * @param onDeleteClick Acción ejecutada al presionar el icono de cesta de basura.
  */
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -29,7 +29,7 @@ import com.example.voxel_review.R
 fun ReviewDetailTopBar(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit = {},
-    onShareClick: () -> Unit = {}
+    onDeleteClick: () -> Unit = {}
 ) {
     CenterAlignedTopAppBar(
         modifier = modifier,
@@ -57,11 +57,11 @@ fun ReviewDetailTopBar(
 
         actions = {
             IconButton(
-                onClick = onShareClick
+                onClick = onDeleteClick
             ) {
                 Icon(
-                    painter = painterResource(R.drawable.ic_share),
-                    contentDescription = null,
+                    painter = painterResource(R.drawable.ic_trash),
+                    contentDescription = "Eliminar reseña",
                     tint = Color.White
                 )
             }

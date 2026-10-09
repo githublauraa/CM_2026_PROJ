@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import com.example.voxel_review.data.dtos.CreateReviewDto
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
@@ -46,11 +47,21 @@ class ProfileViewModel @Inject constructor(
 	fun getUserReviews(userId: String) {
 		viewModelScope.launch {
 			val result = reviewRepository.getUserReviews(userId)
-			if (result.isSuccess){
-				val userReviews = result.getOrNull()!!
-				_uiState.value = _uiState.value.copy(
-					reviews = userReviews
-				)
+
+			if (result.isSuccess) {
+				val userReviews = result.getOrNull() ?: emptyList()
+
+				_uiState.update {
+					it.copy(
+						reviews = userReviews
+					)
+				}
+			} else {
+				_uiState.update {
+					it.copy(
+						errorMessage = "Error al cargar las reseñas"
+					)
+				}
 			}
 		}
 	}
@@ -78,4 +89,53 @@ class ProfileViewModel @Inject constructor(
 			}
 		}
 	}
+
+	fun deleteReview(reviewId: String, profileId: String) {
+		viewModelScope.launch {
+			_uiState.update { it.copy(isReviewDeleted = false) }
+
+			val result = reviewRepository.deleteReview(reviewId)
+
+			if (result.isSuccess) {
+				_uiState.update { state ->
+					state.copy(
+						reviews = state.reviews?.filter { review ->
+							review.idResenia != reviewId
+						} ?: emptyList(),
+						isReviewDeleted = true,
+						errorMessage = null
+					)
+				}
+			} else {
+				_uiState.update {
+					it.copy(
+						errorMessage = "Error al eliminar la reseña"
+					)
+				}
+			}
+		}
+	}
+
+	fun updateReview(reviewId: String, review: CreateReviewDto) {
+		viewModelScope.launch {
+			_uiState.update { it.copy(isReviewUpdated = false) }
+
+			val result = reviewRepository.updateReview(reviewId, review)
+			if (result.isSuccess){
+				_uiState.update {
+					it.copy(
+						isReviewUpdated = true,
+						errorMessage = null
+					)
+				}
+			} else {
+				_uiState.update {
+					it.copy(
+						errorMessage = "Error al actualizar la reseña"
+					)
+				}
+			}
+		}
+	}
+
 }

@@ -20,14 +20,15 @@ class ReviewViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(ReviewDetailState())
     val uiState: StateFlow<ReviewDetailState> = _uiState.asStateFlow()
 
-    fun getGameReviews() {
+    fun getGameReviews(gameId: String) {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, errorMessage = null) }
-            val result = reviewRepository.getGameReviews("1")
+            val result = reviewRepository.getGameReviews(gameId)
             if (result.isSuccess) {
-                _uiState.update { it.copy(reviews = result.getOrNull() ?: emptyList(),
-                isLoading = false
-                )
+                _uiState.update {
+                    it.copy(reviews = result.getOrNull() ?: emptyList(),
+                    isLoading = false
+                    )
                 }
             } else {
                 _uiState.update {
@@ -41,19 +42,33 @@ class ReviewViewModel @Inject constructor(
         }
     }
 
-    fun getReviewComments(id: String){
+    /**
+     * Carga la reseña seleccionada por el usuario (detalle abierto desde el perfil).
+     * Busca la reseña por su id dentro de las reseñas del usuario.
+     */
+    fun getUserReview(userId: String, reviewId: String) {
         viewModelScope.launch {
-            val result = reviewRepository.getReviewComments(id)
-            if (result.isSuccess) {
-                val ReviewComments = result.getOrNull()
-                if (ReviewComments != null) {
-                    _uiState.update { it.copy(comments = ReviewComments) }
+            _uiState.update { it.copy(isLoading = true, errorMessage = null) }
+
+            val result = reviewRepository.getUserReviews(userId)
+            val review = result.getOrNull()?.find { it.idResenia == reviewId }
+
+            when {
+                review != null -> _uiState.update {
+                    it.copy(reviews = listOf(review), isLoading = false)
+                }
+
+                result.isSuccess -> _uiState.update {
+                    it.copy(errorMessage = "Reseña no encontrada", isLoading = false)
+                }
+
+                else -> _uiState.update {
+                    it.copy(
+                        errorMessage = result.exceptionOrNull()?.message,
+                        isLoading = false
+                    )
                 }
             }
         }
-    }
-
-    init {
-        getGameReviews()
     }
 }

@@ -22,7 +22,8 @@ import com.example.voxel_review.ui.theme.VoxelSecondary
 
 @Composable
 fun BotonPublicarReview(
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    text: String = "PUBLICAR REVIEW"
 ) {
     val degradado = Brush.horizontalGradient(
         colors = listOf(
@@ -43,7 +44,7 @@ fun BotonPublicarReview(
         contentAlignment = Alignment.Center
     ) {
         Text(
-            text = "PUBLICAR REVIEW",
+            text = text,
             color = Color.White,
             fontWeight = FontWeight.Bold,
             fontSize = 16.sp

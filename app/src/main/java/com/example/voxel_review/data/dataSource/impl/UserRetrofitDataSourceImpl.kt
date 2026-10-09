@@ -11,4 +11,7 @@ class UserRetrofitDataSourceImpl @Inject constructor(private val service: UserRe
 	    return service.getUserById(id)
     }
 
+    override suspend fun getAllUsers(): List<UserProfileDto> {
+        return service.getAllUsers()
+    }
 }

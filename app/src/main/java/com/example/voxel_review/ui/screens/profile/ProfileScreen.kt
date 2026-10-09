@@ -21,6 +21,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.verticalScroll
 import com.example.voxel_review.R
 import com.example.voxel_review.data.profile.ProfileInfo
+import com.example.voxel_review.data.review.ReviewInfo
 import android.net.Uri
 import com.example.voxel_review.ui.utils.ProfileImage
 @Composable
@@ -30,6 +31,7 @@ fun ProfileScreen(
     onBackClick: () -> Unit,
     onClickImage: () -> Unit,
     buttonLogOutPressed: () -> Unit,
+    onReviewClick: (ReviewInfo) -> Unit,
     modifier: Modifier = Modifier
 ) {
 
@@ -45,6 +47,7 @@ fun ProfileScreen(
         onImageSelected = { profileViewModel.uploadImageFireBase(it) },
         onBackClick = onBackClick,
         onClickImage = onClickImage,
+        onReviewClick = onReviewClick,
         buttonLogOutPressed = {
             profileViewModel.logOut()
             buttonLogOutPressed()
@@ -60,6 +63,7 @@ fun ProfileContent(
     onClickImage: () -> Unit,
     buttonLogOutPressed: () -> Unit,
     onImageSelected: (Uri) -> Unit,
+    onReviewClick: (ReviewInfo) -> Unit,
     modifier: Modifier = Modifier
 ) {
 
@@ -105,7 +109,10 @@ fun ProfileContent(
                 profile.likes
             )
 
-            GameCards(reviews)
+            GameCards(
+                reviews = reviews,
+                onReviewClick = onReviewClick
+            )
 
             EditButton()
 
@@ -140,7 +147,8 @@ fun ProfileContentPreview() {
         onBackClick = {},
         onClickImage = {},
         buttonLogOutPressed = {},
-        onImageSelected = {}
+        onImageSelected = {},
+        onReviewClick = {}
     )
 }
 
