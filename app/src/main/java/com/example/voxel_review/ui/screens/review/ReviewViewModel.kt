@@ -71,4 +71,25 @@ class ReviewViewModel @Inject constructor(
             }
         }
     }
+    fun getReviewComments (reviewId: String) {
+        viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true, errorMessage = null) }
+            val result = reviewRepository.getReviewComments(reviewId)
+            if (result.isSuccess) {
+                _uiState.update {
+                    it.copy(comments = result.getOrNull() ?: emptyList(),
+                        isLoading = false
+                    )
+                }
+            } else {
+                _uiState.update {
+                    it.copy(
+                        errorMessage = result.exceptionOrNull()?.message,
+                        isLoading = false
+                    )
+                }
+
+            }
+        }
+    }
 }

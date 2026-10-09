@@ -280,9 +280,13 @@ fun AppNavigation(
                 juegoId = juegoId,
                 reviewId = reviewId,
                 userId = userId,
+                onCommentClick = { juegoId ->
+                navController.navigate("${AppScreen.WriteReview.route}?gameId=$juegoId")
+                },
                 onBackClick = {
                     navController.popBackStack()
                 },
+
                 onClickReview = {
                     navController.navigate("${AppScreen.WriteReview.route}?gameId=$juegoId")
                 },

@@ -23,6 +23,7 @@ import com.example.voxel_review.ui.utils.FondoPantalla
 fun ReviewDetailScreenContent(
     state: ReviewDetailState,
     onClickReview: () -> Unit,
+    onCommentClick: (String) -> Unit,
     onBackClick: () -> Unit,
     onEditReview: (ReviewInfo) -> Unit,
     onDeleteReview: (ReviewInfo) -> Unit,
@@ -52,7 +53,8 @@ fun ReviewDetailScreenContent(
 
             ReviewDetailContent(
                 state = state,
-                onClickReview = onClickReview
+                onClickReview = onClickReview,
+                onCommentClick = onCommentClick
             )
         }
 

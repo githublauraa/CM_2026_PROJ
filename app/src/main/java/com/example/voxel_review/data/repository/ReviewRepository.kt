@@ -11,33 +11,38 @@ import javax.inject.Inject
 class ReviewRepository @Inject constructor(
         private val reviewRemoteDataSource: ReviewRetrofitDataSourceImpl,
     ) {
-        suspend fun getGameReviews(id: String): Result<List<ReviewInfo>> {
-            return try {
-                val reviews = reviewRemoteDataSource.getGameReviews(id)
-                val reviewsInfo = reviews.map { it.toReviewInfo() }
-                Result.success(reviewsInfo)
-            } catch (e: HttpException) {
-                e.printStackTrace()
-                Result.failure(e)
-            } catch (e: Exception) {
-                e.printStackTrace()
-                Result.failure(e)
-            }
+    suspend fun getGameReviews(id: String): Result<List<ReviewInfo>> {
+        return try {
+            val reviews = reviewRemoteDataSource.getGameReviews(id)
+            val reviewsInfo = reviews.map { it.toReviewInfo() }
+            Result.success(reviewsInfo)
+        } catch (e: HttpException) {
+            e.printStackTrace()
+            Result.failure(e)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Result.failure(e)
         }
-        suspend fun getUserReviews(id: String): Result<List<ReviewInfo>> {
-            return try {
-                val reviews = reviewRemoteDataSource.getUserReviews(id)
-                val reviewsInfo = reviews.map { it.toReviewInfo() }
-                Result.success(reviewsInfo)
-            } catch (e: HttpException) {
-                Result.failure(e)
-            } catch (e: Exception) {
-                Result.failure(e)
-            }
-        }
+    }
 
-    suspend fun createReview(userId: String, videoGameId: String, review: CreateReviewDto):Result<Unit> {
-        return try{
+    suspend fun getUserReviews(id: String): Result<List<ReviewInfo>> {
+        return try {
+            val reviews = reviewRemoteDataSource.getUserReviews(id)
+            val reviewsInfo = reviews.map { it.toReviewInfo() }
+            Result.success(reviewsInfo)
+        } catch (e: HttpException) {
+            Result.failure(e)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    suspend fun createReview(
+        userId: String,
+        videoGameId: String,
+        review: CreateReviewDto
+    ): Result<Unit> {
+        return try {
             reviewRemoteDataSource.createReview(userId, videoGameId, review)
             Result.success(Unit)
         } catch (e: HttpException) {
@@ -47,8 +52,8 @@ class ReviewRepository @Inject constructor(
         }
     }
 
-    suspend fun deleteReview(reviewId: String): Result<Unit>{
-        return try{
+    suspend fun deleteReview(reviewId: String): Result<Unit> {
+        return try {
             reviewRemoteDataSource.deleteReview(reviewId)
             Result.success(Unit)
         } catch (e: HttpException) {
@@ -58,17 +63,26 @@ class ReviewRepository @Inject constructor(
         }
     }
 
-    suspend fun updateReview(id: String, review: CreateReviewDto): Result<Unit>{
+    suspend fun updateReview(id: String, review: CreateReviewDto): Result<Unit> {
         return try {
             reviewRemoteDataSource.updateReview(id, review)
             Result.success(Unit)
-        }catch (e: HttpException) {
+        } catch (e: HttpException) {
             Result.failure(e)
         } catch (e: Exception) {
             Result.failure(e)
         }
     }
 
-
-
+    suspend fun getReviewComments(id: String): Result<List<ReviewInfo>> {
+        return try {
+            val comments = reviewRemoteDataSource.getReviewComments(id)
+            val commentsInfo = comments.map { it.toReviewInfo() }
+            Result.success(commentsInfo)
+        } catch (e: HttpException) {
+            Result.failure(e)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
     }
+}

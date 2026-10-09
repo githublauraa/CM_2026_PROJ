@@ -29,6 +29,7 @@ fun ReviewDetailScreen(
     reviewId: String = "",
     userId: String = "",
     onClickReview: () -> Unit,
+    onCommentClick: (String) -> Unit,
     onBackClick: () -> Unit,
     onEditReview: (ReviewInfo) -> Unit,
 ) {
@@ -74,6 +75,9 @@ fun ReviewDetailScreen(
             ReviewDetailScreenContent(
                 state = state,
                 onClickReview = onClickReview,
+                onCommentClick = {
+                    onCommentClick(juegoId)
+                },
                 onBackClick = onBackClick,
                 onEditReview = onEditReview,
                 onDeleteReview = { review ->
@@ -97,6 +101,7 @@ fun ReviewDetailScreenPreview() {
         reviewId = "",
         userId = "",
         onClickReview = {},
+        onCommentClick = {},
         onBackClick = {},
         onEditReview = {}
     )
