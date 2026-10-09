@@ -14,6 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.voxel_review.data.profile.ProfileInfo
 import com.example.voxel_review.ui.screens.rankings.components.HeaderRankingSceen
 import com.example.voxel_review.ui.screens.rankings.components.LazyColumnRanking
 import com.example.voxel_review.ui.utils.FondoPantalla
@@ -24,12 +25,14 @@ import com.example.voxel_review.ui.utils.FondoPantalla
  *
  * @param state Estado actual de la pantalla de rankings.
  * @param onChangeSeleccionado Acción ejecutada al cambiar el tipo de ranking seleccionado.
+ * @param onUserClick Acción ejecutada al presionar la tarjeta de un usuario.
  * @param modifier Modificador para personalizar el contenido.
  */
 @Composable
 fun RankingContent(
     state: RankingsState,
     onChangeSeleccionado: (Boolean) -> Unit,
+    onUserClick: (ProfileInfo) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Box(
@@ -58,7 +61,8 @@ fun RankingContent(
         )
 
         LazyColumnRanking(
-            state = state
+            state = state,
+            onUserClick = onUserClick
         )
     }
 }
@@ -68,11 +72,13 @@ fun RankingContent(
  * Observa el estado y conecta los eventos de la interfaz con la lógica correspondiente.
  *
  * @param rankingsViewModel ViewModel encargado del estado y la lógica de rankings.
+ * @param onUserClick Acción ejecutada al presionar la tarjeta de un usuario.
  * @param modifier Modificador para personalizar la pantalla.
  */
 @Composable
 fun RankingsScreen(
     rankingsViewModel: RankingsViewModel = viewModel(),
+    onUserClick: (ProfileInfo) -> Unit,
     modifier: Modifier = Modifier
 ) {
     // Convierte el StateFlow del ViewModel en un estado observable por Compose.
@@ -85,7 +91,8 @@ fun RankingsScreen(
 
         RankingContent(
             state = state,
-            onChangeSeleccionado = rankingsViewModel::onChangeSeleccionado
+            onChangeSeleccionado = rankingsViewModel::onChangeSeleccionado,
+            onUserClick = onUserClick
         )
     }
 }
@@ -96,5 +103,7 @@ fun RankingsScreen(
 @Preview(showBackground = true)
 @Composable
 fun RankingScreenPreview() {
-    RankingsScreen()
+    RankingsScreen(
+        onUserClick = {}
+    )
 }

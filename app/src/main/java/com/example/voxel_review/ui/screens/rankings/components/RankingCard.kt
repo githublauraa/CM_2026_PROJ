@@ -2,6 +2,7 @@ package com.example.voxel_review.ui.screens.rankings.components
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -42,6 +43,7 @@ import com.example.voxel_review.ui.utils.ProfileImage
  * @param reseñas Cantidad de reseñas realizadas por el usuario.
  * @param porcentaje Porcentaje asociado al desempeño del usuario.
  * @param imagen URL de la imagen del usuario.
+ * @param onClick Acción ejecutada al presionar la tarjeta.
  * @param modifier Modificador para personalizar el componente.
  */
 @Composable
@@ -51,12 +53,14 @@ fun RankingCard(
     reseñas: String,
     porcentaje: String,
     imagen: String,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .height(80.dp),
+            .height(80.dp)
+            .clickable(onClick = onClick),
         shape = RoundedCornerShape(16.dp),
         border = BorderStroke(
             width = 1.dp,
@@ -162,6 +166,7 @@ fun RankingCardPreview() {
         nombre = "VoxelMaster",
         reseñas = "120 reseñas",
         porcentaje = "94%",
-        imagen = ""
+        imagen = "",
+        onClick = {}
     )
 }

@@ -232,7 +232,12 @@ fun AppNavigation(
             val rankingsViewModel: RankingsViewModel = hiltViewModel()
 
             RankingsScreen(
-                rankingsViewModel = rankingsViewModel
+                rankingsViewModel = rankingsViewModel,
+                onUserClick = { usuario ->
+                    navController.navigate(
+                        "${AppScreen.PerfilUser.route}?profileId=${usuario.id}"
+                    )
+                }
             )
         }
 
