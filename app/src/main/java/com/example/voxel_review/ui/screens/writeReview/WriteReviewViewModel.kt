@@ -13,6 +13,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import com.example.voxel_review.data.repository.ReviewRepository
 import retrofit2.HttpException
+import com.example.voxel_review.data.review.ReviewInfo
 @HiltViewModel
 class WriteReviewViewModel @Inject constructor(
     private val reviewRepository: ReviewRepository
@@ -25,6 +26,19 @@ class WriteReviewViewModel @Inject constructor(
             ?: LocalGameProvider.games.first()
 
         _uiState.update { it.copy(game = game) }
+    }
+
+    fun loadReview(review: ReviewInfo) {
+        _uiState.update {
+            it.copy(
+                reviewText = review.descripcion,
+                gameplayRating = review.ratingJugabilidad.toInt(),
+                graphicsRating = review.ratingGraficos.toInt(),
+                storyRating = review.ratingHistoria.toInt(),
+                isPublished = false,
+                errorMessage = null
+            )
+        }
     }
 
     fun updateReviewText(text: String) {
@@ -102,6 +116,67 @@ class WriteReviewViewModel @Inject constructor(
                             } else {
                                 "Ocurrió un error al publicar la reseña"
                             }
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    fun updateReview(
+        reviewId: String,
+        userId: String,
+        videoGameId: String
+    ) {
+        viewModelScope.launch {
+
+            val state = _uiState.value
+
+            if (state.gameplayRating !in 0..5 ||
+                state.graphicsRating !in 0..5 ||
+                state.storyRating !in 0..5
+            ) {
+                _uiState.update {
+                    it.copy(
+                        errorMessage = "Las calificaciones deben estar entre 0 y 5"
+                    )
+                }
+
+            } else if (state.reviewText.isBlank()) {
+
+                _uiState.update {
+                    it.copy(
+                        errorMessage = "La descripción no puede estar vacía"
+                    )
+                }
+
+            } else {
+
+                val review = CreateReviewDto(
+                    userId = userId.toInt(),
+                    videoGameId = videoGameId.toInt(),
+                    gameplayRating = state.gameplayRating,
+                    graphicsRating = state.graphicsRating,
+                    storyRating = state.storyRating,
+                    content = state.reviewText
+                )
+
+                val result = reviewRepository.updateReview(
+                    reviewId,
+                    review
+                )
+
+                if (result.isSuccess) {
+                    _uiState.update {
+                        it.copy(
+                            isPublished = true,
+                            errorMessage = null
+                        )
+                    }
+                } else {
+                    _uiState.update {
+                        it.copy(
+                            errorMessage = "Error al actualizar la reseña"
                         )
                     }
                 }
