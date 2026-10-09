@@ -1,7 +1,7 @@
 package com.example.voxel_review.ui.screens.writeReview
 
 import androidx.lifecycle.ViewModel
-import com.example.voxel_review.data.InfoGame.LocalGameProvider
+import com.example.voxel_review.data.repository.VideoGameRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -14,19 +14,58 @@ import kotlinx.coroutines.launch
 import com.example.voxel_review.data.repository.ReviewRepository
 import retrofit2.HttpException
 import com.example.voxel_review.data.review.ReviewInfo
+import com.example.voxel_review.data.dtos.toGameDetailInfo
 @HiltViewModel
 class WriteReviewViewModel @Inject constructor(
-    private val reviewRepository: ReviewRepository
+    private val reviewRepository: ReviewRepository,
+    private val videoGameRepository: VideoGameRepository
+
 ): ViewModel() {
 
     private val _uiState = MutableStateFlow(WriteReviewState())
     val uiState: StateFlow<WriteReviewState> = _uiState.asStateFlow()
-    fun loadGame(gameId: String) {
-        val game = LocalGameProvider.games.firstOrNull { it.id == gameId }
-            ?: LocalGameProvider.games.first()
 
-        _uiState.update { it.copy(game = game) }
+    fun loadGame(gameId: String) {
+        val id = gameId.toIntOrNull()
+
+        if (id == null) {
+            _uiState.update {
+                it.copy(
+                    game = null,
+                    errorMessage = "ID del videojuego inválido"
+                )
+            }
+            return
+        }
+
+        viewModelScope.launch {
+            _uiState.update {
+                it.copy(
+                    game = null,
+                    errorMessage = null
+                )
+            }
+
+            videoGameRepository.getVideoGameById(id)
+                .onSuccess { videoGame ->
+                    _uiState.update {
+                        it.copy(
+                            game = videoGame.toGameDetailInfo(),
+                            errorMessage = null
+                        )
+                    }
+                }
+                .onFailure { exception ->
+                    _uiState.update {
+                        it.copy(
+                            errorMessage = exception.message
+                                ?: "No se pudo cargar el videojuego"
+                        )
+                    }
+                }
+        }
     }
+
 
     fun loadReview(review: ReviewInfo) {
         _uiState.update {
