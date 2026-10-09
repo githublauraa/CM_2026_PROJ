@@ -13,9 +13,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.ViewModel
+import com.example.voxel_review.ui.theme.onErrorLight
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.voxel_review.data.InfoGame.LocalGameProvider
+import androidx.compose.material3.Text
 import com.example.voxel_review.ui.screens.writeReview.components.BotonPublicarReview
 import com.example.voxel_review.ui.screens.writeReview.components.GameCalification
 import com.example.voxel_review.ui.screens.writeReview.components.GameInfo
@@ -40,6 +40,7 @@ fun WriteReviewRoute(
         writeReviewViewModel = writeReviewViewModel,
         onBackClick = onBackClick,
         onSettingsClick = onSettingsClick,
+        gameId = gameId,
         modifier = modifier
     )
 }
@@ -49,11 +50,18 @@ fun WriteReviewScreen(
     writeReviewViewModel: WriteReviewViewModel,
     onBackClick: () -> Unit,
     onSettingsClick: () -> Unit,
+    gameId: String,
     modifier: Modifier = Modifier
 ) {
 
     val state by writeReviewViewModel.uiState.collectAsState()
     val game = state.game
+
+    LaunchedEffect(state.isPublished) {
+        if (state.isPublished){
+            onBackClick()
+        }
+    }
 
     Box(
         modifier = modifier.fillMaxSize(),
@@ -83,8 +91,18 @@ fun WriteReviewScreen(
             }
 
             GameCalification(
-                rating = state.rating,
-                onRatingChange = { writeReviewViewModel.updateRating(it) }
+                gameplayRating = state.gameplayRating,
+                graphicsRating = state.graphicsRating,
+                storyRating = state.storyRating,
+                onGameplayRatingChange = {
+                    writeReviewViewModel.updateGameplayRating(it)
+                },
+                onGraphicsRatingChange = {
+                    writeReviewViewModel.updateGraphicsRating(it)
+                },
+                onStoryRatingChange = {
+                    writeReviewViewModel.updateStoryRating(it)
+                }
             )
 
             ReviewText(
@@ -92,7 +110,20 @@ fun WriteReviewScreen(
                 onTextChange = { writeReviewViewModel.updateReviewText(it) }
             )
 
-            BotonPublicarReview()
+            BotonPublicarReview(
+                onClick = {
+                    writeReviewViewModel.publishReview(
+                        userId = "1",//modificar de acuerdo al usuario logueado
+                        videoGameId = gameId
+                    )
+                }
+            )
+            state.errorMessage?.let {
+                Text(
+                    text = it,
+                    color = onErrorLight
+                )
+            }
         }
     }
 }
@@ -103,6 +134,7 @@ fun WriteReviewScreenPreview() {
     WriteReviewScreen(
         writeReviewViewModel = viewModel(),
         onBackClick = {},
-        onSettingsClick = {}
+        onSettingsClick = {},
+        gameId = "1"
     )
 }

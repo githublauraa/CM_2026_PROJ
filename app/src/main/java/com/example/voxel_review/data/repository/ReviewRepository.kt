@@ -35,4 +35,18 @@ class ReviewRepository @Inject constructor(
                 Result.failure(e)
             }
         }
+
+    suspend fun createReview(userId: String, videoGameId: String, review: CreateReviewDto):Result<Unit> {
+        return try{
+            reviewRemoteDataSource.createReview(userId, videoGameId, review)
+            Result.success(Unit)
+        } catch (e: HttpException) {
+            Result.failure(e)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+
+
     }

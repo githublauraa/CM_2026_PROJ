@@ -7,7 +7,7 @@ import com.example.voxel_review.data.dtos.ReviewDto
 import javax.inject.Inject
 
 class ReviewRetrofitDataSourceImpl @Inject constructor(
-    val service: ReviewRetrofitService
+    private val service: ReviewRetrofitService
 ): ReviewRemoteDataSource {
     override suspend fun getGameReviews(id: String): List<ReviewDto> {
 	    return service.getGameReviews(id)
@@ -17,8 +17,8 @@ class ReviewRetrofitDataSourceImpl @Inject constructor(
 	    return service.createReview(userId, videoGameId, review )
     }
 
-    override suspend fun deleteReview(id: String): Boolean {
-	    return service.deleteReview(id)
+    override suspend fun deleteReview(id: String): Unit {
+	    service.deleteReview(id)
     }
 
     override suspend fun getUserReviews(id: String): List<ReviewDto> {

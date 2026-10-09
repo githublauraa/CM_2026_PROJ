@@ -38,6 +38,8 @@ fun ReviewText(
             onValueChange = onTextChange,
             label = { Text("Escribe tu reseña aquí...") },
             colors = TextFieldDefaults.colors(
+                focusedTextColor = onErrorLight,
+                unfocusedTextColor = onErrorLight,
                 focusedContainerColor = Color.Transparent,
                 unfocusedContainerColor = Color.Transparent,
                 focusedIndicatorColor = Color.Transparent,

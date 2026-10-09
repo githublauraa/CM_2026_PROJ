@@ -19,14 +19,15 @@ import androidx.compose.ui.unit.sp
 import com.example.voxel_review.ui.theme.VoxelAccentPurple
 import com.example.voxel_review.ui.theme.VoxelSecondary
 
-@Composable
-fun BotonPublicarReview() {
-    val contexto = LocalContext.current
 
+@Composable
+fun BotonPublicarReview(
+    onClick: () -> Unit
+) {
     val degradado = Brush.horizontalGradient(
         colors = listOf(
-		VoxelSecondary,
-		VoxelAccentPurple
+            VoxelSecondary,
+            VoxelAccentPurple
         )
     )
 
@@ -37,7 +38,7 @@ fun BotonPublicarReview() {
             .clip(RoundedCornerShape(16.dp))
             .background(brush = degradado)
             .clickable {
-                Toast.makeText(contexto, "Reseña publicada", Toast.LENGTH_SHORT).show()
+                onClick()
             },
         contentAlignment = Alignment.Center
     ) {
@@ -45,7 +46,7 @@ fun BotonPublicarReview() {
             text = "PUBLICAR REVIEW",
             color = Color.White,
             fontWeight = FontWeight.Bold,
-            fontSize = 16.sp,
+            fontSize = 16.sp
         )
     }
 }
