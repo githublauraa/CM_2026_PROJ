@@ -1,6 +1,8 @@
+
 package com.example.voxel_review.ui.screens.novedades.components
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -11,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -42,10 +45,9 @@ fun NovedadesContent(
             .fillMaxSize()
             .padding(horizontal = 22.dp)
             .padding(top = 45.dp),
-        contentPadding = PaddingValues(
-            bottom = 70.dp
-        )
+        contentPadding = PaddingValues(bottom = 70.dp)
     ) {
+
         item {
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -57,9 +59,7 @@ fun NovedadesContent(
                     fontSize = 22.sp
                 )
 
-                Spacer(
-                    modifier = Modifier.weight(1f)
-                )
+                Spacer(modifier = Modifier.weight(1f))
 
                 Campana(
                     modifier = Modifier.size(30.dp),
@@ -67,9 +67,7 @@ fun NovedadesContent(
                 )
             }
 
-            Spacer(
-                modifier = Modifier.height(16.dp)
-            )
+            Spacer(modifier = Modifier.height(16.dp))
 
             Row(
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
@@ -107,27 +105,55 @@ fun NovedadesContent(
                 )
             }
 
-            Spacer(
-                modifier = Modifier.height(18.dp)
-            )
+            Spacer(modifier = Modifier.height(18.dp))
         }
 
-        items(state.listaJuegos) { juego ->
-            TarjetaJuego(
-                imagen = juego.imagen,
-                etiqueta = stringResource(juego.etiqueta),
-                nombre = stringResource(juego.nombre),
-                descripcion = stringResource(juego.descripcion),
-                autor = stringResource(juego.autor),
-                calificacion = stringResource(juego.calificacion),
-                onClick = {
-                    onClick(juego)
+        if (state.isLoading) {
+            item {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(24.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    CircularProgressIndicator()
                 }
-            )
+            }
+        } else if (state.error != null) {
+            item {
+                Text(
+                    text = state.error,
+                    color = Color.Red
+                )
+            }
+        } else if (state.listaJuegos.isEmpty()) {
+            item {
+                Text(
+                    text = "No hay videojuegos disponibles.",
+                    color = Color.White
+                )
+            }
+        } else {
+            items(
+                items = state.listaJuegos,
+                key = { it.id }
+            ) { juego ->
 
-            Spacer(
-                modifier = Modifier.height(16.dp)
-            )
+                TarjetaJuego(
+                    imagen = juego.imagen,
+                    etiqueta = juego.etiqueta,
+                    nombre = juego.nombre,
+                    descripcion = juego.descripcion,
+                    autor = juego.autor,
+                    calificacion = juego.calificacion
+                        ?.toString() ?: "Sin calificaciones",
+                    onClick = {
+                        onClick(juego)
+                    }
+                )
+
+                Spacer(modifier = Modifier.height(16.dp))
+            }
         }
     }
 }
@@ -136,7 +162,19 @@ fun NovedadesContent(
 @Preview
 fun NovedadesContentPreview() {
     NovedadesContent(
-        state = NovedadesState(),
+        state = NovedadesState(
+            listaJuegos = listOf(
+                JuegoInfo(
+                    id = "1",
+                    imagen = "",
+                    etiqueta = "VIDEOJUEGO",
+                    nombre = "Starfield",
+                    descripcion = "Videojuego de exploración espacial",
+                    autor = "Bethesda Game Studios",
+                    calificacion = null
+                )
+            )
+        ),
         onCategoriaSeleccionada = {},
         onClick = {},
         onNotificationClick = {}

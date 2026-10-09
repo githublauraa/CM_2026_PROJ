@@ -1,3 +1,4 @@
+
 package com.example.voxel_review.ui.screens.novedades.components
 
 import androidx.compose.foundation.background
@@ -9,10 +10,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.voxel_review.R
 import com.example.voxel_review.ui.theme.VoxelAccentYellow
 import com.example.voxel_review.ui.theme.VoxelBackground
 import com.example.voxel_review.ui.theme.VoxelSecondary
@@ -20,18 +21,6 @@ import com.example.voxel_review.ui.theme.VoxelSurfaceVariant
 import com.example.voxel_review.ui.theme.VoxelTextSecondary
 import com.example.voxel_review.ui.theme.White
 
-/**
- * Muestra la información principal de un juego dentro de una tarjeta seleccionable.
- *
- * @param imagen Recurso drawable correspondiente a la imagen del juego.
- * @param etiqueta Tipo de contenido mostrado en la tarjeta.
- * @param nombre Nombre del juego.
- * @param descripcion Descripción breve del juego.
- * @param autor Nombre del autor de la reseña.
- * @param calificacion Calificación del juego.
- * @param onClick Acción ejecutada al presionar la tarjeta.
- * @param modifier Modificador para personalizar el componente.
- */
 @Composable
 fun TarjetaJuego(
     imagen: String,
@@ -68,9 +57,7 @@ fun TarjetaJuego(
             descripcion = nombre
         )
 
-        Spacer(
-            modifier = Modifier.width(15.dp)
-        )
+        Spacer(modifier = Modifier.width(15.dp))
 
         Column(
             modifier = Modifier
@@ -88,64 +75,63 @@ fun TarjetaJuego(
                     fontSize = 10.sp
                 )
 
-                Spacer(
-                    modifier = Modifier.weight(1f)
-                )
+                Spacer(modifier = Modifier.weight(1f))
 
                 Text(
-                    text = "☆ $calificacion",
+                    text = if (calificacion == "Sin calificaciones") {
+                        calificacion
+                    } else {
+                        "☆ $calificacion"
+                    },
                     color = VoxelAccentYellow,
-                    fontSize = 13.sp
+                    fontSize = 11.sp
                 )
             }
 
-            Spacer(
-                modifier = Modifier.height(5.dp)
-            )
+            Spacer(modifier = Modifier.height(5.dp))
 
             Text(
                 text = nombre,
                 color = White,
-                fontSize = 15.sp
+                fontSize = 15.sp,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
             )
 
-            Spacer(
-                modifier = Modifier.height(5.dp)
-            )
+            Spacer(modifier = Modifier.height(5.dp))
 
             Text(
                 text = descripcion,
                 color = VoxelTextSecondary,
                 fontSize = 12.sp,
-                lineHeight = 14.sp
+                lineHeight = 14.sp,
+                maxLines = 3,
+                overflow = TextOverflow.Ellipsis
             )
 
-            Spacer(
-                modifier = Modifier.weight(1f)
-            )
+            Spacer(modifier = Modifier.weight(1f))
 
             Text(
                 text = "●  $autor",
                 color = VoxelTextSecondary,
-                fontSize = 11.sp
+                fontSize = 11.sp,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
             )
         }
     }
 }
 
-/**
- * Vista previa de la tarjeta de juego.
- */
 @Composable
 @Preview
 fun TarjetaJuegoPreview() {
     TarjetaJuego(
         imagen = "",
-        etiqueta = "Reseña",
-        nombre = "cyber",
-        descripcion = "Cyber es un juego ...",
-        autor = "andres",
-        calificacion = "4.5",
+        etiqueta = "VIDEOJUEGO",
+        nombre = "Starfield",
+        descripcion = "Explora una galaxia llena de planetas.",
+        autor = "Bethesda Game Studios",
+        calificacion = "Sin calificaciones",
         onClick = {}
     )
 }

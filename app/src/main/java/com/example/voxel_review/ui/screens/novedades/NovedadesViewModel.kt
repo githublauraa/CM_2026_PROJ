@@ -1,48 +1,94 @@
+
 package com.example.voxel_review.ui.screens.novedades
 
 import androidx.lifecycle.ViewModel
-import com.example.voxel_review.data.LocalJuegosProvider
+import androidx.lifecycle.viewModelScope
+import com.example.voxel_review.data.repository.VideoGameRepository
 import com.example.voxel_review.data.repository.ReviewRepository
+import com.example.voxel_review.data.dtos.toJuegoInfo
 import dagger.hilt.android.lifecycle.HiltViewModel
+import jakarta.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import jakarta.inject.Inject
-/**
- * ViewModel encargado de administrar el estado y la lógica
- * de la pantalla de novedades.
- */
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+
 @HiltViewModel
-class NovedadesViewModel @Inject constructor(): ViewModel() {
+class NovedadesViewModel @Inject constructor(
+    private val videoGameRepository: VideoGameRepository,
+    private val reviewRepository: ReviewRepository
+) : ViewModel() {
 
-    // Estado interno modificable únicamente desde el ViewModel.
     private val _uiState = MutableStateFlow(NovedadesState())
-
-    // Estado público de solo lectura que puede observar la interfaz.
     val uiState: StateFlow<NovedadesState> = _uiState.asStateFlow()
 
-    /**
-     * Actualiza la categoría seleccionada por el usuario.
-     *
-     * @param category Nueva categoría seleccionada.
-     */
-    fun updateSelectedCategory(category: String) {
-        _uiState.value = _uiState.value.copy(
-            categoriaSeleccionada = category
-        )
-    }
-
-    /**
-     * Carga en el estado la lista de juegos disponibles.
-     */
-    fun getAllJuegos() {
-        _uiState.value = _uiState.value.copy(
-            listaJuegos = LocalJuegosProvider.juegos
-        )
-    }
-
-    // Carga la lista inicial de juegos al crear el ViewModel.
     init {
         getAllJuegos()
+    }
+
+    fun updateSelectedCategory(category: String) {
+        _uiState.update {
+            it.copy(
+                categoriaSeleccionada = category
+            )
+        }
+    }
+
+    fun getAllJuegos() {
+        viewModelScope.launch {
+
+            _uiState.update {
+                it.copy(
+                    isLoading = true,
+                    error = null
+                )
+            }
+
+            videoGameRepository.getAllVideoGames()
+                .onSuccess { games ->
+
+                    val juegos = games.map { game ->
+
+                        val reviewsResult = reviewRepository.getGameReviews(
+                            game.videoGameId.toString()
+                        )
+
+                        val reviews = reviewsResult.getOrNull()
+                            ?: emptyList()
+
+                        val promedio = if (reviews.isNotEmpty()) {
+                            reviews.map { review ->
+                                review.ratingGeneral
+                            }.average().toFloat()
+                        } else {
+                            null
+                        }
+
+                        game.toJuegoInfo().copy(
+                            calificacion = promedio
+                        )
+                    }
+
+                    _uiState.update {
+                        it.copy(
+                            listaJuegos = juegos,
+                            isLoading = false,
+                            error = null
+                        )
+                    }
+                }
+                .onFailure { exception ->
+
+                    _uiState.update {
+                        it.copy(
+                            listaJuegos = emptyList(),
+                            isLoading = false,
+                            error = exception.message
+                                ?: "No se pudieron cargar los videojuegos"
+                        )
+                    }
+                }
+        }
     }
 }

@@ -3,6 +3,7 @@ package com.example.voxel_review.data.dtos
 import com.example.voxel_review.data.InfoDiscover.TrendingSearchInfo
 import com.example.voxel_review.data.review.ReviewInfo
 import com.example.voxel_review.data.InfoGame.GameDetailInfo
+import com.example.voxel_review.data.infoJuegosNovedades.JuegoInfo
 
 data class ReviewDto(
 	val reviewId: Int,
@@ -71,5 +72,17 @@ fun VideoGameDto.toGameDetailInfo(): GameDetailInfo {
 		lanzamiento = releaseDate,
 		generos = emptyList(),
 		imagen = imageUrl ?: ""
+	)
+}
+
+fun VideoGameDto.toJuegoInfo(): JuegoInfo {
+	return JuegoInfo(
+		id = videoGameId.toString(),
+		imagen = imageUrl ?: "",
+		etiqueta = "VIDEOJUEGO",
+		nombre = name,
+		descripcion = description,
+		autor = developer,
+		calificacion = null
 	)
 }
