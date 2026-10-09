@@ -48,14 +48,15 @@ class NovedadesViewModel @Inject constructor(
             videoGameRepository.getAllVideoGames()
                 .onSuccess { games ->
 
-                    val juegos = games.map { game ->
+                    val juegos = games.mapNotNull { game ->
 
                         val reviewsResult = reviewRepository.getGameReviews(
                             game.videoGameId.toString()
                         )
 
-                        val reviews = reviewsResult.getOrNull()
-                            ?: emptyList()
+                        val reviews = reviewsResult.getOrNull()?: emptyList()
+
+
 
                         val promedio = if (reviews.isNotEmpty()) {
                             reviews.map { review ->
@@ -63,6 +64,10 @@ class NovedadesViewModel @Inject constructor(
                             }.average().toFloat()
                         } else {
                             null
+                        }
+
+                        if (reviews.isNullOrEmpty()) {
+                            return@mapNotNull null
                         }
 
                         game.toJuegoInfo().copy(

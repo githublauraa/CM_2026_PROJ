@@ -145,8 +145,7 @@ fun NovedadesContent(
                     nombre = juego.nombre,
                     descripcion = juego.descripcion,
                     autor = juego.autor,
-                    calificacion = juego.calificacion
-                        ?.toString() ?: "Sin calificaciones",
+                    calificacion = "%.1f".format(juego.calificacion),
                     onClick = {
                         onClick(juego)
                     }

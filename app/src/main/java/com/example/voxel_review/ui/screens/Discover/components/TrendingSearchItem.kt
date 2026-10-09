@@ -19,12 +19,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.example.voxel_review.R
 import com.example.voxel_review.data.InfoDiscover.TrendingSearchInfo
 import com.example.voxel_review.ui.theme.onPrimaryDark
@@ -55,6 +59,20 @@ fun TrendingSearchItem(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
+        AsyncImage(
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(item.imagen)
+                .crossfade(true)
+                .build(),
+
+            contentDescription = "Imagen del juego",
+            fallback = painterResource(id = R.drawable.imagen_login_user),
+            placeholder = painterResource(id = R.drawable.loading_img),
+            error = painterResource(id = R.drawable.imagen_login_user),
+
+            contentScale = ContentScale.Crop,
+            modifier = modifier.size(50.dp).clip(CircleShape)
+        )
         Column {
             Text(
                 text = item.nombre,
@@ -93,7 +111,8 @@ private fun TrendingSearchItemPreview() {
         item = TrendingSearchInfo(
             id = "1",
             nombre = "Elden Ring",
-            categoria = "RPG de acción"
+            categoria = "RPG de acción",
+            imagen = ""
         ),
         onClick = {}
     )

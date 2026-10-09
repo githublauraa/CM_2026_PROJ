@@ -57,7 +57,8 @@ fun VideoGameDto.toTrendingSearchInfo(): TrendingSearchInfo {
 	return TrendingSearchInfo(
 		id = videoGameId.toString(),
 		nombre = name,
-		categoria = platform
+		categoria = platform,
+		imagen = imageUrl ?: ""
 	)
 }
 
