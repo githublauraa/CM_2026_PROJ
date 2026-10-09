@@ -41,6 +41,25 @@ class WriteReviewViewModel @Inject constructor(
         }
     }
 
+    /**
+     * Carga la reseña del usuario para editarla: precarga el texto y las
+     * calificaciones en el formulario de escribir reseña.
+     */
+    fun loadReviewForEdit(userId: String, reviewId: String) {
+        viewModelScope.launch {
+            val result = reviewRepository.getUserReviews(userId)
+            val review = result.getOrNull()?.find { it.idResenia == reviewId }
+
+            if (review != null) {
+                loadReview(review)
+            } else {
+                _uiState.update {
+                    it.copy(errorMessage = "No se pudo cargar la reseña para editar")
+                }
+            }
+        }
+    }
+
     fun updateReviewText(text: String) {
         _uiState.update { it.copy(reviewText = text, errorMessage = null) }
     }

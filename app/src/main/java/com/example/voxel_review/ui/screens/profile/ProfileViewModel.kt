@@ -92,6 +92,8 @@ class ProfileViewModel @Inject constructor(
 
 	fun deleteReview(reviewId: String, profileId: String) {
 		viewModelScope.launch {
+			_uiState.update { it.copy(isReviewDeleted = false) }
+
 			val result = reviewRepository.deleteReview(reviewId)
 
 			if (result.isSuccess) {
@@ -100,6 +102,7 @@ class ProfileViewModel @Inject constructor(
 						reviews = state.reviews?.filter { review ->
 							review.idResenia != reviewId
 						} ?: emptyList(),
+						isReviewDeleted = true,
 						errorMessage = null
 					)
 				}
@@ -115,10 +118,13 @@ class ProfileViewModel @Inject constructor(
 
 	fun updateReview(reviewId: String, review: CreateReviewDto) {
 		viewModelScope.launch {
+			_uiState.update { it.copy(isReviewUpdated = false) }
+
 			val result = reviewRepository.updateReview(reviewId, review)
 			if (result.isSuccess){
 				_uiState.update {
 					it.copy(
+						isReviewUpdated = true,
 						errorMessage = null
 					)
 				}

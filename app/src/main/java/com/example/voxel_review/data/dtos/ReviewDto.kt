@@ -1,11 +1,13 @@
 package com.example.voxel_review.data.dtos
 
+import android.media.Rating
 import com.example.voxel_review.data.review.ReviewInfo
 
 data class ReviewDto(
 	val reviewId: Int,
 	val userId: Int,
 	val videoGameId: Int,
+	val avgRating: Float,
 	val gameplayRating: Int,
 	val graphicsRating: Int,
 	val storyRating: Int,
@@ -35,10 +37,12 @@ fun ReviewDto.toReviewInfo(): ReviewInfo {
 		desarrollador = videoGame.developer,
 		tituloDescripcion = "Reseña por ${user.username}",
 		descripcion = content,
-		ratingGeneral = ((gameplayRating + graphicsRating + storyRating) / 3.0f),
+		ratingGeneral = avgRating,
 		ratingJugabilidad = gameplayRating.toFloat(),
 		ratingGraficos = graphicsRating.toFloat(),
 		ratingHistoria = storyRating.toFloat(),
 		imagenUsuario = user.photoUrl ?: "",
+		userId = userId.toString(),
+		videoGameId = videoGameId.toString(),
 	)
 }

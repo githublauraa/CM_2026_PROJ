@@ -11,5 +11,6 @@ data class ProfileState(
     val email: String ="",
     val profileImageUrl: String ? = null,
     val isReviewDeleted: Boolean = false,
+    val isReviewUpdated: Boolean = false,
     val errorMessage: String? = null
 )

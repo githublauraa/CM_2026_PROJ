@@ -276,6 +276,7 @@ fun AppNavigation(
 
             ReviewDetailScreen(
                 reviewViewModel = reviewViewModel,
+                profileViewModel = hiltViewModel(),
                 juegoId = juegoId,
                 reviewId = reviewId,
                 userId = userId,
@@ -284,26 +285,46 @@ fun AppNavigation(
                 },
                 onClickReview = {
                     navController.navigate("${AppScreen.WriteReview.route}?gameId=$juegoId")
+                },
+                onEditReview = { review ->
+                    navController.navigate(
+                        "${AppScreen.WriteReview.route}?gameId=${review.videoGameId}&reviewId=${review.idResenia}&userId=${review.userId}"
+                    )
                 }
             )
         }
 
         // CORREGIDO: defaultValue = "1" en lugar de defaultValue = 1
+        // reviewId/userId habilitan el modo edición (actualizar reseña existente)
         composable(
-            route = "${AppScreen.WriteReview.route}?gameId={gameId}",
+            route = "${AppScreen.WriteReview.route}?gameId={gameId}&reviewId={reviewId}&userId={userId}",
             arguments = listOf(
                 navArgument("gameId") {
                     type = NavType.StringType
                     defaultValue = "1"
+                },
+                navArgument("reviewId") {
+                    type = NavType.StringType
+                    defaultValue = ""
+                },
+                navArgument("userId") {
+                    type = NavType.StringType
+                    defaultValue = ""
                 }
             )
         ) { backStackEntry ->
             val writeReviewViewModel: WriteReviewViewModel = hiltViewModel()
+            val profileViewModel: ProfileViewModel = hiltViewModel()
             val gameId = backStackEntry.arguments?.getString("gameId") ?: "1"
+            val reviewId = backStackEntry.arguments?.getString("reviewId") ?: ""
+            val userId = backStackEntry.arguments?.getString("userId") ?: ""
 
             WriteReviewRoute(
                 writeReviewViewModel = writeReviewViewModel,
+                profileViewModel = profileViewModel,
                 gameId = gameId,
+                reviewId = reviewId,
+                userId = userId,
                 onSettingsClick = {
                     navController.navigate(AppScreen.Configuration.route)
                 },

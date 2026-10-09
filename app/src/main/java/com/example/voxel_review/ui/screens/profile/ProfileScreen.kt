@@ -1,16 +1,10 @@
-
 package com.example.voxel_review.ui.screens.profile
 
-import android.net.Uri
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -19,7 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.voxel_review.data.profile.ProfileInfo
+import androidx.compose.foundation.rememberScrollState
 import com.example.voxel_review.ui.screens.profile.components.*
 import com.example.voxel_review.ui.theme.VoxelBackground
 import androidx.compose.foundation.layout.Spacer
@@ -30,7 +24,6 @@ import com.example.voxel_review.data.profile.ProfileInfo
 import com.example.voxel_review.data.review.ReviewInfo
 import android.net.Uri
 import com.example.voxel_review.ui.utils.ProfileImage
-
 @Composable
 fun ProfileScreen(
     profileId: String,
@@ -51,9 +44,7 @@ fun ProfileScreen(
 
     ProfileContent(
         state = state,
-        onImageSelected = {
-            profileViewModel.uploadImageFireBase(it)
-        },
+        onImageSelected = { profileViewModel.uploadImageFireBase(it) },
         onBackClick = onBackClick,
         onClickImage = onClickImage,
         onReviewClick = onReviewClick,
@@ -77,7 +68,7 @@ fun ProfileContent(
 ) {
 
     val profile = state.profile ?: return
-    val reviews = state.reviews ?: emptyList()
+    val reviews = state.reviews ?: return
 
     Box(
         modifier = modifier
@@ -85,62 +76,51 @@ fun ProfileContent(
             .background(VoxelBackground)
     ) {
 
-        LazyColumn(
+        Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.fillMaxSize(),
-            contentPadding = PaddingValues(bottom = 70.dp)
+            modifier = Modifier
+                .align(Alignment.TopCenter)
+                .padding(bottom = 70.dp)
+                .verticalScroll(rememberScrollState())
         ) {
 
-            item {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
+            TopBar(
+                onBackClick = onBackClick,
+                onClickImage = onClickImage
+            )
 
-                    TopBar(
-                        onBackClick = onBackClick,
-                        onClickImage = onClickImage
-                    )
+            ProfileImage(
+                profileImage = state.profileImageUrl?: "",
+                size = 200,
+                modifier = Modifier
+                    .padding(16.dp)
+                    .align(Alignment.CenterHorizontally)
+            )
 
-                    ProfileImage(
-                        profileImage = state.profileImageUrl ?: "",
-                        size = 200,
-                        modifier = Modifier.padding(16.dp)
-                    )
+            pickImageButton(onImageSelected = onImageSelected)
 
-                    pickImageButton(
-                        onImageSelected = onImageSelected
-                    )
+            UserNick(profile.nick)
 
-                    UserNick(profile.nick)
+            Location()
 
-                    Location()
+            StatsPanel(
+                profile.numResenias,
+                profile.promedio,
+                profile.likes
+            )
 
             GameCards(
                 reviews = reviews,
                 onReviewClick = onReviewClick
             )
 
-                    GameCards(reviews)
+            EditButton()
 
-                    EditButton()
+            Spacer(modifier = Modifier.height(5.dp))
 
-                    Spacer(
-                        modifier = Modifier.height(5.dp)
-                    )
-
-                    ButtonLogOut(
-                        buttonLogOutPressed = buttonLogOutPressed
-                    )
-                }
-            }
-
-            item {
-                ProfileReviews(
-                    reviews = reviews,
-                    onEditReview = onEditReview,
-                    onDeleteReview = onDeleteReview
-                )
-            }
+            ButtonLogOut(
+                buttonLogOutPressed = buttonLogOutPressed
+            )
         }
     }
 }
@@ -171,3 +151,5 @@ fun ProfileContentPreview() {
         onReviewClick = {}
     )
 }
+
+
