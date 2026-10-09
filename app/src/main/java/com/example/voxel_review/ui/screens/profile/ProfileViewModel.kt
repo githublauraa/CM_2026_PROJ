@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import com.example.voxel_review.data.dtos.CreateReviewDto
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
@@ -111,4 +112,24 @@ class ProfileViewModel @Inject constructor(
 			}
 		}
 	}
+
+	fun updateReview(reviewId: String, review: CreateReviewDto) {
+		viewModelScope.launch {
+			val result = reviewRepository.updateReview(reviewId, review)
+			if (result.isSuccess){
+				_uiState.update {
+					it.copy(
+						errorMessage = null
+					)
+				}
+			} else {
+				_uiState.update {
+					it.copy(
+						errorMessage = "Error al actualizar la reseña"
+					)
+				}
+			}
+		}
+	}
+
 }
