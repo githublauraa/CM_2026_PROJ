@@ -72,7 +72,7 @@ fun FomulariosCreateAcount(
             )
 
             FormularioCreateAccount(
-                value = state.username,
+                value = state.bio,
                 icono = R.drawable.bio,
                 placeholder = "Biografia",
                 onValueChange = onBioChange,
