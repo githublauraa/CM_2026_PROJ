@@ -3,7 +3,6 @@ package com.example.voxel_review.data.repository
 import android.util.Log
 import com.example.voxel_review.data.dataSource.impl.UserRetrofitDataSourceImpl
 import com.example.voxel_review.data.dataSource.impl.firestore.UserFirestoreDataSourceImpl
-import com.example.voxel_review.data.dtos.toProfileInfo
 import com.example.voxel_review.data.profile.ProfileInfo
 import javax.inject.Inject
 import com.example.voxel_review.data.dtos.RegisterUserDto
@@ -13,7 +12,7 @@ class UserRepository @Inject constructor(
 	suspend fun getUserById(id: String): Result<ProfileInfo> {
 		return try {
 			val user = userRemoteDataSource.getUserById(id)
-			val userProfileInfo = user.toProfileInfo()
+			val userProfileInfo = user.toUserProfileinfo()
 			Result.success(userProfileInfo)
 		} catch(e: Exception){
 			Result.failure(e)
@@ -23,7 +22,7 @@ class UserRepository @Inject constructor(
 	suspend fun getAllUsers(): Result<List<ProfileInfo>> {
 		return try {
 			val users = userRemoteDataSource.getAllUsers()
-			val userProfileInfo = users.map { it.toProfileInfo() }
+			val userProfileInfo = users.map { it.toUserProfileinfo() }
 			Log.d("UserRepository", "getAllUsers: ${userProfileInfo}")
 			Result.success(userProfileInfo)
 		} catch(e: Exception){

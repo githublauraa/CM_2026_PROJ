@@ -9,7 +9,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.voxel_review.navigation.AppNavigation
 import com.example.voxel_review.navigation.AppScreen
 import com.example.voxel_review.ui.utils.DiscoverBottomNavigationBar
-
+import androidx.compose.runtime.LaunchedEffect
 /**
  * Componente principal de la aplicación.
  * Configura la navegación y controla la visualización de la barra
@@ -49,4 +49,14 @@ fun VoxelReviewApp(
             modifier = modifier.padding(paddingValues)
         )
     }
+
+
+    //prueba para express con retrofit
+//    LaunchedEffect(Unit) {
+//        navController.navigate("${AppScreen.PerfilUser.route}?profileId=2")
+//    }
+
+
+
+
 }
