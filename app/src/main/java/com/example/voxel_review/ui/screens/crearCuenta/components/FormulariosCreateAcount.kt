@@ -22,6 +22,7 @@ import com.example.voxel_review.ui.utils.FondoPantalla
 
 @Composable
 fun FomulariosCreateAcount(
+    onBioChange: (String) -> Unit,
     state: CreateAccountState,
     onEmailChange: (String) -> Unit,
     onPasswordChange: (String) -> Unit,
@@ -54,6 +55,27 @@ fun FomulariosCreateAcount(
                 icono = R.drawable.imagen_login_user,
                 placeholder = "Nombre de usuario",
                 onValueChange = onUsernameChange,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(50.dp)
+            )
+        }
+
+        // CAMPO BIO
+        Column(
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            Text(
+                text = "Biografia",
+                color = VoxelTextSecondary,
+                fontWeight = FontWeight.Bold
+            )
+
+            FormularioCreateAccount(
+                value = state.username,
+                icono = R.drawable.bio,
+                placeholder = "Biografia",
+                onValueChange = onBioChange,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(50.dp)
@@ -166,6 +188,7 @@ private fun FomulariosCreateAcountPreview() {
         FondoPantalla()
 
         FomulariosCreateAcount(
+            onBioChange = {},
             state = CreateAccountState(),
             onUsernameChange = {},
             onEmailChange = {},

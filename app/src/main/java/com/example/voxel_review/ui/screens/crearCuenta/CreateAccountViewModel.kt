@@ -24,6 +24,12 @@ class CreateAccountViewModel @Inject constructor(
     // Estado público de solo lectura que puede observar la interfaz.
     val uiState: StateFlow<CreateAccountState> = _uiState
 
+    fun updateBio(input: String){
+        _uiState.update {
+            it.copy(bio = input)
+        }
+    }
+
 
     fun updateUsername(input: String) {
         _uiState.update {

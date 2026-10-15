@@ -41,19 +41,17 @@ fun CreateAcountHeader(
 
         NombreApp()
 
-        Spacer(modifier = Modifier.height(12.dp))
-
         Text(
             text = "Crear",
             color = VoxelPrimary,
-            fontSize = 32.sp,
+            fontSize = 25.sp,
             fontWeight = FontWeight.Bold
         )
 
         Text(
             text = "Cuenta Voxel",
             color = VoxelSecondary,
-            fontSize = 33.sp,
+            fontSize = 26.sp,
             fontWeight = FontWeight.Bold
         )
     }

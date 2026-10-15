@@ -32,6 +32,7 @@ import com.example.voxel_review.ui.screens.crearCuenta.components.FomulariosCrea
 fun CreateAccountContent(
     state: CreateAccountState,
     onEmailChange: (String) -> Unit,
+    onBioChange: (String) -> Unit,
     onPasswordChange: (String) -> Unit,
     onUsernameChange: (String) -> Unit,
     onTerminosAceptadosChange: () -> Unit,
@@ -46,6 +47,7 @@ fun CreateAccountContent(
         CreateAcountHeader()
 
         FomulariosCreateAcount(
+            onBioChange = onBioChange,
             onUsernameChange = onUsernameChange,
             state = state,
             onEmailChange = onEmailChange,
@@ -81,6 +83,7 @@ fun CreateAccountScreen(
         FondoPantalla()
 
         CreateAccountContent(
+            onBioChange = createAccountViewModel::updateBio,
             onUsernameChange = createAccountViewModel::updateUsername,
             state = state,
             onEmailChange = createAccountViewModel::updateEmail,
@@ -112,6 +115,7 @@ private fun CreateAccountScreenPreview() {
         FondoPantalla()
 
         CreateAccountContent(
+            onBioChange = {},
             onUsernameChange = {},
             state = CreateAccountState(),
             onEmailChange = {},
