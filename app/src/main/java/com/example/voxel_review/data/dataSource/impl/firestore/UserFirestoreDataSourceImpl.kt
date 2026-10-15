@@ -10,8 +10,12 @@ import kotlinx.coroutines.tasks.await
 
 class UserFirestoreDataSourceImpl @Inject constructor(private val db: FirebaseFirestore) : UserRemoteDataSource {
     override suspend fun getUserById(id: String): UserProfileDto {
-        TODO("Not yet implemented")
-
+        //obtener la referencia al documento con ese id
+        val docRef = db.collection("users").document(id)
+        //obtener el documento hacia el front
+        val respuesta = docRef.get().await()
+        //convertir el documento a UserProfileDto
+        return respuesta.toObject(UserProfileDto::class.java)?: throw Exception ("No se encontro el usuario")
     }
 
     override suspend fun getAllUsers(): List<UserProfileDto> {

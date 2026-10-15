@@ -1,46 +1,52 @@
 package com.example.voxel_review.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavHostController
 import androidx.compose.ui.Modifier
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.example.voxel_review.data.InfoDiscover.LocalTrendingSearchProvider
+
+import com.google.firebase.auth.FirebaseAuth
+
 import com.example.voxel_review.ui.screens.start.StartScreen
+import com.example.voxel_review.ui.screens.start.StartViewModel
+
 import com.example.voxel_review.ui.screens.crearCuenta.CreateAccountScreen
+import com.example.voxel_review.ui.screens.crearCuenta.CreateAccountViewModel
+
 import com.example.voxel_review.ui.screens.novedades.NovedadScreen
-import com.example.voxel_review.data.LocalJuegosProvider
+import com.example.voxel_review.ui.screens.novedades.NovedadesViewModel
+
 import com.example.voxel_review.ui.screens.Discover.DiscoverScreen
+import com.example.voxel_review.ui.screens.Discover.DiscoverViewModel
+
 import com.example.voxel_review.ui.screens.profile.ProfileScreen
+import com.example.voxel_review.ui.screens.profile.ProfileViewModel
+
 import com.example.voxel_review.ui.screens.writeReview.WriteReviewRoute
 import com.example.voxel_review.ui.screens.writeReview.WriteReviewViewModel
+
 import com.example.voxel_review.ui.screens.rankings.RankingsScreen
-import com.example.voxel_review.ui.screens.Discover.DiscoverViewModel
+import com.example.voxel_review.ui.screens.rankings.RankingsViewModel
+
 import com.example.voxel_review.ui.screens.GameDetail.GameDetailContent
 import com.example.voxel_review.ui.screens.GameDetail.GameDetailViewModel
+
 import com.example.voxel_review.ui.screens.Splash.SplashScreen
-import com.example.voxel_review.ui.screens.notifications.NotificationsViewModel
-import com.example.voxel_review.ui.screens.review.ReviewDetailScreen
-import com.example.voxel_review.ui.screens.settings.SettingsRoute
-import com.example.voxel_review.ui.screens.profile.ProfileViewModel
-import com.example.voxel_review.ui.screens.start.StartViewModel
-import com.example.voxel_review.ui.screens.crearCuenta.CreateAccountViewModel
+
 import com.example.voxel_review.ui.screens.notifications.NotificationContent
-import com.example.voxel_review.ui.screens.notifications.components.NotificationsContent
-import com.example.voxel_review.ui.screens.novedades.NovedadesViewModel
-import com.example.voxel_review.ui.screens.rankings.RankingsViewModel
+import com.example.voxel_review.ui.screens.notifications.NotificationsViewModel
+
+import com.example.voxel_review.ui.screens.review.ReviewDetailScreen
 import com.example.voxel_review.ui.screens.review.ReviewViewModel
+
+import com.example.voxel_review.ui.screens.settings.SettingsRoute
 import com.example.voxel_review.ui.screens.settings.SettingsViewModel
-import com.example.voxel_review.ui.screens.Splash.SplashViewModel
-/**
- * Define las rutas disponibles dentro de la navegación de la aplicación.
- *
- * @param route Identificador utilizado por Navigation Compose para cada pantalla.
- */
+
+
 sealed class AppScreen(val route: String) {
     object Splash : AppScreen("splash")
     object Start : AppScreen("start")
@@ -56,26 +62,22 @@ sealed class AppScreen(val route: String) {
     object Notifications : AppScreen("notifications")
 }
 
-/**
- * Configura las rutas y la navegación principal de la aplicación.
- * Cada destino crea la pantalla correspondiente y define las acciones
- * necesarias para navegar entre las diferentes secciones.
- *
- * @param navController Controlador encargado de administrar la navegación.
- * @param modifier Modificador aplicado al contenedor de navegación.
- */
+
 @Composable
 fun AppNavigation(
     navController: NavHostController,
     modifier: Modifier = Modifier
 ) {
+
     NavHost(
         navController = navController,
         startDestination = AppScreen.Splash.route,
         modifier = modifier
     ) {
 
+        // SPLASH
         composable(route = AppScreen.Splash.route) {
+
             SplashScreen(
                 splashViewModel = hiltViewModel(),
                 onNavigateHome = {
@@ -91,7 +93,10 @@ fun AppNavigation(
             )
         }
 
+
+        // LOGIN
         composable(route = AppScreen.Start.route) {
+
             val startViewModel: StartViewModel = hiltViewModel()
 
             StartScreen(
@@ -107,7 +112,10 @@ fun AppNavigation(
             )
         }
 
+
+        // REGISTRO
         composable(route = AppScreen.Register.route) {
+
             val createAccountViewModel: CreateAccountViewModel = hiltViewModel()
 
             CreateAccountScreen(
@@ -120,13 +128,15 @@ fun AppNavigation(
             )
         }
 
+
+        // NOVEDADES
         composable(route = AppScreen.Reviews.route) {
+
             val novedadesViewModel: NovedadesViewModel = hiltViewModel()
 
             NovedadScreen(
                 novedadesViewModel,
                 onClick = { juego ->
-                    // CORREGIDO: Se envía directamente el id de tipo String en lugar de usar indexOf
                     navController.navigate(
                         "${AppScreen.FullReviews.route}?juegoId=${juego.id}"
                     )
@@ -137,41 +147,54 @@ fun AppNavigation(
             )
         }
 
-        // CORREGIDO: Se incluye ?profileId={profileId} en la ruta y defaultValue en String "1"
+
+        // PERFIL
         composable(
             route = "${AppScreen.PerfilUser.route}?profileId={profileId}",
             arguments = listOf(
                 navArgument("profileId") {
                     type = NavType.StringType
-                    defaultValue = "2"
+                    defaultValue = ""
                 }
             )
         ) { backStackEntry ->
 
-            val profileId = backStackEntry.arguments?.getString("profileId") ?: "1"
+            val currentUser = FirebaseAuth.getInstance().currentUser
 
-            ProfileScreen(
-                profileViewModel = hiltViewModel(),
-                profileId = profileId,
-                onBackClick = {
-                    navController.popBackStack()
-                },
-                onClickImage = {},
-                onReviewClick = { review ->
-                    navController.navigate(
-                        "${AppScreen.FullReviews.route}?reviewId=${review.idResenia}&userId=$profileId"
-                    )
-                },
-                buttonLogOutPressed = {
-                    navController.navigate(AppScreen.Start.route) {
-                        popUpTo(0) { inclusive = true }
+            val profileId = backStackEntry.arguments
+                ?.getString("profileId")
+                ?.takeIf { it.isNotBlank() }
+                ?: currentUser?.uid.orEmpty()
+
+            if (profileId.isNotBlank()) {
+
+                ProfileScreen(
+                    profileViewModel = hiltViewModel(),
+                    profileId = profileId,
+                    onBackClick = {
+                        navController.popBackStack()
+                    },
+                    onClickImage = {},
+                    onReviewClick = { review ->
+                        navController.navigate(
+                            "${AppScreen.FullReviews.route}?reviewId=${review.idResenia}&userId=$profileId"
+                        )
+                    },
+                    buttonLogOutPressed = {
+                        navController.navigate(AppScreen.Start.route) {
+                            popUpTo(0) { inclusive = true }
+                        }
                     }
-                }
-            )
+                )
+            }
         }
 
+
+        // CONFIGURACIÓN
         composable(route = AppScreen.Configuration.route) {
+
             val settingsViewModel: SettingsViewModel = hiltViewModel()
+
             SettingsRoute(
                 settingsViewModel = settingsViewModel,
                 onBackClick = {
@@ -180,7 +203,10 @@ fun AppNavigation(
             )
         }
 
+
+        // DISCOVER
         composable(route = AppScreen.Discover.route) {
+
             val discoverViewModel: DiscoverViewModel = hiltViewModel()
 
             DiscoverScreen(
@@ -192,7 +218,6 @@ fun AppNavigation(
                     navController.navigate(AppScreen.Notifications.route)
                 },
                 onItemClick = { item ->
-                    // CORREGIDO: Se envía el id de tipo String en lugar de indexOf
                     navController.navigate(
                         "${AppScreen.GameDetail.route}?gameId=${item.id}"
                     )
@@ -200,18 +225,23 @@ fun AppNavigation(
             )
         }
 
+
+        // DETALLE DEL JUEGO
         composable(
             route = "${AppScreen.GameDetail.route}?gameId={gameId}",
             arguments = listOf(
                 navArgument("gameId") {
                     type = NavType.StringType
-                    defaultValue = "1"
+                    defaultValue = ""
                 }
             )
         ) { backStackEntry ->
 
             val gameDetailViewModel: GameDetailViewModel = hiltViewModel()
-            val gameId = backStackEntry.arguments?.getString("gameId") ?: "1"
+
+            val gameId = backStackEntry.arguments
+                ?.getString("gameId")
+                .orEmpty()
 
             GameDetailContent(
                 gameDetailViewModel = gameDetailViewModel,
@@ -223,12 +253,17 @@ fun AppNavigation(
                     navController.navigate(AppScreen.Discover.route)
                 },
                 onWriteReviewPressed = {
-                    navController.navigate("${AppScreen.WriteReview.route}?gameId=$gameId")
+                    navController.navigate(
+                        "${AppScreen.WriteReview.route}?gameId=$gameId"
+                    )
                 }
             )
         }
 
+
+        // RANKINGS
         composable(route = AppScreen.RankingsUser.route) {
+
             val rankingsViewModel: RankingsViewModel = hiltViewModel()
 
             RankingsScreen(
@@ -241,7 +276,10 @@ fun AppNavigation(
             )
         }
 
+
+        // NOTIFICACIONES
         composable(route = AppScreen.Notifications.route) {
+
             val notificationsViewModel: NotificationsViewModel = hiltViewModel()
 
             NotificationContent(
@@ -255,14 +293,14 @@ fun AppNavigation(
             )
         }
 
-        // CORREGIDO: Renombrado juegoIndex a juegoId y agregado defaultValue "1"
-        // reviewId/userId permiten abrir una reseña concreta desde el perfil del usuario.
+
+        // DETALLE DE RESEÑA
         composable(
             route = "${AppScreen.FullReviews.route}?juegoId={juegoId}&reviewId={reviewId}&userId={userId}",
             arguments = listOf(
                 navArgument("juegoId") {
                     type = NavType.StringType
-                    defaultValue = "1"
+                    defaultValue = ""
                 },
                 navArgument("reviewId") {
                     type = NavType.StringType
@@ -274,10 +312,20 @@ fun AppNavigation(
                 }
             )
         ) { backStackEntry ->
+
             val reviewViewModel: ReviewViewModel = hiltViewModel()
-            val juegoId = backStackEntry.arguments?.getString("juegoId") ?: "1"
-            val reviewId = backStackEntry.arguments?.getString("reviewId") ?: ""
-            val userId = backStackEntry.arguments?.getString("userId") ?: ""
+
+            val juegoId = backStackEntry.arguments
+                ?.getString("juegoId")
+                .orEmpty()
+
+            val reviewId = backStackEntry.arguments
+                ?.getString("reviewId")
+                .orEmpty()
+
+            val userId = backStackEntry.arguments
+                ?.getString("userId")
+                .orEmpty()
 
             ReviewDetailScreen(
                 reviewViewModel = reviewViewModel,
@@ -285,15 +333,18 @@ fun AppNavigation(
                 juegoId = juegoId,
                 reviewId = reviewId,
                 userId = userId,
-                onCommentClick = { juegoId ->
-                navController.navigate("${AppScreen.WriteReview.route}?gameId=$juegoId")
+                onCommentClick = { selectedGameId ->
+                    navController.navigate(
+                        "${AppScreen.WriteReview.route}?gameId=$selectedGameId"
+                    )
                 },
                 onBackClick = {
                     navController.popBackStack()
                 },
-
                 onClickReview = {
-                    navController.navigate("${AppScreen.WriteReview.route}?gameId=$juegoId")
+                    navController.navigate(
+                        "${AppScreen.WriteReview.route}?gameId=$juegoId"
+                    )
                 },
                 onEditReview = { review ->
                     navController.navigate(
@@ -303,14 +354,14 @@ fun AppNavigation(
             )
         }
 
-        // CORREGIDO: defaultValue = "1" en lugar de defaultValue = 1
-        // reviewId/userId habilitan el modo edición (actualizar reseña existente)
+
+        // ESCRIBIR RESEÑA
         composable(
             route = "${AppScreen.WriteReview.route}?gameId={gameId}&reviewId={reviewId}&userId={userId}",
             arguments = listOf(
                 navArgument("gameId") {
                     type = NavType.StringType
-                    defaultValue = "1"
+                    defaultValue = ""
                 },
                 navArgument("reviewId") {
                     type = NavType.StringType
@@ -322,11 +373,21 @@ fun AppNavigation(
                 }
             )
         ) { backStackEntry ->
+
             val writeReviewViewModel: WriteReviewViewModel = hiltViewModel()
             val profileViewModel: ProfileViewModel = hiltViewModel()
-            val gameId = backStackEntry.arguments?.getString("gameId") ?: "1"
-            val reviewId = backStackEntry.arguments?.getString("reviewId") ?: ""
-            val userId = backStackEntry.arguments?.getString("userId") ?: ""
+
+            val gameId = backStackEntry.arguments
+                ?.getString("gameId")
+                .orEmpty()
+
+            val reviewId = backStackEntry.arguments
+                ?.getString("reviewId")
+                .orEmpty()
+
+            val userId = backStackEntry.arguments
+                ?.getString("userId")
+                .orEmpty()
 
             WriteReviewRoute(
                 writeReviewViewModel = writeReviewViewModel,
