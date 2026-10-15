@@ -9,13 +9,15 @@ import jakarta.inject.Inject
 import com.example.voxel_review.data.repository.AuthRepository
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
+import com.example.voxel_review.data.repository.UserRepository
 /**
  * ViewModel encargado de administrar el estado y la lógica
  * de la pantalla de creación de cuenta.
  */
 @HiltViewModel
 class CreateAccountViewModel @Inject constructor(
-    private val authRepository: AuthRepository
+    private val authRepository: AuthRepository,
+    private val userRepository: UserRepository
 ): ViewModel() {
 
     // Estado interno modificable únicamente desde el ViewModel.
@@ -116,6 +118,14 @@ class CreateAccountViewModel @Inject constructor(
             )
 
             if (result.isSuccess) {
+                //obtener el id
+                val userId = authRepository.currentUser?.uid?: throw Exception ("No se pudo obtener el id del usuario")
+
+                userRepository.registerUser(
+                   nombreUsuario = _uiState.value.username,
+                   bio = _uiState.value.bio,
+                   userId = userId
+                )
                 onSuccess()
             }else{
                 _uiState.update {

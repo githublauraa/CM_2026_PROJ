@@ -9,7 +9,8 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException
 class AuthRepository @Inject constructor(
     private val authRemoteDataSource: AuthRemoteDataSource
 ) {
-    val currentUser: FirebaseUser? = authRemoteDataSource.currentUser
+    val currentUser: FirebaseUser?
+        get() = authRemoteDataSource.currentUser
 
     suspend fun signIn(email:String, password: String): Result<Unit>{
         try {
