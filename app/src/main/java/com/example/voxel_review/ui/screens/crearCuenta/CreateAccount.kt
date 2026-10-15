@@ -2,6 +2,7 @@ package com.example.voxel_review.ui.screens.crearCuenta
 
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.runtime.Composable
@@ -32,19 +33,20 @@ fun CreateAccountContent(
     state: CreateAccountState,
     onEmailChange: (String) -> Unit,
     onPasswordChange: (String) -> Unit,
+    onUsernameChange: (String) -> Unit,
     onTerminosAceptadosChange: () -> Unit,
     onMostrarContrasenaChange: () -> Unit,
     unirseButtonPressed: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Box(
+    Column (
         modifier = modifier
-            .fillMaxWidth()
-            .offset(y = (-55).dp)
+
     ) {
         CreateAcountHeader()
 
         FomulariosCreateAcount(
+            onUsernameChange = onUsernameChange,
             state = state,
             onEmailChange = onEmailChange,
             onPasswordChange = onPasswordChange,
@@ -79,6 +81,7 @@ fun CreateAccountScreen(
         FondoPantalla()
 
         CreateAccountContent(
+            onUsernameChange = createAccountViewModel::updateUsername,
             state = state,
             onEmailChange = createAccountViewModel::updateEmail,
             onPasswordChange = createAccountViewModel::updatePassword,
@@ -103,8 +106,19 @@ fun CreateAccountScreen(
 @Preview(showBackground = true)
 @Composable
 private fun CreateAccountScreenPreview() {
-    CreateAccountScreen(
-        createAccountViewModel = viewModel(),
-        unirseButtonPressed = {}
-    )
+    Box(
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        FondoPantalla()
+
+        CreateAccountContent(
+            onUsernameChange = {},
+            state = CreateAccountState(),
+            onEmailChange = {},
+            onPasswordChange = {},
+            onTerminosAceptadosChange = {},
+            onMostrarContrasenaChange = {},
+            unirseButtonPressed = {}
+        )
+    }
 }

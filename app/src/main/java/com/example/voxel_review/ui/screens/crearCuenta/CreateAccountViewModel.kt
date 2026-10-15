@@ -25,6 +25,13 @@ class CreateAccountViewModel @Inject constructor(
     val uiState: StateFlow<CreateAccountState> = _uiState
 
 
+    fun updateUsername(input: String) {
+        _uiState.update {
+            it.copy(username = input)
+        }
+    }
+
+
     /**
      * Actualiza el correo electrónico ingresado.
      */

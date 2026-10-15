@@ -25,42 +25,24 @@ import com.example.voxel_review.ui.utils.MostrarLogo
  *
  * @param modifier Modificador para personalizar la distribución del componente.
  */
+
 @Composable
 fun CreateAcountHeader(
     modifier: Modifier = Modifier
 ) {
-
-    // Sección superior con el logo y el nombre de la aplicación.
     Column(
         modifier = modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+        verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         MostrarLogo(
-            modifier = Modifier
-                .width(120.dp)
-                .offset(y = 50.dp)
-        )
-
-        Spacer(
-            modifier = Modifier.height(47.dp)
+            modifier = Modifier.width(120.dp)
         )
 
         NombreApp()
-    }
 
-    Spacer(
-        modifier = Modifier.height(100.dp)
-    )
+        Spacer(modifier = Modifier.height(12.dp))
 
-    // Título principal de la pantalla.
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
-        modifier = Modifier
-            .offset(y = 210.dp)
-            .fillMaxWidth()
-    ) {
         Text(
             text = "Crear",
             color = VoxelPrimary,

@@ -109,6 +109,9 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:3.0.0")
     implementation("com.squareup.retrofit2:converter-scalars:3.0.0")
 
+    //firestore
+    implementation("com.google.firebase:firebase-firestore")
+
     // Tests
     testImplementation(libs.junit)
 
