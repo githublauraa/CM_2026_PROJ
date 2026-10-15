@@ -9,23 +9,21 @@ import jakarta.inject.Inject
 import kotlinx.coroutines.tasks.await
 import android.util.Log
 
-class UserFirestoreDataSourceImpl @Inject constructor(private val db: FirebaseFirestore) : UserRemoteDataSource {
+class UserFirestoreDataSourceImpl @Inject constructor(
+    private val db: FirebaseFirestore
+) : UserRemoteDataSource {
     override suspend fun getUserById(id: String): UserDtoGeneric {
-        Log.d("FIRESTORE_TEST", "Buscando usuario: $id")
 
-        val respuesta = db.collection("users")
-            .document(id)
-            .get()
-            .await()
+        // Obtiene la referencia del documento del usuario en Firestore usando su ID
+        val docRef = db.collection("users").document(id)
 
-        Log.d("FIRESTORE_TEST", "Existe: ${respuesta.exists()}")
-        Log.d("FIRESTORE_TEST", "Datos: ${respuesta.data}")
+        // Consulta el documento y espera la respuesta de Firestore
+        val respuesta = docRef.get().await()
 
-        val userDto = respuesta.toObject(
-            UserProfileFirestoreDto::class.java
-        ) ?: throw Exception("No se encontró el usuario")
-
-        return userDto.copy(userId = respuesta.id)
+        // Convierte el documento a UserProfileFirestoreDto y lo retorna
+        // Si el usuario no existe, lanza una excepción
+        return respuesta.toObject(UserProfileFirestoreDto::class.java)
+            ?: throw Exception("No se encontró el usuario")
     }
 
     override suspend fun getAllUsers(): List<UserDtoGeneric> {
