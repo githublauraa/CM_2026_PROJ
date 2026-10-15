@@ -11,10 +11,11 @@ import com.example.voxel_review.ui.theme.VoxelTextSecondary
 
 @Composable
 fun Location(
+    biografia: String?,
     modifier: Modifier = Modifier
 ) {
     Text(
-        text = stringResource(R.string.ubicacion),
+        text = biografia ?: "Sin biografia",
         color = VoxelTextSecondary,
         modifier = modifier.padding(8.dp)
     )

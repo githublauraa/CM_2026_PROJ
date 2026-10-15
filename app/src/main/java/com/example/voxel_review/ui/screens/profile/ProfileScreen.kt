@@ -101,7 +101,9 @@ fun ProfileContent(
 
             UserNick(profile.nick)
 
-            Location()
+            Location(
+                biografia = state.profile?.biografia
+            )
 
             StatsPanel(
                 profile.numResenias,
