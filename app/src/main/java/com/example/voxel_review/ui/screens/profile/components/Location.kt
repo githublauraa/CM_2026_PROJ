@@ -10,7 +10,7 @@ import com.example.voxel_review.R
 import com.example.voxel_review.ui.theme.VoxelTextSecondary
 
 @Composable
-fun Location(
+fun Biography(
     biografia: String?,
     modifier: Modifier = Modifier
 ) {

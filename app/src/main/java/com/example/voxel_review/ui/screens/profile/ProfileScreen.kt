@@ -101,7 +101,7 @@ fun ProfileContent(
 
             UserNick(profile.nick)
 
-            Location(
+            Biography(
                 biografia = state.profile?.biografia
             )
 
