@@ -7,6 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.voxel_review.data.InfoGame.LocalGameProvider
 import com.example.voxel_review.data.InfoGame.LocalGameRecomendedProvider
+import com.example.voxel_review.data.review.ReviewInfo
 import com.example.voxel_review.ui.screens.GameDetail.components.GameDetailContent
 
 /**
@@ -26,6 +27,7 @@ fun GameDetailScreen(
     onReviewProfileImageCliked:(String) -> Unit,
     onSearchPressed: () -> Unit,
     onWriteReviewPressed: () -> Unit,
+    onReviewClick: (ReviewInfo) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
 
@@ -38,6 +40,7 @@ fun GameDetailScreen(
         onSearchPressed = onSearchPressed,
         onWriteReviewPressed = onWriteReviewPressed,
         onReviewProfileImageCliked = onReviewProfileImageCliked,
+        onReviewClick = onReviewClick,
         modifier = modifier
     )
 }

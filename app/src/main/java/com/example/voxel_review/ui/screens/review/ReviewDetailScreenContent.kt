@@ -29,6 +29,7 @@ fun ReviewDetailScreenContent(
     onBackClick: () -> Unit,
     onEditReview: (ReviewInfo) -> Unit,
     onDeleteReview: (ReviewInfo) -> Unit,
+    onReviewProfileImageClicked: (String) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     val review = state.reviews.firstOrNull()
@@ -66,7 +67,8 @@ fun ReviewDetailScreenContent(
             ReviewDetailContent(
                 state = state,
                 onClickReview = onClickReview,
-                onCommentClick = onCommentClick
+                onCommentClick = onCommentClick,
+                onReviewProfileImageClicked = onReviewProfileImageClicked
             )
         }
 

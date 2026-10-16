@@ -285,6 +285,11 @@ fun AppNavigation(
                     navController.navigate(
                         "${AppScreen.WriteReview.route}?gameId=$gameId"
                     )
+                },
+                onReviewClick = { review ->
+                    navController.navigate(
+                        "${AppScreen.FullReviews.route}?juegoId=${review.videoGameId}&reviewId=${review.idResenia}&userId=${review.userId}"
+                    )
                 }
             )
         }
@@ -379,6 +384,13 @@ fun AppNavigation(
                     navController.navigate(
                         "${AppScreen.WriteReview.route}?gameId=${review.videoGameId}&reviewId=${review.idResenia}&userId=${review.userId}"
                     )
+                },
+                onReviewProfileImageClicked = { selectedUserId ->
+                    if (selectedUserId.isNotBlank()) {
+                        navController.navigate(
+                            "${AppScreen.PerfilUser.route}?profileId=$selectedUserId"
+                        )
+                    }
                 }
             )
         }

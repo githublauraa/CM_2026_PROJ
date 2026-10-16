@@ -34,6 +34,7 @@ fun ReviewDetailContent(
     state: ReviewDetailState,
     onClickReview: () -> Unit,
     onCommentClick: (String) -> Unit,
+    onReviewProfileImageClicked: (String) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
 
@@ -90,6 +91,9 @@ fun ReviewDetailContent(
                 onClickReview = onClickReview,
                 onCommentClick = {
                     onCommentClick(review.idResenia) // Se usa videoGameId del data class
+                },
+                onReviewProfileImageClicked = {
+                    onReviewProfileImageClicked(review.userId)
                 },
                 modifier = Modifier
                     .fillMaxWidth()

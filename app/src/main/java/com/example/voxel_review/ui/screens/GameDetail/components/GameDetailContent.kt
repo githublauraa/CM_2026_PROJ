@@ -33,7 +33,9 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.voxel_review.data.InfoGame.LocalGameProvider
 import com.example.voxel_review.data.InfoGame.LocalGameRecomendedProvider
+import com.example.voxel_review.data.review.ReviewInfo
 import com.example.voxel_review.ui.screens.GameDetail.GameDetailState
+import com.example.voxel_review.ui.theme.VoxelSurface
 import com.example.voxel_review.ui.theme.backgroundDark
 import com.example.voxel_review.ui.theme.VoxelSurfaceVariant
 import com.example.voxel_review.ui.theme.surfaceContainerDark
@@ -45,6 +47,7 @@ fun GameDetailContent(
     onBackPressed: () -> Unit,
     onSearchPressed: () -> Unit,
     onWriteReviewPressed: () -> Unit,
+    onReviewClick: (ReviewInfo) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     val game = state.game
@@ -161,9 +164,12 @@ fun GameDetailContent(
                             Card(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .padding(vertical = 6.dp),
+                                    .padding(vertical = 6.dp)
+                                    .clickable {
+                                        onReviewClick(review)
+                                    },
                                 colors = CardDefaults.cardColors(
-                                    containerColor = surfaceContainerDark
+                                    containerColor = VoxelSurface
                                 )
                             ) {
 

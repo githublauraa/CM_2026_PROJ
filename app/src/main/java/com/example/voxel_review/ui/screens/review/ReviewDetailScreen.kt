@@ -32,6 +32,7 @@ fun ReviewDetailScreen(
     onCommentClick: (String) -> Unit,
     onBackClick: () -> Unit,
     onEditReview: (ReviewInfo) -> Unit,
+    onReviewProfileImageClicked: (String) -> Unit = {},
 ) {
 
     val state by reviewViewModel.uiState.collectAsState()
@@ -85,7 +86,8 @@ fun ReviewDetailScreen(
                         reviewId = review.idResenia,
                         profileId = review.userId
                     )
-                }
+                },
+                onReviewProfileImageClicked = onReviewProfileImageClicked
             )
         }
     }
