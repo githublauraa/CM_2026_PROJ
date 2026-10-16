@@ -9,5 +9,7 @@ data class WriteReviewState(
     val graphicsRating: Int = 0,
     val storyRating: Int = 0,
     val isPublished: Boolean = false,
-    val errorMessage: String? = null
+    val errorMessage: String? = null,
+
+    val editingReviewId: String? = null
 )

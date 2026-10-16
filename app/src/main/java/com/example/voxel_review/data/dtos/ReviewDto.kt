@@ -55,7 +55,11 @@ fun ReviewDto.toReviewInfo(): ReviewInfo {
 		desarrollador = videoGame?.developer ?: "",
 		tituloDescripcion = "Reseña por ${user?.username ?: "Usuario"}",
 		descripcion = content,
-		ratingGeneral = avgRating,
+		ratingGeneral = (
+				gameplayRating +
+						graphicsRating +
+						storyRating
+				).toFloat() / 3f,
 		ratingJugabilidad = gameplayRating.toFloat(),
 		ratingGraficos = graphicsRating.toFloat(),
 		ratingHistoria = storyRating.toFloat(),

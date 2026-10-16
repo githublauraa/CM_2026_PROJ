@@ -16,7 +16,7 @@ class ReviewFirebaseDataSourceImpl @Inject constructor(
     //obtener reseñas dado un usuario
     override suspend fun getUserReviews(id: String): List<ReviewDto> {
         val respuesta = db.collection("reviews")
-            .whereEqualTo("userdId", id).get().await()
+            .whereEqualTo("userId", id).get().await()
         return respuesta.documents.map { doc ->
             val review = doc.toObject(ReviewDto::class.java)
             review?.copy(reviewId = doc.id)?: throw Exception("Reseña no encontrada")

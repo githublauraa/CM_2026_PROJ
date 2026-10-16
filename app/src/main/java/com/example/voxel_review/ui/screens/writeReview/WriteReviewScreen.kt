@@ -1,11 +1,12 @@
+
 package com.example.voxel_review.ui.screens.writeReview
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import com.google.firebase.auth.FirebaseAuth
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -14,16 +15,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.voxel_review.data.dtos.CreateReviewDto
-import com.example.voxel_review.ui.screens.profile.ProfileViewModel
-import com.example.voxel_review.ui.theme.onErrorLight
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.compose.material3.Text
+import com.example.voxel_review.ui.screens.profile.ProfileViewModel
 import com.example.voxel_review.ui.screens.writeReview.components.BotonPublicarReview
 import com.example.voxel_review.ui.screens.writeReview.components.GameCalification
 import com.example.voxel_review.ui.screens.writeReview.components.GameInfo
 import com.example.voxel_review.ui.screens.writeReview.components.ReviewText
 import com.example.voxel_review.ui.screens.writeReview.components.TopBar
+import com.example.voxel_review.ui.theme.onErrorLight
 import com.example.voxel_review.ui.utils.FondoPantalla
 
 @Composable
@@ -38,14 +37,20 @@ fun WriteReviewRoute(
     modifier: Modifier = Modifier
 ) {
 
-    LaunchedEffect(gameId) {
-        writeReviewViewModel.loadGame(gameId = gameId)
-    }
+    LaunchedEffect(gameId, reviewId, userId) {
 
-    // En modo edición se precarga la reseña a editar (texto y calificaciones)
-    LaunchedEffect(reviewId, userId) {
+        writeReviewViewModel.loadGame(gameId)
+
         if (reviewId.isNotBlank() && userId.isNotBlank()) {
-            writeReviewViewModel.loadReviewForEdit(userId = userId, reviewId = reviewId)
+
+            writeReviewViewModel.loadReviewForEdit(
+                userId = userId,
+                reviewId = reviewId
+            )
+
+        } else {
+
+            writeReviewViewModel.loadExistingReview(gameId)
         }
     }
 
@@ -75,41 +80,42 @@ fun WriteReviewScreen(
 
     val state by writeReviewViewModel.uiState.collectAsState()
     val profileState by profileViewModel.uiState.collectAsState()
+
     val game = state.game
 
+    val reviewIdToEdit = state.editingReviewId
+        ?: reviewId.takeIf { it.isNotBlank() }
 
-    val isEditing = reviewId.isNotBlank()
+    val isEditing = reviewIdToEdit != null
 
     LaunchedEffect(state.isPublished) {
-        if (state.isPublished){
+        if (state.isPublished) {
             onBackClick()
         }
     }
 
-    // Al actualizar la reseña se vuelve a la pantalla anterior
     LaunchedEffect(profileState.isReviewUpdated) {
         if (profileState.isReviewUpdated) {
             onBackClick()
         }
     }
 
-
-
-    val currentUserId = FirebaseAuth.getInstance().currentUser?.uid
-
     Box(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize()
     ) {
+
         FondoPantalla(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier.fillMaxSize()
         )
 
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(16.dp),
-            modifier = Modifier.align(Alignment.TopCenter)
+            modifier = Modifier
+                .align(Alignment.TopCenter)
                 .fillMaxWidth(0.9f)
         ) {
+
             TopBar(
                 onBackClick = onBackClick,
                 onSettingsClick = onSettingsClick
@@ -120,7 +126,7 @@ fun WriteReviewScreen(
                     imagen = game.imagen,
                     nombre = game.nombre,
                     desarrollador = game.desarrollador,
-                    anio = game.lanzamiento,
+                    anio = game.lanzamiento
                 )
             }
 
@@ -141,35 +147,40 @@ fun WriteReviewScreen(
 
             ReviewText(
                 text = state.reviewText,
-                onTextChange = { writeReviewViewModel.updateReviewText(it) }
+                onTextChange = {
+                    writeReviewViewModel.updateReviewText(it)
+                }
             )
 
             BotonPublicarReview(
                 onClick = {
-                    if (isEditing) {
-                        profileViewModel.updateReview(
-                            reviewId = reviewId,
-                            review = CreateReviewDto(
-                                userId = userId,
-                                videoGameId = gameId,
-                                gameplayRating = state.gameplayRating,
-                                graphicsRating = state.graphicsRating,
-                                storyRating = state.storyRating,
-                                content = state.reviewText
-                            )
+
+                    if (reviewIdToEdit != null) {
+
+                        writeReviewViewModel.updateReview(
+                            reviewId = reviewIdToEdit,
+                            userId = userId.takeIf { it.isNotBlank() }
+                                ?: writeReviewViewModel.currentUserId().orEmpty(),
+                            videoGameId = gameId
                         )
+
                     } else {
-                        if (currentUserId != null) {
-                            writeReviewViewModel.publishReview(
-                                videoGameId = gameId
-                            )
-                        }
+
+                        writeReviewViewModel.publishReview(
+                            videoGameId = gameId
+                        )
                     }
                 },
-                text = if (isEditing) "Actualizar reseña" else "PUBLICAR REVIEW"
+                text = if (isEditing) {
+                    "Actualizar reseña"
+                } else {
+                    "PUBLICAR REVIEW"
+                }
             )
 
-            val errorMessage = profileState.errorMessage ?: state.errorMessage
+            val errorMessage =
+                state.errorMessage ?: profileState.errorMessage
+
             errorMessage?.let {
                 Text(
                     text = it,
