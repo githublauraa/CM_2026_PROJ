@@ -33,6 +33,7 @@ class UserFirestoreDataSourceImpl @Inject constructor(
 
         return respuesta.documents.mapNotNull { documento ->
             documento.toObject(UserProfileFirestoreDto::class.java)
+                ?.copy(userId = documento.id)
         }
     }
 

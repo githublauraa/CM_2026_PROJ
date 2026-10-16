@@ -24,7 +24,7 @@ data class UserProfileRetrofitDto(
 	override fun toUserProfileinfo(): ProfileInfo {
 		return ProfileInfo(
 			id = userId.toString(),
-			pfp = photoUrl ?: "No hay foto de perfil",
+			pfp = photoUrl ?: "",
 			nick = username,
 			numResenias = numReviews,
 			promedio = avgRating,
@@ -48,7 +48,7 @@ data class UserProfileFirestoreDto(
 	override fun toUserProfileinfo(): ProfileInfo {
 		return ProfileInfo(
 			id = userId,
-			pfp = photoUrl ?: "No hay foto de perfil",
+			pfp = photoUrl ?: "",
 			nick = username,
 			numResenias = numReviews,
 			promedio = avgRating,
