@@ -46,6 +46,8 @@ import com.example.voxel_review.ui.screens.review.ReviewViewModel
 import com.example.voxel_review.ui.screens.settings.SettingsRoute
 import com.example.voxel_review.ui.screens.settings.SettingsViewModel
 
+import com.example.voxel_review.ui.screens.editProfile.EditProfileScreen
+
 
 sealed class AppScreen(val route: String) {
     object Splash : AppScreen("splash")
@@ -60,6 +62,8 @@ sealed class AppScreen(val route: String) {
     object RankingsUser : AppScreen("rankingsUser")
     object Configuration : AppScreen("configuration")
     object Notifications : AppScreen("notifications")
+
+    object EditProfile : AppScreen("editProfile")
 
     object UserProfile: AppScreen("userProfile"){
         fun createRoute(userdId: String,showEdit: Boolean = false) = "userProfile/$userdId/$showEdit"
@@ -112,6 +116,15 @@ fun AppNavigation(
                 },
                 createAccountButtonPressed = {
                     navController.navigate(AppScreen.Register.route)
+                }
+            )
+        }
+
+        // EDITAR PERFIL
+        composable(route = AppScreen.EditProfile.route) {
+            EditProfileScreen(
+                onBackClick = {
+                    navController.popBackStack()
                 }
             )
         }
@@ -188,7 +201,12 @@ fun AppNavigation(
                         navController.navigate(AppScreen.Start.route) {
                             popUpTo(0) { inclusive = true }
                         }
-                    }
+                    },
+                    onEditProfileClick = {
+                        navController.navigate(AppScreen.EditProfile.route){
+                            navController.popBackStack()
+                        }
+                    },
                 )
             }
         }

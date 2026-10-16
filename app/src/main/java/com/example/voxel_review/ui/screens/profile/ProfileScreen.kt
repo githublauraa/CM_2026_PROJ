@@ -32,6 +32,7 @@ fun ProfileScreen(
     onClickImage: () -> Unit,
     buttonLogOutPressed: () -> Unit,
     onReviewClick: (ReviewInfo) -> Unit,
+    onEditProfileClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
 
@@ -56,6 +57,7 @@ fun ProfileScreen(
             buttonLogOutPressed()
         },
         isOwnProfile = isOwnProfile,
+        onEditProfileClick = onEditProfileClick,
         modifier = modifier
     )
 }
@@ -69,6 +71,7 @@ fun ProfileContent(
     onImageSelected: (Uri) -> Unit,
     onReviewClick: (ReviewInfo) -> Unit,
     isOwnProfile: Boolean = false,
+    onEditProfileClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
 
@@ -124,7 +127,9 @@ fun ProfileContent(
             )
 
             if (isOwnProfile) {
-                EditButton()
+                EditButton(
+                    onEditProfileClick = onEditProfileClick
+                )
             }
 
             Spacer(modifier = Modifier.height(5.dp))
@@ -159,7 +164,8 @@ fun ProfileContentPreview() {
         onClickImage = {},
         buttonLogOutPressed = {},
         onImageSelected = {},
-        onReviewClick = {}
+        onReviewClick = {},
+        onEditProfileClick = {}
     )
 }
 

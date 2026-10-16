@@ -10,4 +10,6 @@ interface UserRemoteDataSource {
 	//guardar un usario en la BD
 	suspend fun registerUser(registerUser : RegisterUserDto, id: String): Unit
 
+
+	suspend fun updateUserBio(userId: String, bio: String)
 }

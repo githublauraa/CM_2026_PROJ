@@ -21,4 +21,8 @@ class UserRetrofitDataSourceImpl @Inject constructor(private val service: UserRe
     override suspend fun registerUser(registerUser: RegisterUserDto, id: String): Unit {
         //
     }
+
+    override suspend fun updateUserBio(userId: String, bio: String) {
+        //
+    }
 }

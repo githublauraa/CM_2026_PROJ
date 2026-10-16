@@ -50,4 +50,14 @@ class UserFirestoreDataSourceImpl @Inject constructor(
         //insertarlo el registerUserDto dentro del documento
         docRef.set(registerUserDto).await()
     }
+
+    override suspend fun updateUserBio(
+        userId: String,
+        bio: String
+    ) {
+        db.collection("users")
+            .document(userId)
+            .update("bio", bio)
+            .await()
+    }
 }

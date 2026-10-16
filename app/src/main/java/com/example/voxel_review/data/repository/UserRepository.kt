@@ -40,4 +40,13 @@ class UserRepository @Inject constructor(
 			Result.failure(e)
 		}
 	}
+
+	suspend fun updateUserBio(
+		userId: String,
+		bio: String
+	): Result<Unit> {
+		return runCatching {
+			userRemoteDataSource.updateUserBio(userId, bio)
+		}
+	}
 }

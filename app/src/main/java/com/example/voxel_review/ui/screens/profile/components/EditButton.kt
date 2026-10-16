@@ -16,10 +16,13 @@ import com.example.voxel_review.ui.theme.VoxelSurface
 
 @Composable
 fun EditButton(
+    onEditProfileClick:()-> Unit,
     modifier: Modifier = Modifier
 ) {
     Button(
-        onClick = {},
+        onClick = {
+            onEditProfileClick()
+        },
         colors = ButtonDefaults.buttonColors(
             containerColor = VoxelSurface
         ),
