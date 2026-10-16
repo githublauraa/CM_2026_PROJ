@@ -2,29 +2,40 @@
 package com.example.voxel_review.ui.screens.GameDetail.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.text.font.FontWeight
+import coil.compose.AsyncImage
 import com.example.voxel_review.data.InfoGame.LocalGameProvider
 import com.example.voxel_review.data.InfoGame.LocalGameRecomendedProvider
 import com.example.voxel_review.ui.screens.GameDetail.GameDetailState
 import com.example.voxel_review.ui.theme.backgroundDark
+import com.example.voxel_review.ui.theme.VoxelSurfaceVariant
+import com.example.voxel_review.ui.theme.surfaceContainerDark
 
 @Composable
 fun GameDetailContent(
@@ -34,7 +45,6 @@ fun GameDetailContent(
     onWriteReviewPressed: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-
     val game = state.game
 
     Column(
@@ -97,9 +107,7 @@ fun GameDetailContent(
                         game = game
                     )
 
-                    Spacer(
-                        modifier = Modifier.height(20.dp)
-                    )
+                    Spacer(modifier = Modifier.height(20.dp))
 
                     // Descripción
                     GameDescription(
@@ -107,9 +115,7 @@ fun GameDetailContent(
                         description = game.descripcion
                     )
 
-                    Spacer(
-                        modifier = Modifier.height(18.dp)
-                    )
+                    Spacer(modifier = Modifier.height(18.dp))
 
                     // Información adicional
                     GameInformation(
@@ -117,9 +123,7 @@ fun GameDetailContent(
                         releaseDate = game.lanzamiento
                     )
 
-                    Spacer(
-                        modifier = Modifier.height(24.dp)
-                    )
+                    Spacer(modifier = Modifier.height(24.dp))
 
                     // Sección de reseñas
                     Text(
@@ -129,9 +133,7 @@ fun GameDetailContent(
                         fontWeight = FontWeight.Bold
                     )
 
-                    Spacer(
-                        modifier = Modifier.height(12.dp)
-                    )
+                    Spacer(modifier = Modifier.height(12.dp))
 
                     if (state.isLoading) {
 
@@ -154,45 +156,71 @@ fun GameDetailContent(
                         // Mostrar todas las reseñas del videojuego
                         state.reviews.forEach { review ->
 
-                            Column(
+                            Card(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .padding(vertical = 10.dp)
+                                    .padding(vertical = 6.dp),
+                                colors = CardDefaults.cardColors(
+                                    containerColor = surfaceContainerDark
+                                )
                             ) {
 
-                                Text(
-                                    text = review.tituloDescripcion,
-                                    color = Color.White,
-                                    fontSize = 16.sp,
-                                    fontWeight = FontWeight.SemiBold
-                                )
+                                Row(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(12.dp),
+                                    verticalAlignment = Alignment.Top,
+                                    horizontalArrangement = Arrangement.spacedBy(12.dp)
+                                ) {
 
-                                Spacer(
-                                    modifier = Modifier.height(6.dp)
-                                )
+                                    // Imagen del usuario a la izquierda
+                                    AsyncImage(
+                                        model = review.imagenUsuario,
+                                        contentDescription = "Imagen del usuario",
+                                        modifier = Modifier
+                                            .size(55.dp)
+                                            .clip(CircleShape),
+                                        contentScale = ContentScale.Crop
+                                    )
 
-                                Text(
-                                    text = review.descripcion,
-                                    color = Color.LightGray,
-                                    fontSize = 14.sp
-                                )
+                                    // Información de la reseña a la derecha
+                                    Column(
+                                        modifier = Modifier.weight(1f)
+                                    ) {
 
-                                Spacer(
-                                    modifier = Modifier.height(6.dp)
-                                )
+                                        Text(
+                                            text = review.tituloDescripcion,
+                                            color = Color.White,
+                                            fontSize = 16.sp,
+                                            fontWeight = FontWeight.SemiBold
+                                        )
 
-                                Text(
-                                    text = "Calificación: ${"%.1f".format(review.ratingGeneral)}/5",
-                                    color = Color.White,
-                                    fontSize = 13.sp
-                                )
+                                        Spacer(
+                                            modifier = Modifier.height(6.dp)
+                                        )
+
+                                        Text(
+                                            text = review.descripcion,
+                                            color = Color.LightGray,
+                                            fontSize = 14.sp
+                                        )
+
+                                        Spacer(
+                                            modifier = Modifier.height(6.dp)
+                                        )
+
+                                        Text(
+                                            text = "Calificación: ${"%.1f".format(review.ratingGeneral)}/5",
+                                            color = Color.White,
+                                            fontSize = 13.sp
+                                        )
+                                    }
+                                }
                             }
                         }
                     }
 
-                    Spacer(
-                        modifier = Modifier.height(20.dp)
-                    )
+                    Spacer(modifier = Modifier.height(20.dp))
 
                     // Videojuegos recomendados
                     RecommendedGames(
