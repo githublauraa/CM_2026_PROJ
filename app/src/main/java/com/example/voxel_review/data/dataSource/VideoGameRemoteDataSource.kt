@@ -6,5 +6,5 @@ interface VideoGameRemoteDataSource {
 
     suspend fun getAllVideoGames(): List<VideoGameDto>
 
-    suspend fun getVideoGameById(id: Int): VideoGameDto
+    suspend fun getVideoGameById(id: String): VideoGameDto
 }

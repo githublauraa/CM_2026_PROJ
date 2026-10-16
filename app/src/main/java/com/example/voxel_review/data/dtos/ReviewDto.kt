@@ -6,9 +6,9 @@ import com.example.voxel_review.data.InfoGame.GameDetailInfo
 import com.example.voxel_review.data.infoJuegosNovedades.JuegoInfo
 
 data class ReviewDto(
-	val reviewId: Int,
-	val userId: Int,
-	val videoGameId: Int,
+	val reviewId: String,
+	val userId: String,
+	val videoGameId: String,
 	val avgRating: Float,
 	val gameplayRating: Int,
 	val graphicsRating: Int,
@@ -26,18 +26,28 @@ data class UserDto(
 )
 
 data class VideoGameDto(
-	val videoGameId: Int,
+	val videoGameId: String,
 	val name: String,
 	val description: String,
 	val developer: String,
 	val platform: String,
 	val releaseDate: String,
 	val imageUrl: String?
-)
+){
+	constructor() : this(
+		videoGameId = "",
+		name = "",
+		description = "",
+		developer = "",
+		platform = "",
+		releaseDate = "",
+		imageUrl = null
+	)
+}
 
 fun ReviewDto.toReviewInfo(): ReviewInfo {
 	return ReviewInfo(
-		idResenia = reviewId.toString(),
+		idResenia = reviewId,
 		imagenJuego = videoGame.imageUrl ?: "",
 		tituloJuego = videoGame.name,
 		desarrollador = videoGame.developer,
@@ -48,14 +58,14 @@ fun ReviewDto.toReviewInfo(): ReviewInfo {
 		ratingGraficos = graphicsRating.toFloat(),
 		ratingHistoria = storyRating.toFloat(),
 		imagenUsuario = user.photoUrl ?: "",
-		userId = userId.toString(),
-		videoGameId = videoGameId.toString(),
+		userId = userId,
+		videoGameId = videoGameId,
 	)
 }
 
 fun VideoGameDto.toTrendingSearchInfo(): TrendingSearchInfo {
 	return TrendingSearchInfo(
-		id = videoGameId.toString(),
+		id = videoGameId,
 		nombre = name,
 		categoria = platform,
 		imagen = imageUrl ?: ""
@@ -65,7 +75,7 @@ fun VideoGameDto.toTrendingSearchInfo(): TrendingSearchInfo {
 
 fun VideoGameDto.toGameDetailInfo(): GameDetailInfo {
 	return GameDetailInfo(
-		id = videoGameId.toString(),
+		id = videoGameId,
 		banner = imageUrl ?: "",
 		nombre = name,
 		descripcion = description,
@@ -78,7 +88,7 @@ fun VideoGameDto.toGameDetailInfo(): GameDetailInfo {
 
 fun VideoGameDto.toJuegoInfo(): JuegoInfo {
 	return JuegoInfo(
-		id = videoGameId.toString(),
+		id = videoGameId,
 		imagen = imageUrl ?: "",
 		etiqueta = "VIDEOJUEGO",
 		nombre = name,

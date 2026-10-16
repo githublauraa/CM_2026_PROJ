@@ -13,7 +13,7 @@ class VideoGameRetrofitDataSourceImpl @Inject constructor(
         return videoGameService.getAllVideoGames()
     }
 
-    override suspend fun getVideoGameById(id: Int): VideoGameDto {
-        return videoGameService.getVideoGameById(id)
+    override suspend fun getVideoGameById(id: String): VideoGameDto {
+        return videoGameService.getVideoGameById(id.toInt())
     }
 }

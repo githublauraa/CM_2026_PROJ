@@ -1,11 +1,12 @@
 package com.example.voxel_review.data.repository
 
 import com.example.voxel_review.data.dataSource.impl.VideoGameRetrofitDataSourceImpl
+import com.example.voxel_review.data.dataSource.impl.firestore.JuegosFirebaseDataSource
 import com.example.voxel_review.data.dtos.VideoGameDto
 import javax.inject.Inject
 
 class VideoGameRepository @Inject constructor(
-    private val videoGameRemoteDataSource: VideoGameRetrofitDataSourceImpl
+    private val videoGameRemoteDataSource: JuegosFirebaseDataSource
 ) {
 
     suspend fun getAllVideoGames(): Result<List<VideoGameDto>> {
@@ -19,7 +20,7 @@ class VideoGameRepository @Inject constructor(
 
     suspend fun getVideoGameById(id: Int): Result<VideoGameDto> {
         return try {
-            val videoGame = videoGameRemoteDataSource.getVideoGameById(id)
+            val videoGame = videoGameRemoteDataSource.getVideoGameById(id.toString())
             Result.success(videoGame)
         } catch (e: Exception) {
             Result.failure(e)
