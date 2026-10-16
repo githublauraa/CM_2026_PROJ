@@ -39,7 +39,7 @@ fun ProfileScreen(
 
     LaunchedEffect(profileId) {
         profileViewModel.getProfileById(profileId)
-        //profileViewModel.getUserReviews(profileId)
+        profileViewModel.getUserReviews(profileId)
     }
 
     ProfileContent(

@@ -6,23 +6,25 @@ import com.example.voxel_review.data.InfoGame.GameDetailInfo
 import com.example.voxel_review.data.infoJuegosNovedades.JuegoInfo
 
 data class ReviewDto(
-	val reviewId: String,
-	val userId: String,
-	val videoGameId: String,
-	val avgRating: Float,
-	val gameplayRating: Int,
-	val graphicsRating: Int,
-	val storyRating: Int,
-	val content: String,
-	val createdAt: String,
-	val updatedAt: String,
-	val user: UserDto,
-	val videoGame: VideoGameDto
+	val reviewId: String = "",
+	val userId: String = "",
+	val videoGameId: String = "",
+	val avgRating: Float = 0f,
+	val gameplayRating: Int = 0,
+	val graphicsRating: Int = 0,
+	val storyRating: Int = 0,
+	val content: String = "",
+	val createdAt: String = "",
+	val updatedAt: String = "",
+
+	// Datos desnormalizados
+	val user: UserDto? = null,
+	val videoGame: VideoGameDto? = null
 )
 
 data class UserDto(
-	val username: String,
-	val photoUrl: String?
+	val username: String = "",
+	val photoUrl: String? = null
 )
 
 data class VideoGameDto(
@@ -48,18 +50,18 @@ data class VideoGameDto(
 fun ReviewDto.toReviewInfo(): ReviewInfo {
 	return ReviewInfo(
 		idResenia = reviewId,
-		imagenJuego = videoGame.imageUrl ?: "",
-		tituloJuego = videoGame.name,
-		desarrollador = videoGame.developer,
-		tituloDescripcion = "Reseña por ${user.username}",
+		imagenJuego = videoGame?.imageUrl ?: "",
+		tituloJuego = videoGame?.name ?: "",
+		desarrollador = videoGame?.developer ?: "",
+		tituloDescripcion = "Reseña por ${user?.username ?: "Usuario"}",
 		descripcion = content,
 		ratingGeneral = avgRating,
 		ratingJugabilidad = gameplayRating.toFloat(),
 		ratingGraficos = graphicsRating.toFloat(),
 		ratingHistoria = storyRating.toFloat(),
-		imagenUsuario = user.photoUrl ?: "",
+		imagenUsuario = user?.photoUrl ?: "",
 		userId = userId,
-		videoGameId = videoGameId,
+		videoGameId = videoGameId
 	)
 }
 

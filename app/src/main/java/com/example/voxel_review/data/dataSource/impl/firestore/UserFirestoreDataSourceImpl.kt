@@ -12,7 +12,7 @@ import android.util.Log
 class UserFirestoreDataSourceImpl @Inject constructor(
     private val db: FirebaseFirestore
 ) : UserRemoteDataSource {
-    override suspend fun getUserById(id: String): UserDtoGeneric {
+    override suspend fun getUserById(id: String): UserProfileFirestoreDto {
 
         // Obtiene la referencia del documento del usuario en Firestore usando su ID
         val docRef = db.collection("users").document(id)
@@ -26,7 +26,7 @@ class UserFirestoreDataSourceImpl @Inject constructor(
             ?: throw Exception("No se encontró el usuario")
     }
 
-    override suspend fun getAllUsers(): List<UserDtoGeneric> {
+    override suspend fun getAllUsers(): List<UserProfileFirestoreDto> {
         val respuesta = db.collection("users")
             .get()
             .await()

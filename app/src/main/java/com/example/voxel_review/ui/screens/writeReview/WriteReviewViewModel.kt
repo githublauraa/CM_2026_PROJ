@@ -28,9 +28,9 @@ class WriteReviewViewModel @Inject constructor(
     val uiState: StateFlow<WriteReviewState> = _uiState.asStateFlow()
 
     fun loadGame(gameId: String) {
-        val id = gameId.toIntOrNull()
+        val id = gameId
 
-        if (id == null) {
+        if (gameId.isBlank()) {
             _uiState.update {
                 it.copy(
                     game = null,

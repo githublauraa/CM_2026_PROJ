@@ -1,20 +1,24 @@
 package com.example.voxel_review.data.dataSource.impl.firestore
 
 import com.example.voxel_review.data.dataSource.VideoGameRemoteDataSource
-import com.example.voxel_review.data.dtos.UserProfileFirestoreDto
 import com.example.voxel_review.data.dtos.VideoGameDto
 import com.google.firebase.firestore.FirebaseFirestore
 import jakarta.inject.Inject
 import kotlinx.coroutines.tasks.await
 
-class JuegosFirebaseDataSource @Inject constructor(
+class JuegosFirebaseDataSourceImpl @Inject constructor(
     private val db: FirebaseFirestore
 ): VideoGameRemoteDataSource {
     override suspend fun getAllVideoGames(): List<VideoGameDto> {
-        val respuesta = db.collection("video-Games").get().await()
 
-        return respuesta.documents.mapNotNull { docs ->
-            docs.toObject(VideoGameDto::class.java)
+        val respuesta = db.collection("video-Games")
+            .get()
+            .await()
+
+        return respuesta.documents.mapNotNull { documento ->
+
+            documento.toObject(VideoGameDto::class.java)
+                ?.copy(videoGameId = documento.id)
         }
     }
 

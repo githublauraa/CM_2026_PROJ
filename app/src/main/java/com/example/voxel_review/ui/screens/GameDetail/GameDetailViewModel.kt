@@ -24,9 +24,9 @@ class GameDetailViewModel @Inject constructor(
     val uiState: StateFlow<GameDetailState> = _uiState.asStateFlow()
 
     fun loadGame(gameId: String) {
-        val id = gameId.toIntOrNull()
+        val id = gameId
 
-        if (id == null) {
+        if (gameId.isBlank()) {
             _uiState.update {
                 it.copy(error = "ID del videojuego inválido")
             }

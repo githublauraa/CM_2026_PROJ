@@ -6,5 +6,14 @@ data class CreateReviewDto(
     val gameplayRating: Int,
     val graphicsRating: Int,
     val storyRating: Int,
-    val content: String
+    val content: String,
+
+    val user: CreateReviewUserDto? = null,
+    val videoGame: VideoGameDto? = null
+)
+
+
+data class CreateReviewUserDto(
+    val username: String? = null,
+    val photoUrl: String? = null,
 )

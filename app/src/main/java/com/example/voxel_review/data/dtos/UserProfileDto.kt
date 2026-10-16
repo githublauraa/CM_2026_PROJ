@@ -6,6 +6,7 @@ import com.example.voxel_review.data.profile.ProfileInfo
 
 abstract class UserDtoGeneric{
 	abstract fun toUserProfileinfo(): ProfileInfo
+
 }
 
 //retrofit con express por biography

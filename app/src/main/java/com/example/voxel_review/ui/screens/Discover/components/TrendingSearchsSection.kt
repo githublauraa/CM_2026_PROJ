@@ -15,7 +15,7 @@ import com.example.voxel_review.R
 import com.example.voxel_review.data.InfoDiscover.LocalTrendingSearchProvider
 import com.example.voxel_review.data.InfoDiscover.TrendingSearchInfo
 import com.example.voxel_review.ui.theme.onSurfaceVariantDark
-
+import android.util.Log
 /**
  * Secciona vertical que agrupa y despliega la lista de búsquedas en tendencia.
  *
@@ -45,7 +45,10 @@ fun TrendingSearchesSection(
             items.forEach { item ->
                 TrendingSearchItem(
                     item = item,
-                    onClick = { onItemClick(item) }
+                    onClick = {
+                        Log.d("GAME_TEST", "ID del videojuego: '${item.id}'")
+                        onItemClick(item)
+                    }
                 )
             }
         }
