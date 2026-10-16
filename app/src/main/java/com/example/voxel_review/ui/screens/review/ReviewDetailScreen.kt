@@ -95,7 +95,25 @@ fun ReviewDetailScreen(
 @Composable
 fun ReviewDetailScreenPreview() {
     ReviewDetailScreenContent(
-        state = ReviewDetailState(),
+        state = ReviewDetailState(
+            reviews = listOf(
+                ReviewInfo(
+                    idResenia = "1",
+                    imagenJuego = "",
+                    tituloJuego = "Cyberpunk 2077",
+                    desarrollador = "CD Projekt RED",
+                    tituloDescripcion = "Una experiencia increíble",
+                    descripcion = "Un videojuego con una historia increíble, excelentes gráficos y una jugabilidad muy entretenida.",
+                    ratingGeneral = 4.5f,
+                    ratingJugabilidad = 4.5f,
+                    ratingGraficos = 5.0f,
+                    ratingHistoria = 4.0f,
+                    imagenUsuario = "",
+                    userId = "1",
+                    videoGameId = "1"
+                )
+            )
+        ),
         onClickReview = {},
         onCommentClick = {},
         onBackClick = {},

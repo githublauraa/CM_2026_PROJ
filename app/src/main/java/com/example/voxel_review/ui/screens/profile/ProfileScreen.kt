@@ -19,7 +19,7 @@ import com.example.voxel_review.ui.theme.VoxelBackground
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.verticalScroll
-import com.example.voxel_review.R
+import com.google.firebase.auth.FirebaseAuth
 import com.example.voxel_review.data.profile.ProfileInfo
 import com.example.voxel_review.data.review.ReviewInfo
 import android.net.Uri
@@ -37,6 +37,9 @@ fun ProfileScreen(
 
     val state by profileViewModel.uiState.collectAsState()
 
+    val currentUserId = FirebaseAuth.getInstance().currentUser?.uid
+    val isOwnProfile = currentUserId != null && profileId == currentUserId
+
     LaunchedEffect(profileId) {
         profileViewModel.getProfileById(profileId)
         profileViewModel.getUserReviews(profileId)
@@ -52,6 +55,7 @@ fun ProfileScreen(
             profileViewModel.logOut()
             buttonLogOutPressed()
         },
+        isOwnProfile = isOwnProfile,
         modifier = modifier
     )
 }
@@ -64,6 +68,7 @@ fun ProfileContent(
     buttonLogOutPressed: () -> Unit,
     onImageSelected: (Uri) -> Unit,
     onReviewClick: (ReviewInfo) -> Unit,
+    isOwnProfile: Boolean = false,
     modifier: Modifier = Modifier
 ) {
 
@@ -97,7 +102,9 @@ fun ProfileContent(
                     .align(Alignment.CenterHorizontally)
             )
 
-            pickImageButton(onImageSelected = onImageSelected)
+            if (isOwnProfile) {
+                pickImageButton(onImageSelected = onImageSelected)
+            }
 
             UserNick(profile.nick)
 
@@ -116,13 +123,15 @@ fun ProfileContent(
                 onReviewClick = onReviewClick
             )
 
-            EditButton()
+            if (isOwnProfile) {
+                EditButton()
+            }
 
             Spacer(modifier = Modifier.height(5.dp))
 
-            ButtonLogOut(
-                buttonLogOutPressed = buttonLogOutPressed
-            )
+            if (isOwnProfile) {
+                ButtonLogOut(buttonLogOutPressed = buttonLogOutPressed)
+            }
         }
     }
 }

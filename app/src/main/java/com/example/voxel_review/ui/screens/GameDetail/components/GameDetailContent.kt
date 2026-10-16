@@ -2,6 +2,7 @@
 package com.example.voxel_review.ui.screens.GameDetail.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -39,6 +40,7 @@ import com.example.voxel_review.ui.theme.surfaceContainerDark
 
 @Composable
 fun GameDetailContent(
+    onReviewProfileImageCliked:(String) -> Unit,
     state: GameDetailState,
     onBackPressed: () -> Unit,
     onSearchPressed: () -> Unit,
@@ -179,7 +181,10 @@ fun GameDetailContent(
                                         contentDescription = "Imagen del usuario",
                                         modifier = Modifier
                                             .size(55.dp)
-                                            .clip(CircleShape),
+                                            .clip(CircleShape)
+                                            .clickable {
+                                                onReviewProfileImageCliked(review.userId)
+                                            },
                                         contentScale = ContentScale.Crop
                                     )
 
@@ -240,17 +245,20 @@ fun GameDetailContent(
     }
 }
 
-@Preview
-@Composable
-fun GameDetailContentPreview() {
 
-    GameDetailContent(
-        state = GameDetailState(
-            game = LocalGameProvider.starfield,
-            recommendedGames = LocalGameRecomendedProvider.recommendedGames
-        ),
-        onBackPressed = {},
-        onSearchPressed = {},
-        onWriteReviewPressed = {}
-    )
-}
+//
+//@Preview
+//@Composable
+//fun GameDetailContentPreview() {
+//
+//    GameDetailContent(
+//
+//        state = GameDetailState(
+//            game = LocalGameProvider.starfield,
+//            recommendedGames = LocalGameRecomendedProvider.recommendedGames
+//        ),
+//        onBackPressed = {},
+//        onSearchPressed = {},
+//        onWriteReviewPressed = {}
+//    )
+//}

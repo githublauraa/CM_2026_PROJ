@@ -11,6 +11,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.voxel_review.data.review.ReviewInfo
 import com.example.voxel_review.ui.screens.review.components.DeleteReviewDialog
@@ -18,7 +19,7 @@ import com.example.voxel_review.ui.screens.review.components.EditReviewButton
 import com.example.voxel_review.ui.screens.review.components.ReviewDetailContent
 import com.example.voxel_review.ui.screens.review.components.ReviewDetailTopBar
 import com.example.voxel_review.ui.utils.FondoPantalla
-import androidx.compose.ui.tooling.preview.Preview
+import com.google.firebase.auth.FirebaseAuth
 
 @Composable
 fun ReviewDetailScreenContent(
@@ -30,14 +31,20 @@ fun ReviewDetailScreenContent(
     onDeleteReview: (ReviewInfo) -> Unit,
     modifier: Modifier = Modifier
 ) {
-
     val review = state.reviews.firstOrNull()
-    var showDeleteDialog by remember { mutableStateOf(false) }
+    val currentUserId = FirebaseAuth.getInstance().currentUser?.uid
+
+    val canManageReview =
+        !currentUserId.isNullOrBlank() &&
+                review?.userId == currentUserId
+
+    var showDeleteDialog by remember(review?.idResenia) {
+        mutableStateOf(false)
+    }
 
     Box(
         modifier = modifier.fillMaxSize()
     ) {
-
         FondoPantalla(
             modifier = Modifier.fillMaxSize()
         )
@@ -46,10 +53,14 @@ fun ReviewDetailScreenContent(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.align(Alignment.TopCenter)
         ) {
-
             ReviewDetailTopBar(
+                showDelete = canManageReview,
                 onBackClick = onBackClick,
-                onDeleteClick = { showDeleteDialog = true }
+                onDeleteClick = {
+                    if (canManageReview) {
+                        showDeleteDialog = true
+                    }
+                }
             )
 
             ReviewDetailContent(
@@ -59,20 +70,31 @@ fun ReviewDetailScreenContent(
             )
         }
 
-        if (review != null) {
+        if (review != null && canManageReview) {
             EditReviewButton(
-                onClick = { onEditReview(review) },
+                onClick = {
+                    onEditReview(review)
+                },
                 modifier = Modifier
                     .align(Alignment.BottomEnd)
                     .padding(18.dp)
             )
         }
 
-        if (showDeleteDialog && review != null) {
+        if (showDeleteDialog && review != null && canManageReview) {
             DeleteReviewDialog(
                 onConfirm = {
                     showDeleteDialog = false
-                    onDeleteReview(review)
+
+                    val authenticatedUserId =
+                        FirebaseAuth.getInstance().currentUser?.uid
+
+                    if (
+                        !authenticatedUserId.isNullOrBlank() &&
+                        review.userId == authenticatedUserId
+                    ) {
+                        onDeleteReview(review)
+                    }
                 },
                 onDismiss = {
                     showDeleteDialog = false
@@ -81,8 +103,6 @@ fun ReviewDetailScreenContent(
         }
     }
 }
-
-
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable

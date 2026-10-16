@@ -23,6 +23,7 @@ import com.example.voxel_review.ui.screens.GameDetail.components.GameDetailConte
 fun GameDetailScreen(
     gameDetailViewModel: GameDetailViewModel,
     onBackPressed: () -> Unit,
+    onReviewProfileImageCliked:(String) -> Unit,
     onSearchPressed: () -> Unit,
     onWriteReviewPressed: () -> Unit,
     modifier: Modifier = Modifier
@@ -36,21 +37,22 @@ fun GameDetailScreen(
         onBackPressed = onBackPressed,
         onSearchPressed = onSearchPressed,
         onWriteReviewPressed = onWriteReviewPressed,
+        onReviewProfileImageCliked = onReviewProfileImageCliked,
         modifier = modifier
     )
 }
 
-@Preview
-@Composable
-fun GameDetailScreenPreview() {
-
-    GameDetailContent(
-        state = GameDetailState(
-            game = LocalGameProvider.starfield,
-            recommendedGames = LocalGameRecomendedProvider.recommendedGames
-        ),
-        onBackPressed = {},
-        onSearchPressed = {},
-        onWriteReviewPressed = {}
-    )
-}
+//@Preview
+//@Composable
+//fun GameDetailScreenPreview() {
+//
+//    GameDetailContent(
+//        state = GameDetailState(
+//            game = LocalGameProvider.starfield,
+//            recommendedGames = LocalGameRecomendedProvider.recommendedGames
+//        ),
+//        onBackPressed = {},
+//        onSearchPressed = {},
+//        onWriteReviewPressed = {}
+//    )
+//}

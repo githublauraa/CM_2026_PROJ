@@ -72,14 +72,14 @@ fun UserReviewsSection(
                 fontWeight = FontWeight.Bold
             )
 
-            Text(
-                text = stringResource(R.string.ver_todas),
-                color = VoxelPrimary,
-                fontSize = 14.sp,
-                modifier = Modifier.clickable {
-                    onClickReview()
-                }
-            )
+//            Text(
+//                text = stringResource(R.string.ver_todas),
+//                color = VoxelPrimary,
+//                fontSize = 14.sp,
+//                modifier = Modifier.clickable {
+//                    onClickReview()
+//                }
+//            )
         }
 
         Spacer(
@@ -148,15 +148,15 @@ fun UserReviewsSection(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.End
             ) {
-                IconButton(
-                    onClick = onCommentClick
-                ) {
-                    Icon(
-                        painter = painterResource(R.drawable.ic_comment),
-                        contentDescription = null,
-                        tint = Color.White
-                    )
-                }
+//                IconButton(
+//                    onClick = onCommentClick
+//                ) {
+//                    Icon(
+//                        painter = painterResource(R.drawable.ic_comment),
+//                        contentDescription = null,
+//                        tint = Color.White
+//                    )
+//                }
             }
         }
     }

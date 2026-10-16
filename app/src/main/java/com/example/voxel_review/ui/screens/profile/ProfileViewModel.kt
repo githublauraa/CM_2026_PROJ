@@ -37,9 +37,12 @@ class ProfileViewModel @Inject constructor(
 			val result = userRepository.getUserById(userId)
 			if (result.isSuccess){
 				val userProfileInfo = result.getOrNull()!!
-				_uiState.value = _uiState.value.copy(
-					profile = userProfileInfo
-				)
+				_uiState.update {
+					it.copy(
+						profile = userProfileInfo,
+						profileImageUrl = userProfileInfo.pfp
+					)
+				}
 			}
 		}
 	}

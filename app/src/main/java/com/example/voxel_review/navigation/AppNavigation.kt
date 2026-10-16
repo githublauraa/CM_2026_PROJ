@@ -60,6 +60,10 @@ sealed class AppScreen(val route: String) {
     object RankingsUser : AppScreen("rankingsUser")
     object Configuration : AppScreen("configuration")
     object Notifications : AppScreen("notifications")
+
+    object UserProfile: AppScreen("userProfile"){
+        fun createRoute(userdId: String,showEdit: Boolean = false) = "userProfile/$userdId/$showEdit"
+    }
 }
 
 
@@ -244,6 +248,13 @@ fun AppNavigation(
                 .orEmpty()
 
             GameDetailContent(
+                onReviewProfileImageCliked = { userId ->
+                    if (userId.isNotBlank()) {
+                        navController.navigate(
+                            "${AppScreen.PerfilUser.route}?profileId=$userId"
+                        )
+                    }
+                },
                 gameDetailViewModel = gameDetailViewModel,
                 gameId = gameId,
                 onBackPressed = {

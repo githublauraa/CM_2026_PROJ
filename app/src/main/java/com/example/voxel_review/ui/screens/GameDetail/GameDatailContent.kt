@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
  */
 @Composable
 fun GameDetailContent(
+    onReviewProfileImageCliked:(String) -> Unit,
     gameDetailViewModel: GameDetailViewModel,
     gameId: String,
     modifier: Modifier = Modifier,
@@ -28,6 +29,7 @@ fun GameDetailContent(
     }
 
     GameDetailScreen(
+        onReviewProfileImageCliked = onReviewProfileImageCliked,
         gameDetailViewModel = gameDetailViewModel,
         onBackPressed = onBackPressed,
         onSearchPressed = onSearchPressed,

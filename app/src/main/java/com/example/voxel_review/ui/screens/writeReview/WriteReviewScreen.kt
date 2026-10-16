@@ -1,4 +1,3 @@
-
 package com.example.voxel_review.ui.screens.writeReview
 
 import androidx.compose.foundation.layout.Arrangement
@@ -36,21 +35,24 @@ fun WriteReviewRoute(
     userId: String = "",
     modifier: Modifier = Modifier
 ) {
+    val currentUserId = writeReviewViewModel.currentUserId()
 
-    LaunchedEffect(gameId, reviewId, userId) {
+    val canWriteReview =
+        !currentUserId.isNullOrBlank() &&
+                (userId.isBlank() || userId == currentUserId)
 
+    LaunchedEffect(gameId, reviewId, userId, currentUserId) {
         writeReviewViewModel.loadGame(gameId)
 
-        if (reviewId.isNotBlank() && userId.isNotBlank()) {
-
-            writeReviewViewModel.loadReviewForEdit(
-                userId = userId,
-                reviewId = reviewId
-            )
-
-        } else {
-
-            writeReviewViewModel.loadExistingReview(gameId)
+        if (canWriteReview) {
+            if (reviewId.isNotBlank()) {
+                writeReviewViewModel.loadReviewForEdit(
+                    userId = currentUserId.orEmpty(),
+                    reviewId = reviewId
+                )
+            } else {
+                writeReviewViewModel.loadExistingReview(gameId)
+            }
         }
     }
 
@@ -77,7 +79,6 @@ fun WriteReviewScreen(
     userId: String = "",
     modifier: Modifier = Modifier
 ) {
-
     val state by writeReviewViewModel.uiState.collectAsState()
     val profileState by profileViewModel.uiState.collectAsState()
 
@@ -87,6 +88,15 @@ fun WriteReviewScreen(
         ?: reviewId.takeIf { it.isNotBlank() }
 
     val isEditing = reviewIdToEdit != null
+    val currentUserId = writeReviewViewModel.currentUserId()
+
+    val canWriteReview =
+        !currentUserId.isNullOrBlank() &&
+                (userId.isBlank() || userId == currentUserId)
+
+    // Para una edición explícita, espera a que se cargue esa reseña.
+    val isReviewReady =
+        reviewId.isBlank() || state.editingReviewId == reviewId
 
     LaunchedEffect(state.isPublished) {
         if (state.isPublished) {
@@ -103,7 +113,6 @@ fun WriteReviewScreen(
     Box(
         modifier = modifier.fillMaxSize()
     ) {
-
         FondoPantalla(
             modifier = Modifier.fillMaxSize()
         )
@@ -115,7 +124,6 @@ fun WriteReviewScreen(
                 .align(Alignment.TopCenter)
                 .fillMaxWidth(0.9f)
         ) {
-
             TopBar(
                 onBackClick = onBackClick,
                 onSettingsClick = onSettingsClick
@@ -130,53 +138,59 @@ fun WriteReviewScreen(
                 )
             }
 
-            GameCalification(
-                gameplayRating = state.gameplayRating,
-                graphicsRating = state.graphicsRating,
-                storyRating = state.storyRating,
-                onGameplayRatingChange = {
-                    writeReviewViewModel.updateGameplayRating(it)
-                },
-                onGraphicsRatingChange = {
-                    writeReviewViewModel.updateGraphicsRating(it)
-                },
-                onStoryRatingChange = {
-                    writeReviewViewModel.updateStoryRating(it)
-                }
-            )
-
-            ReviewText(
-                text = state.reviewText,
-                onTextChange = {
-                    writeReviewViewModel.updateReviewText(it)
-                }
-            )
-
-            BotonPublicarReview(
-                onClick = {
-
-                    if (reviewIdToEdit != null) {
-
-                        writeReviewViewModel.updateReview(
-                            reviewId = reviewIdToEdit,
-                            userId = userId.takeIf { it.isNotBlank() }
-                                ?: writeReviewViewModel.currentUserId().orEmpty(),
-                            videoGameId = gameId
-                        )
-
-                    } else {
-
-                        writeReviewViewModel.publishReview(
-                            videoGameId = gameId
-                        )
+            if (canWriteReview && isReviewReady) {
+                GameCalification(
+                    gameplayRating = state.gameplayRating,
+                    graphicsRating = state.graphicsRating,
+                    storyRating = state.storyRating,
+                    onGameplayRatingChange = {
+                        writeReviewViewModel.updateGameplayRating(it)
+                    },
+                    onGraphicsRatingChange = {
+                        writeReviewViewModel.updateGraphicsRating(it)
+                    },
+                    onStoryRatingChange = {
+                        writeReviewViewModel.updateStoryRating(it)
                     }
-                },
-                text = if (isEditing) {
-                    "Actualizar reseña"
-                } else {
-                    "PUBLICAR REVIEW"
-                }
-            )
+                )
+
+                ReviewText(
+                    text = state.reviewText,
+                    onTextChange = {
+                        writeReviewViewModel.updateReviewText(it)
+                    }
+                )
+
+                BotonPublicarReview(
+                    onClick = {
+                        if (reviewIdToEdit != null) {
+                            writeReviewViewModel.updateReview(
+                                reviewId = reviewIdToEdit,
+                                userId = currentUserId.orEmpty(),
+                                videoGameId = gameId
+                            )
+                        } else {
+                            writeReviewViewModel.publishReview(
+                                videoGameId = gameId
+                            )
+                        }
+                    },
+                    text = if (isEditing) {
+                        "Actualizar reseña"
+                    } else {
+                        "PUBLICAR REVIEW"
+                    }
+                )
+            } else if (!canWriteReview) {
+                Text(
+                    text = if (currentUserId.isNullOrBlank()) {
+                        "Debes iniciar sesión para escribir una reseña."
+                    } else {
+                        "No puedes escribir o editar reseñas de otro usuario."
+                    },
+                    color = onErrorLight
+                )
+            }
 
             val errorMessage =
                 state.errorMessage ?: profileState.errorMessage
