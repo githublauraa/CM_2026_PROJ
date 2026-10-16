@@ -27,7 +27,13 @@ class UserFirestoreDataSourceImpl @Inject constructor(
     }
 
     override suspend fun getAllUsers(): List<UserDtoGeneric> {
-        return emptyList()
+        val respuesta = db.collection("users")
+            .get()
+            .await()
+
+        return respuesta.documents.mapNotNull { documento ->
+            documento.toObject(UserProfileFirestoreDto::class.java)
+        }
     }
 
     override suspend fun registerUser(registerUserDto: RegisterUserDto, userId: String) {

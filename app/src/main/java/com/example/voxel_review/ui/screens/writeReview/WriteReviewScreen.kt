@@ -3,6 +3,7 @@ package com.example.voxel_review.ui.screens.writeReview
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import com.google.firebase.auth.FirebaseAuth
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
@@ -76,6 +77,7 @@ fun WriteReviewScreen(
     val profileState by profileViewModel.uiState.collectAsState()
     val game = state.game
 
+
     val isEditing = reviewId.isNotBlank()
 
     LaunchedEffect(state.isPublished) {
@@ -90,6 +92,10 @@ fun WriteReviewScreen(
             onBackClick()
         }
     }
+
+
+
+    val currentUserId = FirebaseAuth.getInstance().currentUser?.uid
 
     Box(
         modifier = modifier.fillMaxSize(),
@@ -144,8 +150,8 @@ fun WriteReviewScreen(
                         profileViewModel.updateReview(
                             reviewId = reviewId,
                             review = CreateReviewDto(
-                                userId = userId.toIntOrNull() ?: 0,
-                                videoGameId = gameId.toIntOrNull() ?: 0,
+                                userId = userId,
+                                videoGameId = gameId,
                                 gameplayRating = state.gameplayRating,
                                 graphicsRating = state.graphicsRating,
                                 storyRating = state.storyRating,
@@ -153,10 +159,11 @@ fun WriteReviewScreen(
                             )
                         )
                     } else {
-                        writeReviewViewModel.publishReview(
-                            userId = "2",//modificar de acuerdo al usuario logueado
-                            videoGameId = gameId
-                        )
+                        if (currentUserId != null) {
+                            writeReviewViewModel.publishReview(
+                                videoGameId = gameId
+                            )
+                        }
                     }
                 },
                 text = if (isEditing) "Actualizar reseña" else "PUBLICAR REVIEW"

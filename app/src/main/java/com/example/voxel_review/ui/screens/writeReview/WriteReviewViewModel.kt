@@ -15,10 +15,12 @@ import com.example.voxel_review.data.repository.ReviewRepository
 import retrofit2.HttpException
 import com.example.voxel_review.data.review.ReviewInfo
 import com.example.voxel_review.data.dtos.toGameDetailInfo
+import com.example.voxel_review.data.repository.AuthRepository
 @HiltViewModel
 class WriteReviewViewModel @Inject constructor(
     private val reviewRepository: ReviewRepository,
-    private val videoGameRepository: VideoGameRepository
+    private val videoGameRepository: VideoGameRepository,
+    private val authRepository: AuthRepository
 
 ): ViewModel() {
 
@@ -122,8 +124,11 @@ class WriteReviewViewModel @Inject constructor(
     }
 
 
-    fun publishReview(userId: String, videoGameId: String) {
+    fun publishReview(videoGameId: String) {
         viewModelScope.launch {
+
+            val userId = authRepository.currentUser?.uid ?: return@launch
+
             val state = _uiState.value
 
             if (state.gameplayRating !in 0..5 ||
@@ -143,8 +148,8 @@ class WriteReviewViewModel @Inject constructor(
 
             } else {
                 val review = CreateReviewDto(
-                    userId = userId.toInt(),
-                    videoGameId = videoGameId.toInt(),
+                    userId = userId,
+                    videoGameId = videoGameId,
                     gameplayRating = state.gameplayRating,
                     graphicsRating = state.graphicsRating,
                     storyRating = state.storyRating,
@@ -211,8 +216,8 @@ class WriteReviewViewModel @Inject constructor(
             } else {
 
                 val review = CreateReviewDto(
-                    userId = userId.toInt(),
-                    videoGameId = videoGameId.toInt(),
+                    userId = userId,
+                    videoGameId = videoGameId,
                     gameplayRating = state.gameplayRating,
                     graphicsRating = state.graphicsRating,
                     storyRating = state.storyRating,

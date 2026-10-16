@@ -2,6 +2,7 @@ package com.example.voxel_review.data.repository
 
 import com.example.voxel_review.data.dataSource.ReviewRemoteDataSource
 import com.example.voxel_review.data.dataSource.impl.ReviewRetrofitDataSourceImpl
+import com.example.voxel_review.data.dataSource.impl.firestore.ReviewFirebaseDataSource
 import com.example.voxel_review.data.dtos.CreateReviewDto
 import com.example.voxel_review.data.dtos.toReviewInfo
 import com.example.voxel_review.data.review.ReviewInfo
@@ -9,7 +10,7 @@ import retrofit2.HttpException
 import javax.inject.Inject
 
 class ReviewRepository @Inject constructor(
-        private val reviewRemoteDataSource: ReviewRetrofitDataSourceImpl,
+        private val reviewRemoteDataSource: ReviewFirebaseDataSource,
     ) {
     suspend fun getGameReviews(id: String): Result<List<ReviewInfo>> {
         return try {
