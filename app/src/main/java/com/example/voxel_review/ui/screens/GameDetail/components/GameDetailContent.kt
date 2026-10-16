@@ -182,7 +182,7 @@ fun GameDetailContent(
                                 )
 
                                 Text(
-                                    text = "Calificación: ${review.ratingGeneral}/5",
+                                    text = "Calificación: ${"%.1f".format(review.ratingGeneral)}/5",
                                     color = Color.White,
                                     fontSize = 13.sp
                                 )
