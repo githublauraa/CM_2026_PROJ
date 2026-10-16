@@ -1,9 +1,6 @@
 package com.example.voxel_review.ui.screens.rankings
 
-import com.example.voxel_review.data.infoRanking.ListaRanking
-import com.example.voxel_review.data.infoRanking.RankingUsuario
-import com.example.voxel_review.data.profile.ProfileInfo
-import com.google.firebase.auth.UserInfo
+import com.example.voxel_review.data.info.profile.ProfileInfo
 
 /**
  * Representa el estado de la interfaz de la pantalla de rankings.

@@ -1,6 +1,6 @@
-package com.example.voxel_review.data.InfoGame
+package com.example.voxel_review.data.info.InfoGame
 
-import com.example.voxel_review.data.InfoDiscover.GenreInfo
+import com.example.voxel_review.data.info.InfoDiscover.GenreInfo
 
 data class GameDetailInfo(
     val id: String,

@@ -1,6 +1,6 @@
 package com.example.voxel_review.ui.screens.novedades
 
-import com.example.voxel_review.data.infoJuegosNovedades.JuegoInfo
+import com.example.voxel_review.data.info.infoJuegosNovedades.JuegoInfo
 
 data class NovedadesState(
     val listaJuegos: List<JuegoInfo> = emptyList(),

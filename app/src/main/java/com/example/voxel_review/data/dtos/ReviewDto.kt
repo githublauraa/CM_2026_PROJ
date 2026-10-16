@@ -1,9 +1,9 @@
 package com.example.voxel_review.data.dtos
 
-import com.example.voxel_review.data.InfoDiscover.TrendingSearchInfo
-import com.example.voxel_review.data.review.ReviewInfo
-import com.example.voxel_review.data.InfoGame.GameDetailInfo
-import com.example.voxel_review.data.infoJuegosNovedades.JuegoInfo
+import com.example.voxel_review.data.info.InfoDiscover.TrendingSearchInfo
+import com.example.voxel_review.data.info.review.ReviewInfo
+import com.example.voxel_review.data.info.InfoGame.GameDetailInfo
+import com.example.voxel_review.data.info.infoJuegosNovedades.JuegoInfo
 
 data class ReviewDto(
 	val reviewId: String = "",

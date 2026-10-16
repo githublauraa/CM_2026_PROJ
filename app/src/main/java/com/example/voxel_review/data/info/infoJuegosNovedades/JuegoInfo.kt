@@ -1,4 +1,4 @@
-package com.example.voxel_review.data.infoJuegosNovedades
+package com.example.voxel_review.data.info.infoJuegosNovedades
 
 data class JuegoInfo(
     val id: String,

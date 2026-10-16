@@ -4,10 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.voxel_review.data.InfoGame.LocalGameProvider
-import com.example.voxel_review.data.InfoGame.LocalGameRecomendedProvider
-import com.example.voxel_review.data.review.ReviewInfo
+import com.example.voxel_review.data.info.review.ReviewInfo
 import com.example.voxel_review.ui.screens.GameDetail.components.GameDetailContent
 
 /**

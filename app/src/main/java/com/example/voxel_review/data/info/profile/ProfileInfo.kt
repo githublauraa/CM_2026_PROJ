@@ -1,4 +1,4 @@
-package com.example.voxel_review.data.profile
+package com.example.voxel_review.data.info.profile
 
 data class ProfileInfo(
     val pfp: String,

@@ -7,7 +7,7 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.voxel_review.data.profile.ProfileInfo
+import com.example.voxel_review.data.info.profile.ProfileInfo
 import com.example.voxel_review.ui.screens.rankings.RankingsState
 
 @Composable

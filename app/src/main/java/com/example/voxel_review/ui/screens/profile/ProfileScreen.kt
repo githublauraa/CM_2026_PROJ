@@ -20,8 +20,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.verticalScroll
 import com.google.firebase.auth.FirebaseAuth
-import com.example.voxel_review.data.profile.ProfileInfo
-import com.example.voxel_review.data.review.ReviewInfo
+import com.example.voxel_review.data.info.profile.ProfileInfo
+import com.example.voxel_review.data.info.review.ReviewInfo
 import android.net.Uri
 import com.example.voxel_review.ui.utils.ProfileImage
 @Composable

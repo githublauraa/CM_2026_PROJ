@@ -1,7 +1,7 @@
 package com.example.voxel_review.ui.screens.profile
 
-import com.example.voxel_review.data.profile.ProfileInfo
-import com.example.voxel_review.data.review.ReviewInfo
+import com.example.voxel_review.data.info.profile.ProfileInfo
+import com.example.voxel_review.data.info.review.ReviewInfo
 
 
 data class ProfileState(

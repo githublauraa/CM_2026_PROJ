@@ -1,6 +1,6 @@
-package com.example.voxel_review.data.InfoGame
+package com.example.voxel_review.data.info.InfoGame
 
-import com.example.voxel_review.data.InfoDiscover.LocalGenreProvider
+import com.example.voxel_review.data.info.InfoDiscover.LocalGenreProvider
 
 object LocalGameProvider {
 

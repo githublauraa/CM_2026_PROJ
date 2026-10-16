@@ -1,6 +1,6 @@
 package com.example.voxel_review.ui.screens.writeReview
 
-import com.example.voxel_review.data.InfoGame.GameDetailInfo
+import com.example.voxel_review.data.info.InfoGame.GameDetailInfo
 
 data class WriteReviewState(
     val game: GameDetailInfo? = null,

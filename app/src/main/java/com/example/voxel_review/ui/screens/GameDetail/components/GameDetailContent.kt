@@ -27,18 +27,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import com.example.voxel_review.data.InfoGame.LocalGameProvider
-import com.example.voxel_review.data.InfoGame.LocalGameRecomendedProvider
-import com.example.voxel_review.data.review.ReviewInfo
+import com.example.voxel_review.data.info.review.ReviewInfo
 import com.example.voxel_review.ui.screens.GameDetail.GameDetailState
 import com.example.voxel_review.ui.theme.VoxelSurface
 import com.example.voxel_review.ui.theme.backgroundDark
-import com.example.voxel_review.ui.theme.VoxelSurfaceVariant
-import com.example.voxel_review.ui.theme.surfaceContainerDark
 
 @Composable
 fun GameDetailContent(

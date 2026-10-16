@@ -1,6 +1,6 @@
 package com.example.voxel_review.data.dtos
 
-import com.example.voxel_review.data.profile.ProfileInfo
+import com.example.voxel_review.data.info.profile.ProfileInfo
 
 //para que funcione con express y con firestore
 

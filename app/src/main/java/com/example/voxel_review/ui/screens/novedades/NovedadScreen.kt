@@ -8,7 +8,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.voxel_review.data.infoJuegosNovedades.JuegoInfo
+import com.example.voxel_review.data.info.infoJuegosNovedades.JuegoInfo
 import com.example.voxel_review.ui.screens.novedades.components.NovedadesContent
 import com.example.voxel_review.ui.utils.FondoPantalla
 

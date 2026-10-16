@@ -11,8 +11,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.voxel_review.data.review.ReviewInfo
+import com.example.voxel_review.data.info.review.ReviewInfo
 import com.example.voxel_review.ui.screens.profile.ProfileViewModel
 
 /**

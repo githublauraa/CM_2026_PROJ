@@ -1,6 +1,6 @@
 package com.example.voxel_review.ui.screens.review
 
-import com.example.voxel_review.data.review.ReviewInfo
+import com.example.voxel_review.data.info.review.ReviewInfo
 
 data class ReviewDetailState(
     val imagenJuego: String = "",

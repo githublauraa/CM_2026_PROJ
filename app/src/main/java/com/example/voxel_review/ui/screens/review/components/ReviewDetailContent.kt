@@ -14,7 +14,6 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.voxel_review.R
-import com.example.voxel_review.data.review.LocalReviewProvider.reviews
 import com.example.voxel_review.ui.screens.review.DescriptionSection
 import com.example.voxel_review.ui.screens.review.HeroSection
 import com.example.voxel_review.ui.screens.review.RatingCard

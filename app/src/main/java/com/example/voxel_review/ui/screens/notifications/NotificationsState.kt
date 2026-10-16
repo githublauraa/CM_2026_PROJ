@@ -1,7 +1,7 @@
 package com.example.voxel_review.ui.screens.notifications
 
-import com.example.voxel_review.data.InfoNotifications.FollowSuggestionInfo
-import com.example.voxel_review.data.InfoNotifications.NotificationInfo
+import com.example.voxel_review.data.info.InfoNotifications.FollowSuggestionInfo
+import com.example.voxel_review.data.info.InfoNotifications.NotificationInfo
 
 /**
  * Estado que representa los datos necesarios para renderizar el centro de notificaciones.

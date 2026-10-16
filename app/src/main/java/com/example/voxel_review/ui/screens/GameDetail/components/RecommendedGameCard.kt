@@ -7,7 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.voxel_review.data.InfoGame.GameDetailInfo
+import com.example.voxel_review.data.info.InfoGame.GameDetailInfo
 import com.example.voxel_review.ui.utils.ProfileImage
 
 /**

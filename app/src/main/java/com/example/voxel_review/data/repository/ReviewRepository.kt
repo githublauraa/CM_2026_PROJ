@@ -3,7 +3,7 @@ package com.example.voxel_review.data.repository
 import com.example.voxel_review.data.dataSource.impl.firestore.ReviewFirebaseDataSourceImpl
 import com.example.voxel_review.data.dtos.CreateReviewDto
 import com.example.voxel_review.data.dtos.toReviewInfo
-import com.example.voxel_review.data.review.ReviewInfo
+import com.example.voxel_review.data.info.review.ReviewInfo
 import retrofit2.HttpException
 import javax.inject.Inject
 

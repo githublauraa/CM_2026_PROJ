@@ -1,8 +1,8 @@
 package com.example.voxel_review.ui.screens.notifications
 
 import androidx.lifecycle.ViewModel
-import com.example.voxel_review.data.InfoNotifications.LocalDestacadasProvider
-import com.example.voxel_review.data.InfoNotifications.LocalSugerenciasProvider
+import com.example.voxel_review.data.info.InfoNotifications.LocalDestacadasProvider
+import com.example.voxel_review.data.info.InfoNotifications.LocalSugerenciasProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

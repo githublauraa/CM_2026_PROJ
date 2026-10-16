@@ -1,4 +1,4 @@
-package com.example.voxel_review.data.InfoDiscover
+package com.example.voxel_review.data.info.InfoDiscover
 
 import com.example.voxel_review.R
 

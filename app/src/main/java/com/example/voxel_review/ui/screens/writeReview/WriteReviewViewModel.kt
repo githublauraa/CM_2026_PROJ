@@ -9,7 +9,7 @@ import com.example.voxel_review.data.dtos.toGameDetailInfo
 import com.example.voxel_review.data.repository.AuthRepository
 import com.example.voxel_review.data.repository.ReviewRepository
 import com.example.voxel_review.data.repository.VideoGameRepository
-import com.example.voxel_review.data.review.ReviewInfo
+import com.example.voxel_review.data.info.review.ReviewInfo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow

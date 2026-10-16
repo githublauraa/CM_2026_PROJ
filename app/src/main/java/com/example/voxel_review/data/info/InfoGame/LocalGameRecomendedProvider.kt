@@ -1,4 +1,4 @@
-package com.example.voxel_review.data.InfoGame
+package com.example.voxel_review.data.info.InfoGame
 
 object LocalGameRecomendedProvider {
 

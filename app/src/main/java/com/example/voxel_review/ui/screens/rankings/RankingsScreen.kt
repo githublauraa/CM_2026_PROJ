@@ -14,7 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.voxel_review.data.profile.ProfileInfo
+import com.example.voxel_review.data.info.profile.ProfileInfo
 import com.example.voxel_review.ui.screens.rankings.components.HeaderRankingSceen
 import com.example.voxel_review.ui.screens.rankings.components.LazyColumnRanking
 import com.example.voxel_review.ui.utils.FondoPantalla

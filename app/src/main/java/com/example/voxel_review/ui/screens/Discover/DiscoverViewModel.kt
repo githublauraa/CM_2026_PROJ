@@ -3,8 +3,8 @@ package com.example.voxel_review.ui.screens.Discover
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.voxel_review.data.InfoDiscover.GenreInfo
-import com.example.voxel_review.data.InfoDiscover.LocalGenreProvider
+import com.example.voxel_review.data.info.InfoDiscover.GenreInfo
+import com.example.voxel_review.data.info.InfoDiscover.LocalGenreProvider
 import com.example.voxel_review.data.dtos.toTrendingSearchInfo
 import com.example.voxel_review.data.repository.VideoGameRepository
 import dagger.hilt.android.lifecycle.HiltViewModel

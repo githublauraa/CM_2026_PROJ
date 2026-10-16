@@ -22,7 +22,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -30,7 +29,7 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.voxel_review.R
-import com.example.voxel_review.data.InfoDiscover.TrendingSearchInfo
+import com.example.voxel_review.data.info.InfoDiscover.TrendingSearchInfo
 import com.example.voxel_review.ui.theme.onPrimaryDark
 import com.example.voxel_review.ui.theme.onSurfaceDark
 import com.example.voxel_review.ui.theme.onSurfaceVariantDark

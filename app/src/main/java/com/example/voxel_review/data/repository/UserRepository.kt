@@ -1,9 +1,8 @@
 package com.example.voxel_review.data.repository
 
 import android.util.Log
-import com.example.voxel_review.data.dataSource.impl.UserRetrofitDataSourceImpl
 import com.example.voxel_review.data.dataSource.impl.firestore.UserFirestoreDataSourceImpl
-import com.example.voxel_review.data.profile.ProfileInfo
+import com.example.voxel_review.data.info.profile.ProfileInfo
 import javax.inject.Inject
 import com.example.voxel_review.data.dtos.RegisterUserDto
 class UserRepository @Inject constructor(

@@ -1,8 +1,5 @@
 package com.example.voxel_review.data
 
-import com.example.voxel_review.R
-import com.example.voxel_review.data.infoJuegosNovedades.JuegoInfo
-
 object LocalJuegosProvider {
 /*
     val juegos = listOf(

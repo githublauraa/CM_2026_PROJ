@@ -3,7 +3,7 @@ package com.example.voxel_review.ui.screens.GameDetail
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-import com.example.voxel_review.data.review.ReviewInfo
+import com.example.voxel_review.data.info.review.ReviewInfo
 
 /**
  * Punto de entrada para la ruta de detalle de juego. Se encarga del ciclo de vida y carga de datos.

@@ -19,7 +19,18 @@ class ReviewFirebaseDataSourceImpl @Inject constructor(
             .whereEqualTo("userId", id).get().await()
         return respuesta.documents.map { doc ->
             val review = doc.toObject(ReviewDto::class.java)
-            review?.copy(reviewId = doc.id)?: throw Exception("Reseña no encontrada")
+            val existingReview = review ?: throw Exception("Reseña no encontrada")
+            // Las ediciones anteriores podían borrar los datos desnormalizados del juego.
+            val videoGame = existingReview.videoGame
+                ?: db.collection("video-Games")
+                    .document(existingReview.videoGameId)
+                    .get()
+                    .await()
+                    .let { gameDocument ->
+                        gameDocument.toObject(VideoGameDto::class.java)
+                            ?.copy(videoGameId = gameDocument.id)
+                    }
+            existingReview.copy(reviewId = doc.id, videoGame = videoGame)
         }
     }
 
@@ -118,7 +129,15 @@ class ReviewFirebaseDataSourceImpl @Inject constructor(
         id: String,
         review: CreateReviewDto
     ) {
-        db.collection("reviews").document(id).set(review).await()
+        // Actualizar solo los campos editables conserva el juego, el usuario y sus imágenes.
+        db.collection("reviews").document(id).update(
+            mapOf(
+                "gameplayRating" to review.gameplayRating,
+                "graphicsRating" to review.graphicsRating,
+                "storyRating" to review.storyRating,
+                "content" to review.content
+            )
+        ).await()
     }
 
     //obtener los comentarios del juego

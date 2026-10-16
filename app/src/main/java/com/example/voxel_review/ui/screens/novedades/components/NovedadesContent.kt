@@ -24,7 +24,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.voxel_review.R
-import com.example.voxel_review.data.infoJuegosNovedades.JuegoInfo
+import com.example.voxel_review.data.info.infoJuegosNovedades.JuegoInfo
 import com.example.voxel_review.ui.screens.novedades.NovedadesState
 
 @Composable

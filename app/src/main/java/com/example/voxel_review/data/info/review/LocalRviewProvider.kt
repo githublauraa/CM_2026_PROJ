@@ -1,4 +1,4 @@
-package com.example.voxel_review.data.review
+package com.example.voxel_review.data.info.review
 
 
 object LocalReviewProvider {

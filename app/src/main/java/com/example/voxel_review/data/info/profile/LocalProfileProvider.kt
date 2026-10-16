@@ -1,4 +1,4 @@
-package com.example.voxel_review.data.profile
+package com.example.voxel_review.data.info.profile
 
 import com.example.voxel_review.R
 

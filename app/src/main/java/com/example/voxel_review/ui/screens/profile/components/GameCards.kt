@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.voxel_review.R
-import com.example.voxel_review.data.review.ReviewInfo
+import com.example.voxel_review.data.info.review.ReviewInfo
 import com.example.voxel_review.ui.theme.White
 
 private const val GRID_COLUMNS = 3

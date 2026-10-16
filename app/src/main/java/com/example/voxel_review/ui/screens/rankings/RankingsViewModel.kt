@@ -2,7 +2,6 @@ package com.example.voxel_review.ui.screens.rankings
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.voxel_review.data.infoRanking.ListaRanking
 import com.example.voxel_review.data.repository.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

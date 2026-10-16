@@ -1,10 +1,9 @@
 package com.example.voxel_review.ui.screens.Discover
 
-import com.example.voxel_review.data.InfoDiscover.GenreInfo
-import com.example.voxel_review.data.InfoDiscover.LocalGenreProvider
-import com.example.voxel_review.data.InfoDiscover.TrendingSearchInfo
-import com.example.voxel_review.data.InfoNotifications.FollowSuggestionInfo
-import com.example.voxel_review.data.InfoNotifications.NotificationInfo
+import com.example.voxel_review.data.info.InfoDiscover.GenreInfo
+import com.example.voxel_review.data.info.InfoDiscover.TrendingSearchInfo
+import com.example.voxel_review.data.info.InfoNotifications.FollowSuggestionInfo
+import com.example.voxel_review.data.info.InfoNotifications.NotificationInfo
 
 /**
  * Representa el estado de la UI para la pantalla de Discover.

@@ -1,7 +1,7 @@
 package com.example.voxel_review.ui.screens.GameDetail
 
-import com.example.voxel_review.data.InfoGame.GameDetailInfo
-import com.example.voxel_review.data.review.ReviewInfo
+import com.example.voxel_review.data.info.InfoGame.GameDetailInfo
+import com.example.voxel_review.data.info.review.ReviewInfo
 
 data class GameDetailState(
     val game: GameDetailInfo? = null,

@@ -1,4 +1,4 @@
-package com.example.voxel_review.data.infoRanking
+package com.example.voxel_review.data.info.infoRanking
 
 object ListaRanking {
 

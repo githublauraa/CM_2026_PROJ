@@ -1,4 +1,4 @@
-package com.example.voxel_review.data.InfoNotifications
+package com.example.voxel_review.data.info.InfoNotifications
 
 data class NotificationInfo(
     val id: String,

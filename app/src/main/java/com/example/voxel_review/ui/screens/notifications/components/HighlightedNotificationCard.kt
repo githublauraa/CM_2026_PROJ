@@ -21,8 +21,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.voxel_review.data.InfoNotifications.LocalDestacadasProvider
-import com.example.voxel_review.data.InfoNotifications.NotificationInfo
+import com.example.voxel_review.data.info.InfoNotifications.LocalDestacadasProvider
+import com.example.voxel_review.data.info.InfoNotifications.NotificationInfo
 import com.example.voxel_review.ui.theme.primaryContainerDark
 import com.example.voxel_review.ui.theme.primaryDark
 import com.example.voxel_review.ui.theme.tertiaryContainerDark

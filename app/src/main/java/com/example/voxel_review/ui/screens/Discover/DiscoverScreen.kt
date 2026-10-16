@@ -19,7 +19,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.voxel_review.ui.screens.Discover.components.DiscoverTopBar
 import com.example.voxel_review.ui.screens.Discover.components.TrendingSearchesSection
 import com.example.voxel_review.R
-import com.example.voxel_review.data.InfoDiscover.TrendingSearchInfo
+import com.example.voxel_review.data.info.InfoDiscover.TrendingSearchInfo
 import com.example.voxel_review.ui.screens.Discover.components.DiscoverSearchBar
 import com.example.voxel_review.ui.screens.Discover.components.GenreFilterSection
 

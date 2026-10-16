@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.voxel_review.R
-import com.example.voxel_review.data.InfoDiscover.GenreInfo
+import com.example.voxel_review.data.info.InfoDiscover.GenreInfo
 
 /**
  * Lista horizontal desplazable que muestra las opciones de filtro por género.

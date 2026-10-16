@@ -13,7 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.voxel_review.data.review.ReviewInfo
+import com.example.voxel_review.data.info.review.ReviewInfo
 import com.example.voxel_review.ui.screens.review.components.DeleteReviewDialog
 import com.example.voxel_review.ui.screens.review.components.EditReviewButton
 import com.example.voxel_review.ui.screens.review.components.ReviewDetailContent

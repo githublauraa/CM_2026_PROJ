@@ -1,4 +1,4 @@
-package com.example.voxel_review.data.InfoDiscover
+package com.example.voxel_review.data.info.InfoDiscover
 
 data class TrendingSearchInfo(
     val id: String,
