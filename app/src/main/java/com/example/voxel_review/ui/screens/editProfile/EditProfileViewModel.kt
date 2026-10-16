@@ -20,7 +20,40 @@ class EditProfileViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(EditProfileState())
     val uiState: StateFlow<EditProfileState> = _uiState
 
+    fun loadProfile() {
+        if (_uiState.value.isProfileLoading || _uiState.value.isProfileLoaded) return
+
+        val userId = firebaseAuth.currentUser?.uid
+        if (userId.isNullOrBlank()) {
+            _uiState.update { it.copy(errorMessage = "Usuario no autenticado") }
+            return
+        }
+
+        _uiState.update { it.copy(isProfileLoading = true, errorMessage = null) }
+        viewModelScope.launch {
+            userRepository.getUserById(userId)
+                .onSuccess { profile ->
+                    _uiState.update {
+                        it.copy(
+                            bio = profile.biografia,
+                            isProfileLoading = false,
+                            isProfileLoaded = true
+                        )
+                    }
+                }
+                .onFailure { error ->
+                    _uiState.update {
+                        it.copy(
+                            isProfileLoading = false,
+                            errorMessage = error.message ?: "Error al cargar el perfil"
+                        )
+                    }
+                }
+        }
+    }
+
     fun updateBio(bio: String) {
+        if (!_uiState.value.isProfileLoaded || _uiState.value.isLoading) return
         _uiState.update {
             it.copy(
                 bio = bio,
@@ -31,7 +64,7 @@ class EditProfileViewModel @Inject constructor(
     }
 
     fun saveBio() {
-        if (_uiState.value.isLoading) return
+        if (_uiState.value.isLoading || !_uiState.value.isProfileLoaded) return
 
         viewModelScope.launch {
 

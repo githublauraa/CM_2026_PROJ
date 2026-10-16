@@ -70,20 +70,24 @@ fun EditProfileContent(
                     fontWeight = FontWeight.Bold
                 )
 
-                FormularioCreateAccount(
-                    value = state.bio,
-                    icono = R.drawable.bio,
-                    placeholder = "Biografía",
-                    onValueChange = onBioChange,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(50.dp)
-                )
+                if (state.isProfileLoaded) {
+                    FormularioCreateAccount(
+                        value = state.bio,
+                        icono = R.drawable.bio,
+                        placeholder = "Biografía",
+                        onValueChange = onBioChange,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(50.dp)
+                    )
+                } else if (state.isProfileLoading) {
+                    Text(text = "Cargando perfil...", color = VoxelTextSecondary)
+                }
 
                 // BOTÓN GUARDAR CAMBIOS
                 Button(
                     onClick = onSaveClick,
-                    enabled = !state.isLoading,
+                    enabled = state.isProfileLoaded && !state.isLoading,
                     colors = ButtonDefaults.buttonColors(
                         containerColor = VoxelSurface,
                         disabledContainerColor = VoxelSurface
@@ -144,6 +148,10 @@ fun EditProfileScreen(
 ) {
     val state by editProfileViewModel.uiState.collectAsState()
 
+    LaunchedEffect(editProfileViewModel) {
+        editProfileViewModel.loadProfile()
+    }
+
     LaunchedEffect(state.isSaved) {
         if (state.isSaved) {
             onBackClick()
@@ -163,7 +171,8 @@ fun EditProfileScreen(
 fun EditProfileContentPreview() {
     EditProfileContent(
         state = EditProfileState(
-            bio = "Me encantan los videojuegos RPG y de aventura."
+            bio = "Me encantan los videojuegos RPG y de aventura.",
+            isProfileLoaded = true
         ),
         onBioChange = {},
         onSaveClick = {}
