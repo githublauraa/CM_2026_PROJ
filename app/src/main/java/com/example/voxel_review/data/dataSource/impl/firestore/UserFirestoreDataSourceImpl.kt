@@ -27,13 +27,20 @@ class UserFirestoreDataSourceImpl @Inject constructor(
     }
 
     override suspend fun getAllUsers(): List<UserProfileFirestoreDto> {
-        val respuesta = db.collection("users")
-            .get()
-            .await()
+        val usersSnapshot = db.collection("users").get().await()
+        val reviewsSnapshot = db.collection("reviews").get().await()
 
-        return respuesta.documents.mapNotNull { documento ->
+        val reviewsPorUsuario = reviewsSnapshot.documents
+            .mapNotNull { it.getString("userId") }
+            .groupingBy { it }
+            .eachCount()
+
+        return usersSnapshot.documents.mapNotNull { documento ->
             documento.toObject(UserProfileFirestoreDto::class.java)
-                ?.copy(userId = documento.id)
+                ?.copy(
+                    userId = documento.id,
+                    numReviews = reviewsPorUsuario[documento.id] ?: 0
+                )
         }
     }
 
