@@ -69,13 +69,6 @@ fun UserReviewsSection(
             verticalAlignment = Alignment.CenterVertically
         ) {
 
-            Text(
-                text = stringResource(R.string.resenas_usuarios),
-                color = White,
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Bold
-            )
-
 //            Text(
 //                text = stringResource(R.string.ver_todas),
 //                color = VoxelPrimary,

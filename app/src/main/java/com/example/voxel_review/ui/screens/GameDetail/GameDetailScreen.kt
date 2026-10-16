@@ -45,7 +45,6 @@ fun GameDetailScreen(
 //@Preview
 //@Composable
 //fun GameDetailScreenPreview() {
-//
 //    GameDetailContent(
 //        state = GameDetailState(
 //            game = LocalGameProvider.starfield,
@@ -53,6 +52,7 @@ fun GameDetailScreen(
 //        ),
 //        onBackPressed = {},
 //        onSearchPressed = {},
-//        onWriteReviewPressed = {}
+//        onWriteReviewPressed = {},
+//
 //    )
 //}

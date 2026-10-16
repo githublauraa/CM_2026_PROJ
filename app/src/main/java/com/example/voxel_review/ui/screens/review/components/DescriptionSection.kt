@@ -40,12 +40,6 @@ fun DescriptionSection(
             modifier = Modifier.height(8.dp)
         )
 
-        Text(
-            text = descripcion,
-            color = Color.LightGray,
-            fontSize = 14.sp,
-            lineHeight = 20.sp
-        )
     }
 }
 
