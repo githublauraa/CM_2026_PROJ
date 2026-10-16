@@ -20,7 +20,8 @@ import com.example.voxel_review.ui.screens.review.HeroSection
 import com.example.voxel_review.ui.screens.review.RatingCard
 import com.example.voxel_review.ui.screens.review.ReviewDetailState
 import com.example.voxel_review.ui.screens.review.UserReviewsSection
-
+import android.util.Log
+import androidx.compose.runtime.LaunchedEffect
 /**
  * Contenido estructurado deslizable que integra las secciones de la reseña detallada de un juego.
  *
@@ -36,10 +37,17 @@ fun ReviewDetailContent(
     modifier: Modifier = Modifier
 ) {
 
+
+
     val cardBackground =
         colorResource(R.color.voxel_background).copy(alpha = 0.5f)
 
     val review = state.reviews.firstOrNull()
+
+
+    LaunchedEffect(review?.imagenUsuario) {
+        Log.d("PROFILE_IMAGE", "Imagen del usuario: ${review?.imagenUsuario}")
+    }
 
     Column(
         modifier = modifier

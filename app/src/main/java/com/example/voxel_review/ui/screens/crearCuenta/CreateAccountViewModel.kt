@@ -112,29 +112,56 @@ class CreateAccountViewModel @Inject constructor(
         }
 
         viewModelScope.launch {
+
             val result = authRepository.signUp(
                 _uiState.value.email,
                 _uiState.value.password
             )
 
             if (result.isSuccess) {
-                //obtener el id
-                val userId = authRepository.currentUser?.uid?: throw Exception ("No se pudo obtener el id del usuario")
 
-                userRepository.registerUser(
-                   nombreUsuario = _uiState.value.username,
-                   bio = _uiState.value.bio,
-                   userId = userId
-                )
-                onSuccess()
-            }else{
-                _uiState.update {
-                    val mensaje = result.exceptionOrNull()?.message?: "Error al inciar sesión"
-                    it.copy(errorMessage = mensaje, mostrarMensaje = true)
+                val userId = authRepository.currentUser?.uid
+
+                if (userId == null) {
+                    _uiState.update {
+                        it.copy(
+                            errorMessage = "No se pudo obtener el ID del usuario",
+                            mostrarMensaje = true
+                        )
+                    }
+                    return@launch
                 }
 
-            }
+                val registerResult = userRepository.registerUser(
+                    nombreUsuario = _uiState.value.username,
+                    bio = _uiState.value.bio,
+                    userId = userId,
+                    photoUrl = null
+                )
 
+                if (registerResult.isSuccess) {
+                    onSuccess()
+                } else {
+                    _uiState.update {
+                        it.copy(
+                            errorMessage = registerResult.exceptionOrNull()?.message
+                                ?: "Error al guardar el usuario en Firestore",
+                            mostrarMensaje = true
+                        )
+                    }
+                }
+
+            } else {
+                _uiState.update {
+                    val mensaje = result.exceptionOrNull()?.message
+                        ?: "Error al crear la cuenta"
+
+                    it.copy(
+                        errorMessage = mensaje,
+                        mostrarMensaje = true
+                    )
+                }
+            }
         }
     }
 }

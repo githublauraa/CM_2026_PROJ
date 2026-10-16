@@ -91,18 +91,15 @@ fun ReviewDetailScreen(
     }
 }
 
-@Preview
+@Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun ReviewDetailScreenPreview() {
-    ReviewDetailScreen(
-        reviewViewModel = viewModel(),
-        profileViewModel = viewModel(),
-        juegoId = "1",
-        reviewId = "",
-        userId = "",
+    ReviewDetailScreenContent(
+        state = ReviewDetailState(),
         onClickReview = {},
         onCommentClick = {},
         onBackClick = {},
-        onEditReview = {}
+        onEditReview = {},
+        onDeleteReview = {}
     )
 }

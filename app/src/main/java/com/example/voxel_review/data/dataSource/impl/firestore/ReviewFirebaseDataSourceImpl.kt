@@ -25,11 +25,33 @@ class ReviewFirebaseDataSourceImpl @Inject constructor(
 
     //dado un juego obtener las reseñas
     override suspend fun getGameReviews(id: String): List<ReviewDto> {
+
         val respuesta = db.collection("reviews")
-            .whereEqualTo("videoGameId", id).get().await()
+            .whereEqualTo("videoGameId", id)
+            .get()
+            .await()
+
         return respuesta.documents.map { doc ->
+
             val review = doc.toObject(ReviewDto::class.java)
-            review?.copy(reviewId = doc.id)?: throw Exception("Reseña no encontrada")
+                ?: throw Exception("Reseña no encontrada")
+
+            val userDocument = db.collection("users")
+                .document(review.userId)
+                .get()
+                .await()
+
+            val user = userDocument.toObject(
+                UserProfileFirestoreDto::class.java
+            )
+
+            review.copy(
+                reviewId = doc.id,
+                user = com.example.voxel_review.data.dtos.UserDto(
+                    username = user?.username ?: "",
+                    photoUrl = user?.photoUrl
+                )
+            )
         }
     }
 

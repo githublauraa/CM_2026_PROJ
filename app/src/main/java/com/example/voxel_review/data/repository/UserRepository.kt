@@ -31,9 +31,9 @@ class UserRepository @Inject constructor(
 		}
 	}
 
-	suspend fun registerUser(nombreUsuario: String, bio: String?,userId: String) : Result<Unit> {
+	suspend fun registerUser(nombreUsuario: String, bio: String?,userId: String, photoUrl: String? = null) : Result<Unit> {
 		return try {
-			val registerUserDto = RegisterUserDto(nombreUsuario, bio)
+			val registerUserDto = RegisterUserDto(nombreUsuario, bio, photoUrl)
 			userRemoteDataSource.registerUser(registerUserDto, userId)
 			Result.success(Unit)
 		} catch(e: Exception) {

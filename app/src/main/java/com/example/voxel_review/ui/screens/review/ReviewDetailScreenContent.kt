@@ -18,6 +18,7 @@ import com.example.voxel_review.ui.screens.review.components.EditReviewButton
 import com.example.voxel_review.ui.screens.review.components.ReviewDetailContent
 import com.example.voxel_review.ui.screens.review.components.ReviewDetailTopBar
 import com.example.voxel_review.ui.utils.FondoPantalla
+import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
 fun ReviewDetailScreenContent(
@@ -79,4 +80,19 @@ fun ReviewDetailScreenContent(
             )
         }
     }
+}
+
+
+
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun ReviewDetailScreenContentPreview() {
+    ReviewDetailScreenContent(
+        state = ReviewDetailState(),
+        onClickReview = {},
+        onCommentClick = {},
+        onBackClick = {},
+        onEditReview = {},
+        onDeleteReview = {}
+    )
 }
