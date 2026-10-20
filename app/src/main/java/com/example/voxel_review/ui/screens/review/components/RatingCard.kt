@@ -1,5 +1,11 @@
 package com.example.voxel_review.ui.screens.review
 
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.material3.Text
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.sp
+import com.example.voxel_review.ui.theme.VoxelBorder
+import com.example.voxel_review.ui.theme.VoxelTextPrimary
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -8,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -37,15 +44,24 @@ fun RatingCard(
 
     Card(
         modifier = modifier,
-        shape = RoundedCornerShape(24.dp),
+        shape = RoundedCornerShape(20.dp),
+        border = BorderStroke(1.dp, VoxelBorder),
         colors = CardDefaults.cardColors(
             containerColor = cardBackgroundColor
         )
     ) {
 
+        Text(
+                fontFamily = FontFamily.SansSerif,
+            text = "Calificaciones",
+            color = VoxelTextPrimary,
+            fontSize = 16.sp,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.padding(start = 18.dp, top = 18.dp)
+        )
         Row(
             modifier = Modifier
-                .padding(24.dp)
+                .padding(18.dp)
                 .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
