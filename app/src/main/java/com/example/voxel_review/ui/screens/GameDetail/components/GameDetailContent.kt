@@ -112,7 +112,7 @@ fun GameDetailContent(
 
                     // Descripción
                     GameDescription(
-                        text = "DESCRIPCIÓN",
+                        text = "Sobre el juego",
                         description = game.descripcion
                     )
 
