@@ -30,7 +30,8 @@ fun ReviewDetailScreenContent(
     onEditReview: (ReviewInfo) -> Unit,
     onDeleteReview: (ReviewInfo) -> Unit,
     onReviewProfileImageClicked: (String) -> Unit = {},
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onLikeClick: (String) -> Unit = {}
 ) {
     val review = state.reviews.firstOrNull()
     val currentUserId = FirebaseAuth.getInstance().currentUser?.uid
@@ -68,7 +69,8 @@ fun ReviewDetailScreenContent(
                 state = state,
                 onClickReview = onClickReview,
                 onCommentClick = onCommentClick,
-                onReviewProfileImageClicked = onReviewProfileImageClicked
+                onReviewProfileImageClicked = onReviewProfileImageClicked,
+                onLikeClick = onLikeClick
             )
         }
 

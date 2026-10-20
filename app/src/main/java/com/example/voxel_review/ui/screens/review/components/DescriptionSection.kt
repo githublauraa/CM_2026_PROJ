@@ -25,11 +25,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.example.voxel_review.ui.screens.GameDetail.components.LikeCard
 import com.example.voxel_review.ui.theme.VoxelBorder
 import com.example.voxel_review.ui.theme.VoxelPrimary
 import com.example.voxel_review.ui.theme.VoxelSurface
 import com.example.voxel_review.ui.theme.VoxelTextPrimary
-import com.example.voxel_review.ui.theme.VoxelTextSecondary
 
 @Composable
 fun DescriptionSection(
@@ -37,7 +37,8 @@ fun DescriptionSection(
     descripcion: String,
     modifier: Modifier = Modifier,
     imagenUsuario: String = "",
-    onAuthorClick: () -> Unit = {}
+    onAuthorClick: () -> Unit = {},
+    onLikeClick: () -> Unit = {}
 ) {
     Card(
         modifier = modifier,
@@ -50,36 +51,51 @@ fun DescriptionSection(
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             Row(
-                modifier = Modifier.fillMaxWidth().clickable(onClick = onAuthorClick),
+                modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                AsyncImage(
-                    model = imagenUsuario,
-                    contentDescription = "Foto del autor",
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier.size(44.dp).clip(CircleShape)
-                )
-                Column(
-                    modifier = Modifier.weight(1f),
-                    verticalArrangement = Arrangement.spacedBy(4.dp)
+                Row(
+                    modifier = Modifier
+                        .weight(1f)
+                        .clickable(onClick = onAuthorClick),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
-                    Text(
-                fontFamily = FontFamily.SansSerif,
-                        text = "RESEÑA DE LA COMUNIDAD",
-                        color = VoxelPrimary,
-                        fontSize = 11.sp,
-                        letterSpacing = 1.sp,
-                        fontWeight = FontWeight.Bold
+                    AsyncImage(
+                        model = imagenUsuario,
+                        contentDescription = "Foto del autor",
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier.size(44.dp).clip(CircleShape)
                     )
-                    Text(
-                fontFamily = FontFamily.SansSerif,
-                        text = titulo,
-                        color = VoxelTextPrimary,
-                        fontSize = 17.sp,
-                        fontWeight = FontWeight.SemiBold
-                    )
+
+                    Column(
+                        modifier = Modifier.weight(1f),
+                        verticalArrangement = Arrangement.spacedBy(4.dp)
+                    ) {
+
+                        Text(
+                            fontFamily = FontFamily.SansSerif,
+                            text = "RESEÑA DE LA COMUNIDAD",
+                            color = VoxelPrimary,
+                            fontSize = 11.sp,
+                            letterSpacing = 1.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                        Text(
+                            fontFamily = FontFamily.SansSerif,
+                            text = titulo,
+                            color = VoxelTextPrimary,
+                            fontSize = 17.sp,
+                            fontWeight = FontWeight.SemiBold
+                        )
+                    }
                 }
+                LikeCard(
+                    isLiked = false,
+                    likes = 2,
+                    onLikeClick = onLikeClick
+                )
             }
             HorizontalDivider(color = VoxelBorder)
             Text(
@@ -89,7 +105,9 @@ fun DescriptionSection(
                 fontSize = 16.sp,
                 lineHeight = 24.sp
             )
+
         }
+
     }
 }
 

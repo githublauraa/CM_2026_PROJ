@@ -34,7 +34,8 @@ fun ReviewDetailContent(
     onClickReview: () -> Unit,
     onCommentClick: (String) -> Unit,
     onReviewProfileImageClicked: (String) -> Unit = {},
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onLikeClick: (String) -> Unit = {}
 ) {
 
 
@@ -80,6 +81,7 @@ fun ReviewDetailContent(
                 descripcion = review.descripcion,
                 imagenUsuario = review.imagenUsuario,
                 onAuthorClick = { onReviewProfileImageClicked(review.userId) },
+                onLikeClick = { onLikeClick(review.idResenia) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp)
