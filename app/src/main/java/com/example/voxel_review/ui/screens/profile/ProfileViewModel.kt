@@ -25,6 +25,7 @@ class ProfileViewModel @Inject constructor(
 
 	private val _uiState = MutableStateFlow(
 		ProfileState(
+			currentUserId = authRepository.currentUser?.uid ?: "",
 			email = authRepository.currentUser?.email ?: "",
 			profileImageUrl = authRepository.currentUser?.photoUrl?.toString() ?: ""
 		)

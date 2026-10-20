@@ -23,6 +23,7 @@ class UserFirestoreDataSourceImpl @Inject constructor(
         // Convierte el documento a UserProfileFirestoreDto y lo retorna
         // Si el usuario no existe, lanza una excepción
         return respuesta.toObject(UserProfileFirestoreDto::class.java)
+            ?.copy(userId = respuesta.id)
             ?: throw Exception("No se encontró el usuario")
     }
 
