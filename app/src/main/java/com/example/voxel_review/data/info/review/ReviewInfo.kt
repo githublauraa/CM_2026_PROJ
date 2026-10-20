@@ -14,4 +14,6 @@ data class ReviewInfo(
     val imagenUsuario: String,
     val userId: String = "",
     val videoGameId: String = "",
+    val cantidadLikes: Int = 0,
+    val likedByCurrentUser: Boolean = false,
 )

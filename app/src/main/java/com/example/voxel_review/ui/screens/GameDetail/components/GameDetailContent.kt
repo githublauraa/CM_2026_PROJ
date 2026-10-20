@@ -1,6 +1,7 @@
 
 package com.example.voxel_review.ui.screens.GameDetail.components
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -221,6 +222,15 @@ fun GameDetailContent(
                                             fontSize = 13.sp
                                         )
                                     }
+
+                                    LikeCard(
+                                        isLiked = false,
+                                        likes = 2,
+                                        onLikeClick = {
+                                            Log.d("darLike", "el usuario ${state.currentUserId} dio like a la reseña ${review.idResenia}")
+                                        }
+                                    )
+
                                 }
                             }
                         }
