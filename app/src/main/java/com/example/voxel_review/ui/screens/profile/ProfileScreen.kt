@@ -116,11 +116,15 @@ fun ProfileContent(
                 biografia = state.profile?.biografia
             )
 
-            ButtonFollow(
-                buttonFollowPressed = {
-                    Log.d("seguirUsuario", "El usuario ${state.currentUserId} esta tratando de seguir a ${state.profile.id}")
-                }
-            )
+            if (!isOwnProfile){
+                ButtonFollow(
+                    buttonFollowPressed = {
+                        Log.d("seguirUsuario", "El usuario ${state.currentUserId} esta tratando de seguir a ${state.profile.id}")
+                    }
+                )
+            }
+
+            Spacer(modifier = Modifier.height(9.dp))
 
 
             StatsPanel(
