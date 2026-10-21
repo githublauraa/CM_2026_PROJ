@@ -1,6 +1,7 @@
 
 package com.example.voxel_review.ui.screens.GameDetail.components
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -38,6 +39,7 @@ import com.example.voxel_review.ui.theme.backgroundDark
 @Composable
 fun GameDetailContent(
     onReviewProfileImageCliked:(String) -> Unit,
+    onLikeClick: (String) -> Unit,
     state: GameDetailState,
     onBackPressed: () -> Unit,
     onSearchPressed: () -> Unit,
@@ -111,7 +113,7 @@ fun GameDetailContent(
 
                     // Descripción
                     GameDescription(
-                        text = "DESCRIPCIÓN",
+                        text = "Sobre el juego",
                         description = game.descripcion
                     )
 
@@ -221,6 +223,18 @@ fun GameDetailContent(
                                             fontSize = 13.sp
                                         )
                                     }
+
+                                    LikeCard(
+                                        isLiked = review.likedByCurrentUser,
+                                        likes = review.cantidadLikes,
+                                        onLikeClick = {
+                                            onLikeClick(
+                                                review.idResenia
+                                            )
+                                            Log.d("darLike", "el usuario ${state.currentUserId} dio like a la reseña ${review.idResenia}")
+                                        }
+                                    )
+
                                 }
                             }
                         }

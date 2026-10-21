@@ -10,15 +10,14 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.colorResource
+import com.example.voxel_review.ui.theme.VoxelSurface
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.voxel_review.R
 import com.example.voxel_review.ui.screens.review.DescriptionSection
 import com.example.voxel_review.ui.screens.review.HeroSection
 import com.example.voxel_review.ui.screens.review.RatingCard
+import com.example.voxel_review.data.info.review.ReviewInfo
 import com.example.voxel_review.ui.screens.review.ReviewDetailState
-import com.example.voxel_review.ui.screens.review.UserReviewsSection
 import android.util.Log
 import androidx.compose.runtime.LaunchedEffect
 /**
@@ -34,15 +33,16 @@ fun ReviewDetailContent(
     onClickReview: () -> Unit,
     onCommentClick: (String) -> Unit,
     onReviewProfileImageClicked: (String) -> Unit = {},
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onLikeClick: (String) -> Unit = {}
 ) {
 
 
 
     val cardBackground =
-        colorResource(R.color.voxel_background).copy(alpha = 0.5f)
+        VoxelSurface
 
-    val review = state.reviews.firstOrNull()
+    val review = state.review
 
 
     LaunchedEffect(review?.imagenUsuario) {
@@ -56,19 +56,19 @@ fun ReviewDetailContent(
     ) {
         if(review != null) {
             HeroSection(
-                imagenJuego = state.reviews[0].imagenJuego,
-                tituloJuego = state.reviews[0].tituloJuego,
-                desarrollador = state.reviews[0].desarrollador,
+                imagenJuego = review.imagenJuego,
+                tituloJuego = review.tituloJuego,
+                desarrollador = review.desarrollador,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp)
+                    .padding(horizontal = 16.dp, vertical = 8.dp)
             )
 
             RatingCard(
-                ratingGeneral = state.reviews[0].ratingGeneral,
-                ratingJugabilidad = state.reviews[0].ratingJugabilidad,
-                ratingGraficos = state.reviews[0].ratingGraficos,
-                ratingHistoria = state.reviews[0].ratingHistoria,
+                ratingGeneral = review.ratingGeneral,
+                ratingJugabilidad = review.ratingJugabilidad,
+                ratingGraficos = review.ratingGraficos,
+                ratingHistoria = review.ratingHistoria,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp),
@@ -76,32 +76,20 @@ fun ReviewDetailContent(
             )
 
             DescriptionSection(
-                titulo = state.reviews[0].tituloDescripcion,
-                descripcion = state.reviews[0].descripcion,
+                titulo = review.tituloDescripcion,
+                descripcion = review.descripcion,
+                imagenUsuario = review.imagenUsuario,
+                likes = review.cantidadLikes,
+                isliked = review.likedByCurrentUser,
+                onAuthorClick = { onReviewProfileImageClicked(review.userId) },
+                onLikeClick = { onLikeClick(review.idResenia) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp)
             )
-            UserReviewsSection(
-                imagenUsuario = review.imagenUsuario,
-                username = review.tituloDescripcion.removePrefix("Reseña por"), // Usa review.userId o la propiedad adecuada para el nombre
-                comentario = review.descripcion, // Se mapea la propiedad descripcion de ReviewInfo
-                rating = review.ratingGeneral.toInt(),
-                onClickReview = onClickReview,
-                onCommentClick = {
-                    onCommentClick(review.idResenia) // Se usa videoGameId del data class
-                },
-                onReviewProfileImageClicked = {
-                    onReviewProfileImageClicked(review.userId)
-                },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp),
-                cardBackgroundColor = cardBackground
-            )
 
             Spacer(
-                modifier = Modifier.height(16.dp)
+                modifier = Modifier.height(96.dp)
             )
         }
     }
@@ -113,16 +101,19 @@ fun ReviewDetailContentPreview() {
 
     ReviewDetailContent(
         state = ReviewDetailState(
-            imagenJuego = "",
-            tituloJuego = "Chrono Sphere",
-            desarrollador = "Desarrollado por Voxel Studios",
-            tituloDescripcion = "Una obra maestra",
-            descripcion = "Una experiencia increíble con una excelente historia.",
-            ratingGeneral = 4.2f,
-            ratingJugabilidad = 4.5f,
-            ratingGraficos = 4.0f,
-            ratingHistoria = 4.1f,
-            imagenUsuario = "",
+            review = ReviewInfo(
+                idResenia = "preview",
+                imagenJuego = "",
+                tituloJuego = "Chrono Sphere",
+                desarrollador = "Desarrollado por Voxel Studios",
+                tituloDescripcion = "Una obra maestra",
+                descripcion = "Una experiencia increíble con una excelente historia.",
+                ratingGeneral = 4.2f,
+                ratingJugabilidad = 4.5f,
+                ratingGraficos = 4.0f,
+                ratingHistoria = 4.1f,
+                imagenUsuario = "",
+            )
         ),
         onClickReview = {},
         onCommentClick = {}

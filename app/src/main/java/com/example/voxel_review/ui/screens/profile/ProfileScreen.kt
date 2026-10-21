@@ -23,6 +23,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.example.voxel_review.data.info.profile.ProfileInfo
 import com.example.voxel_review.data.info.review.ReviewInfo
 import android.net.Uri
+import android.util.Log
 import com.example.voxel_review.ui.utils.ProfileImage
 @Composable
 fun ProfileScreen(
@@ -114,6 +115,17 @@ fun ProfileContent(
             Biography(
                 biografia = state.profile?.biografia
             )
+
+            if (!isOwnProfile){
+                ButtonFollow(
+                    buttonFollowPressed = {
+                        Log.d("seguirUsuario", "El usuario ${state.currentUserId} esta tratando de seguir a ${state.profile.id}")
+                    }
+                )
+            }
+
+            Spacer(modifier = Modifier.height(9.dp))
+
 
             StatsPanel(
                 profile.numResenias,

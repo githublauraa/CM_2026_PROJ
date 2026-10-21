@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Text
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -44,15 +45,17 @@ fun RatingBarItem(
         ) {
 
             Text(
+                fontFamily = FontFamily.SansSerif,
                 text = label,
                 color = Color.LightGray,
-                fontSize = 12.sp
+                fontSize = 13.sp
             )
 
             Text(
+                fontFamily = FontFamily.SansSerif,
                 text = value.toString(),
                 color = color,
-                fontSize = 12.sp
+                fontSize = 13.sp
             )
         }
 

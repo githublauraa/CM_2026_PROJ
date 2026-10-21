@@ -13,15 +13,25 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import com.google.firebase.auth.FirebaseAuth
 
 @HiltViewModel
 class GameDetailViewModel @Inject constructor(
     private val videoGameRepository: VideoGameRepository,
-    private val reviewRepository: ReviewRepository
+    private val reviewRepository: ReviewRepository,
+    private val auth: FirebaseAuth
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(GameDetailState())
     val uiState: StateFlow<GameDetailState> = _uiState.asStateFlow()
+
+    init {
+        val userId = auth.currentUser?.uid ?: ""
+
+        _uiState.update {
+            it.copy(currentUserId = userId)
+        }
+    }
 
     fun loadGame(gameId: String) {
         val id = gameId
@@ -77,6 +87,32 @@ class GameDetailViewModel @Inject constructor(
 
             _uiState.update {
                 it.copy(isLoading = false)
+            }
+        }
+    }
+
+    fun sendOrDeleteReviewLike(reviewId: String, userId: String){
+        viewModelScope.launch {
+            val result = reviewRepository.sendOrDeleteReviewLike(reviewId, userId)
+
+            if (result.isSuccess){
+                _uiState.update {state ->
+                    state.copy(
+                        reviews = state.reviews.map { review ->
+                            if (reviewId == review.idResenia){
+                                review.copy(
+                                        likedByCurrentUser = !review.likedByCurrentUser,
+                                        cantidadLikes = if (review.likedByCurrentUser) review.cantidadLikes -1 else review.cantidadLikes +1
+                                )
+                            } else{
+                                review
+                            }
+                        }
+
+                    )
+                }
+            } else {
+
             }
         }
     }

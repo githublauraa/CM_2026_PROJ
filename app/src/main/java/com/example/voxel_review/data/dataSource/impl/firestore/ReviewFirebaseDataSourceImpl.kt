@@ -9,6 +9,7 @@ import kotlinx.coroutines.tasks.await
 import com.example.voxel_review.data.dtos.UserProfileFirestoreDto
 import com.example.voxel_review.data.dtos.VideoGameDto
 import com.example.voxel_review.data.dtos.CreateReviewUserDto
+import com.google.firebase.firestore.FieldValue
 
 class ReviewFirebaseDataSourceImpl @Inject constructor(
     private val db: FirebaseFirestore
@@ -35,7 +36,10 @@ class ReviewFirebaseDataSourceImpl @Inject constructor(
     }
 
     //dado un juego obtener las reseñas
-    override suspend fun getGameReviews(id: String): List<ReviewDto> {
+    override suspend fun getGameReviews(
+        id: String,
+        userId: String?
+    ): List<ReviewDto> {
 
         val respuesta = db.collection("reviews")
             .whereEqualTo("videoGameId", id)
@@ -43,9 +47,20 @@ class ReviewFirebaseDataSourceImpl @Inject constructor(
             .await()
 
         return respuesta.documents.map { doc ->
-
             val review = doc.toObject(ReviewDto::class.java)
                 ?: throw Exception("Reseña no encontrada")
+
+            var hasLiked = false
+
+            if (!userId.isNullOrBlank()) {
+                val likeSnapshot = doc.reference
+                    .collection("likes")
+                    .document(userId)
+                    .get()
+                    .await()
+
+                hasLiked = likeSnapshot.exists()
+            }
 
             val userDocument = db.collection("users")
                 .document(review.userId)
@@ -58,6 +73,7 @@ class ReviewFirebaseDataSourceImpl @Inject constructor(
 
             review.copy(
                 reviewId = doc.id,
+                likedByCurrentUser = hasLiked,
                 user = com.example.voxel_review.data.dtos.UserDto(
                     username = user?.username ?: "",
                     photoUrl = user?.photoUrl
@@ -149,6 +165,29 @@ class ReviewFirebaseDataSourceImpl @Inject constructor(
             doc.toObject(ReviewDto::class.java)
                 ?.copy(reviewId = doc.id)
         }
+
+    }
+
+    override suspend fun sendOrDeleteReview(reviewId: String, userId: String) {
+        require(reviewId.isNotBlank()) { "El ID de la reseña es obligatorio" }
+        require(userId.isNotBlank()) { "Debes iniciar sesión para dar like" }
+
+        val reviewRef = db.collection("reviews").document(reviewId)
+        val likesRef = reviewRef.collection("likes").document(userId)
+
+        db.runTransaction { transaction ->
+
+            val likeDoc = transaction.get(likesRef)
+
+            if (likeDoc.exists()){
+                transaction.delete(likesRef)
+                transaction.update(reviewRef, "cantidadLikes", FieldValue.increment(-1))
+            } else {
+                transaction.set(likesRef, mapOf("timestamp" to FieldValue.serverTimestamp()))
+                transaction.update(reviewRef, "cantidadLikes", FieldValue.increment(1))
+            }
+
+        }.await()
 
     }
 }
