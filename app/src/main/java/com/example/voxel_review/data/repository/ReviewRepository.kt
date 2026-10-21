@@ -8,11 +8,13 @@ import retrofit2.HttpException
 import javax.inject.Inject
 
 class ReviewRepository @Inject constructor(
-        private val reviewRemoteDataSource: ReviewFirebaseDataSourceImpl
+        private val reviewRemoteDataSource: ReviewFirebaseDataSourceImpl,
+    private val authRepository: AuthRepository
     ) {
     suspend fun getGameReviews(id: String): Result<List<ReviewInfo>> {
         return try {
-            val reviews = reviewRemoteDataSource.getGameReviews(id)
+            val currentUser = authRepository.currentUser?.uid ?:""
+            val reviews = reviewRemoteDataSource.getGameReviews(id,currentUser)
             val reviewsInfo = reviews.map { it.toReviewInfo() }
             Result.success(reviewsInfo)
         } catch (e: HttpException) {
