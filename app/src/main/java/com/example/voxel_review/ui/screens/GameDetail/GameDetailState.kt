@@ -10,5 +10,5 @@ data class GameDetailState(
     val reviews: List<ReviewInfo> = emptyList(),
     val isLoading: Boolean = false,
     val error: String? = null,
-    val currentUserId: String = ""
+    val currentUserId: String? = null
 )
