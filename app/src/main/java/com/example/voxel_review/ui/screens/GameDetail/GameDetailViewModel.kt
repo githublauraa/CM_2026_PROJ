@@ -94,9 +94,20 @@ class GameDetailViewModel @Inject constructor(
     fun sendOrDeleteReviewLike(reviewId: String, userId: String){
         viewModelScope.launch {
             val result = reviewRepository.sendOrDeleteReviewLike(reviewId, userId)
+
             if (result.isSuccess){
-                _uiState.update {
-                    it.copy(
+                _uiState.update {state ->
+                    state.copy(
+                        reviews = state.reviews.map { review ->
+                            if (reviewId == review.idResenia){
+                                review.copy(
+                                        likedByCurrentUser = !review.likedByCurrentUser,
+                                        cantidadLikes = if (review.likedByCurrentUser) review.cantidadLikes -1 else review.cantidadLikes +1
+                                )
+                            } else{
+                                review
+                            }
+                        }
 
                     )
                 }

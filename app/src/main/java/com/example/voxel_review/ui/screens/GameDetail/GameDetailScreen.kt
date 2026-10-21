@@ -38,6 +38,17 @@ fun GameDetailScreen(
         onWriteReviewPressed = onWriteReviewPressed,
         onReviewProfileImageCliked = onReviewProfileImageCliked,
         onReviewClick = onReviewClick,
+        onLikeClick = { reviewId ->
+            val currentUserId = state.currentUserId
+
+            if (!currentUserId.isNullOrBlank()) {
+                gameDetailViewModel.sendOrDeleteReviewLike(
+                    reviewId,
+                    currentUserId
+                )
+            }
+
+        },
         modifier = modifier
     )
 }

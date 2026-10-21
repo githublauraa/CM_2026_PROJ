@@ -39,6 +39,7 @@ import com.example.voxel_review.ui.theme.backgroundDark
 @Composable
 fun GameDetailContent(
     onReviewProfileImageCliked:(String) -> Unit,
+    onLikeClick: (String) -> Unit,
     state: GameDetailState,
     onBackPressed: () -> Unit,
     onSearchPressed: () -> Unit,
@@ -224,9 +225,12 @@ fun GameDetailContent(
                                     }
 
                                     LikeCard(
-                                        isLiked = false,
-                                        likes = 2,
+                                        isLiked = review.likedByCurrentUser,
+                                        likes = review.cantidadLikes,
                                         onLikeClick = {
+                                            onLikeClick(
+                                                review.idResenia
+                                            )
                                             Log.d("darLike", "el usuario ${state.currentUserId} dio like a la reseña ${review.idResenia}")
                                         }
                                     )
