@@ -90,4 +90,19 @@ class GameDetailViewModel @Inject constructor(
             }
         }
     }
+
+    fun sendOrDeleteReviewLike(reviewId: String, userId: String){
+        viewModelScope.launch {
+            val result = reviewRepository.sendOrDeleteReviewLike(reviewId, userId)
+            if (result.isSuccess){
+                _uiState.update {
+                    it.copy(
+
+                    )
+                }
+            } else {
+
+            }
+        }
+    }
 }

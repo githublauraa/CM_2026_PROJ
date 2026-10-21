@@ -16,6 +16,8 @@ data class ReviewDto(
 	val content: String = "",
 	val createdAt: String = "",
 	val updatedAt: String = "",
+	val cantidadLikes: Int = 0,
+	val likedByCurrentUser: Boolean = false,
 
 	// Datos desnormalizados
 	val user: UserDto? = null,
@@ -55,6 +57,8 @@ fun ReviewDto.toReviewInfo(): ReviewInfo {
 		desarrollador = videoGame?.developer ?: "",
 		tituloDescripcion = "Reseña por ${user?.username ?: "Usuario"}",
 		descripcion = content,
+		cantidadLikes = cantidadLikes,
+		likedByCurrentUser = likedByCurrentUser,
 		ratingGeneral = (
 				gameplayRating +
 						graphicsRating +
@@ -65,7 +69,8 @@ fun ReviewDto.toReviewInfo(): ReviewInfo {
 		ratingHistoria = storyRating.toFloat(),
 		imagenUsuario = user?.photoUrl ?: "",
 		userId = userId,
-		videoGameId = videoGameId
+		videoGameId = videoGameId,
+
 	)
 }
 

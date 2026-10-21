@@ -37,6 +37,7 @@ fun DescriptionSection(
     descripcion: String,
     modifier: Modifier = Modifier,
     imagenUsuario: String = "",
+    likes: Int,
     onAuthorClick: () -> Unit = {},
     onLikeClick: () -> Unit = {}
 ) {
@@ -93,7 +94,7 @@ fun DescriptionSection(
                 }
                 LikeCard(
                     isLiked = false,
-                    likes = 2,
+                    likes = likes,
                     onLikeClick = onLikeClick
                 )
             }
@@ -115,6 +116,7 @@ fun DescriptionSection(
 @Composable
 fun DescriptionSectionPreview() {
     DescriptionSection(
+        likes = 1,
         titulo = "Reseña por nuevo",
         descripcion = "Una experiencia increíble con una excelente historia."
     )

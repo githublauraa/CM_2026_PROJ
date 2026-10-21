@@ -33,7 +33,7 @@ fun ReviewDetailScreenContent(
     modifier: Modifier = Modifier,
     onLikeClick: (String) -> Unit = {}
 ) {
-    val review = state.reviews.firstOrNull()
+    val review = state.review
     val currentUserId = FirebaseAuth.getInstance().currentUser?.uid
 
     val canManageReview =

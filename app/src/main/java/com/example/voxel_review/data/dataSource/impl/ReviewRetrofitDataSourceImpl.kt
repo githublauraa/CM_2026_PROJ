@@ -9,9 +9,7 @@ import javax.inject.Inject
 class ReviewRetrofitDataSourceImpl @Inject constructor(
     private val service: ReviewRetrofitService
 ): ReviewRemoteDataSource {
-    override suspend fun getGameReviews(id: String): List<ReviewDto> {
-	    return service.getGameReviews(id)
-    }
+
 
     override suspend fun createReview(userId: String, videoGameId: String, review: CreateReviewDto) {
 	    return service.createReview(userId, videoGameId, review )
@@ -25,12 +23,24 @@ class ReviewRetrofitDataSourceImpl @Inject constructor(
 	    return service.getUserReviews(id)
     }
 
+    override suspend fun getGameReviews(
+        id: String,
+        userId: String?
+    ): List<ReviewDto> {
+        return service.getGameReviews(id)
+    }
+
+
     override suspend fun updateReview(id: String, review: CreateReviewDto) {
 	    return service.updateReview(id, review)
     }
 
     override suspend fun getReviewComments(id: String): List<ReviewDto> {
         return service.getReviewComments(id)
+    }
+
+    override suspend fun sendOrDeleteReview(reviewId: String, userId: String) {
+        TODO("Not yet implemented")
     }
 
 }

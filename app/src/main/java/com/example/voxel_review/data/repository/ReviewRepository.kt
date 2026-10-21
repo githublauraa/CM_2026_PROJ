@@ -84,4 +84,13 @@ class ReviewRepository @Inject constructor(
             Result.failure(e)
         }
     }
+
+    suspend fun sendOrDeleteReviewLike(reviewId: String, userId: String): Result<Unit>{
+        return try{
+            reviewRemoteDataSource.sendOrDeleteReview(reviewId, userId)
+            Result.success(Unit)
+        } catch (e: Exception){
+            Result.failure(e)
+        }
+    }
 }
