@@ -20,7 +20,8 @@ import com.example.voxel_review.ui.screens.profile.ProfileViewModel
  * Pantalla de detalle de una reseña.
  *
  * Si llega [reviewId] y [userId] (flujo del perfil) se carga esa reseña concreta;
- * en caso contrario se cargan las reseñas del videojuego [juegoId] (flujo de novedades).
+ * en caso contrario se carga la reseña indicada del videojuego [juegoId],
+ * o la primera disponible si no llega [reviewId] (flujo de novedades).
  */
 @Composable
 fun ReviewDetailScreen(
@@ -43,7 +44,7 @@ fun ReviewDetailScreen(
         if (reviewId.isNotBlank() && userId.isNotBlank()) {
             reviewViewModel.getUserReview(userId, reviewId)
         } else {
-            reviewViewModel.getGameReviews(juegoId)
+            reviewViewModel.getGameReviews(juegoId, reviewId)
         }
     }
 
@@ -67,7 +68,7 @@ fun ReviewDetailScreen(
             }
         }
 
-        state.reviews.isEmpty() -> {
+        state.review == null -> {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                 Text(text = "No hay reseñas disponibles")
             }
@@ -91,6 +92,7 @@ fun ReviewDetailScreen(
                 onReviewProfileImageClicked = onReviewProfileImageClicked,
                 onLikeClick = { selectedReviewId ->
                     val currentUserId = FirebaseAuth.getInstance().currentUser?.uid.orEmpty()
+                    reviewViewModel.sendOrDeleteReviewLike(selectedReviewId, currentUserId)
                     Log.d(
                         "darLike",
                         "El usuario $currentUserId intenta dar like a la reseña $selectedReviewId"
@@ -106,22 +108,20 @@ fun ReviewDetailScreen(
 fun ReviewDetailScreenPreview() {
     ReviewDetailScreenContent(
         state = ReviewDetailState(
-            reviews = listOf(
-                ReviewInfo(
-                    idResenia = "1",
-                    imagenJuego = "",
-                    tituloJuego = "Cyberpunk 2077",
-                    desarrollador = "CD Projekt RED",
-                    tituloDescripcion = "Una experiencia increíble",
-                    descripcion = "Un videojuego con una historia increíble, excelentes gráficos y una jugabilidad muy entretenida.",
-                    ratingGeneral = 4.5f,
-                    ratingJugabilidad = 4.5f,
-                    ratingGraficos = 5.0f,
-                    ratingHistoria = 4.0f,
-                    imagenUsuario = "",
-                    userId = "1",
-                    videoGameId = "1"
-                )
+            review = ReviewInfo(
+                idResenia = "1",
+                imagenJuego = "",
+                tituloJuego = "Cyberpunk 2077",
+                desarrollador = "CD Projekt RED",
+                tituloDescripcion = "Una experiencia increíble",
+                descripcion = "Un videojuego con una historia increíble, excelentes gráficos y una jugabilidad muy entretenida.",
+                ratingGeneral = 4.5f,
+                ratingJugabilidad = 4.5f,
+                ratingGraficos = 5.0f,
+                ratingHistoria = 4.0f,
+                imagenUsuario = "",
+                userId = "1",
+                videoGameId = "1"
             )
         ),
         onClickReview = {},

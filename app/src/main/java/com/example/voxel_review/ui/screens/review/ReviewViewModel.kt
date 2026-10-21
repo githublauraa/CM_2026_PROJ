@@ -19,14 +19,31 @@ class ReviewViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(ReviewDetailState())
     val uiState: StateFlow<ReviewDetailState> = _uiState.asStateFlow()
 
-    fun getGameReviews(gameId: String) {
+    fun getGameReviews(gameId: String, reviewId: String = "") {
         viewModelScope.launch {
-            _uiState.update { it.copy(isLoading = true, errorMessage = null) }
+            _uiState.update {
+                it.copy(isLoading = true, errorMessage = null)
+            }
+
             val result = reviewRepository.getGameReviews(gameId)
+
             if (result.isSuccess) {
+                val reviews = result.getOrNull().orEmpty()
+                val review = if (reviewId.isBlank()) {
+                    reviews.firstOrNull()
+                } else {
+                    reviews.find { it.idResenia == reviewId }
+                }
+
                 _uiState.update {
-                    it.copy(reviews = result.getOrNull() ?: emptyList(),
-                    isLoading = false
+                    it.copy(
+                        review = review,
+                        isLoading = false,
+                        errorMessage = if (review == null) {
+                            "Reseña no encontrada"
+                        } else {
+                            null
+                        }
                     )
                 }
             } else {
@@ -36,32 +53,36 @@ class ReviewViewModel @Inject constructor(
                         isLoading = false
                     )
                 }
-
             }
         }
     }
 
-    /**
-     * Carga la reseña seleccionada por el usuario (detalle abierto desde el perfil).
-     * Busca la reseña por su id dentro de las reseñas del usuario.
-     */
     fun getUserReview(userId: String, reviewId: String) {
         viewModelScope.launch {
-            _uiState.update { it.copy(isLoading = true, errorMessage = null) }
+            _uiState.update {
+                it.copy(isLoading = true, errorMessage = null)
+            }
 
             val result = reviewRepository.getUserReviews(userId)
-            val review = result.getOrNull()?.find { it.idResenia == reviewId }
 
-            when {
-                review != null -> _uiState.update {
-                    it.copy(reviews = listOf(review), isLoading = false)
+            if (result.isSuccess) {
+                val review = result.getOrNull()?.find {
+                    it.idResenia == reviewId
                 }
 
-                result.isSuccess -> _uiState.update {
-                    it.copy(errorMessage = "Reseña no encontrada", isLoading = false)
+                _uiState.update {
+                    it.copy(
+                        review = review,
+                        isLoading = false,
+                        errorMessage = if (review == null) {
+                            "Reseña no encontrada"
+                        } else {
+                            null
+                        }
+                    )
                 }
-
-                else -> _uiState.update {
+            } else {
+                _uiState.update {
                     it.copy(
                         errorMessage = result.exceptionOrNull()?.message,
                         isLoading = false
@@ -70,13 +91,19 @@ class ReviewViewModel @Inject constructor(
             }
         }
     }
-    fun getReviewComments (reviewId: String) {
+
+    fun getReviewComments(reviewId: String) {
         viewModelScope.launch {
-            _uiState.update { it.copy(isLoading = true, errorMessage = null) }
+            _uiState.update {
+                it.copy(isLoading = true, errorMessage = null)
+            }
+
             val result = reviewRepository.getReviewComments(reviewId)
+
             if (result.isSuccess) {
                 _uiState.update {
-                    it.copy(comments = result.getOrNull() ?: emptyList(),
+                    it.copy(
+                        comments = result.getOrNull() ?: emptyList(),
                         isLoading = false
                     )
                 }
@@ -87,6 +114,23 @@ class ReviewViewModel @Inject constructor(
                         isLoading = false
                     )
                 }
+            }
+        }
+    }
+
+    fun sendOrDeleteReviewLike(reviewId: String, userId: String){
+        viewModelScope.launch {
+            val result = reviewRepository.sendOrDeleteReviewLike(reviewId, userId)
+
+            if (result.isSuccess){
+                _uiState.update {
+                    it.copy(
+                        review = it.review?.copy(
+                            likedByCurrentUser = !it.review.likedByCurrentUser,
+                            cantidadLikes = if (it.review.likedByCurrentUser) it.review.cantidadLikes - 1 else it.review.cantidadLikes +1)
+                        )
+                }
+            } else{
 
             }
         }
