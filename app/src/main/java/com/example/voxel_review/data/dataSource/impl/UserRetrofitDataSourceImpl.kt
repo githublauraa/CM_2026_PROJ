@@ -25,4 +25,11 @@ class UserRetrofitDataSourceImpl @Inject constructor(private val service: UserRe
     override suspend fun updateUserBio(userId: String, bio: String) {
         //
     }
+
+    override suspend fun followOrUnfollow(
+        currentUserId: String,
+        targetUserId: String
+    ) {
+        TODO("Not yet implemented")
+    }
 }

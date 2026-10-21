@@ -12,4 +12,6 @@ interface UserRemoteDataSource {
 
 
 	suspend fun updateUserBio(userId: String, bio: String)
+
+	suspend fun followOrUnfollow(currentUserId: String, targetUserId: String): Unit
 }
