@@ -80,6 +80,7 @@ fun ReviewDetailContent(
                 descripcion = review.descripcion,
                 imagenUsuario = review.imagenUsuario,
                 likes = review.cantidadLikes,
+                isliked = review.likedByCurrentUser,
                 onAuthorClick = { onReviewProfileImageClicked(review.userId) },
                 onLikeClick = { onLikeClick(review.idResenia) },
                 modifier = Modifier
