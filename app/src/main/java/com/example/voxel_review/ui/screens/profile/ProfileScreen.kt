@@ -121,7 +121,14 @@ fun ProfileContent(
             )
 
             if (!isOwnProfile){
+                var textoBoton: String = ""
+                if (profile.followed){
+                    textoBoton = "siguiendo"
+                }else{
+                    textoBoton = "seguir"
+                }
                 ButtonFollow(
+                    text = textoBoton,
                     buttonFollowPressed = {
                         buttonFollowPressed()
                         Log.d("seguirUsuario", "El usuario ${state.currentUserId} esta tratando de seguir a ${state.profile.id}")
