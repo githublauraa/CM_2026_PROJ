@@ -11,6 +11,9 @@ import com.example.voxel_review.data.dtos.VideoGameDto
 import com.example.voxel_review.data.dtos.CreateReviewUserDto
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.channels.awaitClose
 
 class ReviewFirebaseDataSourceImpl @Inject constructor(
     private val db: FirebaseFirestore
@@ -205,5 +208,29 @@ class ReviewFirebaseDataSourceImpl @Inject constructor(
 
         }.await()
 
+    }
+
+    override suspend fun listenReview(
+        gameId: String
+    ): Flow<List<ReviewDto>> = callbackFlow {
+        val listener = db.collection("reviews")
+            .whereEqualTo("videoGameId", gameId)
+            .addSnapshotListener { snapshot, error ->
+                if (error != null) {
+                    close(error)
+                    return@addSnapshotListener
+                }
+
+                if (snapshot != null) {
+                    val reviews = snapshot.documents.mapNotNull { doc ->
+                        doc.toObject(ReviewDto::class.java)
+                            ?.copy(reviewId = doc.id)
+                    }
+
+                    trySend(reviews)
+                }
+            }
+
+        awaitClose { listener.remove() }
     }
 }
