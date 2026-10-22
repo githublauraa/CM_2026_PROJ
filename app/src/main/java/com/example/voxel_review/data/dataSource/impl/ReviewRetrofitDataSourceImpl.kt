@@ -4,6 +4,7 @@ import com.example.voxel_review.data.dataSource.ReviewRemoteDataSource
 import com.example.voxel_review.data.dataSource.services.ReviewRetrofitService
 import com.example.voxel_review.data.dtos.CreateReviewDto
 import com.example.voxel_review.data.dtos.ReviewDto
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class ReviewRetrofitDataSourceImpl @Inject constructor(
@@ -40,6 +41,10 @@ class ReviewRetrofitDataSourceImpl @Inject constructor(
     }
 
     override suspend fun sendOrDeleteReview(reviewId: String, userId: String) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun listenReview(gameId: String): Flow<List<ReviewDto>> {
         TODO("Not yet implemented")
     }
 

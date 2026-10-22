@@ -6,6 +6,11 @@ import com.example.voxel_review.data.dtos.toReviewInfo
 import com.example.voxel_review.data.info.review.ReviewInfo
 import retrofit2.HttpException
 import javax.inject.Inject
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
+
+
+
 
 class ReviewRepository @Inject constructor(
         private val reviewRemoteDataSource: ReviewFirebaseDataSourceImpl,
@@ -94,5 +99,12 @@ class ReviewRepository @Inject constructor(
         } catch (e: Exception){
             Result.failure(e)
         }
+    }
+
+    suspend fun getReviewsLive(gameId: String): Flow<List<ReviewInfo>> {
+        return reviewRemoteDataSource.listenReview(gameId)
+            .map { reviews ->
+                reviews.map { it.toReviewInfo() }
+            }
     }
 }

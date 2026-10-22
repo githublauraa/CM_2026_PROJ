@@ -14,6 +14,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.flow.catch
+
 
 @HiltViewModel
 class GameDetailViewModel @Inject constructor(
@@ -70,24 +72,23 @@ class GameDetailViewModel @Inject constructor(
                     }
                 }
 
-            reviewRepository.getGameReviews(gameId)
-                .onSuccess { reviews ->
-                    _uiState.update {
-                        it.copy(reviews = reviews)
-                    }
-                }
-                .onFailure { exception ->
+            reviewRepository.getReviewsLive(gameId)
+                .catch { e ->
                     _uiState.update {
                         it.copy(
-                            error = exception.message
-                                ?: "No se pudieron cargar las reseñas"
+                            error = e.message,
+                            isLoading = false
                         )
                     }
                 }
-
-            _uiState.update {
-                it.copy(isLoading = false)
-            }
+                .collect { reviews ->
+                    _uiState.update {
+                        it.copy(
+                            reviews = reviews,
+                            isLoading = false
+                        )
+                    }
+                }
         }
     }
 
