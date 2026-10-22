@@ -142,4 +142,6 @@ class ProfileViewModel @Inject constructor(
 		}
 	}
 
+	fun followOrUnfollow(){}
+
 }
