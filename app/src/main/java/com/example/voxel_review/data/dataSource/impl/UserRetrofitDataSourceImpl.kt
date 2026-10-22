@@ -9,7 +9,7 @@ import com.example.voxel_review.data.dtos.UserProfileRetrofitDto
 
 class UserRetrofitDataSourceImpl @Inject constructor(private val service: UserRetrofitService): UserRemoteDataSource {
 
-    override suspend fun getUserById(id: String): UserProfileRetrofitDto {
+    override suspend fun getUserById(id: String, currentUserId: String): UserProfileRetrofitDto {
 	    return service.getUserById(id)
     }
 
@@ -24,5 +24,12 @@ class UserRetrofitDataSourceImpl @Inject constructor(private val service: UserRe
 
     override suspend fun updateUserBio(userId: String, bio: String) {
         //
+    }
+
+    override suspend fun followOrUnfollow(
+        currentUserId: String,
+        targetUserId: String
+    ) {
+        TODO("Not yet implemented")
     }
 }

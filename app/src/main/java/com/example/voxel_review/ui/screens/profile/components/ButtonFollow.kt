@@ -12,6 +12,7 @@ import com.example.voxel_review.ui.theme.VoxelPrimary
 @Composable
 fun ButtonFollow(
     buttonFollowPressed: () -> Unit,
+    text: String,
     modifier: Modifier = Modifier
 ){
     Button(
@@ -25,7 +26,7 @@ fun ButtonFollow(
 
     ) {
         Text(
-            text = "Seguir usuario"
+            text = text
         )
     }
 }
