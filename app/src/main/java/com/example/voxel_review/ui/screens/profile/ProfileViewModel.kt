@@ -152,6 +152,7 @@ class ProfileViewModel @Inject constructor(
 				val profile = uiState.value.profile ?: return@launch
 				_uiState.value = _uiState.value.copy(
 					profile = _uiState.value.profile?.copy(
+						followers = if(profile.followed) profile.followers - 1 else profile.followers + 1,
 						followed = !profile.followed
 					)
 				)

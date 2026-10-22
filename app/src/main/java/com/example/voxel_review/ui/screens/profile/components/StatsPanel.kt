@@ -22,8 +22,8 @@ import com.example.voxel_review.ui.theme.White
 
 @Composable
 fun StatsPanel(
-    resenia: Int,
-    promedio: Float,
+    followers: Int,
+    followed: Int,
     likes: Int,
     modifier: Modifier = Modifier
 ) {
@@ -56,8 +56,8 @@ fun StatsPanel(
 
             // Reseñas
             ItemEstadistica(
-                valor = resenia,
-                etiqueta = "RESEÑAS",
+                valor = followers,
+                etiqueta = "Seguidores",
                 colorValor = VoxelPrimary,
                 colorEtiqueta = VoxelTextSecondary,
                 modifier = Modifier.weight(1f)
@@ -71,8 +71,8 @@ fun StatsPanel(
 
             // Promedio
             ItemEstadistica(
-                valor = promedio,
-                etiqueta = "PROMEDIO",
+                valor = followed,
+                etiqueta = "Seguidos",
                 colorValor = VoxelSecondary,
                 colorEtiqueta = VoxelTextSecondary,
                 modifier = Modifier.weight(1f)
@@ -118,7 +118,7 @@ private fun ItemEstadistica(
         )
 
         Spacer(
-            modifier = Modifier.height(4.dp)
+            modifier = Modifier.height(0.5.dp)
         )
 
         Text(

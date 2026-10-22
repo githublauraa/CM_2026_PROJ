@@ -8,5 +8,7 @@ data class ProfileInfo(
     val promedio: Float,
     val likes: Int,
     val biografia: String,
-    val followed: Boolean = false
+    val followed: Boolean = false,
+    val followers : Int = 0,
+    val following: Int = 0,
 )

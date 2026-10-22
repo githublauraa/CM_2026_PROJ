@@ -133,8 +133,8 @@ fun ProfileContent(
 
 
             StatsPanel(
-                profile.numResenias,
-                profile.promedio,
+                profile.followers,
+                profile.following,
                 profile.likes
             )
 
