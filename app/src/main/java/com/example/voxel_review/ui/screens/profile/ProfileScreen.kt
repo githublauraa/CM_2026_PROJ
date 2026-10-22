@@ -59,6 +59,9 @@ fun ProfileScreen(
         },
         isOwnProfile = isOwnProfile,
         onEditProfileClick = onEditProfileClick,
+        buttonFollowPressed = {
+            profileViewModel.followOrUnfollow(profileId)
+        },
         modifier = modifier
     )
 }
@@ -73,6 +76,7 @@ fun ProfileContent(
     onReviewClick: (ReviewInfo) -> Unit,
     isOwnProfile: Boolean = false,
     onEditProfileClick: () -> Unit,
+    buttonFollowPressed: ()-> Unit,
     modifier: Modifier = Modifier
 ) {
 
@@ -119,6 +123,7 @@ fun ProfileContent(
             if (!isOwnProfile){
                 ButtonFollow(
                     buttonFollowPressed = {
+                        buttonFollowPressed()
                         Log.d("seguirUsuario", "El usuario ${state.currentUserId} esta tratando de seguir a ${state.profile.id}")
                     }
                 )
@@ -177,7 +182,8 @@ fun ProfileContentPreview() {
         buttonLogOutPressed = {},
         onImageSelected = {},
         onReviewClick = {},
-        onEditProfileClick = {}
+        onEditProfileClick = {} ,
+        buttonFollowPressed = {}
     )
 }
 

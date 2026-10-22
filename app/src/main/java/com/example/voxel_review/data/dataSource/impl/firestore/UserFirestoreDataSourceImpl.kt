@@ -79,7 +79,7 @@ class UserFirestoreDataSourceImpl @Inject constructor(
         val targetUserRef = db.collection("users").document(targetUserId)
 
         val followingRef = currentUserRef.collection("following").document(targetUserId)
-        val followersRef = targetUserRef.collection("followers").document(targetUserId)
+        val followersRef = targetUserRef.collection("followers").document(currentUserId)
 
         db.runTransaction { transaction ->
 
