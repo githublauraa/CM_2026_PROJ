@@ -5,12 +5,16 @@ import com.example.voxel_review.data.dataSource.impl.firestore.UserFirestoreData
 import com.example.voxel_review.data.info.profile.ProfileInfo
 import javax.inject.Inject
 import com.example.voxel_review.data.dtos.RegisterUserDto
+import org.checkerframework.checker.units.qual.s
+
 class UserRepository @Inject constructor(
-	private val userRemoteDataSource: UserFirestoreDataSourceImpl
+	private val userRemoteDataSource: UserFirestoreDataSourceImpl,
+	private val authRepository: AuthRepository
 ) {
 	suspend fun getUserById(id: String): Result<ProfileInfo> {
+		val currentUserId = authRepository.currentUser?.uid ?:""
 		return try {
-			val user = userRemoteDataSource.getUserById(id)
+			val user = userRemoteDataSource.getUserById(id, currentUserId)
 			val userProfileInfo = user.toUserProfileinfo()
 			Result.success(userProfileInfo)
 		} catch(e: Exception){
@@ -46,6 +50,16 @@ class UserRepository @Inject constructor(
 	): Result<Unit> {
 		return runCatching {
 			userRemoteDataSource.updateUserBio(userId, bio)
+		}
+	}
+
+
+	suspend fun followOrUnfollow(currentUserId: String, targetUserId: String): Result<Unit>{
+		return try {
+		    userRemoteDataSource.followOrUnfollow(currentUserId, targetUserId)
+			Result.success(Unit)
+		} catch (e: Exception){
+			Result.failure(e)
 		}
 	}
 }

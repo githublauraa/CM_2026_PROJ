@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import com.example.voxel_review.data.dtos.CreateReviewDto
+import com.google.firebase.auth.FirebaseAuth
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
@@ -138,6 +139,23 @@ class ProfileViewModel @Inject constructor(
 						errorMessage = "Error al actualizar la reseña"
 					)
 				}
+			}
+		}
+	}
+
+	fun followOrUnfollow(targetUserId: String){
+		val currentUserId = FirebaseAuth.getInstance().currentUser?.uid ?:""
+
+		viewModelScope.launch {
+			val result = userRepository.followOrUnfollow(currentUserId, targetUserId)
+			if (result.isSuccess){
+				val profile = uiState.value.profile ?: return@launch
+				_uiState.value = _uiState.value.copy(
+					profile = _uiState.value.profile?.copy(
+						followers = if(profile.followed) profile.followers - 1 else profile.followers + 1,
+						followed = !profile.followed
+					)
+				)
 			}
 		}
 	}

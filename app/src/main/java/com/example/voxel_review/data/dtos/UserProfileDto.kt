@@ -18,8 +18,9 @@ data class UserProfileRetrofitDto(
 	val numReviews: Int,
 	val likes: Int,
 	val avgRating: Float,
+	var followed: Boolean = false
 ): UserDtoGeneric(){
-	constructor(): this(0, "", null, null, 0, 0, 0f)
+	constructor(): this(0, "", null, null, 0, 0, 0f, false)
 
 	override fun toUserProfileinfo(): ProfileInfo {
 		return ProfileInfo(
@@ -30,6 +31,7 @@ data class UserProfileRetrofitDto(
 			promedio = avgRating,
 			likes = likes,
 			biografia = biography ?: "No hay biografia",
+			followed = followed
 		)
 	}
 }
@@ -42,8 +44,11 @@ data class UserProfileFirestoreDto(
 	val numReviews: Int,
 	val likes: Int,
 	val avgRating: Float,
+	var followed: Boolean = false,
+	val followersCount: Int,
+	val followingCount: Int
 ): UserDtoGeneric(){
-	constructor(): this("", "", null, null, 0, 0, 0f)
+	constructor(): this("", "", null, null, 0, 0, 0f, false, 0, 0)
 
 	override fun toUserProfileinfo(): ProfileInfo {
 		return ProfileInfo(
@@ -54,6 +59,9 @@ data class UserProfileFirestoreDto(
 			promedio = avgRating,
 			likes = likes,
 			biografia = bio ?: "No hay biografia",
+			followed = followed,
+			followers = followersCount,
+			following = followingCount
 		)
 	}
 }

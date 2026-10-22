@@ -10,12 +10,14 @@ import com.example.voxel_review.data.dtos.UserProfileFirestoreDto
 import com.example.voxel_review.data.dtos.VideoGameDto
 import com.example.voxel_review.data.dtos.CreateReviewUserDto
 import com.google.firebase.firestore.FieldValue
+import com.google.firebase.auth.FirebaseAuth
 
 class ReviewFirebaseDataSourceImpl @Inject constructor(
     private val db: FirebaseFirestore
 ) : ReviewRemoteDataSource {
     //obtener reseñas dado un usuario
     override suspend fun getUserReviews(id: String): List<ReviewDto> {
+        val currentUserId = FirebaseAuth.getInstance().currentUser?.uid
         val respuesta = db.collection("reviews")
             .whereEqualTo("userId", id).get().await()
         return respuesta.documents.map { doc ->
@@ -31,7 +33,21 @@ class ReviewFirebaseDataSourceImpl @Inject constructor(
                         gameDocument.toObject(VideoGameDto::class.java)
                             ?.copy(videoGameId = gameDocument.id)
                     }
-            existingReview.copy(reviewId = doc.id, videoGame = videoGame)
+            val hasLiked = if (!currentUserId.isNullOrBlank()) {
+                doc.reference.collection("likes")
+                    .document(currentUserId)
+                    .get()
+                    .await()
+                    .exists()
+            } else {
+                false
+            }
+
+            existingReview.copy(
+                reviewId = doc.id,
+                videoGame = videoGame,
+                likedByCurrentUser = hasLiked
+            )
         }
     }
 
