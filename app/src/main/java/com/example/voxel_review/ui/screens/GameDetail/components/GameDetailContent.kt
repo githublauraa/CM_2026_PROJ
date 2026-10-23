@@ -248,9 +248,9 @@ fun GameDetailContent(
                     Spacer(modifier = Modifier.height(20.dp))
 
                     // Videojuegos recomendados
-                    RecommendedGames(
-                        games = state.recommendedGames
-                    )
+//                    RecommendedGames(
+//                        games = state.recommendedGames
+//                    )
                 }
 
                 // Botón flotante para escribir reseña
