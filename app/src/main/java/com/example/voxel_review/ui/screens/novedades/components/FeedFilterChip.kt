@@ -1,4 +1,4 @@
-package com.example.voxel_review.ui.screens.Discover.components
+package com.example.voxel_review.ui.screens.novedades.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

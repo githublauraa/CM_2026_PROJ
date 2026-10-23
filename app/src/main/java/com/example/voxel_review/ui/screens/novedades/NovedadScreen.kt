@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.voxel_review.data.info.infoJuegosNovedades.JuegoInfo
+import com.example.voxel_review.data.info.review.ReviewInfo
 import com.example.voxel_review.ui.screens.novedades.components.NovedadesContent
 import com.example.voxel_review.ui.utils.FondoPantalla
 
@@ -24,20 +25,24 @@ import com.example.voxel_review.ui.utils.FondoPantalla
  */
 @Composable
 fun NovedadBody(
-    state: NovedadesState,
+    novedadesViewModel: NovedadesViewModel,
     onCategoriaSeleccionada: (String) -> Unit,
     onClick: (JuegoInfo) -> Unit,
     onNotificationClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onReviewClick: (ReviewInfo) -> Unit,
+    onUserProfileClick: (String) -> Unit = {},
 ) {
     Box(
         modifier = modifier.fillMaxSize()
     ) {
         NovedadesContent(
-            state = state,
+            novedadesViewModel = novedadesViewModel,
             onClick = onClick,
             onNotificationClick = onNotificationClick,
-            onCategoriaSeleccionada = onCategoriaSeleccionada
+            onCategoriaSeleccionada = onCategoriaSeleccionada,
+            onReviewClick = onReviewClick,
+            onUserProfileClick = onUserProfileClick
         )
     }
 }
@@ -56,10 +61,10 @@ fun NovedadScreen(
     novedadesViewModel: NovedadesViewModel,
     onClick: (JuegoInfo) -> Unit,
     onNotificationClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onReviewClick: (ReviewInfo) -> Unit,
+    onUserProfileClick: (String) -> Unit = {},
 ) {
-    // Convierte el StateFlow del ViewModel en un estado observable por Compose.
-    val state by novedadesViewModel.uiState.collectAsState()
 
     Box(
         modifier = modifier.fillMaxSize()
@@ -69,12 +74,14 @@ fun NovedadScreen(
         )
 
         NovedadBody(
-            state = state,
+            novedadesViewModel = novedadesViewModel,
             onCategoriaSeleccionada = {
                 novedadesViewModel.updateSelectedCategory(it)
             },
             onClick = onClick,
             onNotificationClick = onNotificationClick,
+            onReviewClick = onReviewClick,
+            onUserProfileClick = onUserProfileClick,
             modifier = Modifier.fillMaxSize()
         )
     }
@@ -89,6 +96,8 @@ fun NovedadScreenPreview() {
     NovedadScreen(
         novedadesViewModel = viewModel(),
         onClick = {},
-        onNotificationClick = {}
+        onNotificationClick = {},
+        onUserProfileClick = {},
+        onReviewClick = {}
     )
 }

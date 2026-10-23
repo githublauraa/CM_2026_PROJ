@@ -20,8 +20,7 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 class DiscoverViewModel @Inject constructor(
     private val videoGameRepository: VideoGameRepository,
-    private val reviewRepository: ReviewRepository,
-    private val authRepository: AuthRepository
+    private val reviewRepository: ReviewRepository
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(DiscoverState())
@@ -80,53 +79,6 @@ class DiscoverViewModel @Inject constructor(
         }
     }
 
-    fun toggleFollowedFilter(enabled: Boolean) {
-        _uiState.update {
-            it.copy(showOnlyFollowed = enabled)
-        }
-
-        if (enabled && _uiState.value.followedReviews.isEmpty()) {
-            loadFollowedReviews()
-        }
-    }
-
-    private fun loadFollowedReviews() {
-        val currentUserId = authRepository.currentUser?.uid ?: ""
-
-        if (currentUserId.isBlank()) {
-            _uiState.update {
-                it.copy(error = "Debes iniciar sesión para ver seguidos")
-            }
-            return
-        }
-
-        viewModelScope.launch {
-            _uiState.update {
-                it.copy(
-                    isLoading = true,
-                    error = null
-                )
-            }
-
-            reviewRepository.getFollowedUsersReviews(currentUserId)
-                .onSuccess { reviews ->
-                    _uiState.update {
-                        it.copy(
-                            followedReviews = reviews,
-                            isLoading = false
-                        )
-                    }
-                }
-                .onFailure { exception ->
-                    _uiState.update {
-                        it.copy(
-                            isLoading = false,
-                            error = exception.message ?: "No se pudieron obtener las reseñas"
-                        )
-                    }
-                }
-        }
-    }
     fun updateSearchQuery(input: String) {
         _uiState.update {
             it.copy(searchQuery = input)

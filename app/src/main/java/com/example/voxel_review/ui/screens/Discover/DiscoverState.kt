@@ -25,7 +25,5 @@ data class DiscoverState(
     val selectedGenre: GenreInfo? = null,
     val isLoading: Boolean = false,
     val error: String? = null,
-    val currentUserId: String = "",
-    val showOnlyFollowed: Boolean = false,
-    val followedReviews: List<ReviewInfo> = emptyList()
+    val currentUserId: String = ""
 )

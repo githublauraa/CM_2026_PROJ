@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.voxel_review.data.repository.VideoGameRepository
 import com.example.voxel_review.data.repository.ReviewRepository
 import com.example.voxel_review.data.dtos.toJuegoInfo
+import com.example.voxel_review.data.repository.AuthRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,7 +18,8 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 class NovedadesViewModel @Inject constructor(
     private val videoGameRepository: VideoGameRepository,
-    private val reviewRepository: ReviewRepository
+    private val reviewRepository: ReviewRepository,
+    private val authRepository: AuthRepository
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(NovedadesState())
@@ -91,6 +93,54 @@ class NovedadesViewModel @Inject constructor(
                             isLoading = false,
                             error = exception.message
                                 ?: "No se pudieron cargar los videojuegos"
+                        )
+                    }
+                }
+        }
+    }
+
+    fun toggleFollowedFilter(enabled: Boolean) {
+        _uiState.update {
+            it.copy(showOnlyFollowed = enabled)
+        }
+
+        if (enabled && _uiState.value.followedReviews.isEmpty()) {
+            loadFollowedReviews()
+        }
+    }
+
+    private fun loadFollowedReviews() {
+        val currentUserId = authRepository.currentUser?.uid ?: ""
+
+        if (currentUserId.isBlank()) {
+            _uiState.update {
+                it.copy(error = "Debes iniciar sesión para ver seguidos")
+            }
+            return
+        }
+
+        viewModelScope.launch {
+            _uiState.update {
+                it.copy(
+                    isLoading = true,
+                    error = null
+                )
+            }
+
+            reviewRepository.getFollowedUsersReviews(currentUserId)
+                .onSuccess { reviews ->
+                    _uiState.update {
+                        it.copy(
+                            followedReviews = reviews,
+                            isLoading = false
+                        )
+                    }
+                }
+                .onFailure { exception ->
+                    _uiState.update {
+                        it.copy(
+                            isLoading = false,
+                            error = exception.message ?: "No se pudieron obtener las reseñas"
                         )
                     }
                 }

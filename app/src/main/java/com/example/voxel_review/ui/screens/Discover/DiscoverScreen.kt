@@ -13,18 +13,15 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.voxel_review.ui.screens.Discover.components.DiscoverTopBar
 import com.example.voxel_review.ui.screens.Discover.components.TrendingSearchesSection
 import com.example.voxel_review.R
 import com.example.voxel_review.data.info.InfoDiscover.TrendingSearchInfo
 import com.example.voxel_review.data.info.review.ReviewInfo
 import com.example.voxel_review.ui.screens.Discover.components.DiscoverSearchBar
-import com.example.voxel_review.ui.screens.Discover.components.FeedFilterSection
-import com.example.voxel_review.ui.screens.Discover.components.FollowedReviewsSection
-import com.example.voxel_review.ui.screens.Discover.components.GenreFilterSection
+import com.example.voxel_review.ui.screens.novedades.components.FeedFilterSection
+import com.example.voxel_review.ui.screens.novedades.components.FollowedReviewsSection
 
 /**
  * Contenido visual principal de la pantalla de descubrimiento.
@@ -42,8 +39,6 @@ fun DiscoverScreen(
     onBackClick: () -> Unit,
     onNotificationClick: () -> Unit,
     onItemClick: (TrendingSearchInfo) -> Unit,
-    onReviewClick: (ReviewInfo) -> Unit,
-    onUserProfileClick: (String) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
 
@@ -87,26 +82,13 @@ fun DiscoverScreen(
             Spacer(
                 modifier = Modifier.height(20.dp)
             )
-            FeedFilterSection(
-                showOnlyFollowed = state.showOnlyFollowed,
-                onFilterSelected = { enabled ->
-                    discoverViewModel.toggleFollowedFilter(enabled)
-                }
-            )
+
 
             Spacer(
                 modifier = Modifier.height(20.dp)
             )
 
-            if (state.showOnlyFollowed) {
-                // Sección de contenido de publicaciones de usuarios seguidos
-                FollowedReviewsSection(
-                    isLoading = state.isLoading,
-                    reviews = state.followedReviews,
-                    onReviewClick = onReviewClick,
-                    onUserProfileClick = onUserProfileClick
-                )
-            } else {
+
 //                GenreFilterSection(
 //                    genres = state.genres,
 //                    selectedGenre = state.selectedGenre,
@@ -126,7 +108,7 @@ fun DiscoverScreen(
             Spacer(modifier = Modifier.height(80.dp))
         }
     }
-}
+
 
 //@Preview
 //@Composable

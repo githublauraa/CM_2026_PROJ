@@ -84,11 +84,13 @@ fun UserReviewsSection(
         )
 
         Card(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable(onClick = onClickReview),
             shape = RoundedCornerShape(16.dp),
             colors = CardDefaults.cardColors(
                 containerColor = cardBackgroundColor
-            )
+            ),
         ) {
 
             Row(
