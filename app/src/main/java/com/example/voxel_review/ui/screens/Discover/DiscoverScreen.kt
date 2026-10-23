@@ -63,10 +63,6 @@ fun DiscoverScreen(
                 )
         ) {
 
-            Spacer(
-                modifier = Modifier.height(8.dp)
-            )
-
             DiscoverTopBar(
                 onBackClick = onBackClick,
                 onNotificationClick = onNotificationClick
@@ -102,10 +98,26 @@ fun DiscoverScreen(
                 modifier = Modifier.height(20.dp)
             )
 
-            TrendingSearchesSection(
-                items = state.trendingSearches,
-                onItemClick = onItemClick
-            )
+            when {
+                state.isLoading -> com.example.voxel_review.ui.utils.ContentStatus("Cargando juegos…", loading = true)
+                state.error != null -> com.example.voxel_review.ui.utils.ContentStatus(
+                    "No pudimos cargar los juegos. Inténtalo de nuevo.",
+                    onRetry = discoverViewModel::loadVideoGames
+                )
+                else -> {
+                    val results = state.trendingSearches.filter {
+                        it.nombre.contains(state.searchQuery.trim(), ignoreCase = true)
+                    }
+                    if (results.isEmpty()) {
+                        com.example.voxel_review.ui.utils.ContentStatus(
+                            if (state.searchQuery.isBlank()) "Todavía no hay juegos para explorar."
+                            else "No encontramos juegos con ese nombre. Prueba otra búsqueda."
+                        )
+                    } else {
+                        TrendingSearchesSection(items = results, onItemClick = onItemClick)
+                    }
+                }
+            }
 
             Spacer(
                 modifier = Modifier.height(80.dp)

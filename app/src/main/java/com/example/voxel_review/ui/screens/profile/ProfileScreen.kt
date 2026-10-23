@@ -49,6 +49,8 @@ fun ProfileScreen(
 
     ProfileContent(
         state = state,
+        onRetry = { profileViewModel.getProfileById(profileId) },
+        onRetryReviews = { profileViewModel.getUserReviews(profileId) },
         onImageSelected = { profileViewModel.uploadImageFireBase(it) },
         onBackClick = onBackClick,
         onClickImage = onClickImage,
@@ -77,11 +79,24 @@ fun ProfileContent(
     isOwnProfile: Boolean = false,
     onEditProfileClick: () -> Unit,
     buttonFollowPressed: ()-> Unit,
+    onRetry: () -> Unit = {},
+    onRetryReviews: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
 
-    val profile = state.profile ?: return
-    val reviews = state.reviews ?: return
+    val profile = state.profile
+    if (profile == null) {
+        Column(modifier = modifier.fillMaxSize().background(VoxelBackground)) {
+            TopBar(onBackClick = onBackClick, onClickImage = onClickImage)
+            com.example.voxel_review.ui.utils.ContentStatus(
+                message = state.errorMessage ?: "Cargando perfil…",
+                loading = state.errorMessage == null,
+                onRetry = if (state.errorMessage != null) onRetry else null
+            )
+        }
+        return
+    }
+    val reviews = state.reviews
 
     Box(
         modifier = modifier
@@ -105,7 +120,7 @@ fun ProfileContent(
 
             ProfileImage(
                 profileImage = state.profileImageUrl?: "",
-                size = 200,
+                size = 160,
                 modifier = Modifier
                     .padding(16.dp)
                     .align(Alignment.CenterHorizontally)
@@ -145,10 +160,13 @@ fun ProfileContent(
                 followed = profile.following
             )
 
-            GameCards(
-                reviews = reviews,
-                onReviewClick = onReviewClick
-            )
+            when {
+                state.isReviewsLoading -> com.example.voxel_review.ui.utils.ContentStatus("Cargando reseñas…", loading = true)
+                state.reviewsError != null -> com.example.voxel_review.ui.utils.ContentStatus(
+                    state.reviewsError, onRetry = onRetryReviews
+                )
+                else -> GameCards(reviews = reviews, onReviewClick = onReviewClick)
+            }
 
             if (isOwnProfile) {
                 EditButton(

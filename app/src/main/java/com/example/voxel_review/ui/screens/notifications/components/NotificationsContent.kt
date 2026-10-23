@@ -32,8 +32,8 @@ fun NotificationsContent(
     LazyColumn(
         modifier = modifier.fillMaxSize(),
         contentPadding = PaddingValues(
-            start = 37.dp,
-            end = 37.dp,
+            start = 20.dp,
+            end = 20.dp,
             bottom = 24.dp
         ),
         verticalArrangement = Arrangement.spacedBy(12.dp)
@@ -45,6 +45,10 @@ fun NotificationsContent(
                 showSeeAll = true,
                 onSeeAllClick = {}
             )
+        }
+
+        if (highlightedNotifications.isEmpty()) {
+            item { com.example.voxel_review.ui.utils.ContentStatus("No tienes notificaciones destacadas.") }
         }
 
         items(highlightedNotifications) { item ->
@@ -73,6 +77,10 @@ fun NotificationsContent(
                 showSeeAll = true,
                 onSeeAllClick = { }
             )
+        }
+
+        if (followSuggestions.isEmpty()) {
+            item { com.example.voxel_review.ui.utils.ContentStatus("No hay sugerencias de seguimiento por ahora.") }
         }
 
         items(followSuggestions) { item ->

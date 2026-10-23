@@ -1,88 +1,21 @@
 package com.example.voxel_review.ui.screens.Discover.components
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.example.voxel_review.R
-import com.example.voxel_review.ui.theme.onSurfaceDark
-import com.example.voxel_review.ui.screens.novedades.components.Campana
+import com.example.voxel_review.ui.theme.White
+import com.example.voxel_review.ui.utils.ScreenHeader
 
-/**
- * Barra superior de navegación para la pantalla de Discover que incluye botón de retorno,
- * título principal y acceso a las notificaciones.
- *
- * @param modifier Modificador para personalizar la apariencia o disposición de la barra superior.
- * @param onNotificationClick Acción ejecutada al presionar el icono de notificaciones.
- * @param onBackClick Acción ejecutada al presionar el botón de regresar.
- */
 @Composable
-fun DiscoverTopBar(
-    modifier: Modifier = Modifier,
-    onNotificationClick: () -> Unit = {},
-    onBackClick: () -> Unit = {},
-) {
-    Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(horizontal = 20.dp, vertical = 12.dp),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Row(
-        modifier = Modifier.weight(1f),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(8.dp)
-    ) {
-            IconButton(onClick = onBackClick) {
-                Icon(
-                    painter = painterResource(R.drawable.ic_back),
-                    contentDescription = "Volver",
-                    tint = onSurfaceDark
-                )
-            }
-
-            Text(
-                text = "Descubrir",
-                color = onSurfaceDark,
-                fontSize = 28.sp,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.weight(1f)
-            )
-        }
-        Box(
-            modifier = Modifier
-                .size(40.dp)
-                .clip(CircleShape),
-            contentAlignment = Alignment.Center
-        ) {
-            IconButton(onClick = onNotificationClick) {
-                Campana(
-                    onClick = onNotificationClick,
-                    modifier = Modifier.size(40.dp)
-                )
-            }
+fun DiscoverTopBar(modifier: Modifier = Modifier, onNotificationClick: () -> Unit = {}, onBackClick: () -> Unit = {}) {
+    ScreenHeader("Descubrir", onBackClick, modifier) {
+        IconButton(onClick = onNotificationClick) {
+            Icon(painterResource(R.drawable.campana_notificaciones), "Notificaciones", tint = White, modifier = Modifier.size(24.dp))
         }
     }
-}
-
-@Preview
-@Composable
-private fun DiscoverTopBarPreview() {
-    DiscoverTopBar()
 }
