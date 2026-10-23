@@ -13,8 +13,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
@@ -35,17 +33,8 @@ fun StatsPanel(
         modifier = modifier
             .fillMaxWidth(0.9f)
             .padding(top = 8.dp, bottom = 20.dp)
-            .background(
-                Brush.horizontalGradient(
-                    listOf(
-                        VoxelPrimary.copy(alpha = 0.07f),
-                        VoxelSurface,
-                        VoxelSecondary.copy(alpha = 0.07f)
-                    )
-                ),
-                shape
-            )
-            .border(1.dp, VoxelBorder.copy(alpha = 0.65f), shape)
+            .background(VoxelSurface, shape)
+            .border(1.dp, VoxelTextSecondary.copy(alpha = 0.16f), shape)
             .height(IntrinsicSize.Min)
             .padding(horizontal = 8.dp, vertical = 18.dp),
         verticalAlignment = Alignment.CenterVertically
@@ -54,18 +43,16 @@ fun StatsPanel(
             valor = followers,
             etiqueta = "Seguidores",
             icono = Icons.Outlined.Group,
-            acento = VoxelPrimary,
             modifier = Modifier.weight(1f)
         )
         VerticalDivider(
             modifier = Modifier.fillMaxHeight().padding(vertical = 8.dp),
-            color = VoxelBorder
+            color = VoxelTextSecondary.copy(alpha = 0.16f)
         )
         ItemEstadistica(
             valor = followed,
             etiqueta = "Seguidos",
             icono = Icons.Outlined.PersonAdd,
-            acento = VoxelSecondary,
             modifier = Modifier.weight(1f)
         )
     }
@@ -76,7 +63,6 @@ private fun ItemEstadistica(
     valor: Int,
     etiqueta: String,
     icono: ImageVector,
-    acento: Color,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -100,12 +86,12 @@ private fun ItemEstadistica(
             Icon(
                 imageVector = icono,
                 contentDescription = null,
-                tint = acento,
+                tint = VoxelTextSecondary,
                 modifier = Modifier.size(15.dp)
             )
             Text(
                 text = etiqueta,
-                color = VoxelTextSecondary,
+                color = White.copy(alpha = 0.8f),
                 fontSize = 12.sp,
                 fontWeight = FontWeight.Medium,
                 textAlign = TextAlign.Center

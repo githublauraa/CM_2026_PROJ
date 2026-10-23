@@ -191,7 +191,11 @@ fun AppNavigation(
                     onBackClick = {
                         navController.popBackStack()
                     },
-                    onClickImage = {},
+                    onClickImage = {
+                        navController.navigate(AppScreen.Configuration.route) {
+                            launchSingleTop = true
+                        }
+                    },
                     onReviewClick = { review ->
                         navController.navigate(
                             "${AppScreen.FullReviews.route}?reviewId=${review.idResenia}&userId=$profileId"
