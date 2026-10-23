@@ -7,8 +7,6 @@ import javax.inject.Inject
 import com.example.voxel_review.data.dtos.RegisterUserDto
 import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.coroutines.tasks.await
-import kotlinx.coroutines.CancellationException
-import kotlinx.coroutines.withTimeoutOrNull
 import org.checkerframework.checker.units.qual.s
 
 class UserRepository @Inject constructor(
@@ -40,16 +38,11 @@ class UserRepository @Inject constructor(
 
 	suspend fun registerUser(nombreUsuario: String, bio: String?,userId: String, photoUrl: String? = null) : Result<Unit> {
 		return try {
-			val fcmToken = try {
-                withTimeoutOrNull(5_000) { FirebaseMessaging.getInstance().token.await() }
-            } catch (e: CancellationException) { throw e
-            } catch (_: Exception) { null }
-			val registerUserDto = RegisterUserDto(nombreUsuario, bio, photoUrl, fcmToken.orEmpty())
+			val fcmToken = FirebaseMessaging.getInstance().token.await()
+			val registerUserDto = RegisterUserDto(nombreUsuario, bio, photoUrl, fcmToken)
 			userRemoteDataSource.registerUser(registerUserDto, userId)
 			Result.success(Unit)
-		} catch(e: CancellationException) {
-            throw e
-        } catch(e: Exception) {
+		} catch(e: Exception) {
 			Result.failure(e)
 		}
 	}

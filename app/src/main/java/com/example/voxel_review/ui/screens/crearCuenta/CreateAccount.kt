@@ -1,10 +1,5 @@
 package com.example.voxel_review.ui.screens.crearCuenta
 
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.foundation.layout.imePadding
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -46,7 +41,7 @@ fun CreateAccountContent(
     modifier: Modifier = Modifier
 ) {
     Column (
-        modifier = modifier.fillMaxSize().imePadding().verticalScroll(rememberScrollState()).padding(bottom = 24.dp)
+        modifier = modifier
 
     ) {
         CreateAcountHeader()

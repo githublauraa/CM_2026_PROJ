@@ -15,13 +15,10 @@ package com.example.voxel_review.ui.screens.crearCuenta
 data class CreateAccountState(
     val email: String = "",
     val password: String = "",
-    val isLoading: Boolean = false,
-    val fieldErrors: Map<String, String> = emptyMap(),
     val mostrarContrasena: Boolean = false,
     val terminosAceptados: Boolean = false,
     val errorMessage: String = "",
     val mostrarMensaje: Boolean = false,
     val username: String = "",
-    val profilePending: Boolean = false,
     val bio: String = "",
 )

@@ -30,8 +30,7 @@ import com.example.voxel_review.ui.utils.Boton
 fun LoginButtons(
     logginButtonPressed: () -> Unit,
     createAccountButtonPressed: () -> Unit,
-    modifier: Modifier = Modifier,
-    isLoading: Boolean = false
+    modifier: Modifier = Modifier
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -39,10 +38,8 @@ fun LoginButtons(
             .fillMaxWidth()
             .padding(bottom = 80.dp)
     ) {
-        if (isLoading) com.example.voxel_review.ui.auth.AuthLoading()
         Boton(
-            textoBoton = if (isLoading) "Iniciando sesión…" else "Iniciar sesión",
-            enabled = !isLoading,
+            textoBoton = "iniciar sesión",
             colorFondo = tertiaryDark,
             colorBorde = tertiaryDark,
             colorLetra = surfaceContainerLowestLight,
@@ -72,7 +69,6 @@ fun LoginButtons(
 
         Boton(
             textoBoton = "Crear cuenta",
-            enabled = !isLoading,
             colorFondo = backgroundDark,
             colorBorde = secondaryDark,
             colorLetra = secondaryDark,

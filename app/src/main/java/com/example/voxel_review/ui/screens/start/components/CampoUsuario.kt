@@ -7,8 +7,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -33,15 +31,9 @@ fun CampoUsuario(
     usuario: String,
     icono: Int,
     onUserChange: (String) -> Unit,
-    modifier: Modifier = Modifier,
-    enabled: Boolean = true,
-    isError: Boolean = false
+    modifier: Modifier = Modifier
 ) {
     TextField(
-        enabled = enabled,
-        isError = isError,
-        singleLine = true,
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
         value = usuario,
         onValueChange = onUserChange,
 

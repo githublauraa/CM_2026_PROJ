@@ -1,9 +1,5 @@
 package com.example.voxel_review.ui.screens.start
 
-import androidx.compose.foundation.layout.imePadding
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
@@ -42,25 +38,29 @@ fun StartScreenContent(
     createAccountButtonPressed: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    androidx.compose.foundation.layout.Column(
+    Box(
         modifier = modifier.fillMaxSize()
-            .imePadding()
-            .verticalScroll(rememberScrollState())
-            .padding(horizontal = 16.dp, vertical = 16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(24.dp)
     ) {
-        StartHeader()
+        StartHeader(
+            modifier = Modifier.align(Alignment.TopCenter)
+        )
+
         LoginForm(
             state = state,
             onUserNameChange = onUserNameChange,
             onPasswordChange = onPasswordChange,
-            onMostrarContrasenaChange = onMostrarContrasenaChange
+            onMostrarContrasenaChange = onMostrarContrasenaChange,
+            modifier = Modifier
+                .align(Alignment.Center)
+                .offset(y = -30.dp)
         )
+
         LoginButtons(
             logginButtonPressed = logginButtonPressed,
             createAccountButtonPressed = createAccountButtonPressed,
-            isLoading = state.isLoading
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .offset(y = 30.dp)
         )
     }
 }

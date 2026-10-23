@@ -2,8 +2,6 @@
 package com.example.voxel_review.ui.screens.crearCuenta.components
 
 import androidx.compose.foundation.layout.*
-import com.example.voxel_review.ui.auth.AuthFieldError
-import com.example.voxel_review.ui.auth.AuthLoading
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -54,8 +52,6 @@ fun FomulariosCreateAcount(
 
             FormularioCreateAccount(
                 value = state.username,
-                enabled = !state.isLoading,
-                isError = state.fieldErrors.containsKey("username"),
                 icono = R.drawable.imagen_login_user,
                 placeholder = "Nombre de usuario",
                 onValueChange = onUsernameChange,
@@ -63,7 +59,6 @@ fun FomulariosCreateAcount(
                     .fillMaxWidth()
                     .height(50.dp)
             )
-            AuthFieldError(state.fieldErrors["username"])
         }
 
         // CAMPO BIO
@@ -78,8 +73,6 @@ fun FomulariosCreateAcount(
 
             FormularioCreateAccount(
                 value = state.bio,
-                enabled = !state.isLoading,
-                isError = state.fieldErrors.containsKey("bio"),
                 icono = R.drawable.bio,
                 placeholder = "Biografia",
                 onValueChange = onBioChange,
@@ -87,7 +80,6 @@ fun FomulariosCreateAcount(
                     .fillMaxWidth()
                     .height(50.dp)
             )
-            AuthFieldError(state.fieldErrors["bio"])
         }
 
         // CAMPO CORREO
@@ -102,9 +94,6 @@ fun FomulariosCreateAcount(
 
             FormularioCreateAccount(
                 value = state.email,
-                keyboardType = androidx.compose.ui.text.input.KeyboardType.Email,
-                enabled = !state.isLoading && !state.profilePending,
-                isError = state.fieldErrors.containsKey("email"),
                 icono = R.drawable.img_correo,
                 placeholder = "Correo electrónico",
                 onValueChange = onEmailChange,
@@ -112,7 +101,6 @@ fun FomulariosCreateAcount(
                     .fillMaxWidth()
                     .height(50.dp)
             )
-            AuthFieldError(state.fieldErrors["email"])
         }
 
         // CAMPO CONTRASEÑA
@@ -127,8 +115,6 @@ fun FomulariosCreateAcount(
 
             CampoContrasena(
                 password = state.password,
-                enabled = !state.isLoading && !state.profilePending,
-                isError = state.fieldErrors.containsKey("password"),
                 mostrarContrasena = state.mostrarContrasena,
                 onPasswordChange = onPasswordChange,
                 onMostrarContrasenaChange = onMostrarContrasenaChange,
@@ -143,30 +129,27 @@ fun FomulariosCreateAcount(
             )
         }
 
-        AuthFieldError(state.fieldErrors["password"])
-        if (!state.profilePending) Text("Usa al menos 6 caracteres. Combina letras, números y símbolos.", color = VoxelTextSecondary, fontSize = 12.sp)
-        if (state.profilePending) Text("Tu cuenta ya está creada. Completa o reintenta guardar tu perfil.", color = VoxelPrimary, fontSize = 13.sp)
-        AuthFieldError(state.errorMessage)
+        // MENSAJE DE ERROR
+        if (state.errorMessage.isNotEmpty()) {
+            Text(
+                text = state.errorMessage,
+                color = VoxelTextSecondary,
+                fontWeight = FontWeight.Bold,
+                fontSize = 12.sp
+            )
+        }
 
         // TÉRMINOS Y PRIVACIDAD
         TerminosPrivacidad(
             aceptado = state.terminosAceptados,
             onAceptadoChange = {
-                if (!state.isLoading) onTerminosAceptadosChange()
+                onTerminosAceptadosChange()
             }
         )
 
-        AuthFieldError(state.fieldErrors["terms"])
-        if (state.isLoading) AuthLoading()
-
         // BOTÓN REGISTRO
         Boton(
-            textoBoton = when {
-                state.isLoading -> "Guardando…"
-                state.profilePending -> "Reintentar guardar perfil"
-                else -> "Unirse a la aventura"
-            },
-            enabled = !state.isLoading,
+            textoBoton = "Unirse a la aventura",
             modifier = Modifier
                 .fillMaxWidth()
                 .height(50.dp),
