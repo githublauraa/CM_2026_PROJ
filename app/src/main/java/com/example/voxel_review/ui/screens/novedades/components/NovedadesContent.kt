@@ -59,7 +59,7 @@ fun NovedadesContent(
         modifier = modifier
             .fillMaxSize()
             .padding(horizontal = 22.dp)
-            .padding(top = 45.dp),
+            .padding(top = 8.dp),
     ) {
 
 
