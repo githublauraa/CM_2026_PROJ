@@ -120,7 +120,7 @@ fun ProfileContent(
 
             ProfileImage(
                 profileImage = state.profileImageUrl?: "",
-                size = 128,
+                size = 160,
                 modifier = Modifier
                     .padding(16.dp)
                     .align(Alignment.CenterHorizontally)
