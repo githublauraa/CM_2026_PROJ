@@ -42,8 +42,8 @@ fun SettingsScreen(
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
                 .padding(
-                    horizontal = 20.dp,
-                    vertical = 18.dp
+                    horizontal = 0.dp,
+                    vertical = 0.dp
                 ),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
@@ -52,6 +52,10 @@ fun SettingsScreen(
                 onBack = onBack
             )
 
+            Column(
+                modifier = Modifier.padding(horizontal = 20.dp),
+                verticalArrangement = Arrangement.spacedBy(20.dp)
+            ) {
             GeneralSettingsSection(
                 color = VoxelSurfaceVariant,
                 darkMode = darkMode,
@@ -63,6 +67,7 @@ fun SettingsScreen(
                 selectedAccent = selectedAccent,
                 onAccentChange = onAccentChange
             )
+            }
         }
     }
 }
