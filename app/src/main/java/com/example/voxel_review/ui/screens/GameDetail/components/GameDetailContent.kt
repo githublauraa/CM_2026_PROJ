@@ -31,6 +31,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import androidx.compose.ui.res.painterResource
+import com.example.voxel_review.R
 import com.example.voxel_review.data.info.review.ReviewInfo
 import com.example.voxel_review.ui.screens.GameDetail.GameDetailState
 import com.example.voxel_review.ui.theme.VoxelSurface
@@ -180,7 +182,10 @@ fun GameDetailContent(
 
                                     // Imagen del usuario a la izquierda
                                     AsyncImage(
-                                        model = review.imagenUsuario,
+                                        model = review.imagenUsuario.takeIf { it.isNotBlank() },
+                                        placeholder = painterResource(R.drawable.imagen_login_user),
+                                        fallback = painterResource(R.drawable.imagen_login_user),
+                                        error = painterResource(R.drawable.imagen_login_user),
                                         contentDescription = "Imagen del usuario",
                                         modifier = Modifier
                                             .size(55.dp)

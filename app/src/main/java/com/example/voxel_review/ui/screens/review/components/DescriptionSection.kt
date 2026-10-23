@@ -25,6 +25,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import androidx.compose.ui.res.painterResource
+import com.example.voxel_review.R
 import com.example.voxel_review.ui.screens.GameDetail.components.LikeCard
 import com.example.voxel_review.ui.theme.VoxelBorder
 import com.example.voxel_review.ui.theme.VoxelPrimary
@@ -65,7 +67,10 @@ fun DescriptionSection(
                     horizontalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
                     AsyncImage(
-                        model = imagenUsuario,
+                        model = imagenUsuario.takeIf { it.isNotBlank() },
+                        placeholder = painterResource(R.drawable.imagen_login_user),
+                        fallback = painterResource(R.drawable.imagen_login_user),
+                        error = painterResource(R.drawable.imagen_login_user),
                         contentDescription = "Foto del autor",
                         contentScale = ContentScale.Crop,
                         modifier = Modifier.size(44.dp).clip(CircleShape)
