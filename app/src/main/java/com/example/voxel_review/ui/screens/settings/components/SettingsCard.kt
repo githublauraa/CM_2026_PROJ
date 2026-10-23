@@ -28,16 +28,16 @@ fun SettingsCard(
             .fillMaxWidth()
             .border(
                 1.dp,
-                MaterialTheme.colorScheme.outlineVariant,
+                com.example.voxel_review.ui.theme.VoxelBorder.copy(alpha = 0.6f),
                 RoundedCornerShape(12.dp)
             ),
         shape = RoundedCornerShape(12.dp),
         colors = CardDefaults.cardColors(
-            containerColor = color
+            containerColor = com.example.voxel_review.ui.theme.VoxelSurface
         )
     ) {
         Column(
-            modifier = Modifier.padding(16.dp),
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 10.dp),
             content = content
         )
     }

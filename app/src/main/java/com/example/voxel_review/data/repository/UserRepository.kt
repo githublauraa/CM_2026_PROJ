@@ -5,6 +5,8 @@ import com.example.voxel_review.data.dataSource.impl.firestore.UserFirestoreData
 import com.example.voxel_review.data.info.profile.ProfileInfo
 import javax.inject.Inject
 import com.example.voxel_review.data.dtos.RegisterUserDto
+import com.google.firebase.messaging.FirebaseMessaging
+import kotlinx.coroutines.tasks.await
 import org.checkerframework.checker.units.qual.s
 
 class UserRepository @Inject constructor(
@@ -36,7 +38,8 @@ class UserRepository @Inject constructor(
 
 	suspend fun registerUser(nombreUsuario: String, bio: String?,userId: String, photoUrl: String? = null) : Result<Unit> {
 		return try {
-			val registerUserDto = RegisterUserDto(nombreUsuario, bio, photoUrl)
+			val fcmToken = FirebaseMessaging.getInstance().token.await()
+			val registerUserDto = RegisterUserDto(nombreUsuario, bio, photoUrl, fcmToken)
 			userRemoteDataSource.registerUser(registerUserDto, userId)
 			Result.success(Unit)
 		} catch(e: Exception) {
@@ -60,6 +63,12 @@ class UserRepository @Inject constructor(
 			Result.success(Unit)
 		} catch (e: Exception){
 			Result.failure(e)
+		}
+	}
+
+	suspend fun updateUsername(userId: String, username: String): Result<Unit>{
+		return runCatching {
+			userRemoteDataSource.updateUsername(userId, username)
 		}
 	}
 }

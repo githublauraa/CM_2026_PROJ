@@ -112,6 +112,11 @@ dependencies {
     //firestore
     implementation("com.google.firebase:firebase-firestore")
 
+
+    //messaging
+    implementation("com.google.firebase:firebase-analytics")
+    implementation("com.google.firebase:firebase-messaging")
+
     // Tests
     testImplementation(libs.junit)
 

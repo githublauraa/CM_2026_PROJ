@@ -36,62 +36,37 @@ class NovedadesViewModel @Inject constructor(
     }
 
     fun getAllJuegos() {
+        if (_uiState.value.isLoading) return
+        _uiState.update { it.copy(isLoading = true, error = null) }
         viewModelScope.launch {
-
-            _uiState.update {
-                it.copy(
-                    isLoading = true,
-                    error = null
-                )
-            }
-
             videoGameRepository.getAllVideoGames()
                 .onSuccess { games ->
-
-                    val juegos = games.mapNotNull { game ->
-
-                        val reviewsResult = reviewRepository.getGameReviews(
-                            game.videoGameId.toString()
-                        )
-
-                        val reviews = reviewsResult.getOrNull()?: emptyList()
-
-
-
-                        val promedio = if (reviews.isNotEmpty()) {
-                            reviews.map { review ->
-                                review.ratingGeneral
-                            }.average().toFloat()
-                        } else {
-                            null
+                    reviewRepository.getAllReviews()
+                        .onSuccess { reviews ->
+                            val juegos = games.mapNotNull { game ->
+                                val gameReviews = reviews.filter {
+                                    it.videoGameId == game.videoGameId
+                                }
+                                if (gameReviews.isEmpty()) return@mapNotNull null
+                                val promedio = gameReviews.map { it.ratingGeneral }
+                                    .average().toFloat()
+                                game.toJuegoInfo().copy(calificacion = promedio)
+                            }
+                            _uiState.update {
+                                it.copy(listaJuegos = juegos, isLoading = false, error = null)
+                            }
                         }
-
-                        if (reviews.isNullOrEmpty()) {
-                            return@mapNotNull null
+                        .onFailure { error ->
+                            _uiState.update {
+                                it.copy(isLoading = false, error = error.message
+                                    ?: "No se pudieron cargar las reseñas")
+                            }
                         }
-
-                        game.toJuegoInfo().copy(
-                            calificacion = promedio
-                        )
-                    }
-
-                    _uiState.update {
-                        it.copy(
-                            listaJuegos = juegos,
-                            isLoading = false,
-                            error = null
-                        )
-                    }
                 }
-                .onFailure { exception ->
-
+                .onFailure { error ->
                     _uiState.update {
-                        it.copy(
-                            listaJuegos = emptyList(),
-                            isLoading = false,
-                            error = exception.message
-                                ?: "No se pudieron cargar los videojuegos"
-                        )
+                        it.copy(isLoading = false, error = error.message
+                            ?: "No se pudieron cargar los videojuegos")
                     }
                 }
         }

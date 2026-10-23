@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -25,7 +25,7 @@ import com.example.voxel_review.data.info.InfoNotifications.LocalDestacadasProvi
 import com.example.voxel_review.data.info.InfoNotifications.NotificationInfo
 import com.example.voxel_review.ui.theme.primaryContainerDark
 import com.example.voxel_review.ui.theme.primaryDark
-import com.example.voxel_review.ui.theme.tertiaryContainerDark
+import com.example.voxel_review.ui.theme.VoxelTextSecondary
 import com.example.voxel_review.ui.utils.ProfileImage
 
 @Composable
@@ -37,7 +37,7 @@ fun HighlightedNotificationCard(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .height(61.dp)
+            .heightIn(min = 64.dp)
             .clip(RoundedCornerShape(16.dp))
             .background(primaryContainerDark)
             .border(
@@ -46,7 +46,7 @@ fun HighlightedNotificationCard(
                 shape = RoundedCornerShape(16.dp)
             )
             .clickable(onClick = onClick)
-            .padding(horizontal = 12.dp),
+            .padding(horizontal = 12.dp, vertical = 12.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
 
@@ -69,7 +69,7 @@ fun HighlightedNotificationCard(
 
             Text(
                 text = notification.message,
-                color = tertiaryContainerDark,
+                color = VoxelTextSecondary,
                 fontSize = 11.sp
             )
         }

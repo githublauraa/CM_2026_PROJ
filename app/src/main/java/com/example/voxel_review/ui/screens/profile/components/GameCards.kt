@@ -68,6 +68,10 @@ fun GameCards(
             modifier = Modifier.padding(bottom = 16.dp)
         )
 
+        if (reviews.isEmpty()) {
+            com.example.voxel_review.ui.utils.ContentStatus("Todavía no hay reseñas. Los juegos reseñados aparecerán aquí.")
+        }
+
         LazyVerticalGrid(
             columns = GridCells.Fixed(GRID_COLUMNS),
             verticalArrangement = Arrangement.spacedBy(CARD_SPACING_DP.dp),

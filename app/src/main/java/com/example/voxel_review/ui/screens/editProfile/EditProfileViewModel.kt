@@ -36,6 +36,7 @@ class EditProfileViewModel @Inject constructor(
                     _uiState.update {
                         it.copy(
                             bio = profile.biografia,
+                            username = profile.nick,
                             isProfileLoading = false,
                             isProfileLoaded = true
                         )
@@ -63,40 +64,60 @@ class EditProfileViewModel @Inject constructor(
         }
     }
 
-    fun saveBio() {
-        if (_uiState.value.isLoading || !_uiState.value.isProfileLoaded) return
+    fun updateUsername(username: String) {
+        if (!_uiState.value.isProfileLoaded || _uiState.value.isLoading) return
+        _uiState.update {
+            it.copy(
+                username = username,
+                isSaved = false,
+                errorMessage = null
+            )
+        }
+    }
+
+    fun saveProfile() {
+        val state = _uiState.value
+        if (state.isLoading || !state.isProfileLoaded) return
+
+        val userId = firebaseAuth.currentUser?.uid
+        if (userId.isNullOrBlank()) {
+            _uiState.update {
+                it.copy(errorMessage = "Usuario no autenticado")
+            }
+            return
+        }
+
+        _uiState.update {
+            it.copy(
+                isLoading = true,
+                isSaved = false,
+                errorMessage = null
+            )
+        }
 
         viewModelScope.launch {
+            val bioResult = userRepository.updateUserBio(userId, state.bio)
 
-            val userId = firebaseAuth.currentUser?.uid
-
-            if (userId.isNullOrBlank()) {
+            if (bioResult.isFailure) {
                 _uiState.update {
                     it.copy(
-                        errorMessage = "Usuario no autenticado",
-                        isSaved = false
+                        isLoading = false,
+                        errorMessage = bioResult.exceptionOrNull()?.message
+                            ?: "Error al guardar la biografía"
                     )
                 }
                 return@launch
             }
 
-            _uiState.update {
-                it.copy(
-                    isLoading = true,
-                    isSaved = false,
-                    errorMessage = null
-                )
-            }
+            val usernameResult =
+                userRepository.updateUsername(userId, state.username)
 
-            val bio = _uiState.value.bio
-
-            userRepository.updateUserBio(userId, bio)
+            usernameResult
                 .onSuccess {
                     _uiState.update {
                         it.copy(
                             isLoading = false,
-                            isSaved = true,
-                            errorMessage = null
+                            isSaved = true
                         )
                     }
                 }
@@ -104,12 +125,13 @@ class EditProfileViewModel @Inject constructor(
                     _uiState.update {
                         it.copy(
                             isLoading = false,
-                            isSaved = false,
                             errorMessage = error.message
-                                ?: "Error al guardar la biografía"
+                                ?: "La biografía se guardó, pero no se pudo guardar el username"
                         )
                     }
                 }
         }
     }
+
+
 }

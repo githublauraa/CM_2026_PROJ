@@ -1,5 +1,6 @@
 package com.example.voxel_review.ui.screens.Discover.components
 
+import androidx.compose.foundation.border
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -22,6 +23,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -30,6 +32,8 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.voxel_review.R
 import com.example.voxel_review.data.info.InfoDiscover.TrendingSearchInfo
+import com.example.voxel_review.ui.theme.VoxelSurface
+import com.example.voxel_review.ui.theme.VoxelBorder
 import com.example.voxel_review.ui.theme.onPrimaryDark
 import com.example.voxel_review.ui.theme.onSurfaceDark
 import com.example.voxel_review.ui.theme.onSurfaceVariantDark
@@ -52,10 +56,11 @@ fun TrendingSearchItem(
         modifier = modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(16.dp))
-            .background(onPrimaryDark)
+            .background(VoxelSurface)
+            .border(1.dp, VoxelBorder.copy(alpha = 0.65f), RoundedCornerShape(16.dp))
             .clickable { onClick() }
-            .padding(horizontal = 18.dp, vertical = 16.dp),
-        horizontalArrangement = Arrangement.SpaceBetween,
+            .padding(12.dp),
+        horizontalArrangement = Arrangement.spacedBy(14.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         AsyncImage(
@@ -70,27 +75,31 @@ fun TrendingSearchItem(
             error = painterResource(id = R.drawable.imagen_login_user),
 
             contentScale = ContentScale.Crop,
-            modifier = modifier.size(50.dp).clip(CircleShape)
+            modifier = Modifier.size(64.dp).clip(RoundedCornerShape(12.dp))
         )
-        Column {
+        Column(modifier = Modifier.weight(1f)) {
             Text(
                 text = item.nombre,
                 color = onSurfaceDark,
                 fontSize = 16.sp,
-                fontWeight = FontWeight.SemiBold
+                fontWeight = FontWeight.SemiBold,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(
                 text = item.categoria,
                 color = onSurfaceVariantDark,
-                fontSize = 13.sp
+                fontSize = 13.sp,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis
             )
         }
 
         Box(
             modifier = Modifier
-                .size(28.dp)
-                .clip(CircleShape),
+                .size(32.dp)
+                .background(secondaryDark.copy(alpha = 0.08f), RoundedCornerShape(10.dp)),
             contentAlignment = Alignment.Center
         ) {
             Icon(

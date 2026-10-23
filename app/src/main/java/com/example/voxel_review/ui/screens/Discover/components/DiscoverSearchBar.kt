@@ -1,6 +1,9 @@
 package com.example.voxel_review.ui.screens.Discover.components
 
 
+import androidx.compose.foundation.border
+import com.example.voxel_review.ui.theme.VoxelBorder
+import com.example.voxel_review.ui.theme.VoxelSurface
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -40,7 +43,8 @@ fun DiscoverSearchBar(
         onValueChange = onQueryChange,
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 20.dp),
+            .padding(horizontal = 20.dp)
+            .border(1.dp, VoxelBorder, RoundedCornerShape(16.dp)),
         shape = RoundedCornerShape(16.dp),
         placeholder = {
             Text(
@@ -59,9 +63,9 @@ fun DiscoverSearchBar(
         },
         singleLine = true,
         colors = TextFieldDefaults.colors(
-            focusedContainerColor = primaryDark,
-            unfocusedContainerColor = primaryDark,
-            disabledContainerColor = primaryDark,
+            focusedContainerColor = VoxelSurface,
+            unfocusedContainerColor = VoxelSurface,
+            disabledContainerColor = VoxelSurface,
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
             disabledIndicatorColor = Color.Transparent,

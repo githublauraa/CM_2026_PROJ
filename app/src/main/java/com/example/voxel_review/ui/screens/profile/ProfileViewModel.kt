@@ -35,6 +35,7 @@ class ProfileViewModel @Inject constructor(
 	val uiState: StateFlow<ProfileState> = _uiState
 
 	fun getProfileById(userId: String) {
+        _uiState.update { it.copy(errorMessage = null) }
 		viewModelScope.launch { 
 			val result = userRepository.getUserById(userId)
 			if (result.isSuccess){
@@ -42,14 +43,18 @@ class ProfileViewModel @Inject constructor(
 				_uiState.update {
 					it.copy(
 						profile = userProfileInfo,
+                        errorMessage = null,
 						profileImageUrl = userProfileInfo.pfp
 					)
 				}
-			}
-		}
-	}
+            } else {
+                _uiState.update { it.copy(errorMessage = "No se pudo cargar el perfil") }
+            }
+        }
+    }
 
 	fun getUserReviews(userId: String) {
+        _uiState.update { it.copy(isReviewsLoading = true, reviewsError = null) }
 		viewModelScope.launch {
 			val result = reviewRepository.getUserReviews(userId)
 
@@ -58,13 +63,16 @@ class ProfileViewModel @Inject constructor(
 
 				_uiState.update {
 					it.copy(
-						reviews = userReviews
+						reviews = userReviews,
+                        isReviewsLoading = false,
+                        reviewsError = null
 					)
 				}
 			} else {
 				_uiState.update {
 					it.copy(
-						errorMessage = "Error al cargar las reseñas"
+						reviewsError = "No se pudieron cargar las reseñas",
+                        isReviewsLoading = false
 					)
 				}
 			}

@@ -35,6 +35,7 @@ import androidx.compose.runtime.LaunchedEffect
 fun EditProfileContent(
     state: EditProfileState,
     onBioChange: (String) -> Unit,
+    onUsernameChange: (String) -> Unit,
     onSaveClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -82,6 +83,26 @@ fun EditProfileContent(
                     )
                 } else if (state.isProfileLoading) {
                     Text(text = "Cargando perfil...", color = VoxelTextSecondary)
+                }
+
+                Text(
+                    text = "Nombre de usuario",
+                    color = VoxelTextSecondary,
+                    fontWeight = FontWeight.Bold
+                )
+
+                if (state.isProfileLoaded) {
+                    FormularioCreateAccount(
+                        value = state.username,
+                        icono = R.drawable.bio,
+                        placeholder = "username",
+                        onValueChange = onUsernameChange,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(50.dp)
+                    )
+                } else if (state.isProfileLoading) {
+                    Text(text = "Cargando username", color = VoxelTextSecondary)
                 }
 
                 // BOTÓN GUARDAR CAMBIOS
@@ -161,7 +182,8 @@ fun EditProfileScreen(
     EditProfileContent(
         state = state,
         onBioChange = editProfileViewModel::updateBio,
-        onSaveClick = editProfileViewModel::saveBio,
+        onSaveClick = editProfileViewModel::saveProfile,
+        onUsernameChange = editProfileViewModel::updateUsername,
         modifier = modifier
     )
 }
@@ -174,6 +196,7 @@ fun EditProfileContentPreview() {
             bio = "Me encantan los videojuegos RPG y de aventura.",
             isProfileLoaded = true
         ),
+        onUsernameChange = {},
         onBioChange = {},
         onSaveClick = {}
     )

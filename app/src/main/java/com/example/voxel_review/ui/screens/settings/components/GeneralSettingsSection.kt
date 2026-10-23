@@ -2,6 +2,8 @@ package com.example.voxel_review.ui.screens.settings.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.material3.HorizontalDivider
+import com.example.voxel_review.ui.theme.VoxelBorder
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -25,6 +27,7 @@ fun GeneralSettingsSection(
     ) {
         SectionTitle("AJUSTES GENERALES")
 
+        SettingsCard(color = color) {
         SettingSwitch(
             color = color,
             symbol = "☾",
@@ -34,6 +37,7 @@ fun GeneralSettingsSection(
             onCheckedChange = {}
         )
 
+        HorizontalDivider(color = VoxelBorder)
         SettingSwitch(
             color = color,
             iconRes = R.drawable.campana_notificaciones,
@@ -42,6 +46,7 @@ fun GeneralSettingsSection(
             accentColor = VoxelSecondary,
             onCheckedChange = onNotificationsChange
         )
+        }
     }
 }
 @Preview(

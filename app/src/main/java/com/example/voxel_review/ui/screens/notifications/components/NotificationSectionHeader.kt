@@ -13,7 +13,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import com.example.voxel_review.ui.theme.secondaryDark
-import com.example.voxel_review.ui.theme.tertiaryContainerDark
+import com.example.voxel_review.ui.theme.VoxelTextSecondary
 
 /**
  * Encabezado para separar y clasificar las distintas secciones dentro del centro de notificaciones.
@@ -38,7 +38,7 @@ fun NotificationSectionHeader(
         Text(
             text = title,
             modifier = Modifier.weight(1f),
-            color = tertiaryContainerDark,
+            color = VoxelTextSecondary,
             fontSize = 13.sp,
             fontWeight = FontWeight.Bold
         )

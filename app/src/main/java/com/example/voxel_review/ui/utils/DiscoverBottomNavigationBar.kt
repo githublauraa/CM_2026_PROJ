@@ -79,7 +79,7 @@ fun DiscoverBottomNavigationBar(
         navController.currentBackStackEntryAsState()
 
     val currentRoute =
-        navBackStackEntry.value?.destination?.route
+        navBackStackEntry.value?.destination?.route?.substringBefore("?")
 
 
     val barColor =

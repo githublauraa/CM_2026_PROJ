@@ -5,6 +5,10 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Text
+import androidx.compose.ui.unit.sp
+import com.example.voxel_review.ui.theme.VoxelTextSecondary
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -20,10 +24,7 @@ import com.example.voxel_review.ui.screens.Discover.components.DiscoverTopBar
 import com.example.voxel_review.ui.screens.Discover.components.TrendingSearchesSection
 import com.example.voxel_review.R
 import com.example.voxel_review.data.info.InfoDiscover.TrendingSearchInfo
-import com.example.voxel_review.data.info.review.ReviewInfo
 import com.example.voxel_review.ui.screens.Discover.components.DiscoverSearchBar
-import com.example.voxel_review.ui.screens.Discover.components.FeedFilterSection
-import com.example.voxel_review.ui.screens.Discover.components.FollowedReviewsSection
 import com.example.voxel_review.ui.screens.Discover.components.GenreFilterSection
 
 /**
@@ -42,8 +43,6 @@ fun DiscoverScreen(
     onBackClick: () -> Unit,
     onNotificationClick: () -> Unit,
     onItemClick: (TrendingSearchInfo) -> Unit,
-    onReviewClick: (ReviewInfo) -> Unit,
-    onUserProfileClick: (String) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
 
@@ -64,17 +63,16 @@ fun DiscoverScreen(
                 )
         ) {
 
-            Spacer(
-                modifier = Modifier.height(8.dp)
-            )
-
             DiscoverTopBar(
                 onBackClick = onBackClick,
                 onNotificationClick = onNotificationClick
             )
 
-            Spacer(
-                modifier = Modifier.height(12.dp)
+            Text(
+                text = "Tu próximo juego empieza aquí",
+                color = VoxelTextSecondary,
+                fontSize = 13.sp,
+                modifier = Modifier.padding(start = 20.dp, end = 20.dp, bottom = 16.dp)
             )
 
             DiscoverSearchBar(
@@ -87,10 +85,12 @@ fun DiscoverScreen(
             Spacer(
                 modifier = Modifier.height(20.dp)
             )
-            FeedFilterSection(
-                showOnlyFollowed = state.showOnlyFollowed,
-                onFilterSelected = { enabled ->
-                    discoverViewModel.toggleFollowedFilter(enabled)
+
+            GenreFilterSection(
+                genres = state.genres,
+                selectedGenre = state.selectedGenre,
+                onGenreSelected = {
+                    discoverViewModel.updateSelectedGenre(it)
                 }
             )
 
@@ -98,40 +98,41 @@ fun DiscoverScreen(
                 modifier = Modifier.height(20.dp)
             )
 
-            if (state.showOnlyFollowed) {
-                // Sección de contenido de publicaciones de usuarios seguidos
-                FollowedReviewsSection(
-                    isLoading = state.isLoading,
-                    reviews = state.followedReviews,
-                    onReviewClick = onReviewClick,
-                    onUserProfileClick = onUserProfileClick
+            when {
+                state.isLoading -> com.example.voxel_review.ui.utils.ContentStatus("Cargando juegos…", loading = true)
+                state.error != null -> com.example.voxel_review.ui.utils.ContentStatus(
+                    "No pudimos cargar los juegos. Inténtalo de nuevo.",
+                    onRetry = discoverViewModel::loadVideoGames
                 )
-            } else {
-//                GenreFilterSection(
-//                    genres = state.genres,
-//                    selectedGenre = state.selectedGenre,
-//                    onGenreSelected = {
-//                        discoverViewModel.updateSelectedGenre(it)
-//                    }
-//                )
-
-                Spacer(modifier = Modifier.height(20.dp))
-
-                TrendingSearchesSection(
-                    items = state.trendingSearches,
-                    onItemClick = onItemClick
-                )
+                else -> {
+                    val results = state.trendingSearches.filter {
+                        it.nombre.contains(state.searchQuery.trim(), ignoreCase = true)
+                    }
+                    if (results.isEmpty()) {
+                        com.example.voxel_review.ui.utils.ContentStatus(
+                            if (state.searchQuery.isBlank()) "Todavía no hay juegos para explorar."
+                            else "No encontramos juegos con ese nombre. Prueba otra búsqueda."
+                        )
+                    } else {
+                        TrendingSearchesSection(items = results, onItemClick = onItemClick)
+                    }
+                }
             }
 
-            Spacer(modifier = Modifier.height(80.dp))
+            Spacer(
+                modifier = Modifier.height(80.dp)
+            )
         }
     }
 }
 
-//@Preview
-//@Composable
-//fun DiscoverScreenPreview() {
-//    DiscoverScreen(
-//
-//    )
-//}
+@Preview
+@Composable
+fun DiscoverScreenPreview() {
+    DiscoverScreen(
+        discoverViewModel = viewModel(),
+        onBackClick = {},
+        onNotificationClick = {},
+        onItemClick = {}
+    )
+}

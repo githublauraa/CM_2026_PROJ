@@ -44,7 +44,8 @@ class DiscoverViewModel @Inject constructor(
         loadVideoGames()
     }
 
-    private fun loadVideoGames() {
+    fun loadVideoGames() {
+        if (_uiState.value.isLoading) return
         viewModelScope.launch {
 
             _uiState.update {
@@ -73,7 +74,7 @@ class DiscoverViewModel @Inject constructor(
                     _uiState.update {
                         it.copy(
                             isLoading = false,
-                            error = exception.message
+                            error = exception.message ?: "No se pudieron cargar los juegos"
                         )
                     }
                 }
