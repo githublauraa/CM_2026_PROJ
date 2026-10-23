@@ -91,7 +91,7 @@ class DiscoverViewModel @Inject constructor(
     }
 
     private fun loadFollowedReviews() {
-        val currentUserId = _uiState.value.currentUserId
+        val currentUserId = authRepository.currentUser?.uid ?: ""
 
         if (currentUserId.isBlank()) {
             _uiState.update {
