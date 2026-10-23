@@ -1,6 +1,7 @@
 package com.example.voxel_review.ui.screens.notifications.components
 
 
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -31,6 +32,8 @@ fun NotificationsTopBar(
 ) {
     CenterAlignedTopAppBar(
         modifier = modifier,
+        // El Scaffold principal ya reserva el espacio de las barras del sistema.
+        windowInsets = WindowInsets(0, 0, 0, 0),
         title = {
             Text(
                 text = stringResource(R.string.notificaciones),
