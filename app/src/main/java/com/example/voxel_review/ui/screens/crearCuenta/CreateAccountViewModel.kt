@@ -1,167 +1,82 @@
 package com.example.voxel_review.ui.screens.crearCuenta
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.viewModelScope
+import com.example.voxel_review.data.repository.AuthRepository
+import com.example.voxel_review.data.repository.UserRepository
+import com.example.voxel_review.ui.auth.AuthValidation
+import com.example.voxel_review.ui.auth.authErrorMessage
 import dagger.hilt.android.lifecycle.HiltViewModel
+import jakarta.inject.Inject
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
-import jakarta.inject.Inject
-import com.example.voxel_review.data.repository.AuthRepository
-import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import com.example.voxel_review.data.repository.UserRepository
-/**
- * ViewModel encargado de administrar el estado y la lógica
- * de la pantalla de creación de cuenta.
- */
+
 @HiltViewModel
 class CreateAccountViewModel @Inject constructor(
     private val authRepository: AuthRepository,
-    private val userRepository: UserRepository
-): ViewModel() {
-
-    // Estado interno modificable únicamente desde el ViewModel.
-    private val _uiState = MutableStateFlow(CreateAccountState())
-
-    // Estado público de solo lectura que puede observar la interfaz.
+    private val userRepository: UserRepository,
+    private val savedStateHandle: SavedStateHandle
+) : ViewModel() {
+    private var pendingUserId: String?
+        get() = savedStateHandle["pendingUserId"]
+        set(value) { savedStateHandle["pendingUserId"] = value }
+    private val _uiState = MutableStateFlow(CreateAccountState(profilePending = pendingUserId != null))
     val uiState: StateFlow<CreateAccountState> = _uiState
 
-    fun updateBio(input: String){
-        _uiState.update {
-            it.copy(bio = input)
-        }
-    }
+    fun updateBio(input: String) { if (!_uiState.value.isLoading) _uiState.update { it.copy(bio = input, fieldErrors = it.fieldErrors - "bio", errorMessage = "") } }
+    fun updateUsername(input: String) { if (!_uiState.value.isLoading) _uiState.update { it.copy(username = input, fieldErrors = it.fieldErrors - "username", errorMessage = "") } }
+    fun updateEmail(input: String) { if (!_uiState.value.isLoading && !_uiState.value.profilePending) _uiState.update { it.copy(email = input, fieldErrors = it.fieldErrors - "email", errorMessage = "") } }
+    fun updatePassword(input: String) { if (!_uiState.value.isLoading && !_uiState.value.profilePending) _uiState.update { it.copy(password = input, fieldErrors = it.fieldErrors - "password", errorMessage = "") } }
+    fun updateMostrarContrasena() { _uiState.update { it.copy(mostrarContrasena = !it.mostrarContrasena) } }
+    fun updateTerminosAceptados() { if (!_uiState.value.isLoading) _uiState.update { it.copy(terminosAceptados = !it.terminosAceptados, fieldErrors = it.fieldErrors - "terms", errorMessage = "") } }
 
-
-    fun updateUsername(input: String) {
-        _uiState.update {
-            it.copy(username = input)
-        }
-    }
-
-
-    /**
-     * Actualiza el correo electrónico ingresado.
-     */
-    fun updateEmail(input: String) {
-        _uiState.update {
-            it.copy(email = input)
-        }
-    }
-
-    /**
-     * Actualiza la contraseña ingresada.
-     */
-    fun updatePassword(input: String) {
-        _uiState.update {
-            it.copy(password = input)
-        }
-    }
-
-    /**
-     * Alterna la visibilidad de la contraseña.
-     */
-    fun updateMostrarContrasena() {
-        _uiState.update {
-            it.copy(mostrarContrasena = !it.mostrarContrasena)
-        }
-    }
-
-    /**
-     * Alterna el estado de aceptación de los términos y condiciones.
-     */
-    fun updateTerminosAceptados() {
-        _uiState.update {
-            it.copy(terminosAceptados = !it.terminosAceptados)
-        }
-    }
-
-    /**
-     * Valida los datos necesarios para crear una cuenta.
-     * Si encuentra un error, actualiza el mensaje mostrado en la interfaz.
-     *
-     * @return `true` si los datos son válidos, `false` en caso contrario.
-     */
     fun createAcount(onSuccess: () -> Unit) {
-
-        if (_uiState.value.email.isEmpty()) {
-            _uiState.update {
-                it.copy(
-                    errorMessage = "Por favor, completa todos los campos"
-                )
+        val state = _uiState.value
+        if (state.isLoading) return
+        val errors = buildMap {
+            AuthValidation.username(state.username)?.let { put("username", it) }
+            if (state.bio.length > 300) put("bio", "La biografía no puede superar 300 caracteres.")
+            if (!state.profilePending) {
+                AuthValidation.email(state.email)?.let { put("email", it) }
+                AuthValidation.password(state.password, registration = true)?.let { put("password", it) }
             }
-            return
+            if (!state.terminosAceptados) put("terms", "Acepta los términos y condiciones para continuar.")
         }
-
-        if (_uiState.value.password.length < 6) {
-            _uiState.update {
-                it.copy(
-                    errorMessage = "La contraseña debe tener al menos 6 caracteres"
-                )
-            }
-            return
-        }
-
-        if (!_uiState.value.terminosAceptados) {
-            _uiState.update {
-                it.copy(
-                    errorMessage = "Por favor, acepta los términos y condiciones"
-                )
-            }
-            return
-        }
-
+        _uiState.update { it.copy(fieldErrors = errors, errorMessage = "") }
+        if (errors.isNotEmpty()) return
+        _uiState.update { it.copy(isLoading = true) }
         viewModelScope.launch {
-
-            val result = authRepository.signUp(
-                _uiState.value.email,
-                _uiState.value.password
-            )
-
-            if (result.isSuccess) {
-
-                val userId = authRepository.currentUser?.uid
-
-                if (userId == null) {
-                    _uiState.update {
-                        it.copy(
-                            errorMessage = "No se pudo obtener el ID del usuario",
-                            mostrarMensaje = true
-                        )
+            try {
+                if (pendingUserId == null) {
+                    val result = authRepository.signUp(state.email.trim(), state.password)
+                    if (result.isFailure) {
+                        _uiState.update { it.copy(errorMessage = authErrorMessage(result.exceptionOrNull(), true)) }
+                        return@launch
                     }
+                    pendingUserId = authRepository.currentUser?.uid
+                    _uiState.update { it.copy(profilePending = pendingUserId != null, password = "") }
+                }
+                val userId = pendingUserId
+                if (userId == null || authRepository.currentUser?.uid != userId) {
+                    _uiState.update { it.copy(errorMessage = "La sesión no está disponible. Vuelve a iniciar sesión para continuar.") }
                     return@launch
                 }
-
-                val registerResult = userRepository.registerUser(
-                    nombreUsuario = _uiState.value.username,
-                    bio = _uiState.value.bio,
-                    userId = userId,
-                    photoUrl = null
-                )
-
-                if (registerResult.isSuccess) {
+                val result = userRepository.registerUser(state.username.trim(), state.bio.trim(), userId, null)
+                if (result.isSuccess) {
+                    pendingUserId = null
+                    _uiState.update { it.copy(profilePending = false) }
                     onSuccess()
                 } else {
-                    _uiState.update {
-                        it.copy(
-                            errorMessage = registerResult.exceptionOrNull()?.message
-                                ?: "Error al guardar el usuario en Firestore",
-                            mostrarMensaje = true
-                        )
-                    }
+                    _uiState.update { it.copy(errorMessage = "Tu cuenta ya se creó, pero falta guardar el perfil. " + authErrorMessage(result.exceptionOrNull(), true) + " Pulsa Reintentar guardar perfil.") }
                 }
-
-            } else {
-                _uiState.update {
-                    val mensaje = result.exceptionOrNull()?.message
-                        ?: "Error al crear la cuenta"
-
-                    it.copy(
-                        errorMessage = mensaje,
-                        mostrarMensaje = true
-                    )
-                }
-            }
+            } catch (e: CancellationException) { throw e
+            } catch (e: Exception) {
+                _uiState.update { it.copy(errorMessage = authErrorMessage(e, true)) }
+            } finally { _uiState.update { it.copy(isLoading = false) } }
         }
     }
 }

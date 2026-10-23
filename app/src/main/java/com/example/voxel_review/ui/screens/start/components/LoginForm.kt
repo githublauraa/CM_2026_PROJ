@@ -1,5 +1,6 @@
 package com.example.voxel_review.ui.screens.start.components
 
+import com.example.voxel_review.ui.auth.AuthFieldError
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
@@ -34,7 +35,7 @@ fun LoginForm(
     modifier: Modifier = Modifier
 ) {
     Column(
-        modifier = modifier
+        modifier = modifier.width(330.dp)
     ) {
         MensajeLogin()
 
@@ -52,12 +53,16 @@ fun LoginForm(
 
         CampoUsuario(
             usuario = state.correo,
+            enabled = !state.isLoading,
+            isError = state.fieldErrors.containsKey("email"),
             onUserChange = onUserNameChange,
             icono = R.drawable.imagen_login_user,
             modifier = Modifier
                 .width(320.dp)
                 .height(50.dp)
         )
+
+        AuthFieldError(state.fieldErrors["email"])
 
         Spacer(
             modifier = Modifier.height(16.dp)
@@ -73,6 +78,8 @@ fun LoginForm(
 
         CampoContrasena(
             password = state.password,
+            enabled = !state.isLoading,
+            isError = state.fieldErrors.containsKey("password"),
             mostrarContrasena = state.mostrarContrasena,
             onPasswordChange = onPasswordChange,
             onMostrarContrasenaChange = onMostrarContrasenaChange,
@@ -86,13 +93,7 @@ fun LoginForm(
                 .height(50.dp)
         )
 
-        // Muestra el mensaje generado durante la validación, si existe.
-        if (state.errorMessage.isNotEmpty()) {
-            Text(
-                text = state.errorMessage,
-                color = surfaceContainerLowestLight,
-                fontSize = 10.sp
-            )
-        }
+        AuthFieldError(state.fieldErrors["password"])
+        AuthFieldError(state.errorMessage)
     }
 }

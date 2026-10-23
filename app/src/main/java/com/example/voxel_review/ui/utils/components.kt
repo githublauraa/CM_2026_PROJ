@@ -54,9 +54,11 @@ fun Boton(
     colorFondo: Color,
     colorBorde: Color,
     colorLetra: Color,
+    enabled: Boolean = true,
     onClick: () -> Unit
 ) {
     Button(
+        enabled = enabled,
         onClick = onClick,
         colors = ButtonDefaults.buttonColors(
             containerColor = colorFondo

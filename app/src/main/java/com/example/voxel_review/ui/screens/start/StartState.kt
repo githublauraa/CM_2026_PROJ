@@ -13,6 +13,8 @@ package com.example.voxel_review.ui.screens.start
 data class StartState(
     val correo: String = "",
     val password: String = "",
+    val isLoading: Boolean = false,
+    val fieldErrors: Map<String, String> = emptyMap(),
     val mostrarContrasena: Boolean = false,
     val errorMessage: String = "",
     val mostrarMensaje: Boolean = false
