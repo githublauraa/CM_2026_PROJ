@@ -5,6 +5,10 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Text
+import androidx.compose.ui.unit.sp
+import com.example.voxel_review.ui.theme.VoxelTextSecondary
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -68,8 +72,11 @@ fun DiscoverScreen(
                 onNotificationClick = onNotificationClick
             )
 
-            Spacer(
-                modifier = Modifier.height(12.dp)
+            Text(
+                text = "Tu próximo juego empieza aquí",
+                color = VoxelTextSecondary,
+                fontSize = 13.sp,
+                modifier = Modifier.padding(start = 20.dp, end = 20.dp, bottom = 16.dp)
             )
 
             DiscoverSearchBar(
