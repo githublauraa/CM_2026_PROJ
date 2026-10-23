@@ -1,5 +1,6 @@
 package com.example.voxel_review.data.dataSource.impl
 
+import android.R
 import com.example.voxel_review.data.dataSource.UserRemoteDataSource
 import com.example.voxel_review.data.dataSource.services.UserRetrofitService
 import javax.inject.Inject
@@ -24,6 +25,10 @@ class UserRetrofitDataSourceImpl @Inject constructor(private val service: UserRe
 
     override suspend fun updateUserBio(userId: String, bio: String) {
         //
+    }
+
+    override suspend fun updateUsername(userdId: String, username: String) {
+        TODO("Not yet implemented")
     }
 
     override suspend fun followOrUnfollow(

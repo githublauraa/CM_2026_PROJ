@@ -1,5 +1,6 @@
 package com.example.voxel_review.data.dataSource.impl.firestore
 
+import android.R
 import com.example.voxel_review.data.dataSource.UserRemoteDataSource
 import com.example.voxel_review.data.dtos.RegisterUserDto
 import com.example.voxel_review.data.dtos.UserDtoGeneric
@@ -68,6 +69,13 @@ class UserFirestoreDataSourceImpl @Inject constructor(
         db.collection("users")
             .document(userId)
             .update("bio", bio)
+            .await()
+    }
+
+    override suspend fun updateUsername(userdId: String, username: String) {
+        db.collection("users")
+            .document(userdId)
+            .update("username", username)
             .await()
     }
 

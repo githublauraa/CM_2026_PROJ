@@ -65,4 +65,10 @@ class UserRepository @Inject constructor(
 			Result.failure(e)
 		}
 	}
+
+	suspend fun updateUsername(userId: String, username: String): Result<Unit>{
+		return runCatching {
+			userRemoteDataSource.updateUsername(userId, username)
+		}
+	}
 }

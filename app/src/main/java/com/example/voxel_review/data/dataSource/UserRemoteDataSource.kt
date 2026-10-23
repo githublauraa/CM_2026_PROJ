@@ -1,5 +1,6 @@
 package com.example.voxel_review.data.dataSource
 
+import android.R
 import com.example.voxel_review.data.dtos.RegisterUserDto
 import com.example.voxel_review.data.dtos.UserDtoGeneric
 
@@ -12,6 +13,8 @@ interface UserRemoteDataSource {
 
 
 	suspend fun updateUserBio(userId: String, bio: String)
+
+	suspend fun updateUsername(userdId: String, username: String)
 
 	suspend fun followOrUnfollow(currentUserId: String, targetUserId: String): Unit
 }
