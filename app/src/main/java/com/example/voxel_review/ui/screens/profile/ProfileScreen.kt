@@ -140,9 +140,8 @@ fun ProfileContent(
 
 
             StatsPanel(
-                profile.followers,
-                profile.following,
-                profile.likes
+                followers = profile.followers,
+                followed = profile.following
             )
 
             GameCards(
