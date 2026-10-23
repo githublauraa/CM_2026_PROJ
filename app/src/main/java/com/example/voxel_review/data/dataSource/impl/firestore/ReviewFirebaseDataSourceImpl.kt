@@ -250,4 +250,42 @@ class ReviewFirebaseDataSourceImpl @Inject constructor(
             review.copy(likedByCurrentUser = hasLiked)
         }
     }
+
+    override suspend fun getFollowedUsersReviews(currentUserId: String): List<ReviewDto> {
+        if (currentUserId.isBlank()) return emptyList()
+
+        // 1. Obtener la lista de IDs de usuarios seguidos (users/{currentUserId}/following)
+        val followingSnapshot = db.collection("users")
+            .document(currentUserId)
+            .collection("following")
+            .get()
+            .await()
+
+        val followedUserIds = followingSnapshot.documents.map { it.id }
+
+        if (followedUserIds.isEmpty()) return emptyList()
+
+        // 2. Traer las reseñas donde userId está en la lista de seguidos (whereIn limita a 30)
+        val reviewsSnapshot = db.collection("reviews")
+            .whereIn("userId", followedUserIds.take(30))
+            .get()
+            .await()
+
+        return reviewsSnapshot.documents.mapNotNull { doc ->
+            val review = doc.toObject(ReviewDto::class.java) ?: return@mapNotNull null
+
+            // Verificar si el usuario actual le dio like
+            val hasLiked = doc.reference
+                .collection("likes")
+                .document(currentUserId)
+                .get()
+                .await()
+                .exists()
+
+            review.copy(
+                reviewId = doc.id,
+                likedByCurrentUser = hasLiked
+            )
+        }
+    }
 }

@@ -9,11 +9,8 @@ import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-
-
-
 class ReviewRepository @Inject constructor(
-        private val reviewRemoteDataSource: ReviewFirebaseDataSourceImpl,
+    private val reviewRemoteDataSource: ReviewFirebaseDataSourceImpl,
     private val authRepository: AuthRepository
     ) {
     suspend fun getGameReviews(id: String): Result<List<ReviewInfo>> {
@@ -107,4 +104,16 @@ class ReviewRepository @Inject constructor(
                 reviews.map { it.toReviewInfo() }
             }
     }
+
+    suspend fun getFollowedUsersReviews(currentUserId: String): Result<List<ReviewInfo>> {
+        return try {
+            val reviews = reviewRemoteDataSource.getFollowedUsersReviews(currentUserId)
+            val reviewsInfo = reviews.map { it.toReviewInfo() }
+            Result.success(reviewsInfo)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Result.failure(e)
+        }
+    }
+
 }

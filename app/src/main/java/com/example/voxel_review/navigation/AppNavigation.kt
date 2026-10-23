@@ -243,6 +243,18 @@ fun AppNavigation(
                     navController.navigate(
                         "${AppScreen.GameDetail.route}?gameId=${item.id}"
                     )
+                },
+                onReviewClick = { review ->
+                    navController.navigate(
+                        "${AppScreen.FullReviews.route}?juegoId=${review.videoGameId}&reviewId=${review.idResenia}&userId=${review.userId}"
+                    )
+                },
+                onUserProfileClick = { userId ->
+                    if (userId.isNotBlank()) {
+                        navController.navigate(
+                            "${AppScreen.PerfilUser.route}?profileId=$userId"
+                        )
+                    }
                 }
             )
         }

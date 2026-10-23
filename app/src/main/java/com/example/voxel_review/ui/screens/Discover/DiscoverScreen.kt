@@ -20,7 +20,10 @@ import com.example.voxel_review.ui.screens.Discover.components.DiscoverTopBar
 import com.example.voxel_review.ui.screens.Discover.components.TrendingSearchesSection
 import com.example.voxel_review.R
 import com.example.voxel_review.data.info.InfoDiscover.TrendingSearchInfo
+import com.example.voxel_review.data.info.review.ReviewInfo
 import com.example.voxel_review.ui.screens.Discover.components.DiscoverSearchBar
+import com.example.voxel_review.ui.screens.Discover.components.FeedFilterSection
+import com.example.voxel_review.ui.screens.Discover.components.FollowedReviewsSection
 import com.example.voxel_review.ui.screens.Discover.components.GenreFilterSection
 
 /**
@@ -39,6 +42,8 @@ fun DiscoverScreen(
     onBackClick: () -> Unit,
     onNotificationClick: () -> Unit,
     onItemClick: (TrendingSearchInfo) -> Unit,
+    onReviewClick: (ReviewInfo) -> Unit,
+    onUserProfileClick: (String) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
 
@@ -82,12 +87,10 @@ fun DiscoverScreen(
             Spacer(
                 modifier = Modifier.height(20.dp)
             )
-
-            GenreFilterSection(
-                genres = state.genres,
-                selectedGenre = state.selectedGenre,
-                onGenreSelected = {
-                    discoverViewModel.updateSelectedGenre(it)
+            FeedFilterSection(
+                showOnlyFollowed = state.showOnlyFollowed,
+                onFilterSelected = { enabled ->
+                    discoverViewModel.toggleFollowedFilter(enabled)
                 }
             )
 
@@ -95,25 +98,40 @@ fun DiscoverScreen(
                 modifier = Modifier.height(20.dp)
             )
 
-            TrendingSearchesSection(
-                items = state.trendingSearches,
-                onItemClick = onItemClick
-            )
+            if (state.showOnlyFollowed) {
+                // Sección de contenido de publicaciones de usuarios seguidos
+                FollowedReviewsSection(
+                    isLoading = state.isLoading,
+                    reviews = state.followedReviews,
+                    onReviewClick = onReviewClick,
+                    onUserProfileClick = onUserProfileClick
+                )
+            } else {
+//                GenreFilterSection(
+//                    genres = state.genres,
+//                    selectedGenre = state.selectedGenre,
+//                    onGenreSelected = {
+//                        discoverViewModel.updateSelectedGenre(it)
+//                    }
+//                )
 
-            Spacer(
-                modifier = Modifier.height(80.dp)
-            )
+                Spacer(modifier = Modifier.height(20.dp))
+
+                TrendingSearchesSection(
+                    items = state.trendingSearches,
+                    onItemClick = onItemClick
+                )
+            }
+
+            Spacer(modifier = Modifier.height(80.dp))
         }
     }
 }
 
-@Preview
-@Composable
-fun DiscoverScreenPreview() {
-    DiscoverScreen(
-        discoverViewModel = viewModel(),
-        onBackClick = {},
-        onNotificationClick = {},
-        onItemClick = {}
-    )
-}
+//@Preview
+//@Composable
+//fun DiscoverScreenPreview() {
+//    DiscoverScreen(
+//
+//    )
+//}

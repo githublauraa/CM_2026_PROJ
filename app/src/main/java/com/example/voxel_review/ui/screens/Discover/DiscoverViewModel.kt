@@ -6,6 +6,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.voxel_review.data.info.InfoDiscover.GenreInfo
 import com.example.voxel_review.data.info.InfoDiscover.LocalGenreProvider
 import com.example.voxel_review.data.dtos.toTrendingSearchInfo
+import com.example.voxel_review.data.repository.AuthRepository
+import com.example.voxel_review.data.repository.ReviewRepository
 import com.example.voxel_review.data.repository.VideoGameRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
@@ -17,7 +19,9 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel
 class DiscoverViewModel @Inject constructor(
-    private val videoGameRepository: VideoGameRepository
+    private val videoGameRepository: VideoGameRepository,
+    private val reviewRepository: ReviewRepository,
+    private val authRepository: AuthRepository
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(DiscoverState())
@@ -76,6 +80,53 @@ class DiscoverViewModel @Inject constructor(
         }
     }
 
+    fun toggleFollowedFilter(enabled: Boolean) {
+        _uiState.update {
+            it.copy(showOnlyFollowed = enabled)
+        }
+
+        if (enabled && _uiState.value.followedReviews.isEmpty()) {
+            loadFollowedReviews()
+        }
+    }
+
+    private fun loadFollowedReviews() {
+        val currentUserId = _uiState.value.currentUserId
+
+        if (currentUserId.isBlank()) {
+            _uiState.update {
+                it.copy(error = "Debes iniciar sesión para ver seguidos")
+            }
+            return
+        }
+
+        viewModelScope.launch {
+            _uiState.update {
+                it.copy(
+                    isLoading = true,
+                    error = null
+                )
+            }
+
+            reviewRepository.getFollowedUsersReviews(currentUserId)
+                .onSuccess { reviews ->
+                    _uiState.update {
+                        it.copy(
+                            followedReviews = reviews,
+                            isLoading = false
+                        )
+                    }
+                }
+                .onFailure { exception ->
+                    _uiState.update {
+                        it.copy(
+                            isLoading = false,
+                            error = exception.message ?: "No se pudieron obtener las reseñas"
+                        )
+                    }
+                }
+        }
+    }
     fun updateSearchQuery(input: String) {
         _uiState.update {
             it.copy(searchQuery = input)
