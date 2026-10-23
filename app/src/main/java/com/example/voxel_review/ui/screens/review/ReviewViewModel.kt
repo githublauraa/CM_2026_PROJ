@@ -8,8 +8,10 @@ import jakarta.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.Job
 
 @HiltViewModel
 class ReviewViewModel @Inject constructor(
@@ -19,41 +21,43 @@ class ReviewViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(ReviewDetailState())
     val uiState: StateFlow<ReviewDetailState> = _uiState.asStateFlow()
 
+    private var reviewJob: Job? = null
+
     fun getGameReviews(gameId: String, reviewId: String = "") {
-        viewModelScope.launch {
+        reviewJob?.cancel()
+        reviewJob = viewModelScope.launch {
             _uiState.update {
                 it.copy(isLoading = true, errorMessage = null)
             }
 
-            val result = reviewRepository.getGameReviews(gameId)
+            reviewRepository.getReviewsLive(gameId)
+                .catch { e ->
+                    _uiState.update {
+                        it.copy(
+                            errorMessage = e.message,
+                            isLoading = false
+                        )
+                    }
+                }
+                .collect { reviews ->
+                    val selectedReview = if (reviewId.isBlank()) {
+                        reviews.firstOrNull()
+                    } else {
+                        reviews.find { it.idResenia == reviewId }
+                    }
 
-            if (result.isSuccess) {
-                val reviews = result.getOrNull().orEmpty()
-                val review = if (reviewId.isBlank()) {
-                    reviews.firstOrNull()
-                } else {
-                    reviews.find { it.idResenia == reviewId }
+                    _uiState.update {
+                        it.copy(
+                            review = selectedReview,
+                            isLoading = false,
+                            errorMessage = if (selectedReview == null) {
+                                "Reseña no encontrada"
+                            } else {
+                                null
+                            }
+                        )
+                    }
                 }
-
-                _uiState.update {
-                    it.copy(
-                        review = review,
-                        isLoading = false,
-                        errorMessage = if (review == null) {
-                            "Reseña no encontrada"
-                        } else {
-                            null
-                        }
-                    )
-                }
-            } else {
-                _uiState.update {
-                    it.copy(
-                        errorMessage = result.exceptionOrNull()?.message,
-                        isLoading = false
-                    )
-                }
-            }
         }
     }
 
@@ -70,15 +74,16 @@ class ReviewViewModel @Inject constructor(
                     it.idResenia == reviewId
                 }
 
+                if (review != null) {
+                    getGameReviews(review.videoGameId, reviewId)
+                    return@launch
+                }
+
                 _uiState.update {
                     it.copy(
-                        review = review,
+                        review = null,
                         isLoading = false,
-                        errorMessage = if (review == null) {
-                            "Reseña no encontrada"
-                        } else {
-                            null
-                        }
+                        errorMessage = "Reseña no encontrada"
                     )
                 }
             } else {
@@ -122,16 +127,11 @@ class ReviewViewModel @Inject constructor(
         viewModelScope.launch {
             val result = reviewRepository.sendOrDeleteReviewLike(reviewId, userId)
 
-            if (result.isSuccess){
+            if (result.isFailure) {
                 _uiState.update {
-                    it.copy(
-                        review = it.review?.copy(
-                            likedByCurrentUser = !it.review.likedByCurrentUser,
-                            cantidadLikes = if (it.review.likedByCurrentUser) it.review.cantidadLikes - 1 else it.review.cantidadLikes +1)
-                        )
+                    it.copy(errorMessage = result.exceptionOrNull()?.message
+                        ?: "No se pudo actualizar el like")
                 }
-            } else{
-
             }
         }
     }

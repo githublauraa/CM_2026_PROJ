@@ -13,6 +13,7 @@ import com.google.firebase.firestore.FieldValue
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.channels.awaitClose
 
 class ReviewFirebaseDataSourceImpl @Inject constructor(
@@ -232,5 +233,21 @@ class ReviewFirebaseDataSourceImpl @Inject constructor(
             }
 
         awaitClose { listener.remove() }
+    }.map { reviews ->
+        val currentUserId = FirebaseAuth.getInstance().currentUser?.uid
+        reviews.map { review ->
+            val hasLiked = if (currentUserId.isNullOrBlank()) {
+                false
+            } else {
+                db.collection("reviews")
+                    .document(review.reviewId)
+                    .collection("likes")
+                    .document(currentUserId)
+                    .get()
+                    .await()
+                    .exists()
+            }
+            review.copy(likedByCurrentUser = hasLiked)
+        }
     }
 }
