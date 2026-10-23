@@ -93,8 +93,9 @@ fun ProfileContent(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .align(Alignment.TopCenter)
-                .padding(bottom = 70.dp)
+                .fillMaxSize()
                 .verticalScroll(rememberScrollState())
+                .padding(bottom = 24.dp)
         ) {
 
             TopBar(
