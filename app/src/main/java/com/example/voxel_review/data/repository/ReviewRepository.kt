@@ -16,6 +16,20 @@ class ReviewRepository @Inject constructor(
         private val reviewRemoteDataSource: ReviewFirebaseDataSourceImpl,
     private val authRepository: AuthRepository
     ) {
+    suspend fun getAllReviews(): Result<List<ReviewInfo>> {
+        return try {
+            val reviews = reviewRemoteDataSource.getAllReviews()
+            Result.success(reviews.map { it.toReviewInfo() })
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    fun getSelectedReviewLive(gameId: String, reviewId: String): Flow<List<ReviewInfo>> =
+        reviewRemoteDataSource.listenSelectedReview(gameId, reviewId).map { reviews ->
+            reviews.map { it.toReviewInfo() }
+        }
+
     suspend fun getGameReviews(id: String): Result<List<ReviewInfo>> {
         return try {
             val currentUser = authRepository.currentUser?.uid ?:""

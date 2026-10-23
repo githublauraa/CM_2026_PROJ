@@ -102,6 +102,51 @@ class ReviewFirebaseDataSourceImpl @Inject constructor(
         }
     }
 
+    // El listado solo necesita las puntuaciones; no consulta usuarios ni likes.
+    suspend fun getAllReviews(): List<ReviewDto> {
+        return db.collection("reviews").get().await().documents.mapNotNull {
+            it.toObject(ReviewDto::class.java)
+        }
+    }
+
+    // El detalle escucha únicamente la reseña visible.
+    fun listenSelectedReview(gameId: String, reviewId: String): Flow<List<ReviewDto>> = callbackFlow {
+        val listener = if (reviewId.isNotBlank()) {
+            db.collection("reviews").document(reviewId).addSnapshotListener { doc, error ->
+                if (error != null) {
+                    close(error)
+                } else {
+                    val review = doc?.toObject(ReviewDto::class.java)?.copy(reviewId = doc.id)
+                    trySend(listOfNotNull(review))
+                }
+            }
+        } else {
+            db.collection("reviews").whereEqualTo("videoGameId", gameId).limit(1)
+                .addSnapshotListener { snapshot, error ->
+                    if (error != null) {
+                        close(error)
+                    } else {
+                        trySend(snapshot?.documents.orEmpty().mapNotNull { doc ->
+                            doc.toObject(ReviewDto::class.java)?.copy(reviewId = doc.id)
+                        })
+                    }
+                }
+        }
+        awaitClose { listener.remove() }
+    }.map { reviews ->
+        val currentUserId = FirebaseAuth.getInstance().currentUser?.uid
+        reviews.map { review ->
+            val liked = !currentUserId.isNullOrBlank() && db.collection("reviews")
+                .document(review.reviewId).collection("likes").document(currentUserId)
+                .get().await().exists()
+            val game = review.videoGame ?: db.collection("video-Games")
+                .document(review.videoGameId).get().await().let { doc ->
+                    doc.toObject(VideoGameDto::class.java)?.copy(videoGameId = doc.id)
+                }
+            review.copy(likedByCurrentUser = liked, videoGame = game)
+        }
+    }
+
     override suspend fun deleteReview(id: String) {
         db.collection("reviews").document(id).delete().await()
     }
