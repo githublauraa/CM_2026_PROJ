@@ -2,6 +2,7 @@ package com.example.voxel_review
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -17,6 +18,11 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
+    private val requestNotificationPermission =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
+            Log.d(TAG, "POST_NOTIFICATIONS concedido=$granted")
+        }
+
     // Permisos necesarios para hablar con la API local (10.0.2.2 / IP LAN).
     // Sin ellos, el sistema bloquea el tráfico TCP hacia la red local y Retrofit
     // recibe SocketTimeoutException (Local Network Protection de Android).
@@ -25,6 +31,7 @@ class MainActivity : ComponentActivity() {
             grants.forEach { (permission, granted) ->
                 Log.d(TAG, "$permission concedido=$granted")
             }
+            requestNotificationsIfNeeded()
         }
 
     /**
@@ -55,6 +62,17 @@ class MainActivity : ComponentActivity() {
 
         if (pending.isNotEmpty()) {
             requestLocalNetworkPermissions.launch(pending.toTypedArray())
+        } else {
+            requestNotificationsIfNeeded()
+        }
+    }
+
+    private fun requestNotificationsIfNeeded() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
+            checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) !=
+            PackageManager.PERMISSION_GRANTED
+        ) {
+            requestNotificationPermission.launch(Manifest.permission.POST_NOTIFICATIONS)
         }
     }
 
