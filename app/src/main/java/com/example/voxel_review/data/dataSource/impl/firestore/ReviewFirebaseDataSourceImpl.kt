@@ -316,8 +316,21 @@ class ReviewFirebaseDataSourceImpl @Inject constructor(
             .get()
             .await()
 
+        val gamesById = mutableMapOf<String, VideoGameDto?>()
         return reviewsSnapshot.documents.mapNotNull { doc ->
             val review = doc.toObject(ReviewDto::class.java) ?: return@mapNotNull null
+
+            val videoGame = review.videoGame?.takeIf { it.name.isNotBlank() }
+                ?: if (review.videoGameId.isNotBlank()) {
+                    if (!gamesById.containsKey(review.videoGameId)) {
+                        val gameDocument = db.collection("video-Games")
+                            .document(review.videoGameId).get().await()
+                        gamesById[review.videoGameId] = gameDocument
+                            .toObject(VideoGameDto::class.java)
+                            ?.copy(videoGameId = gameDocument.id)
+                    }
+                    gamesById[review.videoGameId]
+                } else null
 
             // Verificar si el usuario actual le dio like
             val hasLiked = doc.reference
@@ -329,6 +342,7 @@ class ReviewFirebaseDataSourceImpl @Inject constructor(
 
             review.copy(
                 reviewId = doc.id,
+                videoGame = videoGame,
                 likedByCurrentUser = hasLiked
             )
         }

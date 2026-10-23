@@ -153,6 +153,9 @@ fun AppNavigation(
 
             NovedadScreen(
                 novedadesViewModel,
+                onBackClick = {
+                    navController.popBackStack()
+                },
                 onClick = { juego ->
                     navController.navigate(
                         "${AppScreen.FullReviews.route}?juegoId=${juego.id}"

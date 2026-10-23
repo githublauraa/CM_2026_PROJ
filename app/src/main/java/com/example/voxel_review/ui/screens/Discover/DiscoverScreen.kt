@@ -22,10 +22,8 @@ import com.example.voxel_review.ui.screens.Discover.components.DiscoverTopBar
 import com.example.voxel_review.ui.screens.Discover.components.TrendingSearchesSection
 import com.example.voxel_review.R
 import com.example.voxel_review.data.info.InfoDiscover.TrendingSearchInfo
-import com.example.voxel_review.data.info.review.ReviewInfo
 import com.example.voxel_review.ui.screens.Discover.components.DiscoverSearchBar
-import com.example.voxel_review.ui.screens.novedades.components.FeedFilterSection
-import com.example.voxel_review.ui.screens.novedades.components.FollowedReviewsSection
+import com.example.voxel_review.ui.screens.Discover.components.GenreFilterSection
 
 /**
  * Contenido visual principal de la pantalla de descubrimiento.
@@ -82,25 +80,15 @@ fun DiscoverScreen(
                 }
             )
 
-            Spacer(
-                modifier = Modifier.height(20.dp)
+            Spacer(modifier = Modifier.height(20.dp))
+
+            GenreFilterSection(
+                genres = state.genres,
+                selectedGenre = state.selectedGenre,
+                onGenreSelected = { discoverViewModel.updateSelectedGenre(it) }
             )
 
-
-            Spacer(
-                modifier = Modifier.height(20.dp)
-            )
-
-
-//                GenreFilterSection(
-//                    genres = state.genres,
-//                    selectedGenre = state.selectedGenre,
-//                    onGenreSelected = {
-//                        discoverViewModel.updateSelectedGenre(it)
-//                    }
-//                )
-
-                Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(20.dp))
 
                 TrendingSearchesSection(
                     items = state.trendingSearches,

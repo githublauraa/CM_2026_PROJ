@@ -32,6 +32,7 @@ fun NovedadBody(
     modifier: Modifier = Modifier,
     onReviewClick: (ReviewInfo) -> Unit,
     onUserProfileClick: (String) -> Unit = {},
+    onBackClick: () -> Unit = {},
 ) {
     Box(
         modifier = modifier.fillMaxSize()
@@ -42,7 +43,8 @@ fun NovedadBody(
             onNotificationClick = onNotificationClick,
             onCategoriaSeleccionada = onCategoriaSeleccionada,
             onReviewClick = onReviewClick,
-            onUserProfileClick = onUserProfileClick
+            onUserProfileClick = onUserProfileClick,
+            onBackClick = onBackClick
         )
     }
 }
@@ -64,6 +66,7 @@ fun NovedadScreen(
     modifier: Modifier = Modifier,
     onReviewClick: (ReviewInfo) -> Unit,
     onUserProfileClick: (String) -> Unit = {},
+    onBackClick: () -> Unit = {},
 ) {
 
     Box(
@@ -82,6 +85,7 @@ fun NovedadScreen(
             onNotificationClick = onNotificationClick,
             onReviewClick = onReviewClick,
             onUserProfileClick = onUserProfileClick,
+            onBackClick = onBackClick,
             modifier = Modifier.fillMaxSize()
         )
     }
