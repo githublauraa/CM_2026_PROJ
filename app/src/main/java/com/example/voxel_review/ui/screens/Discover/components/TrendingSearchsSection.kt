@@ -1,5 +1,13 @@
 package com.example.voxel_review.ui.screens.Discover.components
 
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.size
+import androidx.compose.ui.Alignment
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.TrendingUp
+import androidx.compose.material3.Icon
+import com.example.voxel_review.ui.theme.VoxelPrimary
+import com.example.voxel_review.ui.theme.White
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -28,13 +36,24 @@ fun TrendingSearchesSection(
     modifier: Modifier = Modifier
 ) {
     Column(modifier = modifier.fillMaxWidth()) {
-        Text(
-            text = "TENDENCIAS DE BÚSQUEDA",
-            color = onSurfaceVariantDark,
-            fontSize = 12.sp,
-            fontWeight = FontWeight.SemiBold,
-            modifier = Modifier.padding(horizontal = 20.dp, vertical = 8.dp)
-        )
+        Row(
+            modifier = Modifier.padding(horizontal = 20.dp, vertical = 12.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            Icon(
+                imageVector = Icons.Outlined.TrendingUp,
+                contentDescription = null,
+                tint = VoxelPrimary,
+                modifier = Modifier.size(22.dp)
+            )
+            Text(
+                text = "En tendencia",
+                color = White,
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Bold
+            )
+        }
 
         Column(
             modifier = Modifier.padding(horizontal = 20.dp),
