@@ -17,15 +17,15 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.voxel_review.ui.screens.Discover.components.DiscoverTopBar
 import com.example.voxel_review.ui.screens.Discover.components.TrendingSearchesSection
 import com.example.voxel_review.R
 import com.example.voxel_review.data.info.InfoDiscover.TrendingSearchInfo
+import com.example.voxel_review.data.info.review.ReviewInfo
 import com.example.voxel_review.ui.screens.Discover.components.DiscoverSearchBar
-import com.example.voxel_review.ui.screens.Discover.components.GenreFilterSection
+import com.example.voxel_review.ui.screens.novedades.components.FeedFilterSection
+import com.example.voxel_review.ui.screens.novedades.components.FollowedReviewsSection
 
 /**
  * Contenido visual principal de la pantalla de descubrimiento.
@@ -86,53 +86,37 @@ fun DiscoverScreen(
                 modifier = Modifier.height(20.dp)
             )
 
-            GenreFilterSection(
-                genres = state.genres,
-                selectedGenre = state.selectedGenre,
-                onGenreSelected = {
-                    discoverViewModel.updateSelectedGenre(it)
-                }
-            )
 
             Spacer(
                 modifier = Modifier.height(20.dp)
             )
 
-            when {
-                state.isLoading -> com.example.voxel_review.ui.utils.ContentStatus("Cargando juegos…", loading = true)
-                state.error != null -> com.example.voxel_review.ui.utils.ContentStatus(
-                    "No pudimos cargar los juegos. Inténtalo de nuevo.",
-                    onRetry = discoverViewModel::loadVideoGames
+
+//                GenreFilterSection(
+//                    genres = state.genres,
+//                    selectedGenre = state.selectedGenre,
+//                    onGenreSelected = {
+//                        discoverViewModel.updateSelectedGenre(it)
+//                    }
+//                )
+
+                Spacer(modifier = Modifier.height(20.dp))
+
+                TrendingSearchesSection(
+                    items = state.trendingSearches,
+                    onItemClick = onItemClick
                 )
-                else -> {
-                    val results = state.trendingSearches.filter {
-                        it.nombre.contains(state.searchQuery.trim(), ignoreCase = true)
-                    }
-                    if (results.isEmpty()) {
-                        com.example.voxel_review.ui.utils.ContentStatus(
-                            if (state.searchQuery.isBlank()) "Todavía no hay juegos para explorar."
-                            else "No encontramos juegos con ese nombre. Prueba otra búsqueda."
-                        )
-                    } else {
-                        TrendingSearchesSection(items = results, onItemClick = onItemClick)
-                    }
-                }
             }
 
-            Spacer(
-                modifier = Modifier.height(80.dp)
-            )
+            Spacer(modifier = Modifier.height(80.dp))
         }
     }
-}
 
-@Preview
-@Composable
-fun DiscoverScreenPreview() {
-    DiscoverScreen(
-        discoverViewModel = viewModel(),
-        onBackClick = {},
-        onNotificationClick = {},
-        onItemClick = {}
-    )
-}
+
+//@Preview
+//@Composable
+//fun DiscoverScreenPreview() {
+//    DiscoverScreen(
+//
+//    )
+//}
