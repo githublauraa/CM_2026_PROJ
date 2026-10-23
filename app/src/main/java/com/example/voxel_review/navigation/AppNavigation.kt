@@ -160,6 +160,18 @@ fun AppNavigation(
                 },
                 onNotificationClick = {
                     navController.navigate(AppScreen.Notifications.route)
+                },
+                onReviewClick = { review ->
+                    navController.navigate(
+                        "${AppScreen.FullReviews.route}?reviewId=${review.idResenia}&userId=${review.userId}"
+                    )
+                },
+                onUserProfileClick = { userId ->
+                    if (userId.isNotBlank()) {
+                        navController.navigate(
+                            "${AppScreen.PerfilUser.route}?profileId=$userId"
+                        )
+                    }
                 }
             )
         }

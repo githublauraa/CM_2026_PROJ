@@ -69,13 +69,6 @@ fun UserReviewsSection(
             verticalAlignment = Alignment.CenterVertically
         ) {
 
-            Text(
-                text = stringResource(R.string.resenas_usuarios),
-                color = White,
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Bold
-            )
-
 //            Text(
 //                text = stringResource(R.string.ver_todas),
 //                color = VoxelPrimary,
@@ -91,11 +84,13 @@ fun UserReviewsSection(
         )
 
         Card(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable(onClick = onClickReview),
             shape = RoundedCornerShape(16.dp),
             colors = CardDefaults.cardColors(
                 containerColor = cardBackgroundColor
-            )
+            ),
         ) {
 
             Row(

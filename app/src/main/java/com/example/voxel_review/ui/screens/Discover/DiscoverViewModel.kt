@@ -6,6 +6,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.voxel_review.data.info.InfoDiscover.GenreInfo
 import com.example.voxel_review.data.info.InfoDiscover.LocalGenreProvider
 import com.example.voxel_review.data.dtos.toTrendingSearchInfo
+import com.example.voxel_review.data.repository.AuthRepository
+import com.example.voxel_review.data.repository.ReviewRepository
 import com.example.voxel_review.data.repository.VideoGameRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
@@ -17,7 +19,8 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel
 class DiscoverViewModel @Inject constructor(
-    private val videoGameRepository: VideoGameRepository
+    private val videoGameRepository: VideoGameRepository,
+    private val reviewRepository: ReviewRepository
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(DiscoverState())

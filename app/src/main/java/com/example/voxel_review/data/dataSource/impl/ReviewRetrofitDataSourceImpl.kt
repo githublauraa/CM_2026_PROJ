@@ -48,4 +48,8 @@ class ReviewRetrofitDataSourceImpl @Inject constructor(
         TODO("Not yet implemented")
     }
 
+    override suspend fun getFollowedUsersReviews(currentUserId: String): List<ReviewDto> {
+        TODO("Not yet implemented")
+    }
+
 }

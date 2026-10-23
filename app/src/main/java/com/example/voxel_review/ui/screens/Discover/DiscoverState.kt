@@ -4,6 +4,7 @@ import com.example.voxel_review.data.info.InfoDiscover.GenreInfo
 import com.example.voxel_review.data.info.InfoDiscover.TrendingSearchInfo
 import com.example.voxel_review.data.info.InfoNotifications.FollowSuggestionInfo
 import com.example.voxel_review.data.info.InfoNotifications.NotificationInfo
+import com.example.voxel_review.data.info.review.ReviewInfo
 
 /**
  * Representa el estado de la UI para la pantalla de Discover.
@@ -23,5 +24,6 @@ data class DiscoverState(
     val searchQuery: String = "",
     val selectedGenre: GenreInfo? = null,
     val isLoading: Boolean = false,
-    val error: String? = null
+    val error: String? = null,
+    val currentUserId: String = ""
 )
