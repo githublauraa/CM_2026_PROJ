@@ -30,7 +30,7 @@ class ReviewViewModel @Inject constructor(
                 it.copy(isLoading = true, errorMessage = null)
             }
 
-            reviewRepository.getReviewsLive(gameId)
+            reviewRepository.getSelectedReviewLive(gameId, reviewId)
                 .catch { e ->
                     _uiState.update {
                         it.copy(
@@ -62,39 +62,8 @@ class ReviewViewModel @Inject constructor(
     }
 
     fun getUserReview(userId: String, reviewId: String) {
-        viewModelScope.launch {
-            _uiState.update {
-                it.copy(isLoading = true, errorMessage = null)
-            }
-
-            val result = reviewRepository.getUserReviews(userId)
-
-            if (result.isSuccess) {
-                val review = result.getOrNull()?.find {
-                    it.idResenia == reviewId
-                }
-
-                if (review != null) {
-                    getGameReviews(review.videoGameId, reviewId)
-                    return@launch
-                }
-
-                _uiState.update {
-                    it.copy(
-                        review = null,
-                        isLoading = false,
-                        errorMessage = "Reseña no encontrada"
-                    )
-                }
-            } else {
-                _uiState.update {
-                    it.copy(
-                        errorMessage = result.exceptionOrNull()?.message,
-                        isLoading = false
-                    )
-                }
-            }
-        }
+        // El ID identifica el documento: no hace falta descargar todas las reseñas del autor.
+        getGameReviews(gameId = "", reviewId = reviewId)
     }
 
     fun getReviewComments(reviewId: String) {
