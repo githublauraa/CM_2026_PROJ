@@ -35,6 +35,9 @@ android {
     }
 
     buildTypes {
+        debug {
+            isDebuggable = true
+        }
         release {
             optimization {
                 enable = false
@@ -49,6 +52,7 @@ android {
 
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 
