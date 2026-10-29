@@ -160,9 +160,14 @@ dependencies {
     testImplementation(
         "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.10.2"
     )
+    androidTestImplementation(
+        "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.10.2"
+    )
 
     // Google Truth
     testImplementation("com.google.truth:truth:1.4.2")
+    androidTestImplementation("com.google.truth:truth:1.4.2")
+
 
     // Kotlin Test
     testImplementation(kotlin("test"))
