@@ -1,3 +1,4 @@
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
@@ -38,12 +39,20 @@ android {
         debug {
             isDebuggable = true
         }
+
         release {
             optimization {
                 enable = false
             }
         }
     }
+
+    packaging {
+            excludes += "META-INF/LICENSE.md"
+            excludes += "META-INF/LICENSE-notice.md"
+    }
+
+
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
@@ -58,7 +67,10 @@ android {
 
 dependencies {
 
-    // Compose
+    // ========================================
+    // COMPOSE
+    // ========================================
+
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.compose.foundation)
@@ -69,7 +81,10 @@ dependencies {
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
 
-    // AndroidX
+    // ========================================
+    // ANDROIDX
+    // ========================================
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.foundation)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -88,46 +103,117 @@ dependencies {
     // Room
     implementation(libs.androidx.room.ktx)
 
-    // Hilt
+    // ========================================
+    // HILT
+    // ========================================
+
     implementation(libs.dagger.hilt)
     implementation(libs.hilt.compose.navigation)
 
-    // Hilt Compiler con KSP
+    // Hilt Compiler
     ksp(libs.dagger.compiler)
 
-    // Firebase
+    // ========================================
+    // FIREBASE
+    // ========================================
+
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.firestore)
     implementation(libs.firebase.auth)
     implementation(libs.firebase.crashlytics)
     implementation(libs.firebase.analytics)
 
-    // storage
+    // Storage
     implementation("com.google.firebase:firebase-storage")
 
-    // coil
+    // Messaging
+    implementation("com.google.firebase:firebase-messaging")
+
+    // ========================================
+    // COIL
+    // ========================================
+
     implementation("io.coil-kt:coil-compose:2.4.0")
 
-    // Retrofit
+    // ========================================
+    // RETROFIT
+    // ========================================
+
     implementation("com.squareup.retrofit2:retrofit:3.0.0")
     implementation("com.squareup.retrofit2:converter-gson:3.0.0")
     implementation("com.squareup.retrofit2:converter-scalars:3.0.0")
 
-    //firestore
-    implementation("com.google.firebase:firebase-firestore")
+    // ========================================
+    // TESTS UNITARIOS
+    // ========================================
 
-
-    //messaging
-    implementation("com.google.firebase:firebase-analytics")
-    implementation("com.google.firebase:firebase-messaging")
-
-    // Tests
+    // JUnit
     testImplementation(libs.junit)
 
+    // Mockito
+    testImplementation("org.mockito:mockito-core:5.18.0")
+
+    // Mockito Kotlin
+    testImplementation("org.mockito.kotlin:mockito-kotlin:5.4.0")
+
+    // Coroutines Test
+    testImplementation(
+        "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.10.2"
+    )
+
+    // Google Truth
+    testImplementation("com.google.truth:truth:1.4.2")
+
+    // Kotlin Test
+    testImplementation(kotlin("test"))
+
+    // ========================================
+    // TESTS INSTRUMENTADOS
+    // ========================================
+
+    // Compose Test
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
+
+    // Espresso
     androidTestImplementation(libs.androidx.espresso.core)
+
+    // AndroidX JUnit
     androidTestImplementation(libs.androidx.junit)
+
+    // Hilt Android Testing
+    androidTestImplementation(
+        "com.google.dagger:hilt-android-testing:2.52"
+    )
+
+    // Hilt Compiler para pruebas
+    kspAndroidTest(
+        "com.google.dagger:hilt-compiler:2.52"
+    )
+
+    // UI Automator
+    androidTestImplementation(
+        "androidx.test.uiautomator:uiautomator:2.3.0"
+    )
+
+    // AndroidX Test JUnit
+    androidTestImplementation(
+        "androidx.test.ext:junit:1.1.5"
+    )
+
+    // ActivityScenario / AndroidX Test Core
+    androidTestImplementation(
+        "androidx.test:core:1.5.0"
+    )
+
+    // Mockito Android
+    androidTestImplementation(
+        "org.mockito:mockito-android:5.18.0"
+    )
+
+    // ========================================
+    // DEBUG
+    // ========================================
 
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     debugImplementation(libs.androidx.compose.ui.tooling)
