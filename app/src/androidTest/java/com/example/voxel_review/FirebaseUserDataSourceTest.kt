@@ -5,6 +5,7 @@ import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.test.runTest
 import org.junit.Test
 import com.example.voxel_review.data.dataSource.impl.firestore.UserFirestoreDataSourceImpl
+import com.example.voxel_review.data.dtos.RegisterUserDto
 import com.example.voxel_review.data.dtos.UserProfileFirestoreDto
 import kotlinx.coroutines.tasks.await
 import com.google.common.truth.Truth
@@ -91,7 +92,6 @@ class FirebaseUserDataSourceTest {
     }
 
 
-
     //primero el nombre de lo que se prueba, segundo las precondiciones (usuarios existente), tercero lo que espero que me responda(usuario correcto)
     @Test
     fun getUserById_invalidId_null() = runTest {
@@ -102,8 +102,29 @@ class FirebaseUserDataSourceTest {
         //Act (ejecutar) (realizar prueba)
         val result = dataSource.getUserById(id, currentUserId)
         //Assert (validar)
-        //resultado no puede ser nulo porque se esta buscando algo
         Truth.assertThat(result).isNull()
     }
 
+
+    @Test
+    fun registerUser_insertDoc_DoccumentExist() = runTest {
+        //AAA
+        //Arrange (preparar)
+        val user = RegisterUserDto(
+            username = "username_1",
+            bio = "Bio de usuario 1",
+            photoUrl = "https://picsum.photos/200/200?random=1",
+            FCMToken = ""
+        )
+        var userId = "999"
+        //Act (ejecutar) (realizar prueba)
+        dataSource.registerUser(user, userId)
+        //Assert (validar)
+        val result = dataSource.getUserById(userId, "99944343")
+        Truth.assertThat(result).isNotNull()
+        Truth.assertThat(result?.username).isEqualTo(user.username)
+        Truth.assertThat(result?.photoUrl).isEqualTo(user.photoUrl)
+        Truth.assertThat(result?.bio).isEqualTo(user.bio)
+
+    }
 }
