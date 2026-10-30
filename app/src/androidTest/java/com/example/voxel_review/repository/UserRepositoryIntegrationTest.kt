@@ -142,6 +142,22 @@ class UserRepositoryIntegrationTest {
     }
 
 
+    //modificar el nombre de usuario de un usuario existente
+    @Test
+    fun updateUsername_existUser_updateUsername() = runTest {
+        //arr
+        val usuarioPrueba = generateUser(1)
+        val newUsername = "prueba_username"
+        //act
+        val result = userRepository.updateUsername(usuarioPrueba.userId,newUsername)
+        //assert
+        val usuario = userRepository.getUserById(usuarioPrueba.userId).getOrThrow()
+        Truth.assertThat(result.isSuccess).isTrue()
+        Truth.assertThat(usuario.nick).isEqualTo(newUsername)
+
+    }
+
+
 
 
     //codigo que quiero que se ejecute despues de terminar las pruebas
