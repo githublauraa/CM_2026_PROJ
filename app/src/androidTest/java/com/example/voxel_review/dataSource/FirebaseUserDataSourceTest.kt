@@ -157,13 +157,13 @@ class FirebaseUserDataSourceTest {
         //dejar de seguir
         dataSource.followOrUnfollow(currentUser.userId, targetUser.userId)
         //assert
-        val targetUserResult = dataSource.getUserById(targetUser.userId)
+        val targetUserResult = dataSource.getUserById(targetUser.userId, currentUser.userId)
         Truth.assertThat(targetUserResult?.followed).isFalse()
     }
 
     //verificar cambio nombre usuario, usuario existente
     @Test
-    fun updateUsername_validUser_corretUsername() = runTest {
+    fun updateUsername_existingUser_usernameUpdated() = runTest {
         //arrange
         val user = generateUser(1)
         val newUsername = "prueba"
@@ -177,7 +177,7 @@ class FirebaseUserDataSourceTest {
 
 
     @Test
-    fun updateBio_validUser_correctBio() = runTest {
+    fun updateUserBio_existingUser_bioUpdated() = runTest {
         //arrange
         val user = generateUser(1)
         val newBio = "prueba"
