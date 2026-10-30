@@ -3,6 +3,19 @@
   <component name="AndroidTestResultsUserPreferences">
     <option name="androidTestResultsTableState">
       <map>
+        <entry key="-2121051041">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="Duration" value="90" />
+                  <entry key="Pixel_10a" value="120" />
+                  <entry key="Tests" value="360" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
         <entry key="-2075232665">
           <value>
             <AndroidTestResultsTableState>
@@ -61,6 +74,19 @@
               <option name="preferredColumnWidths">
                 <map>
                   <entry key="Celular_Curso" value="120" />
+                  <entry key="Duration" value="90" />
+                  <entry key="Pixel_10a" value="120" />
+                  <entry key="Tests" value="360" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
+        <entry key="-1106588867">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
                   <entry key="Duration" value="90" />
                   <entry key="Pixel_10a" value="120" />
                   <entry key="Tests" value="360" />

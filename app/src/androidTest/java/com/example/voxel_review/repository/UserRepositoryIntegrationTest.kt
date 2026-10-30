@@ -1,9 +1,8 @@
 package com.example.voxel_review.repository
 
 import com.example.voxel_review.data.dataSource.AuthRemoteDataSource
+import com.example.voxel_review.data.dataSource.UserRemoteDataSource
 import com.example.voxel_review.data.dataSource.impl.firestore.UserFirestoreDataSourceImpl
-import com.example.voxel_review.data.dtos.RegisterUserDto
-import com.example.voxel_review.data.dtos.UserDto
 import com.example.voxel_review.data.dtos.UserProfileFirestoreDto
 import com.example.voxel_review.data.repository.AuthRepository
 import com.example.voxel_review.data.repository.UserRepository
@@ -26,6 +25,7 @@ class UserRepositoryIntegrationTest {
     private val auth = Firebase.auth
 
     private lateinit var userRepository: UserRepository
+    private lateinit var dataSourceUser: UserFirestoreDataSourceImpl
 
     private fun generateUser(i: Int): UserProfileFirestoreDto = UserProfileFirestoreDto(
         userId = "user_$i",
@@ -54,6 +54,7 @@ class UserRepositoryIntegrationTest {
         val authRepository = AuthRepository(authDataSource)
 
         userRepository = UserRepository(userDataSource, authRepository)
+        dataSourceUser = UserFirestoreDataSourceImpl(db)
 
         val batch = db.batch()
 
@@ -155,6 +156,20 @@ class UserRepositoryIntegrationTest {
         Truth.assertThat(result.isSuccess).isTrue()
         Truth.assertThat(usuario.nick).isEqualTo(newUsername)
 
+    }
+
+    //seguir a un usuario
+    @Test
+    fun followOrUnfollow_followUser_UserFollow() = runTest {
+        //arr
+        val currenUser = generateUser(1)
+        val targetUser = generateUser(2)
+        //act
+        val result = userRepository.followOrUnfollow(currenUser.userId, targetUser.userId)
+        //assert
+        val targetUserResult = dataSourceUser.getUserById(targetUser.userId, currenUser.userId)
+        Truth.assertThat(result.isSuccess).isTrue()
+        Truth.assertThat(targetUserResult?.followed).isTrue()
     }
 
 
