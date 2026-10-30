@@ -10,8 +10,12 @@ import com.example.voxel_review.data.dtos.UserProfileRetrofitDto
 
 class UserRetrofitDataSourceImpl @Inject constructor(private val service: UserRetrofitService): UserRemoteDataSource {
 
-    override suspend fun getUserById(id: String, currentUserId: String): UserProfileRetrofitDto {
-	    return service.getUserById(id)
+
+    override suspend fun getUserById(
+        id: String,
+        currentUserId: String?
+    ): UserDtoGeneric? {
+        TODO("Not yet implemented")
     }
 
     override suspend fun getAllUsers(): List<UserProfileRetrofitDto> {

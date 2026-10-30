@@ -13,7 +13,7 @@
         </DropdownSelection>
         <DialogSelection />
       </SelectionState>
-      <SelectionState runConfigName="getUserById_validId_correctUser()">
+      <SelectionState runConfigName="followOrUnfollowUser_unfollow_followedFalse()">
         <option name="selectionMode" value="DROPDOWN" />
         <DropdownSelection timestamp="2026-10-21T04:39:06.107001Z">
           <Target type="DEFAULT_BOOT">
@@ -24,7 +24,7 @@
         </DropdownSelection>
         <DialogSelection />
       </SelectionState>
-      <SelectionState runConfigName="FirebaseUserDataSourceTest">
+      <SelectionState runConfigName="updateUsername_validUser_corretUsername()">
         <option name="selectionMode" value="DROPDOWN" />
         <DropdownSelection timestamp="2026-10-21T04:39:06.107001Z">
           <Target type="DEFAULT_BOOT">
@@ -35,7 +35,29 @@
         </DropdownSelection>
         <DialogSelection />
       </SelectionState>
-      <SelectionState runConfigName="getUserById_invalidId_null()">
+      <SelectionState runConfigName="FirebaseUserDataSourceTest (1)">
+        <option name="selectionMode" value="DROPDOWN" />
+        <DropdownSelection timestamp="2026-10-21T04:39:06.107001Z">
+          <Target type="DEFAULT_BOOT">
+            <handle>
+              <DeviceId pluginId="LocalEmulator" identifier="path=/Users/josecepeda/.android/avd/Pixel_10a.avd" />
+            </handle>
+          </Target>
+        </DropdownSelection>
+        <DialogSelection />
+      </SelectionState>
+      <SelectionState runConfigName="updateBio_validUser_correctBio()">
+        <option name="selectionMode" value="DROPDOWN" />
+        <DropdownSelection timestamp="2026-10-21T04:39:06.107001Z">
+          <Target type="DEFAULT_BOOT">
+            <handle>
+              <DeviceId pluginId="LocalEmulator" identifier="path=/Users/josecepeda/.android/avd/Pixel_10a.avd" />
+            </handle>
+          </Target>
+        </DropdownSelection>
+        <DialogSelection />
+      </SelectionState>
+      <SelectionState runConfigName="updateUsername_invalidUser_null()">
         <option name="selectionMode" value="DROPDOWN" />
         <DropdownSelection timestamp="2026-10-21T04:39:06.107001Z">
           <Target type="DEFAULT_BOOT">

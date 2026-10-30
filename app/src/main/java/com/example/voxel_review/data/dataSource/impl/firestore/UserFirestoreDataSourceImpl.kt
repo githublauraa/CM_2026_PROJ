@@ -14,25 +14,23 @@ import java.nio.file.Files.copy
 class UserFirestoreDataSourceImpl @Inject constructor(
     private val db: FirebaseFirestore
 ) : UserRemoteDataSource {
-    override suspend fun getUserById(id: String, currentUserId: String): UserProfileFirestoreDto? {
-
-        // Obtiene la referencia del documento del usuario en Firestore usando su ID
+    override suspend fun getUserById(id: String, currentUserId: String?): UserProfileFirestoreDto? {
         val docRef = db.collection("users").document(id)
-
-        // Consulta el documento y espera la respuesta de Firestore
         val respuesta = docRef.get().await()
 
-        // Convierte el documento a UserProfileFirestoreDto y lo retorna
-        // Si el usuario no existe, lanza una excepción
         val user = respuesta.toObject(UserProfileFirestoreDto::class.java)
             ?.copy(userId = respuesta.id)
             ?: return null
 
-        val followerDoc = db.collection("users").document(id).collection("followers").document(currentUserId).get().await()
-
-        val exist =  followerDoc.exists()
-
-        user.followed = exist
+        user.followed = if (!currentUserId.isNullOrBlank()) {
+            docRef.collection("followers")
+                .document(currentUserId)
+                .get()
+                .await()
+                .exists()
+        } else {
+            false
+        }
 
         return user
     }
