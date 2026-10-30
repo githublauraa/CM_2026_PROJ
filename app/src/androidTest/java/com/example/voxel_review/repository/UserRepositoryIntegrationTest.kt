@@ -91,7 +91,7 @@ class UserRepositoryIntegrationTest {
         val result = userRepository.getUserById(id)
         //assert
         Truth.assertThat(result.isFailure).isTrue()
-        Truth.assertThat(result?.exceptionOrNull()?.message).isEqualTo("User not found")
+        Truth.assertThat(result.exceptionOrNull()?.message).isEqualTo("User not found")
     }
 
     //verificar que traiga los 10 usuarios
@@ -107,9 +107,22 @@ class UserRepositoryIntegrationTest {
         Truth.assertThat(users).hasSize(cantidadUsuarios)
     }
 
+    //registrar un usuario
+    @Test
+    fun registerUser_validUser_createdUser() = runTest {
+        //arr
+        val userId = "user_0"
+        val username = "prueba"
+        val bio = "bio_prueba"
+        val photo = "https://picsum.photos/200/200?random=1"
+        //act
+        val result = userRepository.registerUser(username,bio,userId,photo)
+        //assert
+        Truth.assertThat(result.isSuccess).isTrue()
 
-
-
+        val user = userRepository.getUserById(userId).getOrThrow()
+        Truth.assertThat(user.nick).isEqualTo(username)
+    }
 
 
 
