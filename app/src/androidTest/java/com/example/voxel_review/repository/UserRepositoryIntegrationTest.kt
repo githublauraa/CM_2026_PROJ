@@ -172,6 +172,22 @@ class UserRepositoryIntegrationTest {
         Truth.assertThat(targetUserResult?.followed).isTrue()
     }
 
+    //dejar de seguir a un usuario
+    @Test
+    fun followOrUnfollow_unfollowUser_userNotFollow() = runTest {
+        //arr
+        val currenUser = generateUser(1)
+        val targetUser = generateUser(2)
+        //act
+        //seguir a usuario
+        userRepository.followOrUnfollow(currenUser.userId, targetUser.userId).getOrThrow()
+        //dejar de seguir
+        val result = userRepository.followOrUnfollow(currenUser.userId, targetUser.userId)
+        //assert
+        val targetUserResult = dataSourceUser.getUserById(targetUser.userId, currenUser.userId)
+        Truth.assertThat(result.isSuccess).isTrue()
+        Truth.assertThat(targetUserResult?.followed).isFalse()
+    }
 
 
 
