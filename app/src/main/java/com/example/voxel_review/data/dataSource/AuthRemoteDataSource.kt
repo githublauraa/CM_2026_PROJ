@@ -28,6 +28,10 @@ class AuthRemoteDataSource @Inject constructor(
         auth.signOut()
     }
 
+    suspend fun sendPasswordResetEmail(email: String): Unit {
+        auth.sendPasswordResetEmail(email).await()
+    }
+
     suspend fun updateProfileImage(photoUrl: String): Unit {
         val uri = Uri.parse(photoUrl)
 
