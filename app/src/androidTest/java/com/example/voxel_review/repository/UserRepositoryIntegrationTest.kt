@@ -2,6 +2,8 @@ package com.example.voxel_review.repository
 
 import com.example.voxel_review.data.dataSource.AuthRemoteDataSource
 import com.example.voxel_review.data.dataSource.impl.firestore.UserFirestoreDataSourceImpl
+import com.example.voxel_review.data.dtos.RegisterUserDto
+import com.example.voxel_review.data.dtos.UserDto
 import com.example.voxel_review.data.dtos.UserProfileFirestoreDto
 import com.example.voxel_review.data.repository.AuthRepository
 import com.example.voxel_review.data.repository.UserRepository
@@ -80,7 +82,7 @@ class UserRepositoryIntegrationTest {
         val result = userRepository.getUserById(id)
         //assert
         Truth.assertThat(result.isSuccess).isTrue()
-        Truth.assertThat(result?.getOrNull()?.nick).isEqualTo(expectedName)
+        Truth.assertThat(result.getOrNull()?.nick).isEqualTo(expectedName)
     }
 
     @Test
@@ -111,7 +113,7 @@ class UserRepositoryIntegrationTest {
     @Test
     fun registerUser_validUser_createdUser() = runTest {
         //arr
-        val userId = "user_0"
+        val userId = "user_10000"
         val username = "prueba"
         val bio = "bio_prueba"
         val photo = "https://picsum.photos/200/200?random=1"
@@ -123,6 +125,22 @@ class UserRepositoryIntegrationTest {
         val user = userRepository.getUserById(userId).getOrThrow()
         Truth.assertThat(user.nick).isEqualTo(username)
     }
+
+    //modificar la biografia de un usuario
+    @Test
+    fun updateBio_existUser_updateBio() = runTest {
+        //arr
+        val ganerateUser= generateUser(1)
+        val newBio = "CAMBIO_BIO"
+        //act
+        val result = userRepository.updateUserBio(ganerateUser.userId, newBio)
+        //assert
+        val user = userRepository.getUserById(ganerateUser.userId).getOrThrow()
+        Truth.assertThat(result.isSuccess).isTrue()
+        Truth.assertThat(user.biografia).isEqualTo(newBio)
+
+    }
+
 
 
 
