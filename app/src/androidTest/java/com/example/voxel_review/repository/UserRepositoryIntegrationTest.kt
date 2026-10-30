@@ -94,6 +94,23 @@ class UserRepositoryIntegrationTest {
         Truth.assertThat(result?.exceptionOrNull()?.message).isEqualTo("User not found")
     }
 
+    //verificar que traiga los 10 usuarios
+    @Test
+    fun getAllUsers_existingUsers_returnAllUses() = runTest {
+        //arr
+        val cantidadUsuarios = 10
+        //la bd ya creo los usuarios
+
+        //act
+        val users = userRepository.getAllUsers().getOrNull()
+        //assert
+        Truth.assertThat(users).hasSize(cantidadUsuarios)
+    }
+
+
+
+
+
 
 
     //codigo que quiero que se ejecute despues de terminar las pruebas
