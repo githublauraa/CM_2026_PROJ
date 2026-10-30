@@ -42,6 +42,7 @@ fun VoxelReviewApp(
     // Determina en qué pantallas debe mostrarse la barra de navegación inferior.
     val showBar = currentRoute != AppScreen.Start.route &&
             currentRoute != AppScreen.Register.route &&
+            currentRoute != AppScreen.ForgotPassword.route &&
             currentRoute != AppScreen.Notifications.route &&
             currentRoute?.startsWith(AppScreen.FullReviews.route) != true &&
             currentRoute ?.startsWith(AppScreen.WriteReview.route) != true &&

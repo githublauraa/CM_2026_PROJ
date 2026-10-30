@@ -45,4 +45,17 @@ class AuthRepository @Inject constructor(
     fun logOut(){
         authRemoteDataSource.signOut()
     }
+
+    suspend fun sendPasswordResetEmail(email: String): Result<Unit> {
+        return try {
+            authRemoteDataSource.sendPasswordResetEmail(email)
+            Result.success(Unit)
+        } catch (e: FirebaseAuthInvalidUserException) {
+            Result.failure(Exception("No existe una cuenta asociada a este correo"))
+        } catch (e: FirebaseAuthInvalidCredentialsException) {
+            Result.failure(Exception("El formato del correo electrónico no es válido"))
+        } catch (e: Exception) {
+            Result.failure(Exception("No se pudo enviar el correo de recuperación"))
+        }
+    }
 }

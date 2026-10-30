@@ -47,12 +47,15 @@ import com.example.voxel_review.ui.screens.settings.SettingsRoute
 import com.example.voxel_review.ui.screens.settings.SettingsViewModel
 
 import com.example.voxel_review.ui.screens.editProfile.EditProfileScreen
+import com.example.voxel_review.ui.screens.forgotPassword.ForgotPasswordScreen
+import com.example.voxel_review.ui.screens.forgotPassword.ForgotPasswordViewModel
 
 
 sealed class AppScreen(val route: String) {
     object Splash : AppScreen("splash")
     object Start : AppScreen("start")
     object Register : AppScreen("register")
+    object ForgotPassword : AppScreen("forgotPassword")
     object Reviews : AppScreen("reviews")
     object PerfilUser : AppScreen("perfilUser")
     object FullReviews : AppScreen("fullReviews")
@@ -116,6 +119,22 @@ fun AppNavigation(
                 },
                 createAccountButtonPressed = {
                     navController.navigate(AppScreen.Register.route)
+                },
+                forgotPasswordButtonPressed = {
+                    navController.navigate(AppScreen.ForgotPassword.route)
+                }
+            )
+        }
+
+        // RECUPERAR CONTRASEÑA
+        composable(route = AppScreen.ForgotPassword.route) {
+
+            val forgotPasswordViewModel: ForgotPasswordViewModel = hiltViewModel()
+
+            ForgotPasswordScreen(
+                forgotPasswordViewModel = forgotPasswordViewModel,
+                onBackToLoginClick = {
+                    navController.popBackStack()
                 }
             )
         }

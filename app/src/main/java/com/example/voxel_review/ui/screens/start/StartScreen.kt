@@ -36,6 +36,7 @@ fun StartScreenContent(
     onMostrarContrasenaChange: () -> Unit,
     logginButtonPressed: () -> Unit,
     createAccountButtonPressed: () -> Unit,
+    forgotPasswordButtonPressed: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     Box(
@@ -50,6 +51,7 @@ fun StartScreenContent(
             onUserNameChange = onUserNameChange,
             onPasswordChange = onPasswordChange,
             onMostrarContrasenaChange = onMostrarContrasenaChange,
+            onForgotPasswordClick = forgotPasswordButtonPressed,
             modifier = Modifier
                 .align(Alignment.Center)
                 .offset(y = -30.dp)
@@ -73,6 +75,7 @@ fun StartScreenContent(
  * @param startViewModel ViewModel encargado de administrar el estado de la pantalla.
  * @param logginButtonPressed Acción ejecutada después de un inicio de sesión válido.
  * @param createAccountButtonPressed Acción ejecutada para navegar a la creación de cuenta.
+ * @param forgotPasswordButtonPressed Acción ejecutada para navegar a la recuperación de contraseña.
  * @param modifier Modificador para personalizar la pantalla.
  */
 @Composable
@@ -80,6 +83,7 @@ fun StartScreen(
     startViewModel: StartViewModel,
     logginButtonPressed: () -> Unit,
     createAccountButtonPressed: () -> Unit,
+    forgotPasswordButtonPressed: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     // Convierte el StateFlow del ViewModel en un estado observable por Compose.
@@ -100,7 +104,8 @@ fun StartScreen(
                     logginButtonPressed()
                 }
             },
-            createAccountButtonPressed = createAccountButtonPressed
+            createAccountButtonPressed = createAccountButtonPressed,
+            forgotPasswordButtonPressed = forgotPasswordButtonPressed
         )
     }
 }
