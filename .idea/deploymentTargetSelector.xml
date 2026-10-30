@@ -13,7 +13,7 @@
         </DropdownSelection>
         <DialogSelection />
       </SelectionState>
-      <SelectionState runConfigName="followOrUnfollowUser_unfollow_followedFalse()">
+      <SelectionState runConfigName="UserRepositoryIntegrationTest">
         <option name="selectionMode" value="DROPDOWN" />
         <DropdownSelection timestamp="2026-10-21T04:39:06.107001Z">
           <Target type="DEFAULT_BOOT">
@@ -24,7 +24,7 @@
         </DropdownSelection>
         <DialogSelection />
       </SelectionState>
-      <SelectionState runConfigName="updateUsername_validUser_corretUsername()">
+      <SelectionState runConfigName="updateBio_existUser_updateBio()">
         <option name="selectionMode" value="DROPDOWN" />
         <DropdownSelection timestamp="2026-10-21T04:39:06.107001Z">
           <Target type="DEFAULT_BOOT">
@@ -35,7 +35,7 @@
         </DropdownSelection>
         <DialogSelection />
       </SelectionState>
-      <SelectionState runConfigName="FirebaseUserDataSourceTest (1)">
+      <SelectionState runConfigName="updateUsername_existUser_updateUsername()">
         <option name="selectionMode" value="DROPDOWN" />
         <DropdownSelection timestamp="2026-10-21T04:39:06.107001Z">
           <Target type="DEFAULT_BOOT">
@@ -46,7 +46,7 @@
         </DropdownSelection>
         <DialogSelection />
       </SelectionState>
-      <SelectionState runConfigName="updateBio_validUser_correctBio()">
+      <SelectionState runConfigName="followOrUnfollow_followUser_UserFollow()">
         <option name="selectionMode" value="DROPDOWN" />
         <DropdownSelection timestamp="2026-10-21T04:39:06.107001Z">
           <Target type="DEFAULT_BOOT">
@@ -57,7 +57,7 @@
         </DropdownSelection>
         <DialogSelection />
       </SelectionState>
-      <SelectionState runConfigName="updateUsername_invalidUser_null()">
+      <SelectionState runConfigName="followOrUnfollow_unfollowUser_followUserFalse()">
         <option name="selectionMode" value="DROPDOWN" />
         <DropdownSelection timestamp="2026-10-21T04:39:06.107001Z">
           <Target type="DEFAULT_BOOT">
