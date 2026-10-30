@@ -83,6 +83,17 @@ class UserRepositoryIntegrationTest {
         Truth.assertThat(result?.getOrNull()?.nick).isEqualTo(expectedName)
     }
 
+    @Test
+    fun getUserById_invalidId_returnFailure() = runTest {
+        //arr
+        val id = "user_999"
+        //act
+        val result = userRepository.getUserById(id)
+        //assert
+        Truth.assertThat(result.isFailure).isTrue()
+        Truth.assertThat(result?.exceptionOrNull()?.message).isEqualTo("User not found")
+    }
+
 
 
     //codigo que quiero que se ejecute despues de terminar las pruebas
