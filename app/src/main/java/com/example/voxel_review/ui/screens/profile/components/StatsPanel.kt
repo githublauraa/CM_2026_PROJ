@@ -1,5 +1,6 @@
 package com.example.voxel_review.ui.screens.profile.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
@@ -26,7 +27,9 @@ import com.example.voxel_review.ui.theme.*
 fun StatsPanel(
     followers: Int,
     followed: Int,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onFollowersClick: () -> Unit = {},
+    onFollowingClick: () -> Unit = {}
 ) {
     val shape = RoundedCornerShape(24.dp)
     Row(
@@ -43,7 +46,10 @@ fun StatsPanel(
             valor = followers,
             etiqueta = "Seguidores",
             icono = Icons.Outlined.Group,
-            modifier = Modifier.weight(1f)
+            modifier = Modifier.weight(1f).clickable(
+                onClickLabel = "Ver seguidores",
+                onClick = onFollowersClick
+            )
         )
         VerticalDivider(
             modifier = Modifier.fillMaxHeight().padding(vertical = 8.dp),
@@ -53,7 +59,10 @@ fun StatsPanel(
             valor = followed,
             etiqueta = "Seguidos",
             icono = Icons.Outlined.PersonAdd,
-            modifier = Modifier.weight(1f)
+            modifier = Modifier.weight(1f).clickable(
+                onClickLabel = "Ver personas seguidas",
+                onClick = onFollowingClick
+            )
         )
     }
 }

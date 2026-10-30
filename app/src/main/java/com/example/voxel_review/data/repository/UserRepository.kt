@@ -25,6 +25,26 @@ class UserRepository @Inject constructor(
 		}
 	}
 
+    suspend fun getFollowing(userId: String): Result<List<ProfileInfo>> {
+        return try {
+            Result.success(userRemoteDataSource.getFollowing(userId).map { it.toUserProfileinfo() })
+        } catch (e: kotlinx.coroutines.CancellationException) {
+            throw e
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    suspend fun getFollowers(userId: String): Result<List<ProfileInfo>> {
+        return try {
+            Result.success(userRemoteDataSource.getFollowers(userId).map { it.toUserProfileinfo() })
+        } catch (e: kotlinx.coroutines.CancellationException) {
+            throw e
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
 	suspend fun getAllUsers(): Result<List<ProfileInfo>> {
 		return try {
 			val users = userRemoteDataSource.getAllUsers()

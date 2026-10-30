@@ -53,6 +53,24 @@ class UserFirestoreDataSourceImpl @Inject constructor(
         }
     }
 
+    suspend fun getFollowing(userId: String): List<UserProfileFirestoreDto> {
+        return getRelatedUsers(userId, "following")
+    }
+
+    suspend fun getFollowers(userId: String): List<UserProfileFirestoreDto> {
+        return getRelatedUsers(userId, "followers")
+    }
+
+    private suspend fun getRelatedUsers(userId: String, collection: String): List<UserProfileFirestoreDto> {
+        val relations = db.collection("users").document(userId)
+            .collection(collection).get().await()
+
+        return relations.documents.mapNotNull { relation ->
+            val user = db.collection("users").document(relation.id).get().await()
+            user.toObject(UserProfileFirestoreDto::class.java)?.copy(userId = user.id)
+        }
+    }
+
     override suspend fun registerUser(registerUserDto: RegisterUserDto, userId: String) {
         //crear el documento en la coleccion users con el id del usuario, la PK es el userId
         val docRef = db.collection("users").document(userId)

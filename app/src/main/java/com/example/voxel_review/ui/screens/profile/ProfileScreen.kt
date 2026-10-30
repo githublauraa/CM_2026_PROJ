@@ -34,6 +34,8 @@ fun ProfileScreen(
     buttonLogOutPressed: () -> Unit,
     onReviewClick: (ReviewInfo) -> Unit,
     onEditProfileClick: () -> Unit,
+    onFollowingClick: () -> Unit = {},
+    onFollowersClick: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
 
@@ -61,6 +63,8 @@ fun ProfileScreen(
         },
         isOwnProfile = isOwnProfile,
         onEditProfileClick = onEditProfileClick,
+        onFollowingClick = onFollowingClick,
+        onFollowersClick = onFollowersClick,
         buttonFollowPressed = {
             profileViewModel.followOrUnfollow(profileId)
         },
@@ -78,6 +82,8 @@ fun ProfileContent(
     onReviewClick: (ReviewInfo) -> Unit,
     isOwnProfile: Boolean = false,
     onEditProfileClick: () -> Unit,
+    onFollowingClick: () -> Unit = {},
+    onFollowersClick: () -> Unit = {},
     buttonFollowPressed: ()-> Unit,
     onRetry: () -> Unit = {},
     onRetryReviews: () -> Unit = {},
@@ -157,7 +163,9 @@ fun ProfileContent(
 
             StatsPanel(
                 followers = profile.followers,
-                followed = profile.following
+                followed = profile.following,
+                onFollowersClick = onFollowersClick,
+                onFollowingClick = onFollowingClick
             )
 
             when {

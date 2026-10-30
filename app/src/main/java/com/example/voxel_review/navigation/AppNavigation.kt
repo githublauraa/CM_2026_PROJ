@@ -1,5 +1,7 @@
 package com.example.voxel_review.navigation
 
+import android.net.Uri
+import com.example.voxel_review.ui.screens.following.FollowingScreen
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
@@ -65,6 +67,11 @@ sealed class AppScreen(val route: String) {
     object RankingsUser : AppScreen("rankingsUser")
     object Configuration : AppScreen("configuration")
     object Notifications : AppScreen("notifications")
+
+    object Following : AppScreen("following") {
+        fun createRoute(userId: String, showFollowers: Boolean = false) =
+            "following/${Uri.encode(userId)}?showFollowers=$showFollowers"
+    }
 
     object EditProfile : AppScreen("editProfile")
 
@@ -240,6 +247,12 @@ fun AppNavigation(
                             popUpTo(0) { inclusive = true }
                         }
                     },
+                    onFollowingClick = {
+                        navController.navigate(AppScreen.Following.createRoute(profileId))
+                    },
+                    onFollowersClick = {
+                        navController.navigate(AppScreen.Following.createRoute(profileId, showFollowers = true))
+                    },
                     onEditProfileClick = {
                         navController.navigate(AppScreen.EditProfile.route){
                             navController.popBackStack()
@@ -249,6 +262,29 @@ fun AppNavigation(
             }
         }
 
+
+        composable(
+            route = "${AppScreen.Following.route}/{userId}?showFollowers={showFollowers}",
+            arguments = listOf(
+                navArgument("userId") { type = NavType.StringType },
+                navArgument("showFollowers") {
+                    type = NavType.BoolType
+                    defaultValue = false
+                }
+            )
+        ) { backStackEntry ->
+            FollowingScreen(
+                userId = backStackEntry.arguments?.getString("userId").orEmpty(),
+                followingViewModel = hiltViewModel(),
+                showFollowers = backStackEntry.arguments?.getBoolean("showFollowers") ?: false,
+                onBackClick = { navController.popBackStack() },
+                onUserClick = { userId ->
+                    navController.navigate(
+                        "${AppScreen.PerfilUser.route}?profileId=${Uri.encode(userId)}"
+                    )
+                }
+            )
+        }
 
         // CONFIGURACIÓN
         composable(route = AppScreen.Configuration.route) {
