@@ -44,5 +44,17 @@ class UserRepositoryTest {
         Truth.assertThat(result.getOrNull()?.id).isEqualTo("123")
     }
 
+    @Test
+    fun `al llamar getUserById, si el id del usuario no es valido debe retorna un Result failure`() = runTest {
+        //AAA
+        //Arange
+        coEvery { authRepository.currentUser?.uid } returns "1"
+        coEvery { mockDataSource.getUserById("999", "1") } returns null
+        //Act
+        val result = userRepository.getUserById("999")
+        //Assert
+        Truth.assertThat(result.isFailure).isTrue()
+        Truth.assertThat(result.exceptionOrNull()?.message).isEqualTo("User not found")
+    }
 
 }
