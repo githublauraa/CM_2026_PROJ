@@ -42,6 +42,13 @@ class UserRepositoryTest {
         Truth.assertThat(result.isSuccess).isTrue()
         Truth.assertThat(result.getOrNull()?.nick).isEqualTo("Juan")
         Truth.assertThat(result.getOrNull()?.id).isEqualTo("123")
+        Truth.assertThat(result.getOrNull()?.biografia).isEqualTo(userDto.bio)
+        Truth.assertThat(result.getOrNull()?.pfp).isEqualTo(userDto.photoUrl)
+        Truth.assertThat(result.getOrNull()?.numResenias).isEqualTo(userDto.numReviews)
+        Truth.assertThat(result.getOrNull()?.promedio).isEqualTo(userDto.avgRating)
+        Truth.assertThat(result.getOrNull()?.likes).isEqualTo(userDto.likes)
+        Truth.assertThat(result.getOrNull()?.followers).isEqualTo(userDto.followersCount)
+        Truth.assertThat(result.getOrNull()?.following).isEqualTo(userDto.followingCount)
     }
 
     @Test
@@ -291,7 +298,4 @@ class UserRepositoryTest {
         Truth.assertThat(result.isSuccess).isTrue()
         Truth.assertThat(result.getOrNull()).isEqualTo(Unit)
     }
-
-
-
 }
