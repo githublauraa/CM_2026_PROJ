@@ -66,10 +66,7 @@ class UserRepository @Inject constructor(
 		}
 	}
 
-	suspend fun updateUserBio(
-		userId: String,
-		bio: String
-	): Result<Unit> {
+	suspend fun updateUserBio(userId: String, bio: String): Result<Unit> {
 		return runCatching {
 			userRemoteDataSource.updateUserBio(userId, bio)
 		}

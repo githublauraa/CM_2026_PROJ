@@ -278,4 +278,20 @@ class UserRepositoryTest {
         Truth.assertThat(result.getOrNull()).isEqualTo(Unit)
     }
 
+    @Test
+    fun `al llamar updateUsername, si el id del usuario es valido devuelve unit`() = runTest {
+        //AAA
+        //Arrange
+        val newUsername = "Username actualizado con el test"
+
+        coEvery { mockDataSource.updateUsername("123", newUsername) } returns Unit
+        //Act
+        val result = userRepository.updateUsername("123", newUsername)
+        //Assert
+        Truth.assertThat(result.isSuccess).isTrue()
+        Truth.assertThat(result.getOrNull()).isEqualTo(Unit)
+    }
+
+
+
 }
