@@ -187,7 +187,6 @@ class UserRepositoryTest {
                 followingCount = 45
             )
         )
-        //Arange
         // Arrange
         coEvery { mockDataSource.getFollowing("123") } returns usersDto
         //Act
@@ -204,7 +203,65 @@ class UserRepositoryTest {
         Truth.assertThat(usuarios[0].nick).isEqualTo(usersDto[0].username)
         Truth.assertThat(usuarios[1].nick).isEqualTo(usersDto[1].username)
         Truth.assertThat(usuarios[2].nick).isEqualTo(usersDto[2].username)
+    }
 
+    @Test
+    fun `al llamar getFollowers, si el datasource devuelve un listado de usuarios, se deben traer todos los usuarios`() = runTest {
+        //AAA
+        val usersDto = listOf(
+            UserProfileFirestoreDto(
+                userId = "123",
+                username = "Juan",
+                bio = "Me gustan los videojuegos y hacer reseñas.",
+                photoUrl = "https://example.com/avatar1.jpg",
+                numReviews = 15,
+                likes = 120,
+                avgRating = 4.5f,
+                followed = false,
+                followersCount = 50,
+                followingCount = 25
+            ),
+            UserProfileFirestoreDto(
+                userId = "456",
+                username = "Carlos",
+                bio = "Fanático de los juegos de aventura y acción.",
+                photoUrl = "https://example.com/avatar2.jpg",
+                numReviews = 8,
+                likes = 65,
+                avgRating = 3.8f,
+                followed = true,
+                followersCount = 30,
+                followingCount = 15
+            ),
+            UserProfileFirestoreDto(
+                userId = "789",
+                username = "Maria",
+                bio = "Me encantan los juegos de rol y estrategia.",
+                photoUrl = "https://example.com/avatar3.jpg",
+                numReviews = 22,
+                likes = 200,
+                avgRating = 4.9f,
+                followed = false,
+                followersCount = 100,
+                followingCount = 45
+            )
+        )
+        // Arrange
+        coEvery { mockDataSource.getFollowers("123") } returns usersDto
+        //Act
+        val result = userRepository.getFollowers("123")
+        //Assert
+        val usuarios = result.getOrThrow()
+        Truth.assertThat(result.isSuccess).isTrue()
+        Truth.assertThat(result.getOrNull()?.size).isEqualTo(usersDto.size)
+        //verificar los ids
+        Truth.assertThat(usuarios[0].id).isEqualTo(usersDto[0].userId)
+        Truth.assertThat(usuarios[1].id).isEqualTo(usersDto[1].userId)
+        Truth.assertThat(usuarios[2].id).isEqualTo(usersDto[2].userId)
+        //verificar nombres
+        Truth.assertThat(usuarios[0].nick).isEqualTo(usersDto[0].username)
+        Truth.assertThat(usuarios[1].nick).isEqualTo(usersDto[1].username)
+        Truth.assertThat(usuarios[2].nick).isEqualTo(usersDto[2].username)
     }
 
 }
