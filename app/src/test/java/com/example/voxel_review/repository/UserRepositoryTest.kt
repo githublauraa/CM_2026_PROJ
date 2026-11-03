@@ -264,4 +264,18 @@ class UserRepositoryTest {
         Truth.assertThat(usuarios[2].nick).isEqualTo(usersDto[2].username)
     }
 
+    @Test
+    fun `al llamar updateUserBio, si el id del usuario es valido devuelve unit`() = runTest {
+        //AAA
+        //Arrange
+        val newBio = "Bio actualizada con el test"
+
+        coEvery { mockDataSource.updateUserBio("123", newBio) } returns Unit
+        //Act
+        val result = userRepository.updateUserBio("123", newBio)
+        //Assert
+        Truth.assertThat(result.isSuccess).isTrue()
+        Truth.assertThat(result.getOrNull()).isEqualTo(Unit)
+    }
+
 }
