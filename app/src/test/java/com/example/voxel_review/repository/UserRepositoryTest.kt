@@ -57,4 +57,32 @@ class UserRepositoryTest {
         Truth.assertThat(result.exceptionOrNull()?.message).isEqualTo("User not found")
     }
 
+    @Test
+    fun `al llamar getUserById, si el dataSource devuelve campos vacios se deben mapear correctamente`() = runTest {
+        //AAA
+        //AAA
+        val userDto = UserProfileFirestoreDto(
+            userId = "123",
+            username = "",
+            bio = null,
+            photoUrl = "",
+            numReviews = 0,
+            likes = 0,
+            avgRating = 0f,
+            followed = false,
+            followersCount = 0,
+            followingCount = 0
+        )
+        //Arange
+        coEvery { authRepository.currentUser?.uid } returns "1"
+        coEvery { mockDataSource.getUserById("123", "1") } returns userDto
+        //Act
+        val result = userRepository.getUserById("123")
+        //Assert
+        Truth.assertThat(result.isSuccess).isTrue()
+        Truth.assertThat(result.getOrNull()?.id).isEqualTo("123")
+        Truth.assertThat(result.getOrNull()?.biografia).isEqualTo("No hay biografia")
+
+    }
+
 }
