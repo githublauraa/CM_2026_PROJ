@@ -21,4 +21,5 @@ data class CreateAccountState(
     val mostrarMensaje: Boolean = false,
     val username: String = "",
     val bio: String = "",
+    val loading: Boolean = false
 )

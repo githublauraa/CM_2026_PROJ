@@ -16,10 +16,12 @@ import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Test
 import com.google.common.truth.Truth.assertThat
+import kotlinx.coroutines.flow.map
 
 class RegisterViewModelIntegrationTest {
 
     private lateinit var viewModel: CreateAccountViewModel
+    private lateinit var authRepository: AuthRepository
 
     @Before
     fun setup() {
@@ -30,7 +32,7 @@ class RegisterViewModelIntegrationTest {
         } catch (e: Exception) {
         }
 
-        val authRepository = AuthRepository(AuthRemoteDataSource(Firebase.auth))
+        authRepository = AuthRepository(AuthRemoteDataSource(Firebase.auth))
         val userRepository = UserRepository(UserFirestoreDataSourceImpl(Firebase.firestore), AuthRepository(AuthRemoteDataSource(Firebase.auth)))
 
         viewModel = CreateAccountViewModel(authRepository, userRepository)
@@ -72,5 +74,38 @@ class RegisterViewModelIntegrationTest {
 
         assertThat(state.errorMessage).isEmpty()
         assertThat(state.mostrarMensaje).isFalse()
+    }
+
+    //correo en uso
+    @Test
+    fun register_alredyUsedEmail_showError() = runTest {
+        authRepository.signUp("juan@voxel.com", "123456")
+        // Arrange
+        // Permite esperar a que el VM ejecute onSuccess antes de verificar el resultado.
+        val registroExitoso = MutableStateFlow(false)
+
+        viewModel.updateUsername("Juan")
+        viewModel.updateEmail("juan@voxel.com")
+        viewModel.updatePassword("123456")
+        viewModel.updateBio("Hola, soy Juan")
+        viewModel.updateTerminosAceptados()
+
+        // Act
+        viewModel.createAcount {
+            registroExitoso.value = true
+        }
+
+        // Esperar hasta que se ejecute el callback.
+        var resultado = viewModel.uiState.map { it.loading }.first { it }
+        assertThat(resultado).isTrue()
+
+        resultado = viewModel.uiState.map { it.loading }.first { !it }
+        // Assert
+        assertThat(resultado).isFalse()
+
+        val state = viewModel.uiState.value
+
+        assertThat(state.errorMessage).isNotEmpty()
+        assertThat(state.errorMessage).isEqualTo("El correo electrónico ya está en uso")
     }
 }

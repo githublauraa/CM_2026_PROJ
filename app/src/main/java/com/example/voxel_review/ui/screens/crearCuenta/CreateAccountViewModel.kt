@@ -10,6 +10,9 @@ import com.example.voxel_review.data.repository.AuthRepository
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import com.example.voxel_review.data.repository.UserRepository
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
+
 /**
  * ViewModel encargado de administrar el estado y la lógica
  * de la pantalla de creación de cuenta.
@@ -83,6 +86,7 @@ class CreateAccountViewModel @Inject constructor(
      * @return `true` si los datos son válidos, `false` en caso contrario.
      */
     fun createAcount(onSuccess: () -> Unit) {
+        _uiState.update { it.copy(loading = true) }
 
         if (_uiState.value.email.isEmpty()) {
             _uiState.update {
@@ -150,17 +154,38 @@ class CreateAccountViewModel @Inject constructor(
                         )
                     }
                 }
-
+                _uiState.update { it.copy(loading = false) }
             } else {
-                _uiState.update {
-                    val mensaje = result.exceptionOrNull()?.message
-                        ?: "Error al crear la cuenta"
 
-                    it.copy(
-                        errorMessage = mensaje,
-                        mostrarMensaje = true
-                    )
+
+                _uiState.update {
+                    val e = result.exceptionOrNull()
+
+                    when (e){
+                        is FirebaseAuthUserCollisionException -> {
+                            it.copy(
+                                loading = false,
+                                errorMessage = "El correo electrónico ya está en uso",
+                                mostrarMensaje = true
+                            )
+                        }
+                        is FirebaseAuthInvalidCredentialsException -> {
+                            it.copy(
+                                loading = false,
+                                errorMessage = "El correo no es valido",
+                                mostrarMensaje = true
+                            )
+                        }
+                        else -> {
+                            it.copy(
+                                loading = false,
+                                errorMessage = "Error al registrar un usuario",
+                                mostrarMensaje = true
+                            )
+                        }
+                    }
                 }
+
             }
         }
     }
