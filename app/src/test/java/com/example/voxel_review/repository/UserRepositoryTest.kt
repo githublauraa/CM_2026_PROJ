@@ -65,7 +65,7 @@ class UserRepositoryTest {
             userId = "123",
             username = "",
             bio = null,
-            photoUrl = "",
+            photoUrl = null,
             numReviews = 0,
             likes = 0,
             avgRating = 0f,
@@ -82,7 +82,7 @@ class UserRepositoryTest {
         Truth.assertThat(result.isSuccess).isTrue()
         Truth.assertThat(result.getOrNull()?.id).isEqualTo("123")
         Truth.assertThat(result.getOrNull()?.biografia).isEqualTo("No hay biografia")
-
+        Truth.assertThat(result.getOrNull()?.pfp).isEqualTo("")
     }
 
 }
