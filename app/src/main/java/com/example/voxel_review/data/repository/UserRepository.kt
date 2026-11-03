@@ -49,10 +49,8 @@ class UserRepository @Inject constructor(
 		return try {
 			val users = userRemoteDataSource.getAllUsers()
 			val userProfileInfo = users.map { it.toUserProfileinfo() }
-			Log.d("UserRepository", "getAllUsers: ${userProfileInfo}")
 			Result.success(userProfileInfo)
 		} catch(e: Exception){
-			Log.e("UserRepository", "getAllUsers: ${e.message}")
 			Result.failure(e)
 		}
 	}
@@ -68,10 +66,7 @@ class UserRepository @Inject constructor(
 		}
 	}
 
-	suspend fun updateUserBio(
-		userId: String,
-		bio: String
-	): Result<Unit> {
+	suspend fun updateUserBio(userId: String, bio: String): Result<Unit> {
 		return runCatching {
 			userRemoteDataSource.updateUserBio(userId, bio)
 		}

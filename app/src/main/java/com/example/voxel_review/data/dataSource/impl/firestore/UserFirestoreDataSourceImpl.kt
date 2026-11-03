@@ -78,27 +78,21 @@ class UserFirestoreDataSourceImpl @Inject constructor(
         docRef.set(registerUserDto).await()
     }
 
-    override suspend fun updateUserBio(
-        userId: String,
-        bio: String
-    ) {
+    override suspend fun updateUserBio(userId: String, bio: String) {
         db.collection("users")
             .document(userId)
             .update("bio", bio)
             .await()
     }
 
-    override suspend fun updateUsername(userdId: String, username: String) {
+    override suspend fun updateUsername(userId: String, username: String) {
         db.collection("users")
-            .document(userdId)
+            .document(userId)
             .update("username", username)
             .await()
     }
 
-    override suspend fun followOrUnfollow(
-        currentUserId: String,
-        targetUserId: String
-    ) {
+    override suspend fun followOrUnfollow(currentUserId: String, targetUserId: String) {
         val currentUserRef = db.collection("users").document(currentUserId)
         val targetUserRef = db.collection("users").document(targetUserId)
 
