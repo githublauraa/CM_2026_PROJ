@@ -108,4 +108,38 @@ class RegisterViewModelIntegrationTest {
         assertThat(state.errorMessage).isNotEmpty()
         assertThat(state.errorMessage).isEqualTo("El correo electrónico ya está en uso")
     }
+
+
+    //correo en uso
+    @Test
+    fun register_emailInvalid_showError() = runTest {
+        // Arrange
+        // Permite esperar a que el VM ejecute onSuccess antes de verificar el resultado.
+        val registroExitoso = MutableStateFlow(false)
+
+        viewModel.updateUsername("Juan")
+        viewModel.updateEmail("juanvoxel.com")
+        viewModel.updatePassword("123456")
+        viewModel.updateBio("Hola, soy Juan")
+        viewModel.updateTerminosAceptados()
+
+        // Act
+        viewModel.createAcount {
+            registroExitoso.value = true
+        }
+
+        // Esperar hasta que se ejecute el callback.
+        var resultado = viewModel.uiState.map { it.loading }.first { it }
+        assertThat(resultado).isTrue()
+
+        resultado = viewModel.uiState.map { it.loading }.first { !it }
+        // Assert
+        assertThat(resultado).isFalse()
+
+        val state = viewModel.uiState.value
+
+        assertThat(state.errorMessage).isNotEmpty()
+        assertThat(state.errorMessage).isEqualTo("El correo no es valido")
+    }
+
 }
