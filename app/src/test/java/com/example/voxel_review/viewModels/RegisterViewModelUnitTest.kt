@@ -8,6 +8,9 @@ import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
@@ -66,6 +69,38 @@ class RegisterViewModelUnitTest {
 
 
 
+    //correo en uso
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @Test
+    fun register_alredyUsedEmail_showError() = runTest {
+
+        // Arrange
+        // Permite esperar a que el VM ejecute onSuccess antes de verificar el resultado.
+        var registroExitoso = false
+
+        viewModel.updateUsername("Juan")
+        viewModel.updateEmail("juan@voxel.com")
+        viewModel.updatePassword("123456")
+        viewModel.updateBio("Hola, soy Juan")
+        viewModel.updateTerminosAceptados()
+
+        coEvery { authRepository.signUp(any(), any()) } returns Result.failure(Exception("El correo electrónico ya está en uso"))
+
+
+        // Act
+        viewModel.createAcount {
+            registroExitoso = true
+        }
+        //esperar a que todo acabe
+        advanceUntilIdle()
+
+
+
+        val state = viewModel.uiState.value
+
+        assertThat(registroExitoso).isFalse()
+        assertThat(state.errorMessage).isNotEmpty()
+    }
 
 
 
