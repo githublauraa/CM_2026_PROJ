@@ -15,5 +15,6 @@ data class StartState(
     val password: String = "",
     val mostrarContrasena: Boolean = false,
     val errorMessage: String = "",
-    val mostrarMensaje: Boolean = false
+    val mostrarMensaje: Boolean = false,
+    val loading: Boolean = false,
 )

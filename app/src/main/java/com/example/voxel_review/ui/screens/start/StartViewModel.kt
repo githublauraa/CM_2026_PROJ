@@ -8,6 +8,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import jakarta.inject.Inject
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import kotlinx.coroutines.launch
 
 
@@ -63,6 +65,9 @@ class StartViewModel @Inject constructor(
      * @return `true` si los datos son válidos o `false` si existe algún error.
      */
     fun login(onSuccess: () -> Unit) {
+
+        _uiState.update { it.copy(loading = true) }
+
         if (
             _uiState.value.correo.isEmpty() ||
             _uiState.value.password.isEmpty()
@@ -89,14 +94,40 @@ class StartViewModel @Inject constructor(
 
             if (result.isSuccess) {
                 onSuccess()
-            }else{
+                _uiState.update { it.copy(loading = false) }
+            }else {
+
                 _uiState.update {
-                    val mensaje = result.exceptionOrNull()?.message?: "Error al inciar sesión"
-                    it.copy(errorMessage = mensaje, mostrarMensaje = true)
+
+                    val e = result.exceptionOrNull()
+
+                    when (e) {
+                        is FirebaseAuthInvalidUserException -> {
+                            it.copy(
+                                loading = false,
+                                errorMessage = "Usuario no existe",
+                                mostrarMensaje = true
+                            )
+                        }
+
+                        is FirebaseAuthInvalidCredentialsException -> {
+                            it.copy(
+                                loading = false,
+                                errorMessage = "Credenciales incorrectas",
+                                mostrarMensaje = true
+                            )
+                        }
+
+                        else -> {
+                            it.copy(
+                                loading = false,
+                                errorMessage = "Error al iniciar sesion",
+                                mostrarMensaje = true
+                            )
+                        }
+                    }
                 }
-
             }
-
         }
     }
 }
