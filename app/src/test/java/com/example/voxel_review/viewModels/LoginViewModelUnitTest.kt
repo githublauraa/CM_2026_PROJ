@@ -29,7 +29,7 @@ class LoginViewModelUnitTest {
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
-    fun login_success_loginUserAndUpdateUI() = runTest {
+    fun login_validCredentials_loginUserAndUpdateUI() = runTest {
         //arrange
         viewModel.updateCorreo("juan@voxel.com")
         viewModel.updatePassword("123456")
@@ -56,7 +56,7 @@ class LoginViewModelUnitTest {
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
-    fun login_incorrectCredential_showError() = runTest {
+    fun login_invalidCredential_showError() = runTest {
         viewModel.updateCorreo("juan@voxel.com")
         viewModel.updatePassword("123456")
 

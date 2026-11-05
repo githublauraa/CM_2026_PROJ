@@ -67,9 +67,14 @@ class UserRepository @Inject constructor(
 	}
 
 	suspend fun updateUserBio(userId: String, bio: String): Result<Unit> {
-		return runCatching {
+
+		return try {
 			userRemoteDataSource.updateUserBio(userId, bio)
+			Result.success(Unit)
+		} catch (e: Exception){
+			Result.failure(e)
 		}
+
 	}
 
 
@@ -83,8 +88,13 @@ class UserRepository @Inject constructor(
 	}
 
 	suspend fun updateUsername(userId: String, username: String): Result<Unit>{
-		return runCatching {
+
+		return try {
 			userRemoteDataSource.updateUsername(userId, username)
+			Result.success(Unit)
+		} catch (e: Exception){
+			Result.failure(e)
 		}
+
 	}
 }
