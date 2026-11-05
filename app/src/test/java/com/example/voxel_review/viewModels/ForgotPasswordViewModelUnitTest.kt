@@ -52,4 +52,25 @@ class ForgotPasswordViewModelUnitTest {
     }
 
 
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @Test
+    fun sendResetEmail_whenEmailIsNotValid_ShowError() = runTest {
+
+        //arrange
+        viewModel.updateCorreo("juangmail")
+
+        //act
+        viewModel.sendResetEmail()
+        //esperar a que todo acabe
+        advanceUntilIdle()
+
+        val state = viewModel.uiState.value
+
+        assertThat(state.isEmailSent).isFalse()
+        assertThat(state.errorMessage).isNotEmpty()
+
+    }
+
+
 }
