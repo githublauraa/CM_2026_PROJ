@@ -18,10 +18,10 @@ class AuthRepository @Inject constructor(
             return Result.success(Unit)
         }
         catch (e: FirebaseAuthInvalidUserException){
-            return Result.failure(Exception("Usuario no existe"))
+            return Result.failure(e)
         }
         catch (e: FirebaseAuthInvalidCredentialsException){
-            return Result.failure(Exception("Credenciales incorrectas"))
+            return Result.failure(e)
         }
         catch (e: Exception){
             return Result.failure(e)
