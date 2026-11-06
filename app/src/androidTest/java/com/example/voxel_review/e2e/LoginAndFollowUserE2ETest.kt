@@ -79,7 +79,7 @@ class LoginAndFollowUserE2ETest {
 
 
     @Test
-    fun loginUser_followUser() {
+    fun login_followUser_openFollowingFeed() {
         //llenar campos
         composeRule.onNodeWithTag("txtEmail").performTextInput("prueba@prueba.com")
         composeRule.onNodeWithTag("txtPassword").performTextInput("123456")
