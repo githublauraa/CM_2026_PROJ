@@ -1,6 +1,5 @@
 package com.example.voxel_review.e2e
 
-import android.util.Log
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.v2.createAndroidComposeRule
 import androidx.compose.ui.test.onAllNodesWithTag
@@ -17,7 +16,6 @@ import com.google.firebase.auth.auth
 import com.google.firebase.firestore.firestore
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.test.runTest
 import org.junit.After
@@ -35,7 +33,7 @@ import androidx.compose.ui.test.performTouchInput
 import androidx.test.espresso.Espresso.pressBack
 
 @HiltAndroidTest
-class RegisterNewUserE2E {
+class RegisterAndReviewE2ETest {
 
     @get:Rule(order = 0)
     var hiltRule = HiltAndroidRule(this)
