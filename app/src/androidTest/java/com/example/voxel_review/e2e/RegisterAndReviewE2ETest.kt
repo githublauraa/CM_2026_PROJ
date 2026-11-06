@@ -31,6 +31,8 @@ import com.example.voxel_review.navigation.AppScreen
 import androidx.compose.ui.test.swipeUp
 import androidx.compose.ui.test.performTouchInput
 import androidx.test.espresso.Espresso.pressBack
+import kotlinx.coroutines.runBlocking
+
 
 @HiltAndroidTest
 class RegisterAndReviewE2ETest {
@@ -59,13 +61,6 @@ class RegisterAndReviewE2ETest {
         val userRemoteDataSource = UserFirestoreDataSourceImpl(Firebase.firestore)
         authRepository = AuthRepository(authDataSource)
         userRepository = UserRepository(userRemoteDataSource, authRepository)
-
-        //usuario registrado
-//        runBlocking {
-//            authRepository.signUp("prueba@gmail.com","123456")
-//            authRepository.logOut()
-//        }
-
     }
 
     //
@@ -93,7 +88,7 @@ class RegisterAndReviewE2ETest {
         composeRule.waitUntil(timeoutMillis = 5000){
             composeRule.onAllNodesWithTag("homeScreen").fetchSemanticsNodes().isNotEmpty()
         }
-        //navegar a la pantalla de descubrir
+        //navegar a la pantalla de home
         composeRule.onNodeWithTag("homeScreen").assertIsDisplayed()
 
         //navegar a la pantalla de descubrir
@@ -151,9 +146,20 @@ class RegisterAndReviewE2ETest {
     @After
     fun tearDown() = runTest{
         val user = Firebase.auth.currentUser
+
         if (user != null){
+            // Eliminar el perfil mientras todavía hay sesión.
+            Firebase.firestore
+                .collection("users")
+                .document(user.uid)
+                .delete()
+                .await()
+
+            // Eliminar también la cuenta de Authentication.
+            user.delete().await()
             Firebase.auth.signOut()
         }
-        user?.delete()?.await()
+
+
     }
 }
