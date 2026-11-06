@@ -25,14 +25,32 @@ class UserRepository @Inject constructor(
 		}
 	}
 
+    suspend fun getFollowing(userId: String): Result<List<ProfileInfo>> {
+        return try {
+            Result.success(userRemoteDataSource.getFollowing(userId).map { it.toUserProfileinfo() })
+        } catch (e: kotlinx.coroutines.CancellationException) {
+            throw e
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    suspend fun getFollowers(userId: String): Result<List<ProfileInfo>> {
+        return try {
+            Result.success(userRemoteDataSource.getFollowers(userId).map { it.toUserProfileinfo() })
+        } catch (e: kotlinx.coroutines.CancellationException) {
+            throw e
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
 	suspend fun getAllUsers(): Result<List<ProfileInfo>> {
 		return try {
 			val users = userRemoteDataSource.getAllUsers()
 			val userProfileInfo = users.map { it.toUserProfileinfo() }
-			Log.d("UserRepository", "getAllUsers: ${userProfileInfo}")
 			Result.success(userProfileInfo)
 		} catch(e: Exception){
-			Log.e("UserRepository", "getAllUsers: ${e.message}")
 			Result.failure(e)
 		}
 	}
@@ -48,13 +66,15 @@ class UserRepository @Inject constructor(
 		}
 	}
 
-	suspend fun updateUserBio(
-		userId: String,
-		bio: String
-	): Result<Unit> {
-		return runCatching {
+	suspend fun updateUserBio(userId: String, bio: String): Result<Unit> {
+
+		return try {
 			userRemoteDataSource.updateUserBio(userId, bio)
+			Result.success(Unit)
+		} catch (e: Exception){
+			Result.failure(e)
 		}
+
 	}
 
 
@@ -68,8 +88,13 @@ class UserRepository @Inject constructor(
 	}
 
 	suspend fun updateUsername(userId: String, username: String): Result<Unit>{
-		return runCatching {
+
+		return try {
 			userRemoteDataSource.updateUsername(userId, username)
+			Result.success(Unit)
+		} catch (e: Exception){
+			Result.failure(e)
 		}
+
 	}
 }

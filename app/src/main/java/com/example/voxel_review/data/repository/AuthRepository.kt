@@ -18,10 +18,10 @@ class AuthRepository @Inject constructor(
             return Result.success(Unit)
         }
         catch (e: FirebaseAuthInvalidUserException){
-            return Result.failure(Exception("Usuario no existe"))
+            return Result.failure(e)
         }
         catch (e: FirebaseAuthInvalidCredentialsException){
-            return Result.failure(Exception("Credenciales incorrectas"))
+            return Result.failure(e)
         }
         catch (e: Exception){
             return Result.failure(e)
@@ -29,17 +29,15 @@ class AuthRepository @Inject constructor(
 
     }
 
-    suspend fun signUp(email: String, password: String): Result<Unit>{
-        try{
-            authRemoteDataSource.signUp(email,password)
+    suspend fun signUp(email: String, password: String): Result<Unit> {
+        try {
+            authRemoteDataSource.signUp(email, password)
             return Result.success(Unit)
-        }catch (e: FirebaseAuthUserCollisionException) {
-            return Result.failure(Exception("Ya existe una cuenta con este correo"))
+        } catch (e: FirebaseAuthUserCollisionException) {
+            return Result.failure(e)
+        } catch (e: Exception) {
+            return Result.failure(e)
         }
-        catch (e: Exception){
-            return Result.failure(Exception("Error al iniciar sesion"))
-        }
-
     }
 
     fun logOut(){

@@ -217,6 +217,16 @@ dependencies {
     )
 
     // ========================================
+    // MOCKK
+    // ========================================
+
+    // MockK para tests unitarios
+        testImplementation("io.mockk:mockk:1.14.6")
+
+    // MockK para tests instrumentados (Android)
+        androidTestImplementation("io.mockk:mockk-android:1.14.6")
+
+    // ========================================
     // DEBUG
     // ========================================
 

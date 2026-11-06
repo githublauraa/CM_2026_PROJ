@@ -54,7 +54,7 @@ class ForgotPasswordViewModel @Inject constructor(
             return
         }
 
-        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+        if (!email.matches(Regex("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$"))) {
             _uiState.update {
                 it.copy(
                     errorMessage = "Ingresa un correo electrónico válido",

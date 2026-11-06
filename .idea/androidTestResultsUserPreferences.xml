@@ -21,6 +21,7 @@
             <AndroidTestResultsTableState>
               <option name="preferredColumnWidths">
                 <map>
+                  <entry key="Celular_Curso" value="120" />
                   <entry key="Duration" value="90" />
                   <entry key="Pixel_10a" value="120" />
                   <entry key="Tests" value="360" />
@@ -47,6 +48,7 @@
             <AndroidTestResultsTableState>
               <option name="preferredColumnWidths">
                 <map>
+                  <entry key="Celular_Curso" value="120" />
                   <entry key="Duration" value="90" />
                   <entry key="Pixel_10a" value="120" />
                   <entry key="Tests" value="360" />
@@ -76,6 +78,19 @@
                   <entry key="Celular_Curso" value="120" />
                   <entry key="Duration" value="90" />
                   <entry key="Pixel_10a" value="120" />
+                  <entry key="Tests" value="360" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
+        <entry key="-1107721147">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="Celular_Curso" value="120" />
+                  <entry key="Duration" value="90" />
                   <entry key="Tests" value="360" />
                 </map>
               </option>
@@ -121,6 +136,19 @@
             </AndroidTestResultsTableState>
           </value>
         </entry>
+        <entry key="-956731522">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="Celular_Curso" value="120" />
+                  <entry key="Duration" value="90" />
+                  <entry key="Tests" value="360" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
         <entry key="-882553283">
           <value>
             <AndroidTestResultsTableState>
@@ -135,6 +163,19 @@
           </value>
         </entry>
         <entry key="-563430191">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="Duration" value="90" />
+                  <entry key="Pixel_10a" value="120" />
+                  <entry key="Tests" value="360" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
+        <entry key="-49160999">
           <value>
             <AndroidTestResultsTableState>
               <option name="preferredColumnWidths">
