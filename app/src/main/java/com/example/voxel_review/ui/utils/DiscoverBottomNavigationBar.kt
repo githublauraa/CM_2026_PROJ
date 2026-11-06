@@ -26,6 +26,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -111,6 +112,7 @@ fun DiscoverBottomNavigationBar(
                 ) {
 
                     IconButton(
+                        modifier = Modifier.testTag("nav_${item.route}"),
                         onClick = {
                             navController.navigate(item.route)
                         }

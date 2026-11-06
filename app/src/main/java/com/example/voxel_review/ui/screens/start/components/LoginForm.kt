@@ -9,6 +9,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -63,6 +64,7 @@ fun LoginForm(
             modifier = Modifier
                 .width(320.dp)
                 .height(50.dp)
+                .testTag("txtEmail")
         )
 
         Spacer(
@@ -90,6 +92,7 @@ fun LoginForm(
             modifier = Modifier
                 .width(330.dp)
                 .height(50.dp)
+                .testTag("txtPassword")
         )
 
         Spacer(

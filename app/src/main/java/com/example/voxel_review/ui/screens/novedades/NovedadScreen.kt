@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.voxel_review.data.info.infoJuegosNovedades.JuegoInfo
@@ -63,7 +64,7 @@ fun NovedadScreen(
     novedadesViewModel: NovedadesViewModel,
     onClick: (JuegoInfo) -> Unit,
     onNotificationClick: () -> Unit,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier.testTag("novedades"),
     onReviewClick: (ReviewInfo) -> Unit,
     onUserProfileClick: (String) -> Unit = {},
     onBackClick: () -> Unit = {},

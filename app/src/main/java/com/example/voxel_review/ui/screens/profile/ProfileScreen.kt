@@ -24,6 +24,8 @@ import com.example.voxel_review.data.info.profile.ProfileInfo
 import com.example.voxel_review.data.info.review.ReviewInfo
 import android.net.Uri
 import android.util.Log
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.testTag
 import com.example.voxel_review.ui.utils.ProfileImage
 @Composable
 fun ProfileScreen(
@@ -150,6 +152,7 @@ fun ProfileContent(
                     textoBoton = "seguir"
                 }
                 ButtonFollow(
+
                     text = textoBoton,
                     buttonFollowPressed = {
                         buttonFollowPressed()

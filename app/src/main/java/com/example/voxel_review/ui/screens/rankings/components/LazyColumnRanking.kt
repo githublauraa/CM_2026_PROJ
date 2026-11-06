@@ -6,6 +6,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import com.example.voxel_review.data.info.profile.ProfileInfo
 import com.example.voxel_review.ui.screens.rankings.RankingsState
@@ -36,6 +37,7 @@ fun LazyColumnRanking(
                 imagen = usuario.pfp,
                 onClick = { onUserClick(usuario) },
                 modifier = Modifier.padding(vertical = 5.dp)
+                    .testTag("profile")
             )
         }
     }

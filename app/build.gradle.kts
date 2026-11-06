@@ -32,7 +32,7 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner =
-            "androidx.test.runner.AndroidJUnitRunner"
+            "com.example.voxel_review.HiltTestRunner"
     }
 
     buildTypes {

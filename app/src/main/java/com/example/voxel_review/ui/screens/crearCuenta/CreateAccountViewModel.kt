@@ -193,6 +193,7 @@ class CreateAccountViewModel @Inject constructor(
                             )
                         }
                         else -> {
+                            Log.e("RegistroE2E", "Error al registrar", e)
                             it.copy(
                                 loading = false,
                                 errorMessage = "Error al registrar un usuario",

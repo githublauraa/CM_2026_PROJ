@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 
 
@@ -31,7 +32,8 @@ fun FeedFilterSection(
             FeedFilterChip(
                 text = "Siguiendo",
                 isSelected = showOnlyFollowed,
-                onClick = { onFilterSelected(true) }
+                onClick = { onFilterSelected(true) },
+                modifier.testTag("btnSiguiendo")
             )
         }
     }

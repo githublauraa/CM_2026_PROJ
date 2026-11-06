@@ -80,3 +80,20 @@ class MainActivity : ComponentActivity() {
         private const val TAG = "MainActivity"
     }
 }
+
+//SE USA PARA LAS PRUEBAS E2E
+//@AndroidEntryPoint
+//class MainActivity : ComponentActivity() {
+//
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//        super.onCreate(savedInstanceState)
+//
+//        enableEdgeToEdge()
+//
+//        setContent {
+//            Voxel_ReviewTheme {
+//                VoxelReviewApp()
+//            }
+//        }
+//    }
+//}

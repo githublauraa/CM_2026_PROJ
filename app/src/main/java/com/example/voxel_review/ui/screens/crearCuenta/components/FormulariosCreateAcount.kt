@@ -6,6 +6,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
@@ -58,6 +59,7 @@ fun FomulariosCreateAcount(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(50.dp)
+                    .testTag("txtNombre")
             )
         }
 
@@ -79,6 +81,7 @@ fun FomulariosCreateAcount(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(50.dp)
+                    .testTag("txtBio")
             )
         }
 
@@ -100,6 +103,7 @@ fun FomulariosCreateAcount(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(50.dp)
+                    .testTag("txtCorreo")
             )
         }
 
@@ -126,6 +130,7 @@ fun FomulariosCreateAcount(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(50.dp)
+                    .testTag("txtContrasenia")
             )
         }
 
@@ -135,7 +140,8 @@ fun FomulariosCreateAcount(
                 text = state.errorMessage,
                 color = VoxelTextSecondary,
                 fontWeight = FontWeight.Bold,
-                fontSize = 12.sp
+                fontSize = 12.sp,
+                modifier = Modifier.testTag("mensajeError")
             )
         }
 
@@ -144,7 +150,8 @@ fun FomulariosCreateAcount(
             aceptado = state.terminosAceptados,
             onAceptadoChange = {
                 onTerminosAceptadosChange()
-            }
+            },
+
         )
 
         // BOTÓN REGISTRO
@@ -152,7 +159,8 @@ fun FomulariosCreateAcount(
             textoBoton = "Unirse a la aventura",
             modifier = Modifier
                 .fillMaxWidth()
-                .height(50.dp),
+                .height(50.dp)
+                .testTag("btnRegistrarse"),
             colorFondo = VoxelSecondary,
             colorBorde = VoxelSecondary,
             colorLetra = White,

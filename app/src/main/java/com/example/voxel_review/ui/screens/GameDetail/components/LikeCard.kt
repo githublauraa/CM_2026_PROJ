@@ -14,6 +14,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.platform.testTag
+
 @Composable
 fun LikeCard(
     isLiked: Boolean,
@@ -25,6 +27,7 @@ fun LikeCard(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         IconButton(
+            modifier = Modifier.testTag("btnLike"),
             onClick = onLikeClick,
         ) {
             Icon(
