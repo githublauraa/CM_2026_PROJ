@@ -1,5 +1,6 @@
 package com.example.voxel_review.ui.screens.review
 
+import android.content.Intent
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,6 +12,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.voxel_review.data.info.review.ReviewInfo
@@ -20,6 +22,7 @@ import com.example.voxel_review.ui.screens.review.components.ReviewDetailContent
 import com.example.voxel_review.ui.screens.review.components.ReviewDetailTopBar
 import com.example.voxel_review.ui.utils.FondoPantalla
 import com.google.firebase.auth.FirebaseAuth
+import java.util.Locale
 
 @Composable
 fun ReviewDetailScreenContent(
@@ -33,6 +36,7 @@ fun ReviewDetailScreenContent(
     modifier: Modifier = Modifier,
     onLikeClick: (String) -> Unit = {}
 ) {
+    val context = LocalContext.current
     val review = state.review
     val currentUserId = FirebaseAuth.getInstance().currentUser?.uid
 
@@ -61,6 +65,31 @@ fun ReviewDetailScreenContent(
                 onDeleteClick = {
                     if (canManageReview) {
                         showDeleteDialog = true
+                    }
+                },
+                onShareClick = {
+                    if (review != null) {
+                        val ratingFormatted = String.format(Locale.US, "%.1f", review.ratingGeneral)
+                        val shareText = buildString {
+                            appendLine("🎮 ${review.tituloJuego} ($ratingFormatted/5 ⭐)")
+                            appendLine("✍️🔥 ${review.tituloDescripcion}")
+                            appendLine("• Jugabilidad: ${review.ratingJugabilidad.toInt()}/5 | Gráficos: ${review.ratingGraficos.toInt()}/5 | Historia: ${review.ratingHistoria.toInt()}/5")
+                            appendLine()
+                            appendLine("\"${review.descripcion}\"")
+                            appendLine()
+                            append("— Compartido desde Voxel Review")
+                        }
+                        val sendIntent = Intent(Intent.ACTION_SEND).apply {
+                            type = "text/plain"
+                            putExtra(
+                                Intent.EXTRA_SUBJECT,
+                                "Reseña de ${review.tituloJuego} en Voxel Review"
+                            )
+                            putExtra(Intent.EXTRA_TEXT, shareText)
+                        }
+                        context.startActivity(
+                            Intent.createChooser(sendIntent, "Compartir reseña")
+                        )
                     }
                 }
             )

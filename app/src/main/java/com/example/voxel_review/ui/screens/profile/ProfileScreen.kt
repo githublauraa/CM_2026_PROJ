@@ -24,8 +24,20 @@ import com.example.voxel_review.data.info.profile.ProfileInfo
 import com.example.voxel_review.data.info.review.ReviewInfo
 import android.net.Uri
 import android.util.Log
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Text
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.sp
+import com.example.voxel_review.ui.theme.VoxelPrimary
+import com.example.voxel_review.ui.theme.VoxelSecondary
+import com.example.voxel_review.ui.theme.VoxelSurface
 import com.example.voxel_review.ui.utils.ProfileImage
 @Composable
 fun ProfileScreen(
@@ -70,6 +82,9 @@ fun ProfileScreen(
         buttonFollowPressed = {
             profileViewModel.followOrUnfollow(profileId)
         },
+        onVerifyEmailClick = {
+            profileViewModel.verifyOrSendEmailVerification()
+        },
         modifier = modifier
     )
 }
@@ -87,6 +102,7 @@ fun ProfileContent(
     onFollowingClick: () -> Unit = {},
     onFollowersClick: () -> Unit = {},
     buttonFollowPressed: ()-> Unit,
+    onVerifyEmailClick: () -> Unit = {},
     onRetry: () -> Unit = {},
     onRetryReviews: () -> Unit = {},
     modifier: Modifier = Modifier
@@ -138,7 +154,48 @@ fun ProfileContent(
                 pickImageButton(onImageSelected = onImageSelected)
             }
 
-            UserNick(profile.nick)
+            UserNick(
+                nick = profile.nick,
+                isVerified = profile.emailVerified
+            )
+
+            if (isOwnProfile && !profile.emailVerified) {
+                Button(
+                    onClick = onVerifyEmailClick,
+                    enabled = !state.isVerifyingEmail,
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = VoxelSurface
+                    ),
+                    shape = RoundedCornerShape(16.dp),
+                    modifier = Modifier
+                        .padding(top = 8.dp)
+                        .border(
+                            width = 2.dp,
+                            color = VoxelSecondary,
+                            shape = RoundedCornerShape(16.dp)
+                        )
+                        .testTag("btnVerifyEmail")
+                ) {
+                    Text(
+                        text = if (state.isVerifyingEmail) "Verificando..." else "Confirmar / Verificar correo",
+                        color = VoxelSecondary,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+            }
+
+            if (isOwnProfile && state.verificationMessage != null) {
+                Text(
+                    text = state.verificationMessage,
+                    color = VoxelSecondary,
+                    fontSize = 13.sp,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .fillMaxWidth(0.9f)
+                        .padding(top = 6.dp)
+                        .testTag("verificationMessage")
+                )
+            }
 
             Biography(
                 biografia = state.profile?.biografia
@@ -206,7 +263,8 @@ fun ProfileContentPreview() {
             numResenias = 15,
             promedio = 4.5f,
             likes = 120,
-            biografia = ""
+            biografia = "",
+            emailVerified = true
         ),
         profileImageUrl = null
     )

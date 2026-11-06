@@ -35,6 +35,10 @@ class UserRetrofitDataSourceImpl @Inject constructor(private val service: UserRe
         TODO("Not yet implemented")
     }
 
+    override suspend fun updateEmailVerified(userId: String, verified: Boolean) {
+        //
+    }
+
     override suspend fun followOrUnfollow(
         currentUserId: String,
         targetUserId: String

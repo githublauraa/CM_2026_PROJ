@@ -35,11 +35,18 @@ class ProfileViewModel @Inject constructor(
 	val uiState: StateFlow<ProfileState> = _uiState
 
 	fun getProfileById(userId: String) {
-        _uiState.update { it.copy(errorMessage = null) }
+        _uiState.update { it.copy(errorMessage = null, verificationMessage = null) }
 		viewModelScope.launch { 
 			val result = userRepository.getUserById(userId)
 			if (result.isSuccess){
-				val userProfileInfo = result.getOrNull()!!
+				var userProfileInfo = result.getOrNull()!!
+				if (userId == authRepository.currentUser?.uid && !userProfileInfo.emailVerified) {
+					val verifiedResult = authRepository.reloadAndCheckEmailVerified()
+					if (verifiedResult.getOrNull() == true) {
+						userRepository.updateEmailVerified(userId, true)
+						userProfileInfo = userProfileInfo.copy(emailVerified = true)
+					}
+				}
 				_uiState.update {
 					it.copy(
 						profile = userProfileInfo,
@@ -52,6 +59,41 @@ class ProfileViewModel @Inject constructor(
             }
         }
     }
+
+	fun verifyOrSendEmailVerification() {
+		val uid = authRepository.currentUser?.uid ?: return
+		_uiState.update { it.copy(isVerifyingEmail = true, verificationMessage = null) }
+		viewModelScope.launch {
+			val checkResult = authRepository.reloadAndCheckEmailVerified()
+			if (checkResult.getOrNull() == true) {
+				userRepository.updateEmailVerified(uid, true)
+				_uiState.update { state ->
+					state.copy(
+						profile = state.profile?.copy(emailVerified = true),
+						isVerifyingEmail = false,
+						verificationMessage = "¡Correo confirmado exitosamente!"
+					)
+				}
+			} else {
+				val sendResult = authRepository.sendEmailVerification()
+				if (sendResult.isSuccess) {
+					_uiState.update {
+						it.copy(
+							isVerifyingEmail = false,
+							verificationMessage = "Te enviamos un correo de verificación. Confírmalo en tu bandeja y vuelve a pulsar este botón."
+						)
+					}
+				} else {
+					_uiState.update {
+						it.copy(
+							isVerifyingEmail = false,
+							verificationMessage = sendResult.exceptionOrNull()?.message ?: "No se pudo enviar el correo de verificación"
+						)
+					}
+				}
+			}
+		}
+	}
 
 	fun getUserReviews(userId: String) {
         _uiState.update { it.copy(isReviewsLoading = true, reviewsError = null) }

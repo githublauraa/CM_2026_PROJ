@@ -97,4 +97,13 @@ class UserRepository @Inject constructor(
 		}
 
 	}
+
+	suspend fun updateEmailVerified(userId: String, verified: Boolean): Result<Unit> {
+		return try {
+			userRemoteDataSource.updateEmailVerified(userId, verified)
+			Result.success(Unit)
+		} catch (e: Exception) {
+			Result.failure(e)
+		}
+	}
 }

@@ -46,9 +46,10 @@ data class UserProfileFirestoreDto(
 	val avgRating: Float,
 	var followed: Boolean = false,
 	val followersCount: Int,
-	val followingCount: Int
+	val followingCount: Int,
+	val emailVerified: Boolean = false
 ): UserDtoGeneric(){
-	constructor(): this("", "", null, null, 0, 0, 0f, false, 0, 0)
+	constructor(): this("", "", null, null, 0, 0, 0f, false, 0, 0, false)
 
 	override fun toUserProfileinfo(): ProfileInfo {
 		return ProfileInfo(
@@ -61,7 +62,8 @@ data class UserProfileFirestoreDto(
 			biografia = bio ?: "No hay biografia",
 			followed = followed,
 			followers = followersCount,
-			following = followingCount
+			following = followingCount,
+			emailVerified = emailVerified
 		)
 	}
 }

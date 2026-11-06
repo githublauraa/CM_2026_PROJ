@@ -32,6 +32,15 @@ class AuthRemoteDataSource @Inject constructor(
         auth.sendPasswordResetEmail(email).await()
     }
 
+    suspend fun sendEmailVerification(): Unit {
+        currentUser?.sendEmailVerification()?.await()
+    }
+
+    suspend fun reloadAndCheckEmailVerified(): Boolean {
+        currentUser?.reload()?.await()
+        return currentUser?.isEmailVerified == true
+    }
+
     suspend fun updateProfileImage(photoUrl: String): Unit {
         val uri = Uri.parse(photoUrl)
 

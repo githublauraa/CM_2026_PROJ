@@ -92,6 +92,13 @@ class UserFirestoreDataSourceImpl @Inject constructor(
             .await()
     }
 
+    override suspend fun updateEmailVerified(userId: String, verified: Boolean) {
+        db.collection("users")
+            .document(userId)
+            .update("emailVerified", verified)
+            .await()
+    }
+
     override suspend fun followOrUnfollow(currentUserId: String, targetUserId: String) {
         val currentUserRef = db.collection("users").document(currentUserId)
         val targetUserRef = db.collection("users").document(targetUserId)

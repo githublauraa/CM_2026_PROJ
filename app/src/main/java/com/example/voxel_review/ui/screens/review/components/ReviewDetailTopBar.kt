@@ -23,6 +23,7 @@ fun ReviewDetailTopBar(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit = {},
     onDeleteClick: () -> Unit = {},
+    onShareClick: () -> Unit = {},
     showDelete: Boolean = false
 ) {
     CenterAlignedTopAppBar(
@@ -46,6 +47,13 @@ fun ReviewDetailTopBar(
             }
         },
         actions = {
+            IconButton(onClick = onShareClick) {
+                Icon(
+                    painter = painterResource(R.drawable.ic_share),
+                    contentDescription = "Compartir reseña",
+                    tint = Color.White
+                )
+            }
             if (showDelete) {
                 IconButton(onClick = onDeleteClick) {
                     Icon(

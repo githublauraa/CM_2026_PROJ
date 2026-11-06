@@ -16,5 +16,7 @@ interface UserRemoteDataSource {
 
 	suspend fun updateUsername(userId: String, username: String)
 
+	suspend fun updateEmailVerified(userId: String, verified: Boolean)
+
 	suspend fun followOrUnfollow(currentUserId: String, targetUserId: String): Unit
 }

@@ -56,4 +56,22 @@ class AuthRepository @Inject constructor(
             Result.failure(Exception("No se pudo enviar el correo de recuperación"))
         }
     }
+
+    suspend fun sendEmailVerification(): Result<Unit> {
+        return try {
+            authRemoteDataSource.sendEmailVerification()
+            Result.success(Unit)
+        } catch (e: Exception) {
+            Result.failure(Exception("No se pudo enviar el correo de verificación"))
+        }
+    }
+
+    suspend fun reloadAndCheckEmailVerified(): Result<Boolean> {
+        return try {
+            val verified = authRemoteDataSource.reloadAndCheckEmailVerified()
+            Result.success(verified)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
 }
