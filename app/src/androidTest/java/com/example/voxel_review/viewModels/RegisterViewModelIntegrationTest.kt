@@ -16,12 +16,15 @@ import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Test
 import com.google.common.truth.Truth.assertThat
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.flow.map
 
 class RegisterViewModelIntegrationTest {
 
     private lateinit var viewModel: CreateAccountViewModel
     private lateinit var authRepository: AuthRepository
+
+    private lateinit var auth: FirebaseAuth
 
     @Before
     fun setup() {
@@ -33,9 +36,10 @@ class RegisterViewModelIntegrationTest {
         }
 
         authRepository = AuthRepository(AuthRemoteDataSource(Firebase.auth))
+        auth = Firebase.auth
         val userRepository = UserRepository(UserFirestoreDataSourceImpl(Firebase.firestore), AuthRepository(AuthRemoteDataSource(Firebase.auth)))
 
-        viewModel = CreateAccountViewModel(authRepository, userRepository)
+        viewModel = CreateAccountViewModel(authRepository, userRepository, auth)
     }
 
     @After

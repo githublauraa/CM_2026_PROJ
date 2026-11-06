@@ -153,10 +153,10 @@ class CreateAccountViewModel @Inject constructor(
                     // 📧 Enviar correo de verificación al registrar exitosamente
                     try {
                         auth.currentUser?.sendEmailVerification()?.await()
-                        Log.d("CreateAccountVM", "Correo de verificación enviado exitosamente")
+                        //Log.d("CreateAccountVM", "Correo de verificación enviado exitosamente")
                     } catch (e: Exception) {
                         // Opcional: manejar si falla el envío de correo de verificación
-                        Log.e("CreateAccountVM", "Error al enviar verificación de correo", e)
+                        //Log.e("CreateAccountVM", "Error al enviar verificación de correo", e)
                     }
 
                     _uiState.update { it.copy(loading = false) }

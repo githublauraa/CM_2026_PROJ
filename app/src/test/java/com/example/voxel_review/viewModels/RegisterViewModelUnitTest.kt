@@ -8,15 +8,15 @@ import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.map
+import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import org.junit.Before
 import org.junit.Test
+import com.google.android.gms.tasks.Tasks
 
 class RegisterViewModelUnitTest {
 
@@ -26,13 +26,16 @@ class RegisterViewModelUnitTest {
 
     private lateinit var userRepository: UserRepository
 
+    private lateinit var auth: FirebaseAuth
+
     @OptIn(ExperimentalCoroutinesApi::class)
     @Before
     fun setUp(){
         Dispatchers.setMain(StandardTestDispatcher())
         authRepository = mockk()
         userRepository = mockk()
-        viewModel = CreateAccountViewModel(authRepository, userRepository)
+        auth = mockk()
+        viewModel = CreateAccountViewModel(authRepository, userRepository, auth)
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -53,6 +56,7 @@ class RegisterViewModelUnitTest {
 
         coEvery { userRepository.registerUser(nombreUsuario = any(), bio = any(), userId = any(), photoUrl = any()) } returns Result.success(Unit)
 
+        coEvery { auth.currentUser?.sendEmailVerification() } returns null
         // Act
         viewModel.createAcount {
             registroExitoso = true
