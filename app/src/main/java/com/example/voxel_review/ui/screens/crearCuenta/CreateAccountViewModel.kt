@@ -1,5 +1,6 @@
 package com.example.voxel_review.ui.screens.crearCuenta
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -8,10 +9,14 @@ import kotlinx.coroutines.flow.update
 import jakarta.inject.Inject
 import com.example.voxel_review.data.repository.AuthRepository
 import androidx.lifecycle.viewModelScope
+import com.example.voxel_review.data.injection.FirebaseHiltModule.auth
 import kotlinx.coroutines.launch
 import com.example.voxel_review.data.repository.UserRepository
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
+import kotlinx.coroutines.tasks.await
+
 
 /**
  * ViewModel encargado de administrar el estado y la lógica
@@ -20,7 +25,8 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException
 @HiltViewModel
 class CreateAccountViewModel @Inject constructor(
     private val authRepository: AuthRepository,
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
+    private val auth: FirebaseAuth
 ): ViewModel() {
 
     // Estado interno modificable únicamente desde el ViewModel.
@@ -144,17 +150,27 @@ class CreateAccountViewModel @Inject constructor(
                 )
 
                 if (registerResult.isSuccess) {
+                    // 📧 Enviar correo de verificación al registrar exitosamente
+                    try {
+                        auth.currentUser?.sendEmailVerification()?.await()
+                        Log.d("CreateAccountVM", "Correo de verificación enviado exitosamente")
+                    } catch (e: Exception) {
+                        // Opcional: manejar si falla el envío de correo de verificación
+                        Log.e("CreateAccountVM", "Error al enviar verificación de correo", e)
+                    }
+
+                    _uiState.update { it.copy(loading = false) }
                     onSuccess()
                 } else {
                     _uiState.update {
                         it.copy(
+                            loading = false,
                             errorMessage = registerResult.exceptionOrNull()?.message
                                 ?: "Error al guardar el usuario en Firestore",
                             mostrarMensaje = true
                         )
                     }
                 }
-                _uiState.update { it.copy(loading = false) }
             } else {
 
 
