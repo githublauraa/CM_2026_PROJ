@@ -1,5 +1,6 @@
 package com.example.voxel_review.e2e
 
+import android.util.Log
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.v2.createAndroidComposeRule
 import androidx.compose.ui.test.onAllNodesWithTag
@@ -26,6 +27,12 @@ import org.junit.Test
 import androidx.compose.ui.test.performTextReplacement
 import androidx.test.espresso.Espresso.closeSoftKeyboard
 import androidx.compose.ui.test.assertIsOn
+import androidx.compose.ui.test.onFirst
+import androidx.compose.ui.test.performScrollTo
+import com.example.voxel_review.navigation.AppScreen
+import androidx.compose.ui.test.swipeUp
+import androidx.compose.ui.test.performTouchInput
+import androidx.test.espresso.Espresso.pressBack
 
 @HiltAndroidTest
 class RegisterNewUserE2E {
@@ -65,7 +72,7 @@ class RegisterNewUserE2E {
 
     //
     @Test
-    fun registerUser_shortPassword_showMessage() {
+    fun registerWithCorrectedPassword_viewGameDetail_toggleReviewLike() {
         composeRule.onNodeWithTag("btnCrearCuenta").performClick()
         //escribir en los campos
         composeRule.onNodeWithTag("txtNombre").performTextInput("nuevo")
@@ -92,8 +99,54 @@ class RegisterNewUserE2E {
         composeRule.onNodeWithTag("homeScreen").assertIsDisplayed()
 
         //navegar a la pantalla de descubrir
+        composeRule.onNodeWithTag("nav_${AppScreen.Discover.route}").performClick()
+        //ir a la pantalla descubrir
+        composeRule.onNodeWithTag("discover").assertIsDisplayed()
+        //seleccionar el primer review, seleecionar el primero
+        composeRule.onAllNodesWithTag("juego").onFirst().performScrollTo().performClick()
 
+        composeRule.onNodeWithTag("detalleJuego").assertIsDisplayed()
 
+        Thread.sleep(2_000)
+
+        //hacer scroll
+        composeRule.onNodeWithTag("detalleJuego")
+            .performTouchInput { swipeUp() }
+
+        Thread.sleep(2_000)
+
+        //dar like al primer comentario
+        composeRule.onAllNodesWithTag("btnLike").onFirst().performScrollTo().performClick()
+
+        composeRule.waitForIdle()
+
+        Thread.sleep(8_000)
+
+        //salir de la pantalla
+        pressBack()
+
+        //volver a la pantalla de descubrir
+        //ir a la pantalla descubrir
+        composeRule.onNodeWithTag("discover").assertIsDisplayed()
+        //seleccionar el primer review, seleecionar el primero
+        composeRule.onAllNodesWithTag("juego").onFirst().performScrollTo().performClick()
+
+        composeRule.onNodeWithTag("detalleJuego").assertIsDisplayed()
+
+        Thread.sleep(2_000)
+
+        //hacer scroll
+        composeRule.onNodeWithTag("detalleJuego")
+            .performTouchInput { swipeUp() }
+
+        Thread.sleep(2_000)
+
+        //dar like al primer comentario
+        composeRule.onAllNodesWithTag("btnLike").onFirst().performScrollTo().performClick()
+
+        composeRule.waitForIdle()
+
+        Thread.sleep(8_000)
 
     }
 
