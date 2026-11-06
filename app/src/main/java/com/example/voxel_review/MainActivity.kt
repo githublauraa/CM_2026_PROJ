@@ -15,80 +15,34 @@ import dagger.hilt.android.AndroidEntryPoint
  * Actividad principal y punto de entrada de la aplicación.
  * Configura el contenido de Jetpack Compose y aplica el tema de Voxel Review.
  */
-@AndroidEntryPoint
-class MainActivity : ComponentActivity() {
-
-    private val requestNotificationPermission =
-        registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
-            Log.d(TAG, "POST_NOTIFICATIONS concedido=$granted")
-        }
-
-    // Permisos necesarios para hablar con la API local (10.0.2.2 / IP LAN).
-    // Sin ellos, el sistema bloquea el tráfico TCP hacia la red local y Retrofit
-    // recibe SocketTimeoutException (Local Network Protection de Android).
-    private val requestLocalNetworkPermissions =
-        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { grants ->
-            grants.forEach { (permission, granted) ->
-                Log.d(TAG, "$permission concedido=$granted")
-            }
-            requestNotificationsIfNeeded()
-        }
-
-    /**
-     * Inicializa la interfaz principal de la aplicación.
-     */
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        enableEdgeToEdge()
-
-        requestLocalNetworkIfNeeded()
-
-        setContent {
-            Voxel_ReviewTheme {
-                VoxelReviewApp()
-            }
-        }
-    }
-
-    /**
-     * Solicita los permisos de red local si aún no están concedidos.
-     */
-    private fun requestLocalNetworkIfNeeded() {
-        val pending = listOf(
-            Manifest.permission.ACCESS_LOCAL_NETWORK,
-            Manifest.permission.NEARBY_WIFI_DEVICES,
-        ).filter { checkSelfPermission(it) != PackageManager.PERMISSION_GRANTED }
-
-        if (pending.isNotEmpty()) {
-            requestLocalNetworkPermissions.launch(pending.toTypedArray())
-        } else {
-            requestNotificationsIfNeeded()
-        }
-    }
-
-    private fun requestNotificationsIfNeeded() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
-            checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) !=
-            PackageManager.PERMISSION_GRANTED
-        ) {
-            requestNotificationPermission.launch(Manifest.permission.POST_NOTIFICATIONS)
-        }
-    }
-
-    companion object {
-        private const val TAG = "MainActivity"
-    }
-}
-
-//SE USA PARA LAS PRUEBAS E2E
 //@AndroidEntryPoint
 //class MainActivity : ComponentActivity() {
 //
+//    private val requestNotificationPermission =
+//        registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
+//            Log.d(TAG, "POST_NOTIFICATIONS concedido=$granted")
+//        }
+//
+//    // Permisos necesarios para hablar con la API local (10.0.2.2 / IP LAN).
+//    // Sin ellos, el sistema bloquea el tráfico TCP hacia la red local y Retrofit
+//    // recibe SocketTimeoutException (Local Network Protection de Android).
+//    private val requestLocalNetworkPermissions =
+//        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { grants ->
+//            grants.forEach { (permission, granted) ->
+//                Log.d(TAG, "$permission concedido=$granted")
+//            }
+//            requestNotificationsIfNeeded()
+//        }
+//
+//    /**
+//     * Inicializa la interfaz principal de la aplicación.
+//     */
 //    override fun onCreate(savedInstanceState: Bundle?) {
 //        super.onCreate(savedInstanceState)
 //
 //        enableEdgeToEdge()
+//
+//        requestLocalNetworkIfNeeded()
 //
 //        setContent {
 //            Voxel_ReviewTheme {
@@ -96,4 +50,50 @@ class MainActivity : ComponentActivity() {
 //            }
 //        }
 //    }
+//
+//    /**
+//     * Solicita los permisos de red local si aún no están concedidos.
+//     */
+//    private fun requestLocalNetworkIfNeeded() {
+//        val pending = listOf(
+//            Manifest.permission.ACCESS_LOCAL_NETWORK,
+//            Manifest.permission.NEARBY_WIFI_DEVICES,
+//        ).filter { checkSelfPermission(it) != PackageManager.PERMISSION_GRANTED }
+//
+//        if (pending.isNotEmpty()) {
+//            requestLocalNetworkPermissions.launch(pending.toTypedArray())
+//        } else {
+//            requestNotificationsIfNeeded()
+//        }
+//    }
+//
+//    private fun requestNotificationsIfNeeded() {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
+//            checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) !=
+//            PackageManager.PERMISSION_GRANTED
+//        ) {
+//            requestNotificationPermission.launch(Manifest.permission.POST_NOTIFICATIONS)
+//        }
+//    }
+//
+//    companion object {
+//        private const val TAG = "MainActivity"
+//    }
 //}
+
+//SE USA PARA LAS PRUEBAS E2E
+@AndroidEntryPoint
+class MainActivity : ComponentActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        enableEdgeToEdge()
+
+        setContent {
+            Voxel_ReviewTheme {
+                VoxelReviewApp()
+            }
+        }
+    }
+}

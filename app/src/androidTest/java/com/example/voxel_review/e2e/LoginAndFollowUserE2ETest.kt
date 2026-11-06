@@ -5,6 +5,7 @@ import androidx.compose.ui.test.junit4.v2.createAndroidComposeRule
 import androidx.compose.ui.test.onAllNodesWithTag
 import androidx.compose.ui.test.onFirst
 import androidx.compose.ui.test.onNodeWithTag
+import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
 import androidx.compose.ui.test.performTextInput
@@ -18,6 +19,7 @@ import com.example.voxel_review.navigation.AppScreen
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import com.google.firebase.firestore.firestore
+import com.google.firebase.firestore.FieldValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import org.junit.Before
 import org.junit.Rule
@@ -80,6 +82,9 @@ class LoginAndFollowUserE2ETest {
 
     @Test
     fun login_followUser_openFollowingFeed() {
+        composeRule.waitUntil(timeoutMillis = 5_000) {
+            composeRule.onAllNodesWithTag("txtEmail").fetchSemanticsNodes().isNotEmpty()
+        }
         //llenar campos
         composeRule.onNodeWithTag("txtEmail").performTextInput("prueba@prueba.com")
         composeRule.onNodeWithTag("txtPassword").performTextInput("123456")
@@ -117,7 +122,12 @@ class LoginAndFollowUserE2ETest {
         composeRule.onNodeWithTag("btnSiguiendo").performClick()
         composeRule.waitForIdle()
 
-        Thread.sleep(15_000)
+        composeRule.waitUntil(timeoutMillis = 15_000) {
+            composeRule.onAllNodesWithText("RESEÑA DE VIDEOJUEGO")
+                .fetchSemanticsNodes().isNotEmpty()
+        }
+        composeRule.onAllNodesWithText("RESEÑA DE VIDEOJUEGO")
+            .onFirst().assertIsDisplayed()
 
     }
 
@@ -129,11 +139,24 @@ class LoginAndFollowUserE2ETest {
             .collection("users")
             .document(user.uid)
 
-        // Eliminar los documentos de following.
-        val followers = userRef.collection("followers").get().await()
+        // Eliminar ambos lados del seguimiento y corregir el contador del otro perfil.
+        val following = userRef.collection("following").get().await()
 
-        for (document in followers.documents) {
-            document.reference.delete().await()
+        for (document in following.documents) {
+            val targetUserRef = Firebase.firestore.collection("users").document(document.id)
+            val followerRef = targetUserRef.collection("followers").document(user.uid)
+
+            Firebase.firestore.runTransaction { transaction ->
+                val follower = transaction.get(followerRef)
+                val targetUser = transaction.get(targetUserRef)
+
+                transaction.delete(document.reference)
+                transaction.delete(followerRef)
+
+                if (follower.exists() && targetUser.exists()) {
+                    transaction.update(targetUserRef, "followersCount", FieldValue.increment(-1))
+                }
+            }.await()
         }
 
         // Eliminar el perfil y la cuenta.
