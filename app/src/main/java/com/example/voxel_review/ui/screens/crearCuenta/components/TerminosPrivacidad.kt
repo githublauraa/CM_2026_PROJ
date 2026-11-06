@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextDecoration
@@ -41,7 +42,8 @@ fun TerminosPrivacidad(
                 checkedColor = VoxelPrimary,
                 uncheckedColor = VoxelPrimary,
                 checkmarkColor = Color.Black
-            )
+            ),
+            modifier = Modifier.testTag("chkTerminos")
         )
 
         // Permite aplicar diferentes estilos a partes específicas del texto.

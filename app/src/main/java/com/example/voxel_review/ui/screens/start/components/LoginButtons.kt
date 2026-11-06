@@ -10,6 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import com.example.voxel_review.ui.theme.backgroundDark
 import com.example.voxel_review.ui.theme.onTertiaryLight
@@ -43,7 +44,8 @@ fun LoginButtons(
             colorFondo = tertiaryDark,
             colorBorde = tertiaryDark,
             colorLetra = surfaceContainerLowestLight,
-            onClick = logginButtonPressed
+            onClick = logginButtonPressed,
+            modifier = Modifier.testTag("btnIniciarSesion")
         )
 
         Spacer(
@@ -72,7 +74,8 @@ fun LoginButtons(
             colorFondo = backgroundDark,
             colorBorde = secondaryDark,
             colorLetra = secondaryDark,
-            onClick = createAccountButtonPressed
+            onClick = createAccountButtonPressed,
+            modifier = Modifier.testTag("btnCrearCuenta")
         )
 
         Spacer(

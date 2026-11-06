@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import com.example.voxel_review.ui.screens.Discover.components.DiscoverTopBar
@@ -41,7 +42,7 @@ fun DiscoverScreen(
     onBackClick: () -> Unit,
     onNotificationClick: () -> Unit,
     onItemClick: (TrendingSearchInfo) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier.testTag("discover")
 ) {
 
     val state by discoverViewModel.uiState.collectAsState()
