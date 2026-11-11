@@ -9,7 +9,10 @@ data class CreateReviewDto(
     val content: String,
 
     val user: CreateReviewUserDto? = null,
-    val videoGame: VideoGameDto? = null
+    val videoGame: VideoGameDto? = null,
+    // Ubicación donde se publicó la reseña
+    val latitude: Double? = null,
+    val longitude: Double? = null
 )
 
 

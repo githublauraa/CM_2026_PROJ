@@ -26,6 +26,7 @@ import com.example.voxel_review.ui.utils.FondoPantalla
  */
 @Composable
 fun NovedadBody(
+    onMapClick: () -> Unit,
     novedadesViewModel: NovedadesViewModel,
     onCategoriaSeleccionada: (String) -> Unit,
     onClick: (JuegoInfo) -> Unit,
@@ -39,6 +40,7 @@ fun NovedadBody(
         modifier = modifier.fillMaxSize()
     ) {
         NovedadesContent(
+            onMapClick = onMapClick,
             novedadesViewModel = novedadesViewModel,
             onClick = onClick,
             onNotificationClick = onNotificationClick,
@@ -61,6 +63,7 @@ fun NovedadBody(
  */
 @Composable
 fun NovedadScreen(
+    onMapClick: () -> Unit,
     novedadesViewModel: NovedadesViewModel,
     onClick: (JuegoInfo) -> Unit,
     onNotificationClick: () -> Unit,
@@ -87,6 +90,7 @@ fun NovedadScreen(
             onReviewClick = onReviewClick,
             onUserProfileClick = onUserProfileClick,
             onBackClick = onBackClick,
+            onMapClick = onMapClick,
             modifier = Modifier.fillMaxSize()
         )
     }
@@ -99,6 +103,7 @@ fun NovedadScreen(
 @Preview(showBackground = true)
 fun NovedadScreenPreview() {
     NovedadScreen(
+        onMapClick = {},
         novedadesViewModel = viewModel(),
         onClick = {},
         onNotificationClick = {},

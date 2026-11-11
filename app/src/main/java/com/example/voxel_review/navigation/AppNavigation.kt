@@ -9,6 +9,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.voxel_review.ui.screens.reviewMap.ReviewMapScreen
 import androidx.navigation.navArgument
 
 import com.google.firebase.auth.FirebaseAuth
@@ -54,6 +55,7 @@ import com.example.voxel_review.ui.screens.forgotPassword.ForgotPasswordViewMode
 
 
 sealed class AppScreen(val route: String) {
+    object Map: AppScreen("map")
     object Splash : AppScreen("splash")
     object Start : AppScreen("start")
     object Register : AppScreen("register")
@@ -173,11 +175,23 @@ fun AppNavigation(
 
 
         // NOVEDADES
+        composable(route = AppScreen.Map.route) {
+            ReviewMapScreen(
+                onBackClick = { navController.popBackStack() },
+                onNotificationClick = { navController.navigate(AppScreen.Notifications.route) }
+            )
+        }
+
         composable(route = AppScreen.Reviews.route) {
 
             val novedadesViewModel: NovedadesViewModel = hiltViewModel()
 
             NovedadScreen(
+                onMapClick = {
+                    navController.navigate(AppScreen.Map.route) {
+                        launchSingleTop = true
+                    }
+                },
                 novedadesViewModel,
                 onBackClick = {
                     navController.popBackStack()
@@ -201,7 +215,8 @@ fun AppNavigation(
                             "${AppScreen.PerfilUser.route}?profileId=$userId"
                         )
                     }
-                }
+                },
+
             )
         }
 

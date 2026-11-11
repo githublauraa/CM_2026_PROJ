@@ -74,12 +74,12 @@ class NovedadesViewModel @Inject constructor(
         }
     }
 
-    fun toggleFollowedFilter(enabled: Boolean) {
+    fun selectFilter(filter: String) {
         _uiState.update {
-            it.copy(showOnlyFollowed = enabled)
+            it.copy(selectedFilter = filter)
         }
 
-        if (enabled && _uiState.value.followedReviews.isEmpty()) {
+        if (filter == "Siguiendo" && _uiState.value.followedReviews.isEmpty()) {
             loadFollowedReviews()
         }
     }

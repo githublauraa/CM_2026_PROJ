@@ -17,4 +17,6 @@ plugins {
     // Firebase
     alias(libs.plugins.google.services) apply false
     alias(libs.plugins.firebase.crashlytics) apply false
+
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin") version "2.0.1" apply false
 }
