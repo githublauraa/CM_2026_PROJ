@@ -345,7 +345,7 @@ class WriteReviewViewModel @Inject constructor(
                     gameplayRating = state.gameplayRating,
                     graphicsRating = state.graphicsRating,
                     storyRating = state.storyRating,
-                    content = state.reviewText
+                    content = state.reviewText,
                 )
 
                 val result = reviewRepository.updateReview(

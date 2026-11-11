@@ -15,6 +15,8 @@ plugins {
     // Firebase
     alias(libs.plugins.google.services)
     alias(libs.plugins.firebase.crashlytics)
+
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
 
 android {
@@ -232,4 +234,27 @@ dependencies {
 
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     debugImplementation(libs.androidx.compose.ui.tooling)
+
+    // Maps SDK for Android
+    // Google Maps para Jetpack Compose
+    implementation("com.google.maps.android:maps-compose:6.12.0")
+
+    // Obtener la ubicación del usuario
+    implementation("com.google.android.gms:play-services-location:21.3.0")
+
+}
+
+secrets {
+    // Optionally specify a different file name containing your secrets.
+    // The plugin defaults to "local.properties"
+    propertiesFileName = "secrets.properties"
+
+    // A properties file containing default secret values. This file can be
+    // checked in version control.
+    defaultPropertiesFileName = "local.defaults.properties"
+
+    // Configure which keys should be ignored by the plugin by providing regular expressions.
+    // "sdk.dir" is ignored by default.
+    ignoreList.add("keyToIgnore") // Ignore the key "keyToIgnore"
+    ignoreList.add("sdk.*")       // Ignore all keys matching the regexp "sdk.*"
 }

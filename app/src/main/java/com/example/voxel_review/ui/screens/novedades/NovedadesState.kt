@@ -9,5 +9,5 @@ data class NovedadesState(
     val isLoading: Boolean = false,
     val error: String? = null,
     val followedReviews: List<ReviewInfo> = emptyList(),
-    val showOnlyFollowed: Boolean = false
+    val selectedFilter: String = "Todos"
 )

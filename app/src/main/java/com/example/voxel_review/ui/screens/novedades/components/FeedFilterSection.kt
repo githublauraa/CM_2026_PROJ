@@ -9,11 +9,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 
-
 @Composable
 fun FeedFilterSection(
-    showOnlyFollowed: Boolean,
-    onFilterSelected: (Boolean) -> Unit,
+    selectedFilter: String,
+    onFilterSelected: (String) -> Unit,
+    onMapClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     LazyRow(
@@ -24,16 +24,25 @@ fun FeedFilterSection(
         item {
             FeedFilterChip(
                 text = "Todos los juegos",
-                isSelected = !showOnlyFollowed,
-                onClick = { onFilterSelected(false) }
+                isSelected = selectedFilter == "Todos",
+                onClick = { onFilterSelected("Todos") }
             )
         }
+
         item {
             FeedFilterChip(
                 text = "Siguiendo",
-                isSelected = showOnlyFollowed,
-                onClick = { onFilterSelected(true) },
-                modifier.testTag("btnSiguiendo")
+                isSelected = selectedFilter == "Siguiendo",
+                onClick = { onFilterSelected("Siguiendo") },
+                modifier = Modifier.testTag("btnSiguiendo")
+            )
+        }
+
+        item {
+            FeedFilterChip(
+                text = "Mapa reseñas",
+                isSelected = false,
+                onClick = onMapClick
             )
         }
     }
