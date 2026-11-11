@@ -15,6 +15,8 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.tasks.await
 
 
 @HiltViewModel
@@ -32,6 +34,34 @@ class GameDetailViewModel @Inject constructor(
 
         _uiState.update {
             it.copy(currentUserId = userId)
+        }
+    }
+
+    fun refreshEmailVerification() {
+        val user = auth.currentUser
+        _uiState.update {
+            it.copy(
+                currentUserId = user?.uid,
+                isEmailVerified = user?.isEmailVerified == true
+            )
+        }
+        if (user == null) return
+
+        viewModelScope.launch {
+            try {
+                user.reload().await()
+                val currentUser = auth.currentUser
+                _uiState.update {
+                    it.copy(
+                        currentUserId = currentUser?.uid,
+                        isEmailVerified = currentUser?.isEmailVerified == true
+                    )
+                }
+            } catch (e: CancellationException) {
+                throw e
+            } catch (_: Exception) {
+                // Conserva el último estado conocido si no hay conexión.
+            }
         }
     }
 

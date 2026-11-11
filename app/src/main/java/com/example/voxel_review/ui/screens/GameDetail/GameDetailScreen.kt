@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.compose.LifecycleResumeEffect
 import com.example.voxel_review.data.info.review.ReviewInfo
 import com.example.voxel_review.ui.screens.GameDetail.components.GameDetailContent
 
@@ -29,6 +30,11 @@ fun GameDetailScreen(
 ) {
 
     val state by gameDetailViewModel.uiState.collectAsState()
+
+    LifecycleResumeEffect(gameDetailViewModel) {
+        gameDetailViewModel.refreshEmailVerification()
+        onPauseOrDispose { }
+    }
 
 
     GameDetailContent(

@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -256,12 +257,27 @@ fun GameDetailContent(
                 }
 
                 // Botón flotante para escribir reseña
-                WriteReviewButton(
-                    onClick = onWriteReviewPressed,
-                    modifier = Modifier
-                        .align(Alignment.BottomEnd)
-                        .padding(18.dp)
-                )
+                if (state.isEmailVerified) {
+                    WriteReviewButton(
+                        onClick = onWriteReviewPressed,
+                        modifier = Modifier
+                            .align(Alignment.BottomEnd)
+                            .padding(18.dp)
+                    )
+                } else {
+                    Text(
+                        text = "Verifica tu correo electrónico para poder reseñar este artículo.",
+                        color = Color.White,
+                        fontSize = 13.sp,
+                        modifier = Modifier
+                            .align(Alignment.BottomCenter)
+                            .fillMaxWidth()
+                            .padding(18.dp)
+                            .background(VoxelSurface, RoundedCornerShape(12.dp))
+                            .padding(horizontal = 16.dp, vertical = 12.dp)
+                            .testTag("emailVerificationRequired")
+                    )
+                }
             }
         }
     }
