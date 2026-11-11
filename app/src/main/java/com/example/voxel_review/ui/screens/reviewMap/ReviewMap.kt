@@ -18,7 +18,9 @@ import androidx.compose.material3.Switch
 import androidx.compose.ui.unit.dp
 import com.example.voxel_review.ui.screens.novedades.components.NovedadesHeader
 import com.example.voxel_review.ui.utils.FondoPantalla
-
+import com.google.android.gms.maps.model.CameraPosition
+import com.google.maps.android.compose.rememberCameraPositionState
+import com.google.android.gms.maps.model.LatLng
 @Composable
 fun ReviewMapScreen(
     onBackClick: () -> Unit,
@@ -41,16 +43,21 @@ fun ReviewMapScreen(
 fun ReviewMap(
     modifier: Modifier = Modifier
 ){
+    val bogota = LatLng(4.60971,-74.08175)
     var uiSettings by remember { mutableStateOf(MapUiSettings()) }
     var properties by remember {
-        mutableStateOf(MapProperties(mapType = MapType.SATELLITE))
+        mutableStateOf(MapProperties(mapType = MapType.NORMAL))
+    }
+    val cameraPositionState = rememberCameraPositionState {
+        position = CameraPosition.fromLatLngZoom(bogota, 10.9f)
     }
 
     Box(modifier.fillMaxSize()) {
         GoogleMap(
             modifier = Modifier.matchParentSize(),
             properties = properties,
-            uiSettings = uiSettings
+            uiSettings = uiSettings,
+            cameraPositionState = cameraPositionState
         )
         Switch(
             checked = uiSettings.zoomControlsEnabled,
