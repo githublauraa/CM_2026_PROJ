@@ -51,7 +51,7 @@ fun BotonScreen(
             color = colorBorde
         ),
         modifier = modifier
-            .width(100.dp)
+            .width(120.dp)
             .height(33.dp)
     ) {
         Text(

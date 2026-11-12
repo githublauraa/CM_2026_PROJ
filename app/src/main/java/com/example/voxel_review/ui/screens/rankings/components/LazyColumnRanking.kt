@@ -1,5 +1,7 @@
 package com.example.voxel_review.ui.screens.rankings.components
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -21,18 +23,21 @@ fun LazyColumnRanking(
         modifier = modifier
             .fillMaxWidth()
             .padding(
-                top = 180.dp,
-                start = 16.dp,
-                end = 16.dp
-            )
+                horizontal = 16.dp
+            ),
+        contentPadding = PaddingValues(
+            top = 4.dp,
+            bottom = 90.dp
+        ),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
 
-        itemsIndexed(state.users.sortedByDescending { it.numResenias }) { posicion, usuario ->
+        itemsIndexed(state.filteredUsers.sortedByDescending { it.numResenias }) { posicion, usuario ->
 
             RankingCard(
                 posicion = (posicion + 1).toString(),
                 nombre = usuario.nick,
-                reseñas = "${usuario.numResenias.toString()} reseñas",
+                reseñas = "${usuario.numResenias} reseñas",
                 porcentaje = 0.toString(),
                 imagen = usuario.pfp,
                 onClick = { onUserClick(usuario) },

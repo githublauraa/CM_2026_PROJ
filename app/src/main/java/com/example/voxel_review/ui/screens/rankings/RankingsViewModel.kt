@@ -38,6 +38,12 @@ class RankingsViewModel @Inject constructor( private val userRepository: UserRep
         }
     }
 
+    fun onSearchQueryChange(newQuery: String) {
+        _uiState.update {
+            it.copy(searchQuery = newQuery)
+        }
+    }
+
     /**
      * Actualiza el tipo de ranking seleccionado.
      *

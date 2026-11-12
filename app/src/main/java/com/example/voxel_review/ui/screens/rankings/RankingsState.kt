@@ -11,5 +11,15 @@ import com.example.voxel_review.data.info.profile.ProfileInfo
  */
 data class RankingsState(
     val users: List<ProfileInfo> = emptyList(),
-    val seleccionado: Boolean = true
-)
+    val seleccionado: Boolean = true,
+    val searchQuery: String = ""
+) {
+    val filteredUsers: List<ProfileInfo>
+        get() = if (searchQuery.isBlank()) {
+            users
+        } else {
+            users.filter { user ->
+                user.nick.contains(searchQuery.trim(), ignoreCase = true)
+            }
+        }
+}

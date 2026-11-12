@@ -1,21 +1,34 @@
 package com.example.voxel_review.ui.screens.rankings
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import com.example.voxel_review.R
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.voxel_review.data.info.profile.ProfileInfo
+import com.example.voxel_review.ui.screens.Discover.components.DiscoverSearchBar
 import com.example.voxel_review.ui.screens.rankings.components.HeaderRankingSceen
 import com.example.voxel_review.ui.screens.rankings.components.LazyColumnRanking
 import com.example.voxel_review.ui.utils.FondoPantalla
@@ -33,10 +46,11 @@ import com.example.voxel_review.ui.utils.FondoPantalla
 fun RankingContent(
     state: RankingsState,
     onChangeSeleccionado: (Boolean) -> Unit,
+    onSearchQueryChange: (String) -> Unit,
     onUserClick: (ProfileInfo) -> Unit,
     modifier: Modifier = Modifier.testTag("homeScreen")
 ) {
-    Box(
+    Column(
         modifier = modifier.fillMaxSize()
     ) {
         HeaderRankingSceen(
@@ -44,26 +58,18 @@ fun RankingContent(
             onChangeSeleccionado = onChangeSeleccionado
         )
 
-        // El título cambia de acuerdo con el tipo de ranking seleccionado.
-        Text(
-            text = if (state.seleccionado) {
-                "TOP CRÍTICOS"
-            } else {
-                "TOP JUEGOS"
-            },
-            color = Color.Gray,
-            fontSize = 16.sp,
-            modifier = Modifier
-                .align(Alignment.TopStart)
-                .padding(
-                    top = 140.dp,
-                    start = 18.dp
-                )
-        )
+        if (state.seleccionado) {
+            DiscoverSearchBar(
+                query = state.searchQuery,
+                onQueryChange = onSearchQueryChange,
+                modifier = Modifier.padding(top = 4.dp, bottom = 12.dp)
+            )
+        }
 
         LazyColumnRanking(
             state = state,
-            onUserClick = onUserClick
+            onUserClick = onUserClick,
+            modifier = Modifier.weight(1f)
         )
     }
 }
@@ -93,7 +99,8 @@ fun RankingsScreen(
         RankingContent(
             state = state,
             onChangeSeleccionado = rankingsViewModel::onChangeSeleccionado,
-            onUserClick = onUserClick
+            onUserClick = onUserClick,
+            onSearchQueryChange = rankingsViewModel::onSearchQueryChange
         )
     }
 }
