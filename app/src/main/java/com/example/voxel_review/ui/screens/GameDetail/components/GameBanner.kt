@@ -13,12 +13,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
+import com.example.voxel_review.R
 import com.example.voxel_review.data.info.InfoGame.GameDetailInfo
-import com.example.voxel_review.ui.utils.ProfileImage
 
 /**
  * Componente visual que muestra el banner promocional del juego con su nombre superpuesto.
@@ -37,9 +42,18 @@ fun GameBanner(
             .clip(RoundedCornerShape(16.dp))
     ) {
 
-        ProfileImage(
-            profileImage = game.banner,
-            size = 165,
+        // Foto de Benedict Calano (Unsplash): https://unsplash.com/photos/WBfhrZA2TAE
+        val fallback = painterResource(R.drawable.game_banner_fallback)
+        AsyncImage(
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(game.banner.takeIf { it.isNotBlank() })
+                .crossfade(true)
+                .build(),
+            contentDescription = null,
+            placeholder = painterResource(R.drawable.loading_img),
+            fallback = fallback,
+            error = fallback,
+            contentScale = ContentScale.Crop,
             modifier = Modifier.fillMaxSize()
         )
 

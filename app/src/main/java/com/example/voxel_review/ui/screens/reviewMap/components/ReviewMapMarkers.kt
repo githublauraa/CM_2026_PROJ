@@ -13,6 +13,7 @@ import com.google.maps.android.compose.rememberUpdatedMarkerState
 @GoogleMapComposable
 fun ReviewMapMarkers(
     reviews: List<ReviewInfo>,
+    onReviewClick: (ReviewInfo) -> Unit,
     modifier: Modifier = Modifier
 ) {
     reviews.forEach { review ->
@@ -22,7 +23,8 @@ fun ReviewMapMarkers(
         key(review.idResenia) {
             MarkerInfoWindow(
                 state = rememberUpdatedMarkerState(position = LatLng(latitude, longitude)),
-                title = review.tituloJuego
+                title = review.tituloJuego,
+                onInfoWindowClick = { onReviewClick(review) }
             ) {
                 ReviewMapInfoCard(
                     review = review,

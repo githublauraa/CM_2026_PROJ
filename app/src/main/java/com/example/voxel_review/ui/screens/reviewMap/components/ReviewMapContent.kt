@@ -13,6 +13,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import com.example.voxel_review.data.info.review.ReviewInfo
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.GoogleMap
@@ -24,6 +25,7 @@ import com.google.maps.android.compose.rememberCameraPositionState
 @Composable
 fun ReviewMapContent(
     state: ReviewMapState,
+    onReviewClick: (ReviewInfo) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val bogota = LatLng(4.60971, -74.08175)
@@ -43,7 +45,7 @@ fun ReviewMapContent(
             cameraPositionState = cameraPositionState,
             contentDescription = "Mapa reseñas voxelReview"
         ) {
-            ReviewMapMarkers(reviews = state.reviews)
+            ReviewMapMarkers(reviews = state.reviews, onReviewClick = onReviewClick)
         }
         when {
             state.isLoading -> CircularProgressIndicator(Modifier.align(Alignment.Center))

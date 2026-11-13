@@ -182,7 +182,15 @@ fun AppNavigation(
             ReviewMapScreen(
                 reviewMapViewModel = reviewMapViewModel,
                 onBackClick = { navController.popBackStack() },
-                onNotificationClick = { navController.navigate(AppScreen.Notifications.route) }
+                onNotificationClick = { navController.navigate(AppScreen.Notifications.route) },
+                onReviewClick = { review ->
+                    navController.navigate(
+                        "${AppScreen.FullReviews.route}?juegoId=${Uri.encode(review.videoGameId)}" +
+                            "&reviewId=${Uri.encode(review.idResenia)}&userId=${Uri.encode(review.userId)}"
+                    ) {
+                        launchSingleTop = true
+                    }
+                }
             )
         }
 

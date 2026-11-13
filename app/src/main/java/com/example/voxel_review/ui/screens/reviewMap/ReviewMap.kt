@@ -9,6 +9,7 @@ import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.voxel_review.data.info.review.ReviewInfo
 import com.example.voxel_review.ui.screens.novedades.components.NovedadesHeader
 import com.example.voxel_review.ui.screens.reviewMap.components.ReviewMapContent
 import com.example.voxel_review.ui.utils.FondoPantalla
@@ -18,6 +19,7 @@ fun ReviewMapScreen(
     reviewMapViewModel: ReviewMapViewModel,
     onBackClick: () -> Unit,
     onNotificationClick: () -> Unit,
+    onReviewClick: (ReviewInfo) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val state by reviewMapViewModel.uiState.collectAsStateWithLifecycle()
@@ -27,7 +29,8 @@ fun ReviewMapScreen(
         ReviewMapBody(
             state = state,
             onBackClick = onBackClick,
-            onNotificationClick = onNotificationClick
+            onNotificationClick = onNotificationClick,
+            onReviewClick = onReviewClick
         )
     }
 }
@@ -37,6 +40,7 @@ fun ReviewMapBody(
     state: ReviewMapState,
     onBackClick: () -> Unit,
     onNotificationClick: () -> Unit,
+    onReviewClick: (ReviewInfo) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(modifier.fillMaxSize()) {
@@ -45,6 +49,10 @@ fun ReviewMapBody(
             onNotificationClick = onNotificationClick,
             modifier = Modifier.padding(start = 22.dp, top = 8.dp, end = 22.dp)
         )
-        ReviewMapContent(state = state, modifier = Modifier.weight(1f))
+        ReviewMapContent(
+            state = state,
+            onReviewClick = onReviewClick,
+            modifier = Modifier.weight(1f)
+        )
     }
 }
