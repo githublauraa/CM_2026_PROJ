@@ -78,21 +78,22 @@ fun DiscoverScreen(
                 query = state.searchQuery,
                 onQueryChange = {
                     discoverViewModel.updateSearchQuery(it)
-                }
+                },
+                placeholder = "Buscar juegos...",
             )
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            GenreFilterSection(
-                genres = state.genres,
-                selectedGenre = state.selectedGenre,
-                onGenreSelected = { discoverViewModel.updateSelectedGenre(it) }
-            )
+//            GenreFilterSection(
+//                genres = state.genres,
+//                selectedGenre = state.selectedGenre,
+//                onGenreSelected = { discoverViewModel.updateSelectedGenre(it) }
+//            )
 
-            Spacer(modifier = Modifier.height(20.dp))
+//            Spacer(modifier = Modifier.height(20.dp))
 
                 TrendingSearchesSection(
-                    items = state.trendingSearches,
+                    items = state.filteredTrendingSearches,
                     onItemClick = onItemClick
                 )
             }

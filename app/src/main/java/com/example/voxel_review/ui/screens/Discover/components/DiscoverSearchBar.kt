@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.Placeholder
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -36,6 +37,7 @@ import com.example.voxel_review.ui.theme.tertiaryDark
 fun DiscoverSearchBar(
     query: String,
     onQueryChange: (String) -> Unit,
+    placeholder: String = "Buscar juegos...",
     modifier: Modifier = Modifier
 ) {
     TextField(
@@ -48,7 +50,7 @@ fun DiscoverSearchBar(
         shape = RoundedCornerShape(16.dp),
         placeholder = {
             Text(
-                text = "Buscar juegos, géneros...",
+                text = placeholder,
                 color = onSurfaceVariantDark,
                 fontSize = 14.sp
             )
@@ -77,8 +79,8 @@ fun DiscoverSearchBar(
     )
 }
 
-@Preview(showBackground = true)
-@Composable
-private fun DiscoverSearchBarPreview() {
-    DiscoverSearchBar(query = "", onQueryChange = {})
-}
+//@Preview(showBackground = true)
+//@Composable
+//private fun DiscoverSearchBarPreview() {
+//    DiscoverSearchBar(query = "", onQueryChange = {}, placeholder = Placeholder("Buscar juegos..."))
+//}

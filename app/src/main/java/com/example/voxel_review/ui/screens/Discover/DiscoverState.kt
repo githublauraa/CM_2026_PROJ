@@ -26,4 +26,13 @@ data class DiscoverState(
     val isLoading: Boolean = false,
     val error: String? = null,
     val currentUserId: String = ""
-)
+) {
+    val filteredTrendingSearches: List<TrendingSearchInfo>
+        get() = if (searchQuery.isBlank()) {
+            trendingSearches
+        } else {
+            trendingSearches.filter { game ->
+                game.nombre.contains(searchQuery.trim(), ignoreCase = true)
+            }
+        }
+}

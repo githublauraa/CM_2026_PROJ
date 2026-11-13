@@ -27,6 +27,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.room.util.appendPlaceholders
 import com.example.voxel_review.data.info.profile.ProfileInfo
 import com.example.voxel_review.ui.screens.Discover.components.DiscoverSearchBar
 import com.example.voxel_review.ui.screens.rankings.components.HeaderRankingSceen
@@ -62,6 +63,7 @@ fun RankingContent(
             DiscoverSearchBar(
                 query = state.searchQuery,
                 onQueryChange = onSearchQueryChange,
+                placeholder = "Buscar críticos...",
                 modifier = Modifier.padding(top = 4.dp, bottom = 12.dp)
             )
         }
