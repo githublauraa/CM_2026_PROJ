@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.channels.awaitClose
+import java.time.Instant
 
 class ReviewFirebaseDataSourceImpl @Inject constructor(
     private val db: FirebaseFirestore
@@ -104,8 +105,8 @@ class ReviewFirebaseDataSourceImpl @Inject constructor(
 
     // El listado solo necesita las puntuaciones; no consulta usuarios ni likes.
     suspend fun getAllReviews(): List<ReviewDto> {
-        return db.collection("reviews").get().await().documents.mapNotNull {
-            it.toObject(ReviewDto::class.java)
+        return db.collection("reviews").get().await().documents.mapNotNull { doc ->
+            doc.toObject(ReviewDto::class.java)?.copy(reviewId = doc.id)
         }
     }
 
@@ -187,6 +188,7 @@ class ReviewFirebaseDataSourceImpl @Inject constructor(
 
         // Crear reseña con datos desnormalizados
         val newReview = review.copy(
+            createdAt = Instant.now().toString(),
             userId = userId,
             videoGameId = videoGameId,
 

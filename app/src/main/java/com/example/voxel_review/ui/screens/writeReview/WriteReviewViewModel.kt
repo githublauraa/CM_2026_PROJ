@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.Job
 import retrofit2.HttpException
 
 @HiltViewModel
@@ -235,8 +236,16 @@ class WriteReviewViewModel @Inject constructor(
         }
     }
 
-    fun publishReview(videoGameId: String) {
-        viewModelScope.launch {
+    private var publishJob: Job? = null
+
+    fun publishReview(
+        videoGameId: String,
+        latitude: Double? = null,
+        longitude: Double? = null
+    ) {
+        if (publishJob?.isActive == true || _uiState.value.isPublished) return
+
+        publishJob = viewModelScope.launch {
 
             val userId = authRepository.currentUser?.uid
                 ?: return@launch
@@ -271,7 +280,9 @@ class WriteReviewViewModel @Inject constructor(
                     gameplayRating = state.gameplayRating,
                     graphicsRating = state.graphicsRating,
                     storyRating = state.storyRating,
-                    content = state.reviewText
+                    content = state.reviewText,
+                    latitude = latitude,
+                    longitude = longitude
                 )
 
                 val result = reviewRepository.createReview(

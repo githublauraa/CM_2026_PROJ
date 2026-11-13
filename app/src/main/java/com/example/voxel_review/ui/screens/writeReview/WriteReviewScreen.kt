@@ -1,10 +1,40 @@
 package com.example.voxel_review.ui.screens.writeReview
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.location.LocationManager
+import android.os.CancellationSignal
+import android.os.SystemClock
+import androidx.core.location.LocationManagerCompat
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.layout.Row
+import androidx.compose.material3.Checkbox
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalContext
+import androidx.core.content.ContextCompat
+import com.google.android.gms.location.CurrentLocationRequest
+import com.google.android.gms.location.Granularity
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.Priority
+import com.google.android.gms.tasks.CancellationTokenSource
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlin.coroutines.resume
+import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withTimeoutOrNull
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -98,6 +128,87 @@ fun WriteReviewScreen(
     val isReviewReady =
         reviewId.isBlank() || state.editingReviewId == reviewId
 
+    val context = LocalContext.current
+    val scope = rememberCoroutineScope()
+    val locationClient = remember(context) {
+        LocationServices.getFusedLocationProviderClient(context)
+    }
+    var shareLocation by rememberSaveable { mutableStateOf(false) }
+    var waitingForLocation by remember { mutableStateOf(false) }
+    var locationError by remember { mutableStateOf<String?>(null) }
+    val locationPermission = Manifest.permission.ACCESS_COARSE_LOCATION
+
+    fun publishWithLocation() {
+        scope.launch {
+            val requestedAt = SystemClock.elapsedRealtimeNanos()
+            val cancellation = CancellationTokenSource()
+            try {
+                val publicationLocation = try {
+                    withTimeoutOrNull(7_000L) {
+                        val manager = context.getSystemService(LocationManager::class.java)
+                        if (manager?.isProviderEnabled(LocationManager.GPS_PROVIDER) == true) {
+                            val gpsLocation = withTimeoutOrNull(3_500L) {
+                                suspendCancellableCoroutine { continuation ->
+                                    val signal = CancellationSignal()
+                                    continuation.invokeOnCancellation { signal.cancel() }
+                                    LocationManagerCompat.getCurrentLocation(
+                                        manager,
+                                        LocationManager.GPS_PROVIDER,
+                                        signal,
+                                        ContextCompat.getMainExecutor(context)
+                                    ) { fix -> continuation.resume(fix) }
+                                }
+                            }
+                            if (gpsLocation != null &&
+                                gpsLocation.elapsedRealtimeNanos >= requestedAt
+                            ) {
+                                return@withTimeoutOrNull gpsLocation
+                            }
+                        }
+
+                        val request = CurrentLocationRequest.Builder()
+                            .setPriority(Priority.PRIORITY_HIGH_ACCURACY)
+                            .setGranularity(Granularity.GRANULARITY_COARSE)
+                            .setMaxUpdateAgeMillis(0L)
+                            .setDurationMillis(3_000L)
+                            .build()
+                        locationClient.getCurrentLocation(request, cancellation.token).await()
+                            ?.takeIf { it.elapsedRealtimeNanos >= requestedAt }
+                    }
+                } catch (exception: CancellationException) {
+                    throw exception
+                } catch (_: Exception) {
+                    null
+                }
+
+                if (publicationLocation == null) {
+                    locationError = "No se pudo obtener tu ubicación. Actívala e inténtalo de nuevo, o desmarca la opción para publicar sin aparecer en el mapa."
+                } else {
+                    writeReviewViewModel.publishReview(
+                        videoGameId = gameId,
+                        latitude = publicationLocation.latitude,
+                        longitude = publicationLocation.longitude
+                    )
+                }
+            } finally {
+                cancellation.cancel()
+                waitingForLocation = false
+            }
+        }
+    }
+
+    val requestLocation = rememberLauncherForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { granted ->
+        if (granted) {
+            waitingForLocation = true
+            publishWithLocation()
+        } else {
+            waitingForLocation = false
+            locationError = "Para aparecer en el mapa, permite el acceso a la ubicación. Puedes desmarcar la opción para publicar sin ubicación."
+        }
+    }
+
     LaunchedEffect(state.isPublished) {
         if (state.isPublished) {
             onBackClick()
@@ -123,6 +234,7 @@ fun WriteReviewScreen(
             modifier = Modifier
                 .align(Alignment.TopCenter)
                 .fillMaxWidth(0.9f)
+                .verticalScroll(rememberScrollState())
         ) {
             TopBar(
                 onBackClick = onBackClick,
@@ -161,21 +273,46 @@ fun WriteReviewScreen(
                     }
                 )
 
+                if (!isEditing) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Checkbox(
+                            checked = shareLocation,
+                            onCheckedChange = {
+                                shareLocation = it
+                                locationError = null
+                            },
+                            enabled = !waitingForLocation
+                        )
+                        Text("Mostrar esta reseña en el mapa con mi ubicación aproximada")
+                    }
+                }
+
                 BotonPublicarReview(
+                    enabled = !waitingForLocation,
                     onClick = {
+                        locationError = null
                         if (reviewIdToEdit != null) {
                             writeReviewViewModel.updateReview(
                                 reviewId = reviewIdToEdit,
                                 userId = currentUserId.orEmpty(),
                                 videoGameId = gameId
                             )
+                        } else if (!shareLocation || state.reviewText.isBlank()) {
+                            writeReviewViewModel.publishReview(videoGameId = gameId)
                         } else {
-                            writeReviewViewModel.publishReview(
-                                videoGameId = gameId
-                            )
+                            waitingForLocation = true
+                            if (ContextCompat.checkSelfPermission(context, locationPermission) ==
+                                PackageManager.PERMISSION_GRANTED
+                            ) {
+                                publishWithLocation()
+                            } else {
+                                requestLocation.launch(locationPermission)
+                            }
                         }
                     },
-                    text = if (isEditing) {
+                    text = if (waitingForLocation) {
+                        "Obteniendo ubicación…"
+                    } else if (isEditing) {
                         "Actualizar reseña"
                     } else {
                         "PUBLICAR REVIEW"
@@ -193,7 +330,7 @@ fun WriteReviewScreen(
             }
 
             val errorMessage =
-                state.errorMessage ?: profileState.errorMessage
+                locationError ?: state.errorMessage ?: profileState.errorMessage
 
             errorMessage?.let {
                 Text(

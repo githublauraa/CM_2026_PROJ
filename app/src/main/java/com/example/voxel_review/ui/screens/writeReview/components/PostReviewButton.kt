@@ -23,7 +23,9 @@ import com.example.voxel_review.ui.theme.VoxelSecondary
 @Composable
 fun BotonPublicarReview(
     onClick: () -> Unit,
-    text: String = "PUBLICAR REVIEW"
+    text: String = "PUBLICAR REVIEW",
+    enabled: Boolean = true,
+    modifier: Modifier = Modifier
 ) {
     val degradado = Brush.horizontalGradient(
         colors = listOf(
@@ -33,14 +35,12 @@ fun BotonPublicarReview(
     )
 
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .height(56.dp)
             .clip(RoundedCornerShape(16.dp))
             .background(brush = degradado)
-            .clickable {
-                onClick()
-            },
+            .clickable(enabled = enabled, onClick = onClick),
         contentAlignment = Alignment.Center
     ) {
         Text(

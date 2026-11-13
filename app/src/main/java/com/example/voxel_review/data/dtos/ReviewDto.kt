@@ -21,7 +21,9 @@ data class ReviewDto(
 
 	// Datos desnormalizados
 	val user: UserDto? = null,
-	val videoGame: VideoGameDto? = null
+	val videoGame: VideoGameDto? = null,
+	val latitude: Double? = null,
+	val longitude: Double? = null,
 )
 
 data class UserDto(
@@ -70,6 +72,10 @@ fun ReviewDto.toReviewInfo(): ReviewInfo {
 		imagenUsuario = user?.photoUrl ?: "",
 		userId = userId,
 		videoGameId = videoGameId,
+		username = user?.username.orEmpty(),
+		createdAt = createdAt,
+		latitude = latitude,
+		longitude = longitude,
 
 	)
 }
