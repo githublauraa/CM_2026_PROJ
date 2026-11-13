@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import androidx.compose.ui.res.painterResource
 import com.example.voxel_review.R
+import com.example.voxel_review.data.info.library.LibraryStatus
 import com.example.voxel_review.data.info.review.ReviewInfo
 import com.example.voxel_review.ui.screens.GameDetail.GameDetailState
 import com.example.voxel_review.ui.theme.VoxelSurface
@@ -49,6 +50,7 @@ fun GameDetailContent(
     onSearchPressed: () -> Unit,
     onWriteReviewPressed: () -> Unit,
     onReviewClick: (ReviewInfo) -> Unit = {},
+    onSelectLibraryStatus: (LibraryStatus) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     val game = state.game
@@ -129,6 +131,17 @@ fun GameDetailContent(
                         developer = game.desarrollador,
                         releaseDate = game.lanzamiento
                     )
+
+                    if (!state.currentUserId.isNullOrBlank()) {
+                        Spacer(modifier = Modifier.height(20.dp))
+
+                        LibraryStatusSelector(
+                            selectedStatus = state.libraryStatus,
+                            isUpdating = state.isUpdatingLibrary,
+                            errorMessage = state.libraryError,
+                            onSelectStatus = onSelectLibraryStatus
+                        )
+                    }
 
                     Spacer(modifier = Modifier.height(24.dp))
 

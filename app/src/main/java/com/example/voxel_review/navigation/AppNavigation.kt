@@ -268,6 +268,13 @@ fun AppNavigation(
                     onFollowersClick = {
                         navController.navigate(AppScreen.Following.createRoute(profileId, showFollowers = true))
                     },
+                    onGameClick = { gameId ->
+                        if (gameId.isNotBlank()) {
+                            navController.navigate(
+                                "${AppScreen.GameDetail.route}?gameId=$gameId"
+                            )
+                        }
+                    },
                     onEditProfileClick = {
                         navController.navigate(AppScreen.EditProfile.route){
                             navController.popBackStack()

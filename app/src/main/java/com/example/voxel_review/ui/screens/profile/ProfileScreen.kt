@@ -50,6 +50,7 @@ fun ProfileScreen(
     onEditProfileClick: () -> Unit,
     onFollowingClick: () -> Unit = {},
     onFollowersClick: () -> Unit = {},
+    onGameClick: (String) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
 
@@ -61,16 +62,21 @@ fun ProfileScreen(
     LaunchedEffect(profileId) {
         profileViewModel.getProfileById(profileId)
         profileViewModel.getUserReviews(profileId)
+        profileViewModel.getUserLibrary(profileId)
     }
 
     ProfileContent(
         state = state,
         onRetry = { profileViewModel.getProfileById(profileId) },
         onRetryReviews = { profileViewModel.getUserReviews(profileId) },
+        onRetryLibrary = { profileViewModel.getUserLibrary(profileId) },
         onImageSelected = { profileViewModel.uploadImageFireBase(it) },
         onBackClick = onBackClick,
         onClickImage = onClickImage,
         onReviewClick = onReviewClick,
+        onGameClick = onGameClick,
+        onSelectTab = profileViewModel::selectProfileTab,
+        onSelectLibraryFilter = profileViewModel::selectLibraryFilter,
         buttonLogOutPressed = {
             profileViewModel.logOut()
             buttonLogOutPressed()
@@ -103,8 +109,12 @@ fun ProfileContent(
     onFollowersClick: () -> Unit = {},
     buttonFollowPressed: ()-> Unit,
     onVerifyEmailClick: () -> Unit = {},
+    onGameClick: (String) -> Unit = {},
+    onSelectTab: (ProfileContentTab) -> Unit = {},
+    onSelectLibraryFilter: (com.example.voxel_review.data.info.library.LibraryStatus?) -> Unit = {},
     onRetry: () -> Unit = {},
     onRetryReviews: () -> Unit = {},
+    onRetryLibrary: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
 
@@ -228,12 +238,32 @@ fun ProfileContent(
                 onFollowingClick = onFollowingClick
             )
 
-            when {
-                state.isReviewsLoading -> com.example.voxel_review.ui.utils.ContentStatus("Cargando reseñas…", loading = true)
-                state.reviewsError != null -> com.example.voxel_review.ui.utils.ContentStatus(
-                    state.reviewsError, onRetry = onRetryReviews
-                )
-                else -> GameCards(reviews = reviews, onReviewClick = onReviewClick)
+            ProfileTabChips(
+                selectedTab = state.selectedTab,
+                onSelectTab = onSelectTab
+            )
+
+            when (state.selectedTab) {
+                ProfileContentTab.REVIEWS -> {
+                    when {
+                        state.isReviewsLoading -> com.example.voxel_review.ui.utils.ContentStatus("Cargando reseñas…", loading = true)
+                        state.reviewsError != null -> com.example.voxel_review.ui.utils.ContentStatus(
+                            state.reviewsError, onRetry = onRetryReviews
+                        )
+                        else -> GameCards(reviews = reviews, onReviewClick = onReviewClick)
+                    }
+                }
+                ProfileContentTab.LIBRARY -> {
+                    ProfileLibrarySection(
+                        games = state.filteredLibraryGames,
+                        selectedFilter = state.selectedLibraryFilter,
+                        isLoading = state.isLibraryLoading,
+                        errorMessage = state.libraryError,
+                        onSelectFilter = onSelectLibraryFilter,
+                        onGameClick = onGameClick,
+                        onRetry = onRetryLibrary
+                    )
+                }
             }
 
             if (isOwnProfile) {

@@ -1,8 +1,14 @@
 package com.example.voxel_review.ui.screens.profile
 
+import com.example.voxel_review.data.info.library.LibraryGameInfo
+import com.example.voxel_review.data.info.library.LibraryStatus
 import com.example.voxel_review.data.info.profile.ProfileInfo
 import com.example.voxel_review.data.info.review.ReviewInfo
 
+enum class ProfileContentTab(val label: String) {
+    REVIEWS("Reseñas"),
+    LIBRARY("Colección")
+}
 
 data class ProfileState(
     val profiles: List<ProfileInfo> = emptyList(),
@@ -17,5 +23,17 @@ data class ProfileState(
     val errorMessage: String? = null,
     val currentUserId: String = "",
     val isVerifyingEmail: Boolean = false,
-    val verificationMessage: String? = null
-)
+    val verificationMessage: String? = null,
+    val selectedTab: ProfileContentTab = ProfileContentTab.REVIEWS,
+    val libraryGames: List<LibraryGameInfo> = emptyList(),
+    val selectedLibraryFilter: LibraryStatus? = null,
+    val isLibraryLoading: Boolean = false,
+    val libraryError: String? = null
+) {
+    val filteredLibraryGames: List<LibraryGameInfo>
+        get() = if (selectedLibraryFilter == null) {
+            libraryGames
+        } else {
+            libraryGames.filter { it.status == selectedLibraryFilter }
+        }
+}

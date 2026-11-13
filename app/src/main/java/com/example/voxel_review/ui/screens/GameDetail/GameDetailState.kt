@@ -1,6 +1,7 @@
 package com.example.voxel_review.ui.screens.GameDetail
 
 import com.example.voxel_review.data.info.InfoGame.GameDetailInfo
+import com.example.voxel_review.data.info.library.LibraryStatus
 import com.example.voxel_review.data.info.review.ReviewInfo
 
 data class GameDetailState(
@@ -11,5 +12,8 @@ data class GameDetailState(
     val isLoading: Boolean = false,
     val error: String? = null,
     val currentUserId: String? = null,
-    val isEmailVerified: Boolean = false
+    val isEmailVerified: Boolean = false,
+    val libraryStatus: LibraryStatus? = null,
+    val isUpdatingLibrary: Boolean = false,
+    val libraryError: String? = null
 )

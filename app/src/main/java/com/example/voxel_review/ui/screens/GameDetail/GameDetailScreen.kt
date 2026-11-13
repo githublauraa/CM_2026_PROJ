@@ -44,6 +44,7 @@ fun GameDetailScreen(
         onWriteReviewPressed = onWriteReviewPressed,
         onReviewProfileImageCliked = onReviewProfileImageCliked,
         onReviewClick = onReviewClick,
+        onSelectLibraryStatus = gameDetailViewModel::toggleLibraryStatus,
         onLikeClick = { reviewId ->
             val currentUserId = state.currentUserId
 

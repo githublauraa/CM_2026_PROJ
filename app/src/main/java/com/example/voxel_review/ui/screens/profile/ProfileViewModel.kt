@@ -3,7 +3,9 @@ package com.example.voxel_review.ui.screens.profile
 import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.voxel_review.data.info.library.LibraryStatus
 import com.example.voxel_review.data.repository.AuthRepository
+import com.example.voxel_review.data.repository.LibraryRepository
 import com.example.voxel_review.data.repository.ReviewRepository
 import com.example.voxel_review.data.repository.StorageRepository
 import com.example.voxel_review.data.repository.UserRepository
@@ -22,6 +24,7 @@ class ProfileViewModel @Inject constructor(
 	private val storageRepository: StorageRepository,
 	private val userRepository: UserRepository,
 	private val reviewRepository: ReviewRepository,
+	private val libraryRepository: LibraryRepository,
 ) : ViewModel() {
 
 	private val _uiState = MutableStateFlow(
@@ -119,6 +122,37 @@ class ProfileViewModel @Inject constructor(
 				}
 			}
 		}
+	}
+
+	fun getUserLibrary(userId: String) {
+		_uiState.update { it.copy(isLibraryLoading = true, libraryError = null) }
+		viewModelScope.launch {
+			val result = libraryRepository.getUserLibrary(userId)
+			if (result.isSuccess) {
+				_uiState.update {
+					it.copy(
+						libraryGames = result.getOrNull() ?: emptyList(),
+						isLibraryLoading = false,
+						libraryError = null
+					)
+				}
+			} else {
+				_uiState.update {
+					it.copy(
+						libraryError = "No se pudo cargar la colección",
+						isLibraryLoading = false
+					)
+				}
+			}
+		}
+	}
+
+	fun selectProfileTab(tab: ProfileContentTab) {
+		_uiState.update { it.copy(selectedTab = tab) }
+	}
+
+	fun selectLibraryFilter(status: LibraryStatus?) {
+		_uiState.update { it.copy(selectedLibraryFilter = status) }
 	}
 	// fun getAllProfiles() {
 	// 	_uiState.update {

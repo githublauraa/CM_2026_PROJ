@@ -29,9 +29,9 @@ class JuegosFirebaseDataSourceImpl @Inject constructor(
         // Consulta el documento y espera la respuesta de Firestore
         val respuesta = docRef.get().await()
 
-        // Convierte el documento a UserProfileFirestoreDto y lo retorna
-        // Si el usuario no existe, lanza una excepción
+        // Convierte el documento a VideoGameDto y conserva el ID del documento
         return respuesta.toObject(VideoGameDto::class.java)
-            ?: throw Exception("No se encontró el usuario")
+            ?.copy(videoGameId = respuesta.id)
+            ?: throw Exception("No se encontró el videojuego")
     }
 }
