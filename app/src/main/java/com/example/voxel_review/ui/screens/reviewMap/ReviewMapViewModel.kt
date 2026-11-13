@@ -10,8 +10,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import java.time.Instant
-import java.time.temporal.ChronoUnit
 
 @HiltViewModel
 class ReviewMapViewModel @Inject constructor(
@@ -31,17 +29,10 @@ class ReviewMapViewModel @Inject constructor(
         _uiState.update { it.copy(isLoading = true, error = null) }
 
         viewModelScope.launch {
-            reviewRepository.getAllReviews()
+            reviewRepository.getRecentReviewsWithLocation()
                 .onSuccess { reviews ->
-                    val ahora = Instant.now()
-                    val hace24Horas = ahora.minus(24, ChronoUnit.HOURS)
-                    val recentReviews = reviews.filter { review ->
-                        review.latitude != null && review.longitude != null &&
-                            fuePublicadaEntre(review.createdAt, hace24Horas, ahora)
-                    }
-
                     _uiState.update {
-                        it.copy(reviews = recentReviews, isLoading = false)
+                        it.copy(reviews = reviews, isLoading = false)
                     }
                 }
                 .onFailure { exception ->
@@ -53,11 +44,5 @@ class ReviewMapViewModel @Inject constructor(
                     }
                 }
         }
-    }
-
-    private fun fuePublicadaEntre(fecha: String, inicio: Instant, fin: Instant): Boolean {
-        val fechaPublicacion = runCatching { Instant.parse(fecha) }.getOrNull()
-            ?: return false
-        return fechaPublicacion in inicio..fin
     }
 }

@@ -6,6 +6,7 @@ import com.example.voxel_review.data.dtos.toReviewInfo
 import com.example.voxel_review.data.info.review.ReviewInfo
 import retrofit2.HttpException
 import javax.inject.Inject
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -17,6 +18,17 @@ class ReviewRepository @Inject constructor(
         return try {
             val reviews = reviewRemoteDataSource.getAllReviews()
             Result.success(reviews.map { it.toReviewInfo() })
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    suspend fun getRecentReviewsWithLocation(): Result<List<ReviewInfo>> {
+        return try {
+            val reviews = reviewRemoteDataSource.getRecentReviewsWithLocation()
+            Result.success(reviews.map { it.toReviewInfo() })
+        } catch (e: CancellationException) {
+            throw e
         } catch (e: Exception) {
             Result.failure(e)
         }

@@ -16,6 +16,7 @@ import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.channels.awaitClose
 import java.time.Instant
+import java.time.temporal.ChronoUnit
 
 class ReviewFirebaseDataSourceImpl @Inject constructor(
     private val db: FirebaseFirestore
@@ -107,6 +108,19 @@ class ReviewFirebaseDataSourceImpl @Inject constructor(
     suspend fun getAllReviews(): List<ReviewDto> {
         return db.collection("reviews").get().await().documents.mapNotNull { doc ->
             doc.toObject(ReviewDto::class.java)?.copy(reviewId = doc.id)
+        }
+    }
+
+    suspend fun getRecentReviewsWithLocation(): List<ReviewDto> {
+        val reviews = getAllReviews()
+        val now = Instant.now()
+        val cutoff = now.minus(24, ChronoUnit.HOURS)
+
+        return reviews.filter { review ->
+            if (review.latitude == null || review.longitude == null) return@filter false
+
+            val publishedAt = runCatching { Instant.parse(review.createdAt) }.getOrNull()
+            publishedAt != null && publishedAt in cutoff..now
         }
     }
 
