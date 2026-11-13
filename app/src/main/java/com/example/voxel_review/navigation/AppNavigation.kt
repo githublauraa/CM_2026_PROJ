@@ -10,6 +10,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.voxel_review.ui.screens.reviewMap.ReviewMapScreen
+import com.example.voxel_review.ui.screens.reviewMap.ReviewMapViewModel
 import androidx.navigation.navArgument
 
 import com.google.firebase.auth.FirebaseAuth
@@ -176,7 +177,10 @@ fun AppNavigation(
 
         // NOVEDADES
         composable(route = AppScreen.Map.route) {
+            val reviewMapViewModel: ReviewMapViewModel = hiltViewModel()
+
             ReviewMapScreen(
+                reviewMapViewModel = reviewMapViewModel,
                 onBackClick = { navController.popBackStack() },
                 onNotificationClick = { navController.navigate(AppScreen.Notifications.route) }
             )

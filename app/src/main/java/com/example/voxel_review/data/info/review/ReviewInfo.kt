@@ -16,4 +16,8 @@ data class ReviewInfo(
     val videoGameId: String = "",
     val cantidadLikes: Int = 0,
     val likedByCurrentUser: Boolean = false,
+    val username: String = "",
+    val createdAt: String = "",
+    val latitude: Double? = null,
+    val longitude: Double? = null,
 )

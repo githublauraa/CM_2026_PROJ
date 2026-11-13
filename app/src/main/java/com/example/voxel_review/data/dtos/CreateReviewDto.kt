@@ -12,7 +12,8 @@ data class CreateReviewDto(
     val videoGame: VideoGameDto? = null,
     // Ubicación donde se publicó la reseña
     val latitude: Double? = null,
-    val longitude: Double? = null
+    val longitude: Double? = null,
+    val createdAt: String = ""
 )
 
 

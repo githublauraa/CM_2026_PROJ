@@ -242,6 +242,22 @@ dependencies {
     // Obtener la ubicación del usuario
     implementation("com.google.android.gms:play-services-location:21.3.0")
 
+    // Google Maps SDK -- these are here for the data model.  Remove these dependencies and replace
+    // with the compose versions.
+    implementation("com.google.android.gms:play-services-maps:18.2.0")
+    // KTX for the Maps SDK for Android library
+    implementation("com.google.maps.android:maps-ktx:5.0.0")
+    // KTX for the Maps SDK for Android Utility Library
+    implementation("com.google.maps.android:maps-utils-ktx:5.0.0")
+
+    // Google Maps SDK -- these are here for the data model.  Remove these dependencies and replace
+    // with the compose versions.
+    implementation("com.google.android.gms:play-services-maps:18.2.0")
+    // KTX for the Maps SDK for Android library
+    implementation("com.google.maps.android:maps-ktx:5.0.0")
+    // KTX for the Maps SDK for Android Utility Library
+    implementation("com.google.maps.android:maps-utils-ktx:5.0.0")
+
 }
 
 secrets {
