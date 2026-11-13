@@ -127,6 +127,12 @@ fun ReviewMapInfoCard(
                     overflow = TextOverflow.Ellipsis
                 )
             }
+            Text(
+                text = "Ver reseña completa",
+                color = VoxelPrimary,
+                style = MaterialTheme.typography.labelLarge,
+                modifier = Modifier.align(Alignment.End)
+            )
         }
     }
 }

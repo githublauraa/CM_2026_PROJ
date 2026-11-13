@@ -11,14 +11,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.AsyncImage
 import com.example.voxel_review.data.info.review.ReviewInfo
 import com.example.voxel_review.ui.theme.*
+import com.example.voxel_review.ui.utils.GameImage
 import java.util.Locale
 
 @Composable
@@ -63,19 +62,12 @@ private fun FollowedReviewCard(review: ReviewInfo, onClick: () -> Unit, onProfil
     ) {
         Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp), verticalAlignment = Alignment.CenterVertically) {
-                Box(
+                GameImage(
+                    imageUrl = review.imagenJuego,
+                    contentDescription = "Portada de ${review.tituloJuego}",
                     modifier = Modifier.size(width = 64.dp, height = 84.dp)
-                        .clip(RoundedCornerShape(8.dp)).background(VoxelSurfaceVariant),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text("Juego", color = VoxelTextSecondary, fontSize = 12.sp)
-                    AsyncImage(
-                        model = review.imagenJuego.takeIf { it.isNotBlank() },
-                        contentDescription = "Portada de ${review.tituloJuego}",
-                        contentScale = ContentScale.Crop,
-                        modifier = Modifier.fillMaxSize()
-                    )
-                }
+                        .clip(RoundedCornerShape(8.dp))
+                )
                 Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                     Text("RESEÑA DE VIDEOJUEGO", color = VoxelPrimary, fontSize = 10.sp)
                     Text(

@@ -20,16 +20,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.AsyncImage
-import coil.request.ImageRequest
 import com.example.voxel_review.R
 import com.example.voxel_review.data.info.InfoDiscover.TrendingSearchInfo
 import com.example.voxel_review.ui.theme.VoxelSurface
@@ -38,6 +34,7 @@ import com.example.voxel_review.ui.theme.onPrimaryDark
 import com.example.voxel_review.ui.theme.onSurfaceDark
 import com.example.voxel_review.ui.theme.onSurfaceVariantDark
 import com.example.voxel_review.ui.theme.secondaryDark
+import com.example.voxel_review.ui.utils.GameImage
 
 /**
  * Elemento de lista que muestra la información de un elemento en tendencia de búsqueda.
@@ -63,18 +60,9 @@ fun TrendingSearchItem(
         horizontalArrangement = Arrangement.spacedBy(14.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        AsyncImage(
-            model = ImageRequest.Builder(LocalContext.current)
-                .data(item.imagen)
-                .crossfade(true)
-                .build(),
-
+        GameImage(
+            imageUrl = item.imagen,
             contentDescription = "Imagen del juego",
-            fallback = painterResource(id = R.drawable.imagen_login_user),
-            placeholder = painterResource(id = R.drawable.loading_img),
-            error = painterResource(id = R.drawable.imagen_login_user),
-
-            contentScale = ContentScale.Crop,
             modifier = Modifier.size(64.dp).clip(RoundedCornerShape(12.dp))
         )
         Column(modifier = Modifier.weight(1f)) {

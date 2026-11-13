@@ -24,17 +24,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.AsyncImage
-import coil.request.ImageRequest
-import com.example.voxel_review.R
 import com.example.voxel_review.data.info.library.LibraryGameInfo
 import com.example.voxel_review.data.info.library.LibraryStatus
 import com.example.voxel_review.ui.screens.novedades.components.FeedFilterChip
@@ -46,6 +40,7 @@ import com.example.voxel_review.ui.theme.VoxelSurface
 import com.example.voxel_review.ui.theme.VoxelTextSecondary
 import com.example.voxel_review.ui.theme.White
 import com.example.voxel_review.ui.utils.ContentStatus
+import com.example.voxel_review.ui.utils.GameImage
 
 /**
  * Fila de chips principales en el perfil para alternar entre Reseñas y Colección.
@@ -181,16 +176,9 @@ private fun LibraryGameCard(
                 .fillMaxWidth()
                 .padding(12.dp)
         ) {
-            AsyncImage(
-                model = ImageRequest.Builder(LocalContext.current)
-                    .data(entry.gameImageUrl.takeIf { it.isNotBlank() })
-                    .crossfade(true)
-                    .build(),
+            GameImage(
+                imageUrl = entry.gameImageUrl,
                 contentDescription = entry.gameName,
-                fallback = painterResource(id = R.drawable.imagen_login_user),
-                placeholder = painterResource(id = R.drawable.loading_img),
-                error = painterResource(id = R.drawable.imagen_login_user),
-                contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .size(64.dp)
                     .clip(RoundedCornerShape(10.dp))
