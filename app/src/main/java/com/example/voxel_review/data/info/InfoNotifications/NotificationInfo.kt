@@ -4,5 +4,8 @@ data class NotificationInfo(
     val id: String,
     val title: String,
     val message: String,
-    val imageUrl: String
+    val imageUrl: String,
+    val reviewId: String? = null,
+    val gameId: String = "",
+    val reviewAuthorId: String = ""
 )

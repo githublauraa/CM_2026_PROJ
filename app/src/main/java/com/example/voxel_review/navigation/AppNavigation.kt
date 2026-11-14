@@ -428,10 +428,19 @@ fun AppNavigation(
                 onBackClick = {
                     navController.popBackStack()
                 },
-                onNotificationClick = { userId ->
-                    navController.navigate(
-                        "${AppScreen.PerfilUser.route}?profileId=${Uri.encode(userId)}"
-                    )
+                onNotificationClick = { notification ->
+                    val reviewId = notification.reviewId
+                    if (reviewId == null) {
+                        navController.navigate(
+                            "${AppScreen.PerfilUser.route}?profileId=${Uri.encode(notification.id)}"
+                        )
+                    } else {
+                        val gameId = Uri.encode(notification.gameId)
+                        val authorId = Uri.encode(notification.reviewAuthorId)
+                        navController.navigate(
+                            "${AppScreen.FullReviews.route}?juegoId=$gameId&reviewId=${Uri.encode(reviewId)}&userId=$authorId"
+                        )
+                    }
                 }
             )
         }

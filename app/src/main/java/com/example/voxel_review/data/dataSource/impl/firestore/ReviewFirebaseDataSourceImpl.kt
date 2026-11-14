@@ -1,6 +1,7 @@
 package com.example.voxel_review.data.dataSource.impl.firestore
 
 import com.example.voxel_review.data.dataSource.ReviewRemoteDataSource
+import com.example.voxel_review.data.info.InfoNotifications.NotificationInfo
 import com.example.voxel_review.data.dtos.CreateReviewDto
 import com.example.voxel_review.data.dtos.ReviewDto
 import jakarta.inject.Inject
@@ -247,6 +248,36 @@ class ReviewFirebaseDataSourceImpl @Inject constructor(
                 ?.copy(reviewId = doc.id)
         }
 
+    }
+
+    suspend fun getReceivedLikes(userId: String): List<NotificationInfo> {
+        val reviews = db.collection("reviews").whereEqualTo("userId", userId).get().await()
+        val actors = mutableMapOf<String, UserProfileFirestoreDto?>()
+
+        return reviews.documents.flatMap { review ->
+            val likes = review.reference.collection("likes").get().await()
+            val gameName = review.getString("videoGame.name").orEmpty()
+            val message = if (gameName.isBlank()) "Le dio me gusta a tu reseña"
+                else "Le dio me gusta a tu reseña de $gameName"
+
+            likes.documents.mapNotNull { like ->
+                if (like.id == userId) return@mapNotNull null
+                val actor = actors.getOrPut(like.id) {
+                    db.collection("users").document(like.id).get().await()
+                        .toObject(UserProfileFirestoreDto::class.java)
+                } ?: return@mapNotNull null
+
+                like.getTimestamp("timestamp") to NotificationInfo(
+                    id = like.reference.path,
+                    title = actor.username,
+                    message = message,
+                    imageUrl = actor.photoUrl.orEmpty(),
+                    reviewId = review.id,
+                    gameId = review.getString("videoGameId").orEmpty(),
+                    reviewAuthorId = userId
+                )
+            }
+        }.sortedByDescending { it.first }.map { it.second }
     }
 
     override suspend fun sendOrDeleteReview(reviewId: String, userId: String) {

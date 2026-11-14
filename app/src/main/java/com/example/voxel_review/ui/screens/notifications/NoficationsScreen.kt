@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import com.example.voxel_review.data.info.InfoNotifications.NotificationInfo
 import com.example.voxel_review.ui.screens.notifications.components.NotificationsContent
 import com.example.voxel_review.ui.screens.notifications.components.NotificationsTopBar
 import com.example.voxel_review.ui.utils.FondoPantalla
@@ -24,7 +25,7 @@ import com.example.voxel_review.ui.utils.FondoPantalla
 fun NotificationScreen(
     notificationsViewModel: NotificationsViewModel,
     onBackClick: () -> Unit,
-    onNotificationClick: (String) -> Unit,
+    onNotificationClick: (NotificationInfo) -> Unit,
     modifier: Modifier = Modifier
 ) {
 

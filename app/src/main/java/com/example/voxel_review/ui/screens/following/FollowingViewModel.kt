@@ -22,7 +22,7 @@ class FollowingViewModel @Inject constructor(
     fun loadUsers(userId: String, showFollowers: Boolean) {
         loadJob?.cancel()
         loadJob = viewModelScope.launch {
-            _uiState.update { FollowingState() }
+            _uiState.update { FollowingState(showingFollowers = showFollowers) }
             if (userId.isBlank()) {
                 _uiState.update {
                     it.copy(isLoading = false, error = "No se pudo identificar al usuario")
