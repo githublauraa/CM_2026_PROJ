@@ -93,4 +93,13 @@
   <string name="register_accept_terms">Acepto los términos de servicio y privacidad</string>
   <string name="register_back_to_login">Volver a iniciar sesión</string>
   <string name="profile_empty_biography">Sin biografía</string>
+  <string name="nav_rankings">Rankings</string>
+  <string name="nav_discover">Descubrir</string>
+  <string name="nav_reviews">Reseñas</string>
+  <string name="nav_profile">Perfil</string>
+    <string name="reset_password_title">Recuperar contraseña</string>
+    <string name="reset_password_description">Ingresa el correo de tu cuenta y te enviaremos un enlace para restablecer tu contraseña.</string>
+    <string name="reset_password_send">Enviar enlace</string>
+    <string name="reset_password_back">Volver al inicio de sesión</string>
+    <string name="reset_password_sent">¡Enlace enviado! Revisa tu bandeja de entrada o la carpeta de spam.</string>
 </resources>

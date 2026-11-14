@@ -1,40 +1,44 @@
 package com.example.voxel_review.ui.screens.forgotPassword
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Email
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.LiveRegionMode
+import androidx.compose.ui.semantics.liveRegion
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.example.voxel_review.R
-import com.example.voxel_review.ui.screens.start.components.CampoUsuario
-import com.example.voxel_review.ui.screens.start.components.MensajeUsuario
-import com.example.voxel_review.ui.screens.start.components.NombreApp
+import com.example.voxel_review.ui.screens.start.components.StartHeader
 import com.example.voxel_review.ui.theme.VoxelPrimary
-import com.example.voxel_review.ui.theme.VoxelSecondary
+import com.example.voxel_review.ui.theme.VoxelTextPrimary
 import com.example.voxel_review.ui.theme.VoxelTextSecondary
-import com.example.voxel_review.ui.theme.backgroundDark
-import com.example.voxel_review.ui.theme.secondaryDark
-import com.example.voxel_review.ui.theme.surfaceContainerLowestLight
-import com.example.voxel_review.ui.theme.tertiaryDark
-import com.example.voxel_review.ui.utils.Boton
-import com.example.voxel_review.ui.utils.FondoPantalla
-import com.example.voxel_review.ui.utils.MostrarLogo
+import com.example.voxel_review.ui.theme.errorDark
+import com.example.voxel_review.ui.utils.AuthScreenLayout
+import com.example.voxel_review.ui.utils.AuthSecondaryButton
+import com.example.voxel_review.ui.utils.AuthSubmitButton
+import com.example.voxel_review.ui.utils.authFieldColors
+import com.example.voxel_review.ui.utils.authFieldVisibility
+import com.example.voxel_review.ui.utils.authFormBackground
 
 /**
  * Contenido visual sin estado para la pantalla de recuperación de contraseña.
@@ -53,121 +57,72 @@ fun ForgotPasswordContent(
     onBackToLoginClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(horizontal = 24.dp, vertical = 32.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.SpaceBetween
-    ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(10.dp),
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            MostrarLogo(
-                modifier = Modifier.width(110.dp)
-            )
-
-            NombreApp()
-
-            Text(
-                text = "Recuperar",
-                color = VoxelPrimary,
-                fontSize = 24.sp,
-                fontWeight = FontWeight.Bold
-            )
-
-            Text(
-                text = "Contraseña",
-                color = VoxelSecondary,
-                fontSize = 25.sp,
-                fontWeight = FontWeight.Bold
-            )
-
-            Spacer(modifier = Modifier.height(4.dp))
-
-            Text(
-                text = "Ingresa el correo electrónico de tu cuenta y te enviaremos un enlace para restablecer tu contraseña.",
-                color = VoxelTextSecondary,
-                fontSize = 13.sp,
-                textAlign = TextAlign.Center,
-                modifier = Modifier.padding(horizontal = 8.dp)
-            )
+    val focusManager = LocalFocusManager.current
+    val submit = {
+        if (!state.isLoading) {
+            focusManager.clearFocus()
+            onSendClick()
         }
+    }
+
+    AuthScreenLayout(modifier) {
+        StartHeader()
 
         Column(
-            modifier = Modifier.width(320.dp)
+            modifier = Modifier.authFormBackground(),
+            verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
-            MensajeUsuario(
-                tipo = "Correo electrónico"
+            Text(
+                text = stringResource(R.string.reset_password_title),
+                style = MaterialTheme.typography.headlineSmall,
+                fontWeight = FontWeight.Bold,
+                color = VoxelTextPrimary
             )
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            CampoUsuario(
-                usuario = state.correo,
-                onUserChange = onEmailChange,
-                icono = R.drawable.img_correo,
-                modifier = Modifier
-                    .width(320.dp)
-                    .height(50.dp)
+            Text(
+                text = stringResource(R.string.reset_password_description),
+                style = MaterialTheme.typography.bodySmall,
+                color = VoxelTextSecondary
             )
-
-            Spacer(modifier = Modifier.height(10.dp))
-
-            if (state.isLoading) {
-                Box(
-                    modifier = Modifier.fillMaxWidth(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    CircularProgressIndicator(
-                        color = VoxelSecondary
-                    )
-                }
-            }
-
-            if (state.errorMessage.isNotEmpty()) {
-                Text(
-                    text = state.errorMessage,
-                    color = surfaceContainerLowestLight,
-                    fontSize = 12.sp
-                )
-            }
-
-            if (state.isEmailSent) {
-                Text(
-                    text = "¡Enlace enviado! Revisa tu bandeja de entrada o carpeta de spam para restablecer tu contraseña.",
-                    color = VoxelSecondary,
-                    fontSize = 12.sp,
-                    fontWeight = FontWeight.Medium
-                )
-            }
-        }
-
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 32.dp)
-        ) {
-            Boton(
-                textoBoton = "Enviar enlace",
-                colorFondo = tertiaryDark,
-                colorBorde = tertiaryDark,
-                colorLetra = surfaceContainerLowestLight,
-                onClick = onSendClick
+            OutlinedTextField(
+                value = state.correo,
+                onValueChange = onEmailChange,
+                modifier = authFieldVisibility().fillMaxWidth(),
+                label = { Text(stringResource(R.string.login_email)) },
+                singleLine = true,
+                shape = RoundedCornerShape(14.dp),
+                colors = authFieldColors(),
+                trailingIcon = {
+                    Icon(Icons.Outlined.Email, contentDescription = null, modifier = Modifier.size(22.dp))
+                },
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Email,
+                    imeAction = ImeAction.Done
+                ),
+                keyboardActions = KeyboardActions(onDone = { submit() })
             )
-
-            Spacer(modifier = Modifier.height(12.dp))
-
-            Boton(
-                textoBoton = "Volver al inicio de sesión",
-                colorFondo = backgroundDark,
-                colorBorde = secondaryDark,
-                colorLetra = secondaryDark,
+            AuthSubmitButton(
+                label = stringResource(R.string.reset_password_send),
+                loading = state.isLoading,
+                onClick = submit
+            )
+            AuthSecondaryButton(
+                label = stringResource(R.string.reset_password_back),
                 onClick = onBackToLoginClick
             )
+
+            val message = when {
+                state.errorMessage.isNotEmpty() -> state.errorMessage
+                state.isEmailSent -> stringResource(R.string.reset_password_sent)
+                else -> ""
+            }
+            if (message.isNotEmpty()) {
+                Text(
+                    text = message,
+                    modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite },
+                    style = MaterialTheme.typography.bodySmall,
+                    color = if (state.errorMessage.isNotEmpty()) errorDark else VoxelPrimary
+                )
+            }
         }
     }
 }
@@ -187,33 +142,22 @@ fun ForgotPasswordScreen(
 ) {
     val state by forgotPasswordViewModel.uiState.collectAsState()
 
-    Box(
-        modifier = modifier.fillMaxSize()
-    ) {
-        FondoPantalla()
-
-        ForgotPasswordContent(
-            state = state,
-            onEmailChange = forgotPasswordViewModel::updateCorreo,
-            onSendClick = forgotPasswordViewModel::sendResetEmail,
-            onBackToLoginClick = onBackToLoginClick
-        )
-    }
+    ForgotPasswordContent(
+        state = state,
+        onEmailChange = forgotPasswordViewModel::updateCorreo,
+        onSendClick = forgotPasswordViewModel::sendResetEmail,
+        onBackToLoginClick = onBackToLoginClick,
+        modifier = modifier
+    )
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, widthDp = 360, heightDp = 740)
 @Composable
 fun ForgotPasswordScreenPreview() {
-    Box(
-        modifier = Modifier.fillMaxSize()
-    ) {
-        FondoPantalla()
-
-        ForgotPasswordContent(
-            state = ForgotPasswordState(),
-            onEmailChange = {},
-            onSendClick = {},
-            onBackToLoginClick = {}
-        )
-    }
+    ForgotPasswordContent(
+        state = ForgotPasswordState(),
+        onEmailChange = {},
+        onSendClick = {},
+        onBackToLoginClick = {}
+    )
 }

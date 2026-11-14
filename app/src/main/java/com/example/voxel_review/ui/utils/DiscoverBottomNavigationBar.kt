@@ -1,14 +1,12 @@
 package com.example.voxel_review.ui.utils
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
+import androidx.compose.material3.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
@@ -18,145 +16,74 @@ import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material.icons.outlined.Star
-import androidx.compose.material3.BottomAppBar
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.text.Placeholder
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.voxel_review.R
 import com.example.voxel_review.navigation.AppScreen
+import com.example.voxel_review.ui.theme.VoxelBorder
+import com.example.voxel_review.ui.theme.VoxelSecondary
+import com.example.voxel_review.ui.theme.VoxelSurface
+import com.example.voxel_review.ui.theme.VoxelSurfaceVariant
+import com.example.voxel_review.ui.theme.onSurfaceVariantDark
 
-
-data class BottomNavItem(
+private data class BottomNavItem(
+    val route: String,
+    val label: Int,
     val filledIcon: ImageVector,
-    val outlinedIcon: ImageVector,
-    val route: String
+    val outlinedIcon: ImageVector
 )
 
-
-val bottomNavItems = listOf(
-
-    BottomNavItem(
-        filledIcon = Icons.Filled.Home,
-        outlinedIcon = Icons.Outlined.Home,
-        route = AppScreen.RankingsUser.route
-    ),
-
-    BottomNavItem(
-        filledIcon = Icons.Filled.Search,
-        outlinedIcon = Icons.Outlined.Search,
-        route = AppScreen.Discover.route
-    ),
-
-    BottomNavItem(
-        filledIcon = Icons.Filled.Star,
-        outlinedIcon = Icons.Outlined.Star,
-        route = AppScreen.Reviews.route
-    ),
-
-    BottomNavItem(
-        filledIcon = Icons.Filled.Person,
-        outlinedIcon = Icons.Outlined.Person,
-        route = AppScreen.PerfilUser.route
-    )
+private val bottomNavItems = listOf(
+    BottomNavItem(AppScreen.RankingsUser.route, R.string.nav_rankings, Icons.Filled.Home, Icons.Outlined.Home),
+    BottomNavItem(AppScreen.Discover.route, R.string.nav_discover, Icons.Filled.Search, Icons.Outlined.Search),
+    BottomNavItem(AppScreen.Reviews.route, R.string.nav_reviews, Icons.Filled.Star, Icons.Outlined.Star),
+    BottomNavItem(AppScreen.PerfilUser.route, R.string.nav_profile, Icons.Filled.Person, Icons.Outlined.Person)
 )
-
 
 @Composable
 fun DiscoverBottomNavigationBar(
     navController: NavHostController,
     modifier: Modifier = Modifier
 ) {
+    val entry by navController.currentBackStackEntryAsState()
+    val currentRoute = entry?.destination?.route?.substringBefore("?")
+    val colors = NavigationBarItemDefaults.colors(
+        selectedIconColor = VoxelSecondary,
+        selectedTextColor = VoxelSecondary,
+        indicatorColor = VoxelSurfaceVariant,
+        unselectedIconColor = onSurfaceVariantDark,
+        unselectedTextColor = onSurfaceVariantDark
+    )
 
-    val navBackStackEntry =
-        navController.currentBackStackEntryAsState()
-
-    val currentRoute =
-        navBackStackEntry.value?.destination?.route?.substringBefore("?")
-
-
-    val barColor =
-        colorResource(R.color.voxel_background)
-            .copy(alpha = 0.8f)
-
-
-    BottomAppBar(
-        modifier = modifier.height(70.dp),
-        containerColor = barColor,
-        contentColor = MaterialTheme.colorScheme.onSurface
-    ) {
-
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceAround,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-
+    Column(modifier) {
+        HorizontalDivider(color = VoxelBorder)
+        NavigationBar(containerColor = VoxelSurface, tonalElevation = 0.dp) {
             bottomNavItems.forEach { item ->
-
-                val isSelected =
-                    currentRoute == item.route
-
-
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center
-                ) {
-
-                    IconButton(
-                        modifier = Modifier.testTag("nav_${item.route}"),
-                        onClick = {
-                            navController.navigate(item.route)
+                val selected = currentRoute == item.route
+                NavigationBarItem(
+                    selected = selected,
+                    onClick = {
+                        if (!selected) {
+                            navController.navigate(item.route) { launchSingleTop = true }
                         }
-                    ) {
-
+                    },
+                    icon = {
                         Icon(
-                            imageVector =
-                                if (isSelected) {
-                                    item.filledIcon
-                                } else {
-                                    item.outlinedIcon
-                                },
-
-                            contentDescription = item.route,
-
-                            tint =
-                                if (isSelected) {
-                                    colorResource(
-                                        R.color.voxel_secondary
-                                    )
-                                } else {
-                                    colorResource(
-                                        R.color.voxel_accent_purple
-                                    )
-                                }
+                            imageVector = if (selected) item.filledIcon else item.outlinedIcon,
+                            contentDescription = null
                         )
-                    }
-
-
-                    if (isSelected) {
-
-                        Box(
-                            modifier = Modifier
-                                .size(4.dp)
-                                .background(
-                                    color = colorResource(
-                                        R.color.voxel_secondary
-                                    ),
-                                    shape = CircleShape
-                                )
-                        )
-                    }
-                }
+                    },
+                    label = { Text(stringResource(item.label), maxLines = 1) },
+                    colors = colors,
+                    modifier = Modifier.testTag("nav_${item.route}")
+                )
             }
         }
     }
