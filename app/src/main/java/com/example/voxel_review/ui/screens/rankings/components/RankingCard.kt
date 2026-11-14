@@ -2,171 +2,100 @@ package com.example.voxel_review.ui.screens.rankings.components
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.KeyboardArrowRight
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import com.example.voxel_review.data.info.profile.ProfileInfo
 import com.example.voxel_review.ui.theme.VoxelBorder
-import com.example.voxel_review.ui.theme.VoxelPrimary
 import com.example.voxel_review.ui.theme.VoxelSurface
 import com.example.voxel_review.ui.theme.VoxelSurfaceVariant
 import com.example.voxel_review.ui.theme.VoxelTextPrimary
-import com.example.voxel_review.ui.theme.VoxelTextSecondary
+import com.example.voxel_review.ui.theme.onSurfaceVariantDark
 import com.example.voxel_review.ui.utils.ProfileImage
 
-/**
- * Muestra la información de un usuario dentro del ranking.
- * Incluye su posición, imagen de perfil, nombre,
- * cantidad de reseñas y porcentaje.
- *
- * @param posicion Posición que ocupa el usuario en el ranking.
- * @param nombre Nombre del usuario.
- * @param reseñas Cantidad de reseñas realizadas por el usuario.
- * @param porcentaje Porcentaje asociado al desempeño del usuario.
- * @param imagen URL de la imagen del usuario.
- * @param onClick Acción ejecutada al presionar la tarjeta.
- * @param modifier Modificador para personalizar el componente.
- */
+internal fun medalColor(position: Int) = when (position) {
+    1 -> Color(0xFFFFCF73)
+    2 -> Color(0xFFBFD1FC)
+    3 -> Color(0xFFF4A789)
+    else -> onSurfaceVariantDark
+}
+
 @Composable
-fun RankingCard(
-    posicion: String,
-    nombre: String,
-    reseñas: String,
-    porcentaje: String,
-    imagen: String,
+internal fun RankingCard(
+    position: Int,
+    user: ProfileInfo,
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Card(
-        modifier = modifier
-            .fillMaxWidth()
-            .height(80.dp)
-            .clickable(onClick = onClick),
+    val featured = position == 1
+    val accent = medalColor(position)
+    Surface(
+        onClick = onClick,
+        modifier = modifier.fillMaxWidth(),
         shape = RoundedCornerShape(16.dp),
-        border = BorderStroke(
-            width = 1.dp,
-            color = VoxelBorder
-        ),
-        colors = CardDefaults.cardColors(
-            containerColor = VoxelSurface
-        )
+        color = if (featured) VoxelSurfaceVariant else VoxelSurface,
+        contentColor = VoxelTextPrimary,
+        border = BorderStroke(1.dp, if (featured) accent.copy(alpha = 0.42f) else VoxelBorder)
     ) {
-
         Row(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(horizontal = 12.dp),
+            modifier = Modifier.padding(horizontal = 12.dp, vertical = if (featured) 16.dp else 12.dp),
+            horizontalArrangement = Arrangement.spacedBy(10.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-
-            // Posición del usuario dentro del ranking.
             Box(
                 modifier = Modifier
-                    .size(35.dp)
-                    .background(
-                        color = VoxelSurfaceVariant,
-                        shape = CircleShape
-                    ),
+                    .widthIn(min = 34.dp)
+                    .background(accent.copy(alpha = 0.12f), CircleShape)
+                    .padding(horizontal = 6.dp, vertical = 6.dp),
                 contentAlignment = Alignment.Center
             ) {
-
                 Text(
-                    text = posicion,
-                    color = VoxelTextPrimary,
-                    fontSize = 15.sp,
-                    fontWeight = FontWeight.Bold
+                    text = position.toString(),
+                    style = MaterialTheme.typography.labelLarge,
+                    fontWeight = FontWeight.Bold,
+                    color = accent
                 )
             }
-
-            Spacer(
-                modifier = Modifier.width(10.dp)
-            )
-
-            // Imagen del usuario.
-            ProfileImage(
-                profileImage = imagen,
-                size = 45
-            )
-
-            Spacer(
-                modifier = Modifier.width(10.dp)
-            )
-
-            // Información principal del usuario.
-            Column(
-                modifier = Modifier.weight(1f)
-            ) {
-
+            ProfileImage(profileImage = user.pfp, size = if (featured) 48 else 38)
+            Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(3.dp)) {
                 Text(
-                    text = nombre,
-                    color = VoxelTextPrimary,
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold
+                    text = user.nick,
+                    style = if (featured) MaterialTheme.typography.titleLarge else MaterialTheme.typography.titleMedium,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
                 )
-
                 Text(
-                    text = reseñas,
-                    color = VoxelTextSecondary,
-                    fontSize = 11.sp
+                    text = if (user.numResenias == 1) "1 reseña" else "${user.numResenias} reseñas",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = if (featured) accent else onSurfaceVariantDark
                 )
             }
-
-            // Porcentaje destacado del usuario.
-            Box(
-                modifier = Modifier
-                    .background(
-                        color = VoxelSurfaceVariant,
-                        shape = RoundedCornerShape(8.dp)
-                    )
-                    .padding(
-                        horizontal = 10.dp,
-                        vertical = 6.dp
-                    )
-            ) {
-
-                Text(
-                    text = porcentaje,
-                    color = VoxelPrimary,
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.Bold
-                )
-            }
+            Icon(
+                imageVector = Icons.AutoMirrored.Outlined.KeyboardArrowRight,
+                contentDescription = null,
+                tint = onSurfaceVariantDark,
+                modifier = Modifier.size(18.dp)
+            )
         }
     }
-}
-
-/**
- * Vista previa de una tarjeta del ranking.
- */
-@Preview(showBackground = true)
-@Composable
-fun RankingCardPreview() {
-
-    RankingCard(
-        posicion = "2",
-        nombre = "VoxelMaster",
-        reseñas = "120 reseñas",
-        porcentaje = "94%",
-        imagen = "",
-        onClick = {}
-    )
 }

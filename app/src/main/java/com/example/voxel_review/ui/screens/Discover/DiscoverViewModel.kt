@@ -6,11 +6,11 @@ import androidx.lifecycle.viewModelScope
 import com.example.voxel_review.data.info.InfoDiscover.GenreInfo
 import com.example.voxel_review.data.info.InfoDiscover.LocalGenreProvider
 import com.example.voxel_review.data.dtos.toTrendingSearchInfo
-import com.example.voxel_review.data.repository.AuthRepository
 import com.example.voxel_review.data.repository.ReviewRepository
 import com.example.voxel_review.data.repository.VideoGameRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -54,11 +54,17 @@ class DiscoverViewModel @Inject constructor(
                 )
             }
 
+            val reviews = async { reviewRepository.getAllReviews() }
             videoGameRepository.getAllVideoGames()
                 .onSuccess { games ->
 
-                    val trendingSearches = games.map {
-                        it.toTrendingSearchInfo()
+                    val reviewCounts = reviews.await().getOrNull().orEmpty()
+                        .groupingBy { it.videoGameId }
+                        .eachCount()
+                    val trendingSearches = games.map { game ->
+                        game.toTrendingSearchInfo().copy(
+                            reviewCount = reviewCounts[game.videoGameId] ?: 0
+                        )
                     }
 
                     _uiState.update {
@@ -69,6 +75,7 @@ class DiscoverViewModel @Inject constructor(
                     }
                 }
                 .onFailure { exception ->
+                    reviews.cancel()
 
                     _uiState.update {
                         it.copy(

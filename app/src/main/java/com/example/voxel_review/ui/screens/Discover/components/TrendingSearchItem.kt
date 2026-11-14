@@ -1,10 +1,7 @@
 package com.example.voxel_review.ui.screens.Discover.components
 
-import androidx.compose.foundation.border
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -12,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -28,9 +24,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.voxel_review.R
 import com.example.voxel_review.data.info.InfoDiscover.TrendingSearchInfo
-import com.example.voxel_review.ui.theme.VoxelSurface
-import com.example.voxel_review.ui.theme.VoxelBorder
-import com.example.voxel_review.ui.theme.onPrimaryDark
 import com.example.voxel_review.ui.theme.onSurfaceDark
 import com.example.voxel_review.ui.theme.onSurfaceVariantDark
 import com.example.voxel_review.ui.theme.secondaryDark
@@ -52,18 +45,15 @@ fun TrendingSearchItem(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(16.dp))
-            .background(VoxelSurface)
-            .border(1.dp, VoxelBorder.copy(alpha = 0.65f), RoundedCornerShape(16.dp))
             .clickable { onClick() }
-            .padding(12.dp),
+            .padding(vertical = 10.dp),
         horizontalArrangement = Arrangement.spacedBy(14.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         GameImage(
             imageUrl = item.imagen,
-            contentDescription = "Imagen del juego",
-            modifier = Modifier.size(64.dp).clip(RoundedCornerShape(12.dp))
+            contentDescription = null,
+            modifier = Modifier.size(56.dp).clip(RoundedCornerShape(8.dp))
         )
         Column(modifier = Modifier.weight(1f)) {
             Text(
@@ -84,19 +74,12 @@ fun TrendingSearchItem(
             )
         }
 
-        Box(
-            modifier = Modifier
-                .size(32.dp)
-                .background(secondaryDark.copy(alpha = 0.08f), RoundedCornerShape(10.dp)),
-            contentAlignment = Alignment.Center
-        ) {
-            Icon(
-                painter = painterResource(R.drawable.northeast_arrow),
-                contentDescription = null,
-                tint = secondaryDark,
-                modifier = Modifier.size(18.dp)
-            )
-        }
+        Icon(
+            painter = painterResource(R.drawable.northeast_arrow),
+            contentDescription = null,
+            tint = secondaryDark,
+            modifier = Modifier.size(18.dp)
+        )
     }
 }
 

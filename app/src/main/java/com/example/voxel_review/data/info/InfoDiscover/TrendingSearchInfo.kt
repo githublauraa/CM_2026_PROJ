@@ -5,5 +5,6 @@ data class TrendingSearchInfo(
     val nombre: String,
     val categoria: String,
     val imagen: String,
+    val reviewCount: Int = 0,
 )
 
