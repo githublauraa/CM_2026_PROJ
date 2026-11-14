@@ -37,6 +37,7 @@ class EditProfileViewModel @Inject constructor(
                         it.copy(
                             bio = profile.biografia,
                             username = profile.nick,
+                            profileImageUrl = profile.pfp,
                             isProfileLoading = false,
                             isProfileLoaded = true
                         )

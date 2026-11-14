@@ -32,12 +32,13 @@ internal fun AuthSubmitButton(
     label: String,
     loading: Boolean,
     onClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true
 ) {
     val shape = RoundedCornerShape(14.dp)
     Button(
         onClick = onClick,
-        enabled = !loading,
+        enabled = enabled && !loading,
         modifier = modifier
             .fillMaxWidth()
             .defaultMinSize(minHeight = 50.dp)

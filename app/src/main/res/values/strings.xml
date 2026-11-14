@@ -102,4 +102,8 @@
     <string name="reset_password_send">Enviar enlace</string>
     <string name="reset_password_back">Volver al inicio de sesión</string>
     <string name="reset_password_sent">¡Enlace enviado! Revisa tu bandeja de entrada o la carpeta de spam.</string>
+    <string name="edit_profile_title">Editar perfil</string>
+    <string name="edit_profile_loading">Cargando perfil…</string>
+    <string name="edit_profile_save">Guardar cambios</string>
+    <string name="edit_profile_visibility">Tu nombre y biografía se muestran en tu perfil público.</string>
 </resources>

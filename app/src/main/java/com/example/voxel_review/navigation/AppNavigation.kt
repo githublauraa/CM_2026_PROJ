@@ -289,9 +289,7 @@ fun AppNavigation(
                         }
                     },
                     onEditProfileClick = {
-                        navController.navigate(AppScreen.EditProfile.route){
-                            navController.popBackStack()
-                        }
+                        navController.navigate(AppScreen.EditProfile.route)
                     },
                 )
             }

@@ -1,10 +1,6 @@
 package com.example.voxel_review.ui.screens.profile.components
 
-import android.net.Uri
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -16,11 +12,10 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.voxel_review.R
-import com.example.voxel_review.ui.screens.profile.ProfileState
 @Composable
 fun Pfp(
     profileImage: String?,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier.size(200.dp)
 ){
     AsyncImage(
         contentDescription = "User image",
@@ -34,8 +29,6 @@ fun Pfp(
         error = painterResource(id = R.drawable.imagen_login_user),
 
         contentScale = ContentScale.Crop,
-        modifier = Modifier
-            .size(200.dp)
-            .clip(CircleShape)
+        modifier = modifier.clip(CircleShape)
     )
 }

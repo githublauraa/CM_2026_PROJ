@@ -7,5 +7,6 @@ data class EditProfileState(
     val isProfileLoaded: Boolean = false,
     val isLoading: Boolean = false,
     val isSaved: Boolean = false,
-    val errorMessage: String? = null
+    val errorMessage: String? = null,
+    val profileImageUrl: String? = null
 )

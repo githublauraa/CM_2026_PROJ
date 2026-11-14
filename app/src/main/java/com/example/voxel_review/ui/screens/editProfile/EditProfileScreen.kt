@@ -2,160 +2,144 @@ package com.example.voxel_review.ui.screens.editProfile
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.LiveRegionMode
+import androidx.compose.ui.semantics.liveRegion
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.voxel_review.R
-import com.example.voxel_review.ui.screens.crearCuenta.components.FormularioCreateAccount
+import com.example.voxel_review.ui.screens.profile.components.Pfp
 import com.example.voxel_review.ui.theme.VoxelPrimary
-import com.example.voxel_review.ui.theme.VoxelSurface
-import com.example.voxel_review.ui.theme.White
+import com.example.voxel_review.ui.theme.VoxelTextPrimary
 import com.example.voxel_review.ui.theme.VoxelTextSecondary
-import com.example.voxel_review.ui.utils.FondoPantalla
-import androidx.compose.runtime.LaunchedEffect
+import com.example.voxel_review.ui.theme.errorDark
+import com.example.voxel_review.ui.utils.AuthScreenLayout
+import com.example.voxel_review.ui.utils.AuthSubmitButton
+import com.example.voxel_review.ui.utils.ScreenHeader
+import com.example.voxel_review.ui.utils.authFieldColors
+import com.example.voxel_review.ui.utils.authFieldVisibility
+import com.example.voxel_review.ui.utils.authFormBackground
+
 @Composable
 fun EditProfileContent(
     state: EditProfileState,
     onBioChange: (String) -> Unit,
     onUsernameChange: (String) -> Unit,
     onSaveClick: () -> Unit,
+    onBackClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val focusManager = LocalFocusManager.current
+    val fieldShape = RoundedCornerShape(14.dp)
+    val fieldColors = authFieldColors()
 
-    Box(
-        modifier = modifier.fillMaxSize()
-    ) {
-        FondoPantalla()
+    AuthScreenLayout(modifier) {
+        ScreenHeader(stringResource(R.string.edit_profile_title), onBackClick)
+
+        if (state.isProfileLoaded) {
+            Row(
+                modifier = Modifier.authFormBackground(),
+                horizontalArrangement = Arrangement.spacedBy(14.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Pfp(
+                    profileImage = state.profileImageUrl,
+                    modifier = Modifier
+                        .size(64.dp)
+                        .border(1.dp, VoxelPrimary, CircleShape)
+                        .padding(3.dp)
+                )
+                Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                    Text(
+                        text = state.username.ifBlank {
+                            stringResource(R.string.register_username)
+                        },
+                        color = VoxelTextPrimary,
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.Bold,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                    Text(
+                        text = stringResource(R.string.edit_profile_visibility),
+                        color = VoxelTextSecondary,
+                        style = MaterialTheme.typography.bodySmall
+                    )
+                }
+            }
+        }
 
         Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(24.dp)
+            modifier = Modifier.authFormBackground(),
+            verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
-            Text(
-                text = "Editar perfil",
-                color = White,
-                fontSize = 30.sp,
-                textAlign = TextAlign.Center,
-                modifier = Modifier.padding(7.dp)
+            if (state.isProfileLoaded) {
+                OutlinedTextField(
+                    value = state.username,
+                    onValueChange = onUsernameChange,
+                    modifier = authFieldVisibility().fillMaxWidth(),
+                    label = { Text(stringResource(R.string.register_username)) },
+                    readOnly = state.isLoading,
+                    singleLine = true,
+                    shape = fieldShape,
+                    colors = fieldColors
+                )
+                OutlinedTextField(
+                    value = state.bio,
+                    onValueChange = onBioChange,
+                    modifier = authFieldVisibility().fillMaxWidth(),
+                    label = { Text(stringResource(R.string.register_bio)) },
+                    readOnly = state.isLoading,
+                    minLines = 2,
+                    maxLines = 4,
+                    shape = fieldShape,
+                    colors = fieldColors
+                )
+            } else if (state.isProfileLoading) {
+                Text(
+                    text = stringResource(R.string.edit_profile_loading),
+                    color = VoxelTextSecondary,
+                    style = MaterialTheme.typography.bodySmall
+                )
+            }
+
+            AuthSubmitButton(
+                label = stringResource(R.string.edit_profile_save),
+                loading = state.isLoading,
+                enabled = state.isProfileLoaded,
+                onClick = {
+                    focusManager.clearFocus()
+                    onSaveClick()
+                }
             )
-
-            // CAMPO BIOGRAFÍA
-            Column(
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-                modifier = Modifier.fillMaxWidth()
-            ) {
+            state.errorMessage?.let { error ->
                 Text(
-                    text = "Biografía",
-                    color = VoxelTextSecondary,
-                    fontWeight = FontWeight.Bold
+                    text = error,
+                    modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite },
+                    color = errorDark,
+                    style = MaterialTheme.typography.bodySmall
                 )
-
-                if (state.isProfileLoaded) {
-                    FormularioCreateAccount(
-                        value = state.bio,
-                        icono = R.drawable.bio,
-                        placeholder = "Biografía",
-                        onValueChange = onBioChange,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(50.dp)
-                    )
-                } else if (state.isProfileLoading) {
-                    Text(text = "Cargando perfil...", color = VoxelTextSecondary)
-                }
-
-                Text(
-                    text = "Nombre de usuario",
-                    color = VoxelTextSecondary,
-                    fontWeight = FontWeight.Bold
-                )
-
-                if (state.isProfileLoaded) {
-                    FormularioCreateAccount(
-                        value = state.username,
-                        icono = R.drawable.bio,
-                        placeholder = "username",
-                        onValueChange = onUsernameChange,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(50.dp)
-                    )
-                } else if (state.isProfileLoading) {
-                    Text(text = "Cargando username", color = VoxelTextSecondary)
-                }
-
-                // BOTÓN GUARDAR CAMBIOS
-                Button(
-                    onClick = onSaveClick,
-                    enabled = state.isProfileLoaded && !state.isLoading,
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = VoxelSurface,
-                        disabledContainerColor = VoxelSurface
-                    ),
-                    shape = RoundedCornerShape(16.dp),
-                    modifier = Modifier
-                        .align(Alignment.CenterHorizontally)
-                        .padding(top = 16.dp)
-                        .fillMaxWidth(0.9f)
-                        .height(55.dp)
-                        .border(
-                            width = 2.dp,
-                            color = VoxelPrimary,
-                            shape = RoundedCornerShape(16.dp)
-                        )
-                ) {
-                    Text(
-                        text = if (state.isLoading) {
-                            "Guardando..."
-                        } else {
-                            "Guardar cambios"
-                        },
-                        color = VoxelPrimary,
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Bold
-                    )
-                }
-
-                // MENSAJE DE ÉXITO
-                if (state.isSaved) {
-                    Text(
-                        text = "Biografía actualizada correctamente",
-                        color = VoxelPrimary,
-                        fontSize = 14.sp,
-                        modifier = Modifier.align(Alignment.CenterHorizontally)
-                    )
-                }
-
-                // MENSAJE DE ERROR
-                state.errorMessage?.let { error ->
-                    Text(
-                        text = error,
-                        color = White,
-                        fontSize = 14.sp,
-                        modifier = Modifier.align(Alignment.CenterHorizontally)
-                    )
-                }
             }
         }
     }
@@ -184,20 +168,23 @@ fun EditProfileScreen(
         onBioChange = editProfileViewModel::updateBio,
         onSaveClick = editProfileViewModel::saveProfile,
         onUsernameChange = editProfileViewModel::updateUsername,
+        onBackClick = onBackClick,
         modifier = modifier
     )
 }
 
-@Preview(showBackground = true, showSystemUi = true)
+@Preview(showBackground = true, widthDp = 360, heightDp = 740)
 @Composable
 fun EditProfileContentPreview() {
     EditProfileContent(
         state = EditProfileState(
+            username = "PixelRPG",
             bio = "Me encantan los videojuegos RPG y de aventura.",
             isProfileLoaded = true
         ),
         onUsernameChange = {},
         onBioChange = {},
+        onBackClick = {},
         onSaveClick = {}
     )
 }
