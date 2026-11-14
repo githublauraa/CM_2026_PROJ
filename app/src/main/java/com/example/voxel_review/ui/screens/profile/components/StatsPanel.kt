@@ -1,10 +1,9 @@
 package com.example.voxel_review.ui.screens.profile.components
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Group
 import androidx.compose.material.icons.outlined.PersonAdd
@@ -31,15 +30,10 @@ fun StatsPanel(
     onFollowersClick: () -> Unit = {},
     onFollowingClick: () -> Unit = {}
 ) {
-    val shape = RoundedCornerShape(24.dp)
     Row(
-        modifier = modifier
-            .fillMaxWidth(0.9f)
-            .padding(top = 8.dp, bottom = 20.dp)
-            .background(VoxelSurface, shape)
-            .border(1.dp, VoxelTextSecondary.copy(alpha = 0.16f), shape)
-            .height(IntrinsicSize.Min)
-            .padding(horizontal = 8.dp, vertical = 18.dp),
+        modifier = modifier.fillMaxWidth()
+            .background(VoxelSurface, RoundedCornerShape(16.dp))
+            .height(IntrinsicSize.Min),
         verticalAlignment = Alignment.CenterVertically
     ) {
         ItemEstadistica(
@@ -77,14 +71,14 @@ private fun ItemEstadistica(
     Column(
         modifier = modifier
             .semantics(mergeDescendants = true) {}
-            .padding(horizontal = 8.dp),
+            .padding(horizontal = 8.dp, vertical = 10.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(4.dp)
     ) {
         Text(
             text = valor.toString(),
             color = White,
-            fontSize = 28.sp,
+            fontSize = 26.sp,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center
         )
@@ -101,7 +95,7 @@ private fun ItemEstadistica(
             Text(
                 text = etiqueta,
                 color = White.copy(alpha = 0.8f),
-                fontSize = 12.sp,
+                fontSize = 14.sp,
                 fontWeight = FontWeight.Medium,
                 textAlign = TextAlign.Center
             )

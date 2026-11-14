@@ -92,4 +92,5 @@
   <string name="register_password_hint">Usa al menos 6 caracteres</string>
   <string name="register_accept_terms">Acepto los términos de servicio y privacidad</string>
   <string name="register_back_to_login">Volver a iniciar sesión</string>
+  <string name="profile_empty_biography">Sin biografía</string>
 </resources>

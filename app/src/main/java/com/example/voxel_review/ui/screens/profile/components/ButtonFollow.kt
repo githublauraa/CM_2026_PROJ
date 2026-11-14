@@ -8,7 +8,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
-import com.example.voxel_review.ui.theme.VoxelPrimary
+import com.example.voxel_review.ui.theme.VoxelSecondary
+import com.example.voxel_review.ui.theme.VoxelBackgroundDark
 
 @Composable
 fun ButtonFollow(
@@ -17,12 +18,13 @@ fun ButtonFollow(
     modifier: Modifier = Modifier
 ){
     Button(
-        modifier = Modifier.testTag("btnFollow"),
+        modifier = modifier.testTag("btnFollow"),
         onClick = {
             buttonFollowPressed()
         },
         colors = ButtonDefaults.buttonColors(
-            containerColor = VoxelPrimary
+            containerColor = VoxelSecondary,
+            contentColor = VoxelBackgroundDark
         ),
         shape = RoundedCornerShape(16.dp),
 

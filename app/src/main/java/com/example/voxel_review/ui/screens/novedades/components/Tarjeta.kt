@@ -1,137 +1,93 @@
-
 package com.example.voxel_review.ui.screens.novedades.components
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import com.example.voxel_review.data.info.infoJuegosNovedades.JuegoInfo
 import com.example.voxel_review.ui.theme.VoxelAccentYellow
-import com.example.voxel_review.ui.theme.VoxelBackground
-import com.example.voxel_review.ui.theme.VoxelSecondary
+import com.example.voxel_review.ui.theme.VoxelBorder
+import com.example.voxel_review.ui.theme.VoxelSurface
 import com.example.voxel_review.ui.theme.VoxelSurfaceVariant
-import com.example.voxel_review.ui.theme.VoxelTextSecondary
-import com.example.voxel_review.ui.theme.White
+import com.example.voxel_review.ui.theme.VoxelTextPrimary
+import com.example.voxel_review.ui.theme.onSurfaceVariantDark
+import com.example.voxel_review.ui.utils.GameImage
 
 @Composable
-fun TarjetaJuego(
-    imagen: String,
-    etiqueta: String,
-    nombre: String,
-    descripcion: String,
-    autor: String,
-    calificacion: String,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .clickable {
-                onClick()
-            }
-            .height(145.dp)
-            .background(
-                color = VoxelBackground,
-                shape = RoundedCornerShape(18.dp)
-            )
-            .border(
-                width = 1.dp,
-                color = VoxelSurfaceVariant,
-                shape = RoundedCornerShape(18.dp)
-            )
-            .padding(12.dp),
-        verticalAlignment = Alignment.CenterVertically
+internal fun TarjetaJuego(juego: JuegoInfo, onClick: () -> Unit) {
+    Surface(
+        onClick = onClick,
+        modifier = Modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(14.dp),
+        color = VoxelSurface,
+        border = BorderStroke(1.dp, VoxelBorder.copy(alpha = 0.65f))
     ) {
-
-        ImagenJuego(
-            imagen = imagen,
-            descripcion = nombre
-        )
-
-        Spacer(modifier = Modifier.width(15.dp))
-
-        Column(
-            modifier = Modifier
-                .weight(1f)
-                .fillMaxHeight()
+        Row(
+            modifier = Modifier.padding(10.dp),
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
+            GameImage(
+                imageUrl = juego.imagen,
+                contentDescription = null,
+                modifier = Modifier.size(width = 78.dp, height = 94.dp).clip(RoundedCornerShape(10.dp))
+            )
+            Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 Text(
-                    text = etiqueta,
-                    color = VoxelSecondary,
-                    fontSize = 10.sp
+                    juego.nombre,
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.SemiBold,
+                    color = VoxelTextPrimary,
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis
                 )
-
-                Spacer(modifier = Modifier.weight(1f))
-
-                Text(
-                    text = if (calificacion == "Sin calificaciones") {
-                        calificacion
-                    } else {
-                        "☆ $calificacion"
-                    },
-                    color = VoxelAccentYellow,
-                    fontSize = 11.sp
-                )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        juego.autor,
+                        modifier = Modifier.weight(1f),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = onSurfaceVariantDark,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                    Text(
+                        text = "★ %.1f".format(juego.calificacion),
+                        modifier = Modifier
+                            .background(VoxelSurfaceVariant, RoundedCornerShape(6.dp))
+                            .padding(horizontal = 6.dp, vertical = 3.dp),
+                        color = VoxelAccentYellow,
+                        style = MaterialTheme.typography.labelSmall
+                    )
+                }
+                if (juego.descripcion.isNotBlank()) {
+                    Text(
+                        juego.descripcion,
+                        style = MaterialTheme.typography.bodySmall,
+                        color = onSurfaceVariantDark,
+                        maxLines = 2,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                }
             }
-
-            Spacer(modifier = Modifier.height(5.dp))
-
-            Text(
-                text = nombre,
-                color = White,
-                fontSize = 15.sp,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
-            )
-
-            Spacer(modifier = Modifier.height(5.dp))
-
-            Text(
-                text = descripcion,
-                color = VoxelTextSecondary,
-                fontSize = 12.sp,
-                lineHeight = 14.sp,
-                maxLines = 3,
-                overflow = TextOverflow.Ellipsis
-            )
-
-            Spacer(modifier = Modifier.weight(1f))
-
-            Text(
-                text = "●  $autor",
-                color = VoxelTextSecondary,
-                fontSize = 11.sp,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
-            )
         }
     }
-}
-
-@Composable
-@Preview
-fun TarjetaJuegoPreview() {
-    TarjetaJuego(
-        imagen = "",
-        etiqueta = "VIDEOJUEGO",
-        nombre = "Starfield",
-        descripcion = "Explora una galaxia llena de planetas.",
-        autor = "Bethesda Game Studios",
-        calificacion = "Sin calificaciones",
-        onClick = {}
-    )
 }

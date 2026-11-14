@@ -1,6 +1,5 @@
 package com.example.voxel_review.ui.screens.novedades.components
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -18,6 +17,7 @@ import androidx.compose.ui.unit.sp
 import com.example.voxel_review.data.info.review.ReviewInfo
 import com.example.voxel_review.ui.theme.*
 import com.example.voxel_review.ui.utils.GameImage
+import com.example.voxel_review.ui.utils.ProfileImage
 import java.util.Locale
 
 @Composable
@@ -69,7 +69,6 @@ private fun FollowedReviewCard(review: ReviewInfo, onClick: () -> Unit, onProfil
                         .clip(RoundedCornerShape(8.dp))
                 )
                 Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                    Text("RESEÑA DE VIDEOJUEGO", color = VoxelPrimary, fontSize = 10.sp)
                     Text(
                         review.tituloJuego.ifBlank { "Juego no disponible" },
                         color = White, fontSize = 18.sp, fontWeight = FontWeight.Bold,
@@ -87,34 +86,27 @@ private fun FollowedReviewCard(review: ReviewInfo, onClick: () -> Unit, onProfil
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                com.example.voxel_review.ui.utils.ProfileImage(profileImage = review.imagenUsuario, size = 32)
-                Text(review.tituloDescripcion, color = White, fontSize = 13.sp, modifier = Modifier.weight(1f))
+                ProfileImage(profileImage = review.imagenUsuario, size = 32)
+                Text(review.username.ifBlank { "Ver perfil" }, color = VoxelPrimary, fontSize = 13.sp, modifier = Modifier.weight(1f))
+            }
+            if (review.tituloDescripcion.isNotBlank()) {
+                Text(
+                    review.tituloDescripcion,
+                    style = MaterialTheme.typography.titleMedium,
+                    color = White,
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis
+                )
             }
             Text(
                 review.descripcion, color = VoxelTextSecondary, fontSize = 14.sp,
-                lineHeight = 21.sp, maxLines = 5, overflow = TextOverflow.Ellipsis
+                lineHeight = 21.sp, maxLines = 3, overflow = TextOverflow.Ellipsis
             )
-            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                RatingDetail("Jugabilidad", review.ratingJugabilidad, Modifier.weight(1f))
-                RatingDetail("Gráficos", review.ratingGraficos, Modifier.weight(1f))
-                RatingDetail("Historia", review.ratingHistoria, Modifier.weight(1f))
-            }
             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
                 Text("${review.cantidadLikes} Me gusta", color = VoxelTextSecondary, fontSize = 12.sp)
                 TextButton(onClick = onClick) { Text("Ver reseña", color = VoxelPrimary) }
             }
         }
-    }
-}
-
-@Composable
-private fun RatingDetail(label: String, rating: Float, modifier: Modifier = Modifier) {
-    Column(
-        modifier.clip(RoundedCornerShape(8.dp)).background(VoxelSurfaceVariant).padding(vertical = 8.dp, horizontal = 4.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(label, color = VoxelTextSecondary, fontSize = 11.sp)
-        Text("${formatRating(rating)}/5", color = White, fontSize = 13.sp, fontWeight = FontWeight.Bold)
     }
 }
 
