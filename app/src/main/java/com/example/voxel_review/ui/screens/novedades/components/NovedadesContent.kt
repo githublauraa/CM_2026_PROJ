@@ -25,10 +25,6 @@ import com.example.voxel_review.ui.theme.VoxelPrimary
 import com.example.voxel_review.ui.theme.VoxelTextPrimary
 import com.example.voxel_review.ui.theme.errorDark
 import com.example.voxel_review.ui.theme.onSurfaceVariantDark
-import com.example.voxel_review.ui.utils.HeaderNotificationButton
-import com.example.voxel_review.ui.utils.ScreenHeader
-import androidx.compose.ui.res.stringResource
-import com.example.voxel_review.R
 
 @Composable
 fun NovedadesContent(
@@ -51,12 +47,10 @@ fun NovedadesContent(
             Brush.verticalGradient(0f to VoxelSurface, 0.4f to VoxelBackground)
         )
     ) {
-        ScreenHeader(
-            title = stringResource(R.string.novedades_y_rese_as),
-            onBack = onBackClick
-        ) {
-            HeaderNotificationButton(onClick = onNotificationClick)
-        }
+        NovedadesHeader(
+            onBackClick = onBackClick,
+            onNotificationClick = onNotificationClick
+        )
         FeedFilterSection(
             selectedFilter = state.selectedFilter,
             onFilterSelected = novedadesViewModel::selectFilter,
