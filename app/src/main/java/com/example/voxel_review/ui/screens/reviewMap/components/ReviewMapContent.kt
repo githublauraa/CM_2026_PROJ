@@ -1,6 +1,15 @@
 package com.example.voxel_review.ui.screens.reviewMap.components
 
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.TextButton
+import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Switch
 import androidx.compose.material3.CircularProgressIndicator
@@ -37,6 +46,9 @@ fun ReviewMapContent(
         position = CameraPosition.fromLatLngZoom(bogota, 10.9f)
     }
 
+    val groups = remember(state.reviews) { reviewsByLocation(state.reviews) }
+    var selectedLocation by remember { mutableStateOf<LatLng?>(null) }
+
     Box(modifier.fillMaxSize()) {
         GoogleMap(
             modifier = Modifier.matchParentSize(),
@@ -45,7 +57,11 @@ fun ReviewMapContent(
             cameraPositionState = cameraPositionState,
             contentDescription = "Mapa reseñas voxelReview"
         ) {
-            ReviewMapMarkers(reviews = state.reviews, onReviewClick = onReviewClick)
+            ReviewMapMarkers(
+                groups = groups,
+                onReviewClick = onReviewClick,
+                onClusterClick = { selectedLocation = it }
+            )
         }
         when {
             state.isLoading -> CircularProgressIndicator(Modifier.align(Alignment.Center))
@@ -64,4 +80,32 @@ fun ReviewMapContent(
 
     }
 
+    selectedLocation?.let { location ->
+        val reviews = groups[location].orEmpty()
+        if (reviews.isNotEmpty()) {
+            AlertDialog(
+                onDismissRequest = { selectedLocation = null },
+                title = { Text("${reviews.size} reseñas en este punto") },
+                text = {
+                    LazyColumn(
+                        modifier = Modifier.heightIn(max = 360.dp),
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        items(reviews, key = { it.idResenia }) { review ->
+                            ReviewMapInfoCard(
+                                review = review,
+                                modifier = Modifier.fillMaxWidth().clickable {
+                                    selectedLocation = null
+                                    onReviewClick(review)
+                                }
+                            )
+                        }
+                    }
+                },
+                confirmButton = {
+                    TextButton(onClick = { selectedLocation = null }) { Text("Cerrar") }
+                }
+            )
+        }
+    }
 }

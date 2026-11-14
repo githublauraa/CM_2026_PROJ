@@ -15,6 +15,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.sp
 import com.example.voxel_review.R
+import com.example.voxel_review.ui.utils.HeaderNotificationButton
 
 @Composable
 fun NovedadesHeader(
@@ -43,9 +44,6 @@ fun NovedadesHeader(
             fontSize = 22.sp
         )
 
-        Campana(
-            modifier = Modifier.size(30.dp),
-            onClick = onNotificationClick
-        )
+        HeaderNotificationButton(onClick = onNotificationClick)
     }
 }

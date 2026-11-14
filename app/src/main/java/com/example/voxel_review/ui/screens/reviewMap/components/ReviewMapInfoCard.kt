@@ -48,6 +48,8 @@ fun ReviewMapInfoCard(
     review: ReviewInfo,
     modifier: Modifier = Modifier
 ) {
+    val coverFallback = painterResource(R.drawable.game_banner_fallback)
+
     Card(
         modifier = modifier.width(236.dp),
         shape = RoundedCornerShape(14.dp),
@@ -84,9 +86,9 @@ fun ReviewMapInfoCard(
                         .size(width = 52.dp, height = 66.dp)
                         .clip(RoundedCornerShape(12.dp)),
                     contentScale = ContentScale.Crop,
-                    placeholder = painterResource(R.drawable.imagen_login_user),
-                    error = painterResource(R.drawable.imagen_login_user),
-                    fallback = painterResource(R.drawable.imagen_login_user)
+                    placeholder = coverFallback,
+                    error = coverFallback,
+                    fallback = coverFallback
                 )
 
                 Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
