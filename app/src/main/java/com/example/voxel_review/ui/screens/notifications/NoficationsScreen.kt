@@ -7,8 +7,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.voxel_review.ui.screens.notifications.components.NotificationsContent
 import com.example.voxel_review.ui.screens.notifications.components.NotificationsTopBar
 import com.example.voxel_review.ui.utils.FondoPantalla
@@ -26,7 +24,7 @@ import com.example.voxel_review.ui.utils.FondoPantalla
 fun NotificationScreen(
     notificationsViewModel: NotificationsViewModel,
     onBackClick: () -> Unit,
-    onNotificationClick: () -> Unit,
+    onNotificationClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
 
@@ -49,19 +47,9 @@ fun NotificationScreen(
             )
 
             NotificationsContent(
-                highlightedNotifications = state.highlightedNotifications,
-                followSuggestions = state.followSuggestions,
+                state = state,
                 onNotificationClick = onNotificationClick,
             )
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable fun NotificationScreenPreview() {
-    NotificationScreen(
-        notificationsViewModel = viewModel(),
-        onBackClick = {},
-        onNotificationClick = {}
-    )
 }

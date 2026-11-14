@@ -428,8 +428,10 @@ fun AppNavigation(
                 onBackClick = {
                     navController.popBackStack()
                 },
-                onNotificationClick = {
-                    navController.navigate(AppScreen.Discover.route)
+                onNotificationClick = { userId ->
+                    navController.navigate(
+                        "${AppScreen.PerfilUser.route}?profileId=${Uri.encode(userId)}"
+                    )
                 }
             )
         }

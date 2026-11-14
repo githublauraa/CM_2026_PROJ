@@ -65,7 +65,13 @@ class UserFirestoreDataSourceImpl @Inject constructor(
         val relations = db.collection("users").document(userId)
             .collection(collection).get().await()
 
-        return relations.documents.mapNotNull { relation ->
+        val documents = if (collection == "followers") {
+            relations.documents.sortedByDescending { it.getTimestamp("timestamp") }
+        } else {
+            relations.documents
+        }
+
+        return documents.mapNotNull { relation ->
             val user = db.collection("users").document(relation.id).get().await()
             user.toObject(UserProfileFirestoreDto::class.java)?.copy(userId = user.id)
         }

@@ -9,95 +9,43 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.voxel_review.data.info.InfoNotifications.FollowSuggestionInfo
-import com.example.voxel_review.data.info.InfoNotifications.NotificationInfo
-import kotlin.collections.emptyList
+import com.example.voxel_review.ui.screens.notifications.NotificationsState
+import com.example.voxel_review.ui.utils.ContentStatus
 
-/**
- * Contenido principal y estructurado para la pantalla de notificaciones.
- * Organiza las notificaciones destacadas, avisos de nuevos juegos y sugerencias mediante una lista.
- *
- * @param highlightedNotifications Lista de notificaciones destacadas a mostrar.
- * @param followSuggestions Lista de sugerencias de usuarios a seguir.
- * @param onNotificationClick Callback ejecutado al presionar cualquier elemento de notificación.
- * @param modifier Modificador para el contenedor de la lista.
- */
 @Composable
 fun NotificationsContent(
-    highlightedNotifications: List<NotificationInfo>,
-    followSuggestions: List<FollowSuggestionInfo>,
-    onNotificationClick: () -> Unit,
-    modifier: Modifier = Modifier,
+    state: NotificationsState,
+    onNotificationClick: (String) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     LazyColumn(
         modifier = modifier.fillMaxSize(),
-        contentPadding = PaddingValues(
-            start = 20.dp,
-            end = 20.dp,
-            bottom = 24.dp
-        ),
+        contentPadding = PaddingValues(start = 20.dp, end = 20.dp, bottom = 24.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-
         item {
-            NotificationSectionHeader(
-                title = "DESTACADOS",
-                showSeeAll = true,
-                onSeeAllClick = {}
-            )
+            NotificationSectionHeader(title = "Nuevos seguidores")
         }
 
-        if (highlightedNotifications.isEmpty()) {
-            item { com.example.voxel_review.ui.utils.ContentStatus("No tienes notificaciones destacadas.") }
-        }
-
-        items(highlightedNotifications) { item ->
-            HighlightedNotificationCard(
-                notification = item,
-                onClick = { onNotificationClick() }
-            )
-        }
-
-        item {
-            NotificationSectionHeader(
-                title = "Ayer"
-            )
-        }
-
-        item {
-            NewGameNotificationCard(
-                gameName = "Resident Evil Requiem",
-                onClick = { onNotificationClick() }
-            )
-        }
-
-        item {
-            NotificationSectionHeader(
-                title = "Sugerencias de seguimiento",
-                showSeeAll = true,
-                onSeeAllClick = { }
-            )
-        }
-
-        if (followSuggestions.isEmpty()) {
-            item { com.example.voxel_review.ui.utils.ContentStatus("No hay sugerencias de seguimiento por ahora.") }
-        }
-
-        items(followSuggestions) { item ->
-            FollowSuggestionCard(
-                suggestion = item,
-                onClick = { onNotificationClick() }
-            )
+        when {
+            state.isLoading -> item { ContentStatus("Cargando notificaciones…") }
+            state.hasError -> item { ContentStatus("No se pudieron cargar las notificaciones.") }
+            state.followers.isEmpty() -> item { ContentStatus("Todavía no tienes avisos de seguimiento.") }
+            else -> items(state.followers, key = { it.id }) { follower ->
+                HighlightedNotificationCard(
+                    notification = follower,
+                    onClick = { onNotificationClick(follower.id) }
+                )
+            }
         }
     }
 }
 
 @Preview
 @Composable
-fun NotificationsContentPreview() {
+private fun NotificationsContentPreview() {
     NotificationsContent(
-        highlightedNotifications = emptyList(),
-        followSuggestions = emptyList(),
-        onNotificationClick = {},
+        state = NotificationsState(isLoading = false),
+        onNotificationClick = {}
     )
 }

@@ -7,7 +7,7 @@ import androidx.compose.ui.Modifier
 fun NotificationContent(
     notificationsViewModel: NotificationsViewModel,
     onBackClick: () -> Unit,
-    onNotificationClick: () -> Unit,
+    onNotificationClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     NotificationScreen(
