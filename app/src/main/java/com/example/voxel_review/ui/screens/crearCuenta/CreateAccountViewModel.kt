@@ -92,40 +92,27 @@ class CreateAccountViewModel @Inject constructor(
      * @return `true` si los datos son válidos, `false` en caso contrario.
      */
     fun createAcount(onSuccess: () -> Unit) {
-        _uiState.update { it.copy(loading = true) }
+        val state = _uiState.value
+        if (state.loading) return
 
-        if (_uiState.value.email.isEmpty()) {
-            _uiState.update {
-                it.copy(
-                    errorMessage = "Por favor, completa todos los campos"
-                )
-            }
+        val email = state.email.trim()
+        val error = when {
+            email.isEmpty() -> "Ingresa tu correo electrónico"
+            state.password.length < 6 -> "La contraseña debe tener al menos 6 caracteres"
+            !state.terminosAceptados -> "Por favor, acepta los términos y condiciones"
+            else -> null
+        }
+        if (error != null) {
+            _uiState.update { it.copy(errorMessage = error, mostrarMensaje = true) }
             return
         }
 
-        if (_uiState.value.password.length < 6) {
-            _uiState.update {
-                it.copy(
-                    errorMessage = "La contraseña debe tener al menos 6 caracteres"
-                )
-            }
-            return
-        }
-
-        if (!_uiState.value.terminosAceptados) {
-            _uiState.update {
-                it.copy(
-                    errorMessage = "Por favor, acepta los términos y condiciones"
-                )
-            }
-            return
-        }
-
+        _uiState.update { it.copy(loading = true, errorMessage = "", mostrarMensaje = false) }
         viewModelScope.launch {
 
             val result = authRepository.signUp(
-                _uiState.value.email,
-                _uiState.value.password
+                email,
+                state.password
             )
 
             if (result.isSuccess) {
@@ -135,6 +122,7 @@ class CreateAccountViewModel @Inject constructor(
                 if (userId == null) {
                     _uiState.update {
                         it.copy(
+                            loading = false,
                             errorMessage = "No se pudo obtener el ID del usuario",
                             mostrarMensaje = true
                         )
@@ -143,8 +131,8 @@ class CreateAccountViewModel @Inject constructor(
                 }
 
                 val registerResult = userRepository.registerUser(
-                    nombreUsuario = _uiState.value.username,
-                    bio = _uiState.value.bio,
+                    nombreUsuario = state.username,
+                    bio = state.bio,
                     userId = userId,
                     photoUrl = null
                 )

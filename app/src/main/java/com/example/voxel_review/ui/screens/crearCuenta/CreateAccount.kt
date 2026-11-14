@@ -1,35 +1,16 @@
 package com.example.voxel_review.ui.screens.crearCuenta
 
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.offset
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import com.example.voxel_review.ui.utils.FondoPantalla
-import androidx.compose.ui.unit.dp
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.collectAsState
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.voxel_review.ui.screens.crearCuenta.components.CreateAcountHeader
-import com.example.voxel_review.ui.screens.crearCuenta.components.FomulariosCreateAcount
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import com.example.voxel_review.ui.screens.crearCuenta.components.RegisterForm
+import com.example.voxel_review.ui.screens.start.components.StartHeader
+import com.example.voxel_review.ui.utils.AuthScreenLayout
 
-/**
- * Contenido visual de la pantalla de creación de cuenta.
- * Recibe el estado y los eventos desde la pantalla sin acceder directamente al ViewModel.
- *
- * @param state Estado actual de la pantalla.
- * @param onUserNameChange Acción ejecutada cuando cambia el nombre de usuario.
- * @param onEmailChange Acción ejecutada cuando cambia el correo electrónico.
- * @param onPasswordChange Acción ejecutada cuando cambia la contraseña.
- * @param onTerminosAceptadosChange Acción para cambiar la aceptación de los términos.
- * @param onMostrarContrasenaChange Acción para mostrar u ocultar la contraseña.
- * @param unirseButtonPressed Acción ejecutada al presionar el botón de registro.
- * @param modifier Modificador para personalizar el contenido.
- */
 @Composable
-fun CreateAccountContent(
+private fun CreateAccountContent(
     state: CreateAccountState,
     onEmailChange: (String) -> Unit,
     onBioChange: (String) -> Unit,
@@ -37,92 +18,60 @@ fun CreateAccountContent(
     onUsernameChange: (String) -> Unit,
     onTerminosAceptadosChange: () -> Unit,
     onMostrarContrasenaChange: () -> Unit,
-    unirseButtonPressed: () -> Unit,
+    onSubmit: () -> Unit,
+    onBackToLogin: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Column (
-        modifier = modifier
-
-    ) {
-        CreateAcountHeader()
-
-        FomulariosCreateAcount(
-            onBioChange = onBioChange,
-            onUsernameChange = onUsernameChange,
+    AuthScreenLayout(modifier) {
+        StartHeader()
+        RegisterForm(
             state = state,
+            onUsernameChange = onUsernameChange,
+            onBioChange = onBioChange,
             onEmailChange = onEmailChange,
             onPasswordChange = onPasswordChange,
             onMostrarContrasenaChange = onMostrarContrasenaChange,
             onTerminosAceptadosChange = onTerminosAceptadosChange,
-            unirseButtonPressed = unirseButtonPressed,
-            modifier = Modifier
+            onSubmit = onSubmit,
+            onBackToLogin = onBackToLogin
         )
     }
 }
 
-/**
- * Pantalla de creación de cuenta conectada al ViewModel.
- * Observa el estado y conecta los eventos de la interfaz con las funciones del ViewModel.
- *
- * @param createAccountViewModel ViewModel encargado del estado y la lógica de la pantalla.
- * @param unirseButtonPressed Acción ejecutada después de crear la cuenta correctamente.
- * @param modifier Modificador para personalizar la pantalla.
- */
 @Composable
 fun CreateAccountScreen(
     createAccountViewModel: CreateAccountViewModel,
     unirseButtonPressed: () -> Unit,
+    onBackToLogin: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    // Convierte el StateFlow del ViewModel en un estado observable por Compose.
     val state by createAccountViewModel.uiState.collectAsState()
-
-    Box(
-        modifier = modifier.fillMaxWidth()
-    ) {
-        FondoPantalla()
-
-        CreateAccountContent(
-            onBioChange = createAccountViewModel::updateBio,
-            onUsernameChange = createAccountViewModel::updateUsername,
-            state = state,
-            onEmailChange = createAccountViewModel::updateEmail,
-            onPasswordChange = createAccountViewModel::updatePassword,
-            onTerminosAceptadosChange = createAccountViewModel::updateTerminosAceptados,
-            onMostrarContrasenaChange = createAccountViewModel::updateMostrarContrasena,
-
-            // Solo continúa con la acción externa si la validación es correcta.
-            unirseButtonPressed = {
-                createAccountViewModel.createAcount {
-                    unirseButtonPressed()
-                }
-            },
-
-            modifier = modifier.fillMaxWidth()
-        )
-    }
+    CreateAccountContent(
+        state = state,
+        onBioChange = createAccountViewModel::updateBio,
+        onUsernameChange = createAccountViewModel::updateUsername,
+        onEmailChange = createAccountViewModel::updateEmail,
+        onPasswordChange = createAccountViewModel::updatePassword,
+        onTerminosAceptadosChange = createAccountViewModel::updateTerminosAceptados,
+        onMostrarContrasenaChange = createAccountViewModel::updateMostrarContrasena,
+        onSubmit = { createAccountViewModel.createAcount(unirseButtonPressed) },
+        onBackToLogin = onBackToLogin,
+        modifier = modifier
+    )
 }
 
-/**
- * Vista previa de la pantalla de creación de cuenta.
- */
-@Preview(showBackground = true)
+@Preview(showBackground = true, widthDp = 360, heightDp = 740)
 @Composable
 private fun CreateAccountScreenPreview() {
-    Box(
-        modifier = Modifier.fillMaxWidth()
-    ) {
-        FondoPantalla()
-
-        CreateAccountContent(
-            onBioChange = {},
-            onUsernameChange = {},
-            state = CreateAccountState(),
-            onEmailChange = {},
-            onPasswordChange = {},
-            onTerminosAceptadosChange = {},
-            onMostrarContrasenaChange = {},
-            unirseButtonPressed = {}
-        )
-    }
+    CreateAccountContent(
+        state = CreateAccountState(),
+        onBioChange = {},
+        onUsernameChange = {},
+        onEmailChange = {},
+        onPasswordChange = {},
+        onTerminosAceptadosChange = {},
+        onMostrarContrasenaChange = {},
+        onSubmit = {},
+        onBackToLogin = {}
+    )
 }

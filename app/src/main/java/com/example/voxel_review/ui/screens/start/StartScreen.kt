@@ -1,33 +1,16 @@
 package com.example.voxel_review.ui.screens.start
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.offset
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.voxel_review.ui.screens.start.components.LoginButtons
 import com.example.voxel_review.ui.screens.start.components.LoginForm
+import com.example.voxel_review.ui.screens.start.components.MensajeTerminos
 import com.example.voxel_review.ui.screens.start.components.StartHeader
-import com.example.voxel_review.ui.utils.FondoPantalla
+import com.example.voxel_review.ui.utils.AuthScreenLayout
 
-/**
- * Contenido visual de la pantalla de inicio.
- * Recibe el estado y los eventos necesarios sin acceder directamente al ViewModel.
- *
- * @param state Estado actual de la pantalla de inicio.
- * @param onUserNameChange Acción ejecutada cuando cambia el nombre de usuario.
- * @param onPasswordChange Acción ejecutada cuando cambia la contraseña.
- * @param onMostrarContrasenaChange Acción para mostrar u ocultar la contraseña.
- * @param logginButtonPressed Acción ejecutada al presionar el botón de inicio de sesión.
- * @param createAccountButtonPressed Acción ejecutada al presionar el botón de crear cuenta.
- * @param modifier Modificador para personalizar el contenido.
- */
 @Composable
 fun StartScreenContent(
     state: StartState,
@@ -39,45 +22,29 @@ fun StartScreenContent(
     forgotPasswordButtonPressed: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
-    Box(
-        modifier = modifier.fillMaxSize()
-    ) {
-        StartHeader(
-            modifier = Modifier.align(Alignment.TopCenter)
-        )
+    val focusManager = LocalFocusManager.current
+    val submit = {
+        if (!state.loading) {
+            focusManager.clearFocus()
+            logginButtonPressed()
+        }
+    }
 
+    AuthScreenLayout(modifier) {
+        StartHeader()
         LoginForm(
             state = state,
             onUserNameChange = onUserNameChange,
             onPasswordChange = onPasswordChange,
             onMostrarContrasenaChange = onMostrarContrasenaChange,
             onForgotPasswordClick = forgotPasswordButtonPressed,
-            modifier = Modifier
-                .align(Alignment.Center)
-                .offset(y = -30.dp)
+            onSubmit = submit,
+            onCreateAccount = createAccountButtonPressed
         )
-
-        LoginButtons(
-            logginButtonPressed = logginButtonPressed,
-            createAccountButtonPressed = createAccountButtonPressed,
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .offset(y = 30.dp)
-        )
+        MensajeTerminos()
     }
 }
 
-/**
- * Pantalla de inicio conectada al ViewModel.
- * Observa el estado de la interfaz y conecta las acciones del usuario
- * con las funciones correspondientes del ViewModel.
- *
- * @param startViewModel ViewModel encargado de administrar el estado de la pantalla.
- * @param logginButtonPressed Acción ejecutada después de un inicio de sesión válido.
- * @param createAccountButtonPressed Acción ejecutada para navegar a la creación de cuenta.
- * @param forgotPasswordButtonPressed Acción ejecutada para navegar a la recuperación de contraseña.
- * @param modifier Modificador para personalizar la pantalla.
- */
 @Composable
 fun StartScreen(
     startViewModel: StartViewModel,
@@ -86,38 +53,27 @@ fun StartScreen(
     forgotPasswordButtonPressed: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
-    // Convierte el StateFlow del ViewModel en un estado observable por Compose.
     val state by startViewModel.uiState.collectAsState()
-
-    Box(
-        modifier = modifier.fillMaxSize()
-    ) {
-        FondoPantalla()
-
-        StartScreenContent(
-            state = state,
-            onUserNameChange = startViewModel::updateCorreo,
-            onPasswordChange = startViewModel::updatePassword,
-            onMostrarContrasenaChange = startViewModel::updateMostrarContrasena,
-            logginButtonPressed = {
-                startViewModel.login {
-                    logginButtonPressed()
-                }
-            },
-            createAccountButtonPressed = createAccountButtonPressed,
-            forgotPasswordButtonPressed = forgotPasswordButtonPressed
-        )
-    }
+    StartScreenContent(
+        state = state,
+        onUserNameChange = startViewModel::updateCorreo,
+        onPasswordChange = startViewModel::updatePassword,
+        onMostrarContrasenaChange = startViewModel::updateMostrarContrasena,
+        logginButtonPressed = { startViewModel.login(logginButtonPressed) },
+        createAccountButtonPressed = createAccountButtonPressed,
+        forgotPasswordButtonPressed = forgotPasswordButtonPressed,
+        modifier = modifier
+    )
 }
 
-/**
- * Vista previa de la pantalla de inicio.
- */
+@Preview(showBackground = true, widthDp = 360, heightDp = 740)
 @Composable
-@Preview
 fun StartScreenPreview() {
-    StartScreen(
-        startViewModel = viewModel(),
+    StartScreenContent(
+        state = StartState(),
+        onUserNameChange = {},
+        onPasswordChange = {},
+        onMostrarContrasenaChange = {},
         logginButtonPressed = {},
         createAccountButtonPressed = {}
     )

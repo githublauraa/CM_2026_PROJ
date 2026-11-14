@@ -166,6 +166,7 @@ fun AppNavigation(
 
             CreateAccountScreen(
                 createAccountViewModel = createAccountViewModel,
+                onBackToLogin = { navController.popBackStack() },
                 unirseButtonPressed = {
                     navController.navigate(AppScreen.RankingsUser.route) {
                         popUpTo(0) { inclusive = true }

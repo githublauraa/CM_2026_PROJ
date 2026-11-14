@@ -82,4 +82,14 @@
   <string name="nombre_juego2">STARFIELD</string>
   <string name="nombre_juego3">BALDURS GATE 3</string>
   <string name="Descripcion">DESCRIPCIÓN</string>
+  <string name="login_sign_in">Iniciar sesión</string>
+  <string name="login_email">Correo electrónico</string>
+  <string name="login_show_password">Mostrar contraseña</string>
+  <string name="login_forgot_password">¿Olvidaste tu contraseña?</string>
+  <string name="login_create_account">Crear cuenta</string>
+  <string name="register_username">Nombre de usuario</string>
+  <string name="register_bio">Biografía</string>
+  <string name="register_password_hint">Usa al menos 6 caracteres</string>
+  <string name="register_accept_terms">Acepto los términos de servicio y privacidad</string>
+  <string name="register_back_to_login">Volver a iniciar sesión</string>
 </resources>

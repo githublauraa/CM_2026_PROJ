@@ -1,30 +1,26 @@
 package com.example.voxel_review.ui.screens.crearCuenta.components
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.defaultMinSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.selection.toggleable
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.unit.sp
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.unit.dp
+import com.example.voxel_review.R
+import com.example.voxel_review.ui.theme.VoxelBackgroundDark
 import com.example.voxel_review.ui.theme.VoxelPrimary
-import com.example.voxel_review.ui.theme.VoxelTextSecondary
+import com.example.voxel_review.ui.theme.onSurfaceVariantDark
 
-/**
- * Componente para aceptar los términos de servicio y privacidad.
- * Muestra un checkbox junto con el texto informativo correspondiente.
- *
- * @param aceptado Indica si los términos han sido aceptados.
- * @param onAceptadoChange Acción ejecutada cuando cambia el estado del checkbox.
- * @param modifier Modificador para personalizar el componente.
- */
 @Composable
 fun TerminosPrivacidad(
     aceptado: Boolean,
@@ -32,60 +28,27 @@ fun TerminosPrivacidad(
     modifier: Modifier = Modifier
 ) {
     Row(
-        verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
+            .fillMaxWidth()
+            .defaultMinSize(minHeight = 48.dp)
+            .testTag("chkTerminos")
+            .toggleable(value = aceptado, role = Role.Checkbox, onValueChange = onAceptadoChange),
+        horizontalArrangement = Arrangement.spacedBy(10.dp),
+        verticalAlignment = Alignment.CenterVertically
     ) {
         Checkbox(
             checked = aceptado,
-            onCheckedChange = onAceptadoChange,
+            onCheckedChange = null,
             colors = CheckboxDefaults.colors(
                 checkedColor = VoxelPrimary,
-                uncheckedColor = VoxelPrimary,
-                checkmarkColor = Color.Black
-            ),
-            modifier = Modifier.testTag("chkTerminos")
+                uncheckedColor = onSurfaceVariantDark,
+                checkmarkColor = VoxelBackgroundDark
+            )
         )
-
-        // Permite aplicar diferentes estilos a partes específicas del texto.
         Text(
-            buildAnnotatedString {
-                withStyle(
-                    style = SpanStyle(
-                        color = VoxelTextSecondary
-                    )
-                ) {
-                    append("Acepto los ")
-                }
-
-                withStyle(
-                    style = SpanStyle(
-                        color = VoxelPrimary,
-                        textDecoration = TextDecoration.Underline
-                    )
-                ) {
-                    append("Términos de Servicio")
-                }
-
-                withStyle(
-                    style = SpanStyle(
-                        color = VoxelTextSecondary
-                    )
-                ) {
-                    append(" y Privacidad")
-                }
-            },
-            fontSize = 10.sp
+            text = stringResource(R.string.register_accept_terms),
+            style = MaterialTheme.typography.bodySmall,
+            color = onSurfaceVariantDark
         )
     }
-}
-
-/**
- * Vista previa del componente de términos y privacidad.
- */
-@Composable
-fun TerminosPrivacidadPreview() {
-    TerminosPrivacidad(
-        aceptado = true,
-        onAceptadoChange = {}
-    )
 }

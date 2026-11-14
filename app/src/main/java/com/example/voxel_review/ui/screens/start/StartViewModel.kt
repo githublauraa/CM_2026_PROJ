@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import jakarta.inject.Inject
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.FirebaseTooManyRequestsException
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import kotlinx.coroutines.launch
@@ -35,7 +36,7 @@ class StartViewModel @Inject constructor(
      */
     fun updateCorreo(input: String) {
         _uiState.update {
-            it.copy(correo = input)
+            it.copy(correo = input, errorMessage = "", mostrarMensaje = false)
         }
     }
 
@@ -46,7 +47,7 @@ class StartViewModel @Inject constructor(
      */
     fun updatePassword(input: String) {
         _uiState.update {
-            it.copy(password = input)
+            it.copy(password = input, errorMessage = "", mostrarMensaje = false)
         }
     }
 
@@ -59,75 +60,41 @@ class StartViewModel @Inject constructor(
         }
     }
 
-    /**
-     * Valida los datos ingresados antes de realizar el inicio de sesión.
-     *
-     * @return `true` si los datos son válidos o `false` si existe algún error.
-     */
     fun login(onSuccess: () -> Unit) {
+        val state = _uiState.value
+        if (state.loading) return
 
-        _uiState.update { it.copy(loading = true) }
-
-        if (
-            _uiState.value.correo.isEmpty() ||
-            _uiState.value.password.isEmpty()
-        ) {
-            _uiState.update {
-                it.copy(errorMessage = "Por favor, completa todos los campos")
-            }
+        val correo = state.correo.trim()
+        val password = state.password
+        val validationError = when {
+            correo.isEmpty() || password.isEmpty() -> "Completa todos los campos."
+            password.length < 6 -> "La contraseña debe tener al menos 6 caracteres."
+            else -> null
+        }
+        if (validationError != null) {
+            _uiState.update { it.copy(errorMessage = validationError, mostrarMensaje = true) }
             return
         }
 
-        if (_uiState.value.password.length < 6) {
-            _uiState.update {
-                it.copy(errorMessage = "La contraseña debe ser minimo de 6 caracteres")
-            }
-            return
-        }
-
+        _uiState.update { it.copy(loading = true, errorMessage = "", mostrarMensaje = false) }
         viewModelScope.launch {
-
-            val result = authRepository.signIn(
-                    _uiState.value.correo,
-                    _uiState.value.password
-                )
-
-            if (result.isSuccess) {
-                onSuccess()
-                _uiState.update { it.copy(loading = false) }
-            }else {
-
-                _uiState.update {
-
-                    val e = result.exceptionOrNull()
-
-                    when (e) {
-                        is FirebaseAuthInvalidUserException -> {
-                            it.copy(
-                                loading = false,
-                                errorMessage = "Usuario no existe",
-                                mostrarMensaje = true
-                            )
-                        }
-
-                        is FirebaseAuthInvalidCredentialsException -> {
-                            it.copy(
-                                loading = false,
-                                errorMessage = "Credenciales incorrectas",
-                                mostrarMensaje = true
-                            )
-                        }
-
-                        else -> {
-                            it.copy(
-                                loading = false,
-                                errorMessage = "Error al iniciar sesion",
-                                mostrarMensaje = true
-                            )
-                        }
-                    }
-                }
+            val result = authRepository.signIn(correo, password)
+            val errorMessage = when (result.exceptionOrNull()) {
+                null -> ""
+                is FirebaseAuthInvalidUserException -> "Usuario no existe."
+                is FirebaseAuthInvalidCredentialsException -> "Credenciales incorrectas."
+                is FirebaseTooManyRequestsException ->
+                    "Demasiados intentos. Vuelve a intentarlo más tarde."
+                else -> "No se pudo iniciar sesión. Inténtalo de nuevo."
             }
+            _uiState.update {
+                it.copy(
+                    loading = false,
+                    errorMessage = errorMessage,
+                    mostrarMensaje = errorMessage.isNotEmpty()
+                )
+            }
+            if (result.isSuccess) onSuccess()
         }
     }
 }
