@@ -22,6 +22,7 @@ import com.example.voxel_review.data.info.profile.ProfileInfo
 import com.example.voxel_review.ui.screens.rankings.RankingsState
 import com.example.voxel_review.ui.theme.onSurfaceVariantDark
 import com.example.voxel_review.ui.theme.VoxelTextPrimary
+import com.example.voxel_review.ui.utils.LocalBottomBarPadding
 
 @Composable
 fun LazyColumnRanking(
@@ -51,7 +52,7 @@ fun LazyColumnRanking(
     val showPodium = query.isEmpty() && results.size >= 3
     LazyColumn(
         modifier = modifier.fillMaxSize(),
-        contentPadding = PaddingValues(start = 20.dp, end = 20.dp, bottom = 20.dp, top = 4.dp),
+        contentPadding = PaddingValues(start = 20.dp, end = 20.dp, bottom = 20.dp + LocalBottomBarPadding.current, top = 4.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         if (showPodium) {

@@ -40,6 +40,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import com.example.voxel_review.ui.theme.onSurfaceVariantDark
 import com.example.voxel_review.ui.utils.ProfileImage
+import com.example.voxel_review.ui.utils.LocalBottomBarPadding
 @Composable
 fun ProfileScreen(
     profileId: String,
@@ -147,7 +148,7 @@ fun ProfileContent(
                 .align(Alignment.TopCenter)
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
-                .padding(bottom = 24.dp)
+                .padding(bottom = 24.dp + LocalBottomBarPadding.current)
         ) {
 
             TopBar(

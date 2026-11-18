@@ -22,6 +22,7 @@ import com.example.voxel_review.ui.theme.*
 import com.example.voxel_review.ui.utils.GameImage
 import com.example.voxel_review.ui.utils.ProfileImage
 import java.util.Locale
+import com.example.voxel_review.ui.utils.LocalBottomBarPadding
 
 @Composable
 fun FollowedReviewsSection(
@@ -46,7 +47,7 @@ fun FollowedReviewsSection(
         LazyColumn(
             modifier = modifier.fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(16.dp),
-            contentPadding = PaddingValues(bottom = 24.dp)
+            contentPadding = PaddingValues(bottom = 24.dp + LocalBottomBarPadding.current)
         ) {
             items(reviews, key = { it.idResenia }) { review ->
                 FollowedReviewCard(review, { onReviewClick(review) }, { onUserProfileClick(review.userId) })

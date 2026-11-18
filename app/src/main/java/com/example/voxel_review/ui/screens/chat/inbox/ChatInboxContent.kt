@@ -20,6 +20,7 @@ import com.example.voxel_review.ui.theme.VoxelBackground
 import com.example.voxel_review.ui.theme.VoxelBackgroundDark
 import com.example.voxel_review.ui.utils.ContentStatus
 import com.example.voxel_review.ui.utils.ScreenHeader
+import com.example.voxel_review.ui.utils.LocalBottomBarPadding
 
 @Composable
 fun ChatInboxContent(
@@ -38,7 +39,10 @@ fun ChatInboxContent(
         LazyColumn(
             modifier = Modifier.fillMaxSize().padding(padding)
                 .background(Brush.verticalGradient(listOf(VoxelBackground, VoxelBackgroundDark))),
-            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 20.dp)
+            contentPadding = PaddingValues(
+                start = 16.dp, top = 20.dp, end = 16.dp,
+                bottom = 20.dp + LocalBottomBarPadding.current
+            )
         ) {
             when {
                 state.error != null && state.conversations.isEmpty() -> item {

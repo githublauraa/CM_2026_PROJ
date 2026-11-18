@@ -27,6 +27,7 @@ import com.example.voxel_review.ui.theme.VoxelPrimary
 import com.example.voxel_review.ui.theme.VoxelTextPrimary
 import com.example.voxel_review.ui.theme.errorDark
 import com.example.voxel_review.ui.theme.onSurfaceVariantDark
+import com.example.voxel_review.ui.utils.LocalBottomBarPadding
 
 @Composable
 fun NovedadesContent(
@@ -90,7 +91,7 @@ fun NovedadesContent(
             )
             else -> LazyColumn(
                 modifier = Modifier.fillMaxSize(),
-                contentPadding = PaddingValues(start = 20.dp, end = 20.dp, bottom = 20.dp),
+                contentPadding = PaddingValues(start = 20.dp, end = 20.dp, bottom = 20.dp + LocalBottomBarPadding.current),
                 verticalArrangement = Arrangement.spacedBy(10.dp)
             ) {
                 items(state.listaJuegos, key = { it.id }) { juego ->
