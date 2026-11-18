@@ -40,7 +40,7 @@ class ReviewRetrofitDataSourceImpl @Inject constructor(
         return service.getReviewComments(id)
     }
 
-    override suspend fun sendOrDeleteReview(reviewId: String, userId: String) {
+    override suspend fun sendOrDeleteReview(reviewId: String, userId: String, dislike: Boolean) {
         TODO("Not yet implemented")
     }
 

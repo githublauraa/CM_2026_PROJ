@@ -1,6 +1,5 @@
 package com.example.voxel_review.ui.screens.review
 
-import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -90,13 +89,9 @@ fun ReviewDetailScreen(
                     )
                 },
                 onReviewProfileImageClicked = onReviewProfileImageClicked,
-                onLikeClick = { selectedReviewId ->
+                onReactionClick = { selectedReviewId, dislike ->
                     val currentUserId = FirebaseAuth.getInstance().currentUser?.uid.orEmpty()
-                    reviewViewModel.sendOrDeleteReviewLike(selectedReviewId, currentUserId)
-                    Log.d(
-                        "darLike",
-                        "El usuario $currentUserId intenta dar like a la reseña $selectedReviewId"
-                    )
+                    reviewViewModel.toggleReviewReaction(selectedReviewId, currentUserId, dislike)
                 }
             )
         }

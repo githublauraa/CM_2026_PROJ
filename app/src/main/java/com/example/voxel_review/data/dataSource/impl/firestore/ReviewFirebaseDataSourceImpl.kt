@@ -40,21 +40,10 @@ class ReviewFirebaseDataSourceImpl @Inject constructor(
                         gameDocument.toObject(VideoGameDto::class.java)
                             ?.copy(videoGameId = gameDocument.id)
                     }
-            val hasLiked = if (!currentUserId.isNullOrBlank()) {
-                doc.reference.collection("likes")
-                    .document(currentUserId)
-                    .get()
-                    .await()
-                    .exists()
-            } else {
-                false
-            }
-
             existingReview.copy(
                 reviewId = doc.id,
-                videoGame = videoGame,
-                likedByCurrentUser = hasLiked
-            )
+                videoGame = videoGame
+            ).withCurrentUserReactions(currentUserId)
         }
     }
 
@@ -73,18 +62,6 @@ class ReviewFirebaseDataSourceImpl @Inject constructor(
             val review = doc.toObject(ReviewDto::class.java)
                 ?: throw Exception("Reseña no encontrada")
 
-            var hasLiked = false
-
-            if (!userId.isNullOrBlank()) {
-                val likeSnapshot = doc.reference
-                    .collection("likes")
-                    .document(userId)
-                    .get()
-                    .await()
-
-                hasLiked = likeSnapshot.exists()
-            }
-
             val userDocument = db.collection("users")
                 .document(review.userId)
                 .get()
@@ -96,12 +73,11 @@ class ReviewFirebaseDataSourceImpl @Inject constructor(
 
             review.copy(
                 reviewId = doc.id,
-                likedByCurrentUser = hasLiked,
                 user = com.example.voxel_review.data.dtos.UserDto(
                     username = user?.username ?: "",
                     photoUrl = user?.photoUrl
                 )
-            )
+            ).withCurrentUserReactions(userId)
         }
     }
 
@@ -152,14 +128,11 @@ class ReviewFirebaseDataSourceImpl @Inject constructor(
     }.map { reviews ->
         val currentUserId = FirebaseAuth.getInstance().currentUser?.uid
         reviews.map { review ->
-            val liked = !currentUserId.isNullOrBlank() && db.collection("reviews")
-                .document(review.reviewId).collection("likes").document(currentUserId)
-                .get().await().exists()
             val game = review.videoGame ?: db.collection("video-Games")
                 .document(review.videoGameId).get().await().let { doc ->
                     doc.toObject(VideoGameDto::class.java)?.copy(videoGameId = doc.id)
                 }
-            review.copy(likedByCurrentUser = liked, videoGame = game)
+            review.copy(videoGame = game).withCurrentUserReactions(currentUserId)
         }
     }
 
@@ -280,27 +253,44 @@ class ReviewFirebaseDataSourceImpl @Inject constructor(
         }.sortedByDescending { it.first }.map { it.second }
     }
 
-    override suspend fun sendOrDeleteReview(reviewId: String, userId: String) {
+    override suspend fun sendOrDeleteReview(reviewId: String, userId: String, dislike: Boolean) {
         require(reviewId.isNotBlank()) { "El ID de la reseña es obligatorio" }
-        require(userId.isNotBlank()) { "Debes iniciar sesión para dar like" }
+        require(userId.isNotBlank()) { "Debes iniciar sesión para reaccionar a la reseña" }
 
         val reviewRef = db.collection("reviews").document(reviewId)
         val likesRef = reviewRef.collection("likes").document(userId)
+        val dislikesRef = reviewRef.collection("dislikes").document(userId)
+        val selectedRef = if (dislike) dislikesRef else likesRef
+        val selectedCounter = if (dislike) "cantidadDislikes" else "cantidadLikes"
+        val oppositeRef = if (dislike) likesRef else dislikesRef
+        val oppositeCounter = if (dislike) "cantidadLikes" else "cantidadDislikes"
 
         db.runTransaction { transaction ->
+            val selected = transaction.get(selectedRef).exists()
+            val opposite = transaction.get(oppositeRef).exists()
 
-            val likeDoc = transaction.get(likesRef)
-
-            if (likeDoc.exists()){
-                transaction.delete(likesRef)
-                transaction.update(reviewRef, "cantidadLikes", FieldValue.increment(-1))
+            if (selected) {
+                transaction.delete(selectedRef)
+                transaction.update(reviewRef, selectedCounter, FieldValue.increment(-1))
             } else {
-                transaction.set(likesRef, mapOf("timestamp" to FieldValue.serverTimestamp()))
-                transaction.update(reviewRef, "cantidadLikes", FieldValue.increment(1))
+                if (opposite) {
+                    transaction.delete(oppositeRef)
+                    transaction.update(reviewRef, oppositeCounter, FieldValue.increment(-1))
+                }
+                transaction.set(selectedRef, mapOf("timestamp" to FieldValue.serverTimestamp()))
+                transaction.update(reviewRef, selectedCounter, FieldValue.increment(1))
             }
-
         }.await()
+    }
 
+    private suspend fun ReviewDto.withCurrentUserReactions(userId: String?): ReviewDto {
+        if (userId.isNullOrBlank()) return this
+
+        val reviewRef = db.collection("reviews").document(reviewId)
+        return copy(
+            likedByCurrentUser = reviewRef.collection("likes").document(userId).get().await().exists(),
+            dislikedByCurrentUser = reviewRef.collection("dislikes").document(userId).get().await().exists()
+        )
     }
 
     override suspend fun listenReview(
@@ -327,20 +317,7 @@ class ReviewFirebaseDataSourceImpl @Inject constructor(
         awaitClose { listener.remove() }
     }.map { reviews ->
         val currentUserId = FirebaseAuth.getInstance().currentUser?.uid
-        reviews.map { review ->
-            val hasLiked = if (currentUserId.isNullOrBlank()) {
-                false
-            } else {
-                db.collection("reviews")
-                    .document(review.reviewId)
-                    .collection("likes")
-                    .document(currentUserId)
-                    .get()
-                    .await()
-                    .exists()
-            }
-            review.copy(likedByCurrentUser = hasLiked)
-        }
+        reviews.map { it.withCurrentUserReactions(currentUserId) }
     }
 
     override suspend fun getFollowedUsersReviews(currentUserId: String): List<ReviewDto> {
@@ -379,19 +356,10 @@ class ReviewFirebaseDataSourceImpl @Inject constructor(
                     gamesById[review.videoGameId]
                 } else null
 
-            // Verificar si el usuario actual le dio like
-            val hasLiked = doc.reference
-                .collection("likes")
-                .document(currentUserId)
-                .get()
-                .await()
-                .exists()
-
             review.copy(
                 reviewId = doc.id,
-                videoGame = videoGame,
-                likedByCurrentUser = hasLiked
-            )
+                videoGame = videoGame
+            ).withCurrentUserReactions(currentUserId)
         }
     }
 }

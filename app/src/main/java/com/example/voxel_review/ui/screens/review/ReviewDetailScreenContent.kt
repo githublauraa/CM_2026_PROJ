@@ -34,7 +34,7 @@ fun ReviewDetailScreenContent(
     onDeleteReview: (ReviewInfo) -> Unit,
     onReviewProfileImageClicked: (String) -> Unit = {},
     modifier: Modifier = Modifier,
-    onLikeClick: (String) -> Unit = {}
+    onReactionClick: (String, Boolean) -> Unit = { _, _ -> }
 ) {
     val context = LocalContext.current
     val review = state.review
@@ -99,7 +99,7 @@ fun ReviewDetailScreenContent(
                 onClickReview = onClickReview,
                 onCommentClick = onCommentClick,
                 onReviewProfileImageClicked = onReviewProfileImageClicked,
-                onLikeClick = onLikeClick
+                onReactionClick = onReactionClick
             )
         }
 

@@ -1,7 +1,6 @@
 
 package com.example.voxel_review.ui.screens.GameDetail.components
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -18,6 +17,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -44,7 +44,7 @@ import com.example.voxel_review.ui.theme.backgroundDark
 @Composable
 fun GameDetailContent(
     onReviewProfileImageCliked:(String) -> Unit,
-    onLikeClick: (String) -> Unit,
+    onReactionClick: (String, Boolean) -> Unit,
     state: GameDetailState,
     onBackPressed: () -> Unit,
     onSearchPressed: () -> Unit,
@@ -155,6 +155,10 @@ fun GameDetailContent(
 
                     Spacer(modifier = Modifier.height(12.dp))
 
+                    state.reactionError?.let { message ->
+                        Text(text = message, color = MaterialTheme.colorScheme.error)
+                    }
+
                     if (state.isLoading) {
 
                         CircularProgressIndicator()
@@ -245,14 +249,14 @@ fun GameDetailContent(
                                         )
                                     }
 
-                                    LikeCard(
+                                    ReviewReactions(
                                         isLiked = review.likedByCurrentUser,
                                         likes = review.cantidadLikes,
-                                        onLikeClick = {
-                                            onLikeClick(
-                                                review.idResenia
-                                            )
-                                            Log.d("darLike", "el usuario ${state.currentUserId} dio like a la reseña ${review.idResenia}")
+                                        isDisliked = review.dislikedByCurrentUser,
+                                        dislikes = review.cantidadDislikes,
+                                        enabled = review.idResenia !in state.updatingReactionIds,
+                                        onReactionClick = { dislike ->
+                                            onReactionClick(review.idResenia, dislike)
                                         }
                                     )
 

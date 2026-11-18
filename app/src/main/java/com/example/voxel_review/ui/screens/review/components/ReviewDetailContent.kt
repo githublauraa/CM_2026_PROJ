@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.example.voxel_review.ui.theme.VoxelSurface
@@ -34,7 +36,7 @@ fun ReviewDetailContent(
     onCommentClick: (String) -> Unit,
     onReviewProfileImageClicked: (String) -> Unit = {},
     modifier: Modifier = Modifier,
-    onLikeClick: (String) -> Unit = {}
+    onReactionClick: (String, Boolean) -> Unit = { _, _ -> }
 ) {
 
 
@@ -81,12 +83,23 @@ fun ReviewDetailContent(
                 imagenUsuario = review.imagenUsuario,
                 likes = review.cantidadLikes,
                 isliked = review.likedByCurrentUser,
+                dislikes = review.cantidadDislikes,
+                isDisliked = review.dislikedByCurrentUser,
+                reactionsEnabled = !state.isUpdatingReaction,
                 onAuthorClick = { onReviewProfileImageClicked(review.userId) },
-                onLikeClick = { onLikeClick(review.idResenia) },
+                onReactionClick = { dislike -> onReactionClick(review.idResenia, dislike) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp)
             )
+
+            state.reactionError?.let { message ->
+                Text(
+                    text = message,
+                    color = MaterialTheme.colorScheme.error,
+                    modifier = Modifier.padding(horizontal = 16.dp)
+                )
+            }
 
             Spacer(
                 modifier = Modifier.height(96.dp)

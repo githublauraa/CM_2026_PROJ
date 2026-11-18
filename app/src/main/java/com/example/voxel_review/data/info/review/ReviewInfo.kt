@@ -20,4 +20,6 @@ data class ReviewInfo(
     val createdAt: String = "",
     val latitude: Double? = null,
     val longitude: Double? = null,
+    val cantidadDislikes: Int = 0,
+    val dislikedByCurrentUser: Boolean = false,
 )

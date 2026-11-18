@@ -43,9 +43,14 @@ class ReviewRepository @Inject constructor(
         }
     }
 
-    fun getSelectedReviewLive(gameId: String, reviewId: String): Flow<List<ReviewInfo>> =
+    fun getSelectedReviewLive(gameId: String, reviewId: String): Flow<ReviewInfo?> =
         reviewRemoteDataSource.listenSelectedReview(gameId, reviewId).map { reviews ->
-            reviews.map { it.toReviewInfo() }
+            val selectedReview = if (reviewId.isBlank()) {
+                reviews.firstOrNull()
+            } else {
+                reviews.find { review -> review.reviewId == reviewId }
+            }
+            selectedReview?.toReviewInfo()
         }
 
     suspend fun getGameReviews(id: String): Result<List<ReviewInfo>> {
@@ -124,9 +129,9 @@ class ReviewRepository @Inject constructor(
         }
     }
 
-    suspend fun sendOrDeleteReviewLike(reviewId: String, userId: String): Result<Unit>{
+    suspend fun toggleReviewReaction(reviewId: String, userId: String, dislike: Boolean): Result<Unit>{
         return try{
-            reviewRemoteDataSource.sendOrDeleteReview(reviewId, userId)
+            reviewRemoteDataSource.sendOrDeleteReview(reviewId, userId, dislike)
             Result.success(Unit)
         } catch (e: Exception){
             Result.failure(e)

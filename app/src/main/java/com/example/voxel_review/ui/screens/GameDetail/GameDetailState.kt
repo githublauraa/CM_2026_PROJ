@@ -15,5 +15,7 @@ data class GameDetailState(
     val isEmailVerified: Boolean = false,
     val libraryStatus: LibraryStatus? = null,
     val isUpdatingLibrary: Boolean = false,
-    val libraryError: String? = null
+    val libraryError: String? = null,
+    val updatingReactionIds: Set<String> = emptySet(),
+    val reactionError: String? = null
 )

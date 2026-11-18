@@ -18,5 +18,7 @@ data class ReviewDetailState(
     val isLoading: Boolean = false,
     val errorMessage: String? = null,
     //nuevo
-    val likedByCurrentUser: Boolean = false
+    val likedByCurrentUser: Boolean = false,
+    val isUpdatingReaction: Boolean = false,
+    val reactionError: String? = null
 )

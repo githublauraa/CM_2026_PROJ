@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import androidx.compose.ui.res.painterResource
 import com.example.voxel_review.R
-import com.example.voxel_review.ui.screens.GameDetail.components.LikeCard
+import com.example.voxel_review.ui.screens.GameDetail.components.ReviewReactions
 import com.example.voxel_review.ui.theme.VoxelBorder
 import com.example.voxel_review.ui.theme.VoxelPrimary
 import com.example.voxel_review.ui.theme.VoxelSurface
@@ -42,7 +42,10 @@ fun DescriptionSection(
     likes: Int,
     isliked: Boolean,
     onAuthorClick: () -> Unit = {},
-    onLikeClick: () -> Unit = {}
+    dislikes: Int = 0,
+    isDisliked: Boolean = false,
+    reactionsEnabled: Boolean = true,
+    onReactionClick: (Boolean) -> Unit = {}
 ) {
     Card(
         modifier = modifier,
@@ -98,10 +101,13 @@ fun DescriptionSection(
                         )
                     }
                 }
-                LikeCard(
+                ReviewReactions(
                     isLiked = isliked,
                     likes = likes,
-                    onLikeClick = onLikeClick
+                    isDisliked = isDisliked,
+                    dislikes = dislikes,
+                    enabled = reactionsEnabled,
+                    onReactionClick = onReactionClick
                 )
             }
             HorizontalDivider(color = VoxelBorder)

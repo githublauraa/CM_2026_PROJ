@@ -8,14 +8,18 @@ import com.example.voxel_review.data.info.library.LibraryStatus
 import com.example.voxel_review.data.repository.LibraryRepository
 import com.example.voxel_review.data.repository.ReviewRepository
 import com.example.voxel_review.data.repository.VideoGameRepository
+import com.example.voxel_review.ui.review.OptimisticReviewReactions
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
@@ -30,7 +34,27 @@ class GameDetailViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(GameDetailState())
-    val uiState: StateFlow<GameDetailState> = _uiState.asStateFlow()
+    private val reactions = OptimisticReviewReactions(viewModelScope, reviewRepository)
+
+    val uiState: StateFlow<GameDetailState> = combine(_uiState, reactions.pending) { state, pendingReactions ->
+        val displayedReviews = state.reviews.map { review ->
+            val pendingReaction = pendingReactions[review.idResenia]
+            if (pendingReaction == null) {
+                review
+            } else {
+                pendingReaction.applyTo(review)
+            }
+        }
+
+        state.copy(
+            reviews = displayedReviews,
+            updatingReactionIds = pendingReactions.keys
+        )
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.Eagerly,
+        initialValue = _uiState.value
+    )
 
     init {
         val userId = auth.currentUser?.uid ?: ""
@@ -179,16 +203,15 @@ class GameDetailViewModel @Inject constructor(
         }
     }
 
-    fun sendOrDeleteReviewLike(reviewId: String, userId: String){
-        viewModelScope.launch {
-            val result = reviewRepository.sendOrDeleteReviewLike(reviewId, userId)
-
-            if (result.isFailure) {
-                _uiState.update {
-                    it.copy(error = result.exceptionOrNull()?.message
-                        ?: "No se pudo actualizar el like")
-                }
-            }
+    fun toggleReviewReaction(reviewId: String, userId: String, dislike: Boolean) {
+        val review = _uiState.value.reviews.find { it.idResenia == reviewId } ?: return
+        reactions.toggle(
+            review = review,
+            userId = userId,
+            dislike = dislike,
+            liveReview = _uiState.map { it.reviews.find { review -> review.idResenia == reviewId } }
+        ) { message ->
+            _uiState.update { it.copy(reactionError = message) }
         }
     }
 }

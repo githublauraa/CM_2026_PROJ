@@ -24,6 +24,8 @@ data class ReviewDto(
 	val videoGame: VideoGameDto? = null,
 	val latitude: Double? = null,
 	val longitude: Double? = null,
+	val cantidadDislikes: Int = 0,
+	val dislikedByCurrentUser: Boolean = false,
 )
 
 data class UserDto(
@@ -61,6 +63,8 @@ fun ReviewDto.toReviewInfo(): ReviewInfo {
 		descripcion = content,
 		cantidadLikes = cantidadLikes,
 		likedByCurrentUser = likedByCurrentUser,
+		cantidadDislikes = cantidadDislikes,
+		dislikedByCurrentUser = dislikedByCurrentUser,
 		ratingGeneral = (
 				gameplayRating +
 						graphicsRating +

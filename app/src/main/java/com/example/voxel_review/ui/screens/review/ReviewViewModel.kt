@@ -3,12 +3,16 @@ package com.example.voxel_review.ui.screens.review
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.voxel_review.data.repository.ReviewRepository
+import com.example.voxel_review.ui.review.OptimisticReviewReactions
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.Job
@@ -19,7 +23,27 @@ class ReviewViewModel @Inject constructor(
 ): ViewModel() {
 
     private val _uiState = MutableStateFlow(ReviewDetailState())
-    val uiState: StateFlow<ReviewDetailState> = _uiState.asStateFlow()
+    private val reactions = OptimisticReviewReactions(viewModelScope, reviewRepository)
+
+    val uiState: StateFlow<ReviewDetailState> = combine(_uiState, reactions.pending) { state, pendingReactions ->
+        val review = state.review
+        val pendingReaction = review?.let { pendingReactions[it.idResenia] }
+
+        val displayedReview = if (review != null && pendingReaction != null) {
+            pendingReaction.applyTo(review)
+        } else {
+            review
+        }
+
+        state.copy(
+            review = displayedReview,
+            isUpdatingReaction = pendingReaction != null
+        )
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.Eagerly,
+        initialValue = _uiState.value
+    )
 
     private var reviewJob: Job? = null
 
@@ -39,13 +63,7 @@ class ReviewViewModel @Inject constructor(
                         )
                     }
                 }
-                .collect { reviews ->
-                    val selectedReview = if (reviewId.isBlank()) {
-                        reviews.firstOrNull()
-                    } else {
-                        reviews.find { it.idResenia == reviewId }
-                    }
-
+                .collect { selectedReview ->
                     _uiState.update {
                         it.copy(
                             review = selectedReview,
@@ -92,16 +110,15 @@ class ReviewViewModel @Inject constructor(
         }
     }
 
-    fun sendOrDeleteReviewLike(reviewId: String, userId: String){
-        viewModelScope.launch {
-            val result = reviewRepository.sendOrDeleteReviewLike(reviewId, userId)
-
-            if (result.isFailure) {
-                _uiState.update {
-                    it.copy(errorMessage = result.exceptionOrNull()?.message
-                        ?: "No se pudo actualizar el like")
-                }
-            }
+    fun toggleReviewReaction(reviewId: String, userId: String, dislike: Boolean) {
+        val review = _uiState.value.review?.takeIf { it.idResenia == reviewId } ?: return
+        reactions.toggle(
+            review = review,
+            userId = userId,
+            dislike = dislike,
+            liveReview = _uiState.map { it.review?.takeIf { review -> review.idResenia == reviewId } }
+        ) { message ->
+            _uiState.update { it.copy(reactionError = message) }
         }
     }
 }

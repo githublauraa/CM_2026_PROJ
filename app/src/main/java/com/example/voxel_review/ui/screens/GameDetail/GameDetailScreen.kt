@@ -45,13 +45,14 @@ fun GameDetailScreen(
         onReviewProfileImageCliked = onReviewProfileImageCliked,
         onReviewClick = onReviewClick,
         onSelectLibraryStatus = gameDetailViewModel::toggleLibraryStatus,
-        onLikeClick = { reviewId ->
+        onReactionClick = { reviewId, dislike ->
             val currentUserId = state.currentUserId
 
             if (!currentUserId.isNullOrBlank()) {
-                gameDetailViewModel.sendOrDeleteReviewLike(
+                gameDetailViewModel.toggleReviewReaction(
                     reviewId,
-                    currentUserId
+                    currentUserId,
+                    dislike
                 )
             }
 
