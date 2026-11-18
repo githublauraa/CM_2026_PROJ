@@ -1,5 +1,7 @@
 package com.example.voxel_review.ui.screens.settings.components
 
+import com.example.voxel_review.R
+import androidx.compose.ui.res.stringResource
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -33,7 +35,7 @@ private fun SectionTitlePreview() {
         dynamicColor = false
     ) {
         SectionTitle(
-            text = "AJUSTES GENERALES"
+            text = stringResource(R.string.settings_general)
         )
     }
 }

@@ -41,7 +41,7 @@ fun ReviewDetailTopBar(
             IconButton(onClick = onBackClick) {
                 Icon(
                     painter = painterResource(R.drawable.ic_back),
-                    contentDescription = "Volver",
+                    contentDescription = stringResource(R.string.go_back),
                     tint = Color.White
                 )
             }
@@ -50,7 +50,7 @@ fun ReviewDetailTopBar(
             IconButton(onClick = onShareClick) {
                 Icon(
                     painter = painterResource(R.drawable.ic_share),
-                    contentDescription = "Compartir reseña",
+                    contentDescription = stringResource(R.string.share_review),
                     tint = Color.White
                 )
             }
@@ -58,7 +58,7 @@ fun ReviewDetailTopBar(
                 IconButton(onClick = onDeleteClick) {
                     Icon(
                         painter = painterResource(R.drawable.ic_trash),
-                        contentDescription = "Eliminar reseña",
+                        contentDescription = stringResource(R.string.delete_review),
                         tint = Color.White
                     )
                 }

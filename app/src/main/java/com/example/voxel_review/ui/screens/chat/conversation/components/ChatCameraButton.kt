@@ -1,5 +1,7 @@
 package com.example.voxel_review.ui.screens.chat.conversation.components
 
+import com.example.voxel_review.R
+import androidx.compose.ui.res.stringResource
 import android.Manifest
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -41,7 +43,7 @@ fun ChatCameraButton(
                 try {
                     context.contentResolver.delete(uri, null, null)
                 } catch (_: Exception) {
-                    onError("No se pudo borrar la foto temporal.")
+                    onError(context.getString(R.string.camera_cleanup_error))
                 }
             }
         }
@@ -59,7 +61,7 @@ fun ChatCameraButton(
         } catch (_: Exception) {
             pendingCapture = null
             file?.delete()
-            onError("No se pudo abrir la cámara. Comprueba que haya una aplicación de cámara disponible.")
+            onError(context.getString(R.string.camera_open_error))
         }
     }
 
@@ -67,7 +69,7 @@ fun ChatCameraButton(
         if (granted) {
             openCamera()
         } else {
-            onError("Para tomar una foto, permite el acceso a la cámara en los ajustes de Voxel Review.")
+            onError(context.getString(R.string.camera_permission_error))
         }
     }
 
@@ -84,7 +86,7 @@ fun ChatCameraButton(
     ) {
         Icon(
             Icons.Outlined.PhotoCamera,
-            contentDescription = "Tomar foto",
+            contentDescription = stringResource(R.string.camera_take_photo),
             tint = if (enabled) Color(0xFF352B5D) else Color(0xFF6A617E)
         )
     }

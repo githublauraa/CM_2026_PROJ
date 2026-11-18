@@ -1,6 +1,7 @@
 package com.example.voxel_review.ui.screens.Discover.components
 
 
+import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.border
 import com.example.voxel_review.ui.theme.VoxelBorder
 import com.example.voxel_review.ui.theme.VoxelSurface
@@ -37,7 +38,7 @@ import com.example.voxel_review.ui.theme.tertiaryDark
 fun DiscoverSearchBar(
     query: String,
     onQueryChange: (String) -> Unit,
-    placeholder: String = "Buscar juegos...",
+    placeholder: String = stringResource(R.string.search_games),
     modifier: Modifier = Modifier
 ) {
     TextField(
@@ -58,7 +59,7 @@ fun DiscoverSearchBar(
         leadingIcon = {
             Icon(
                 painter = painterResource(R.drawable.ic_search),
-                contentDescription = "icono buscador",
+                contentDescription = stringResource(R.string.search_icon),
                 tint = onSurfaceVariantDark,
                 modifier = Modifier.size(20.dp)
             )

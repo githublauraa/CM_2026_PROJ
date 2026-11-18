@@ -1,5 +1,7 @@
 package com.example.voxel_review.ui.screens.profile
 
+import com.example.voxel_review.R
+import com.example.voxel_review.data.localization.AppStrings
 import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -24,6 +26,7 @@ class ProfileViewModel @Inject constructor(
 	private val userRepository: UserRepository,
 	private val reviewRepository: ReviewRepository,
 	private val libraryRepository: LibraryRepository,
+	private val strings: AppStrings
 ) : ViewModel() {
 
 	private val _uiState = MutableStateFlow(
@@ -63,7 +66,7 @@ class ProfileViewModel @Inject constructor(
 					)
 				}
             } else {
-                _uiState.update { it.copy(errorMessage = result.exceptionOrNull()?.message ?: "No se pudo cargar el perfil") }
+                _uiState.update { it.copy(errorMessage = result.exceptionOrNull()?.message ?: strings[R.string.error_profile]) }
             }
         }
     }
@@ -91,7 +94,7 @@ class ProfileViewModel @Inject constructor(
 					state.copy(
 						profile = state.profile?.copy(emailVerified = true),
 						isVerifyingEmail = false,
-						verificationMessage = "¡Correo confirmado exitosamente!"
+						verificationMessage = strings[R.string.email_verified]
 					)
 				}
 			} else {
@@ -100,14 +103,14 @@ class ProfileViewModel @Inject constructor(
 					_uiState.update {
 						it.copy(
 							isVerifyingEmail = false,
-							verificationMessage = "Te enviamos un correo de verificación. Confírmalo en tu bandeja y vuelve a pulsar este botón."
+							verificationMessage = strings[R.string.verification_email_sent]
 						)
 					}
 				} else {
 					_uiState.update {
 						it.copy(
 							isVerifyingEmail = false,
-							verificationMessage = sendResult.exceptionOrNull()?.message ?: "No se pudo enviar el correo de verificación"
+							verificationMessage = sendResult.exceptionOrNull()?.message ?: strings[R.string.error_email_verification]
 						)
 					}
 				}
@@ -133,7 +136,7 @@ class ProfileViewModel @Inject constructor(
 			} else {
 				_uiState.update {
 					it.copy(
-						reviewsError = result.exceptionOrNull()?.message ?: "No se pudieron cargar las reseñas",
+						reviewsError = result.exceptionOrNull()?.message ?: strings[R.string.error_reviews],
                         isReviewsLoading = false
 					)
 				}
@@ -156,7 +159,7 @@ class ProfileViewModel @Inject constructor(
 			} else {
 				_uiState.update {
 					it.copy(
-						libraryError = result.exceptionOrNull()?.message ?: "No se pudo cargar la colección",
+						libraryError = result.exceptionOrNull()?.message ?: strings[R.string.error_collection],
 						isLibraryLoading = false
 					)
 				}
@@ -220,7 +223,7 @@ class ProfileViewModel @Inject constructor(
 			} else {
 				_uiState.update {
 					it.copy(
-						deleteReviewError = result.exceptionOrNull()?.message ?: "Error al eliminar la reseña"
+						deleteReviewError = result.exceptionOrNull()?.message ?: strings[R.string.error_review_delete]
 					)
 				}
 			}
@@ -246,7 +249,7 @@ class ProfileViewModel @Inject constructor(
 			} else {
 				_uiState.update {
 					it.copy(
-						errorMessage = result.exceptionOrNull()?.message ?: "Error al actualizar la reseña"
+						errorMessage = result.exceptionOrNull()?.message ?: strings[R.string.error_review_update]
 					)
 				}
 			}

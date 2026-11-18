@@ -1,5 +1,7 @@
 package com.example.voxel_review.ui.screens.writeReview.components
 
+import com.example.voxel_review.R
+import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
@@ -36,7 +38,7 @@ fun ReviewText(
         TextField(
             value = text,
             onValueChange = onTextChange,
-            label = { Text("Escribe tu reseña aquí...") },
+            label = { Text(stringResource(R.string.review_placeholder)) },
             colors = TextFieldDefaults.colors(
                 focusedTextColor = onErrorLight,
                 unfocusedTextColor = onErrorLight,

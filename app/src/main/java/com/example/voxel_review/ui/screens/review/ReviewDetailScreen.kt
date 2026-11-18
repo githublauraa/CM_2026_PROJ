@@ -1,5 +1,7 @@
 package com.example.voxel_review.ui.screens.review
 
+import com.example.voxel_review.R
+import androidx.compose.ui.res.stringResource
 import com.google.firebase.auth.FirebaseAuth
 import android.widget.Toast
 import androidx.compose.ui.platform.LocalContext
@@ -72,13 +74,13 @@ fun ReviewDetailScreen(
 
         state.errorMessage != null -> {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                Text(text = state.errorMessage ?: "Error desconocido")
+                Text(text = state.errorMessage ?: stringResource(R.string.unknown_error))
             }
         }
 
         state.review == null -> {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                Text(text = "No hay reseñas disponibles")
+                Text(text = stringResource(R.string.no_reviews))
             }
         }
 

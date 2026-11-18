@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.dp
 import com.example.voxel_review.ui.screens.settings.components.GamerPreferencesSection
 import com.example.voxel_review.ui.screens.settings.components.GeneralSettingsSection
 import com.example.voxel_review.ui.screens.settings.components.SettingsHeader
+import com.example.voxel_review.ui.screens.settings.components.LanguageSelector
 import com.example.voxel_review.ui.theme.Voxel_ReviewTheme
 import com.example.voxel_review.ui.utils.FondoPantalla
 import com.example.voxel_review.ui.theme.VoxelSurfaceVariant
@@ -25,7 +26,9 @@ fun SettingsScreen(
     selectedAccent: AccentOption,
     onNotificationsChange: (Boolean) -> Unit,
     onAccentChange: (AccentOption) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    language: AppLanguage = AppLanguage.SPANISH,
+    onLanguageChange: (AppLanguage) -> Unit = {}
 ) {
 
     Box(
@@ -62,6 +65,8 @@ fun SettingsScreen(
                 notificationsEnabled = notificationsEnabled,
                 onNotificationsChange = onNotificationsChange
             )
+
+            LanguageSelector(language = language, onLanguageChange = onLanguageChange)
 
             GamerPreferencesSection(
                 selectedAccent = selectedAccent,

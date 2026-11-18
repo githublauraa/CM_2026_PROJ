@@ -1,5 +1,7 @@
 package com.example.voxel_review.ui.screens.profile
 
+import com.example.voxel_review.R
+import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -122,7 +124,7 @@ fun ProfileContent(
         Column(modifier = modifier.fillMaxSize().background(VoxelBackground)) {
             TopBar(onBackClick = onBackClick, onClickImage = onClickImage)
             com.example.voxel_review.ui.utils.ContentStatus(
-                message = state.errorMessage ?: "Cargando perfil…",
+                message = state.errorMessage ?: stringResource(R.string.edit_profile_loading),
                 loading = state.errorMessage == null,
                 onRetry = if (state.errorMessage != null) onRetry else null
             )
@@ -188,7 +190,7 @@ fun ProfileContent(
                 } else {
                     Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                         ButtonFollow(
-                            text = if (profile.followed) "siguiendo" else "seguir",
+                            text = if (profile.followed) stringResource(R.string.profile_following) else stringResource(R.string.profile_follow),
                             buttonFollowPressed = buttonFollowPressed
                         )
                         if (onMessageClick != null) {
@@ -196,7 +198,7 @@ fun ProfileContent(
                                 onClick = onMessageClick,
                                 modifier = Modifier.testTag("openProfileChat")
                             ) {
-                                Text("Mensaje")
+                                Text(stringResource(R.string.profile_message))
                             }
                         }
                     }
@@ -210,7 +212,7 @@ fun ProfileContent(
                         modifier = Modifier.testTag("btnVerifyEmail")
                     ) {
                         Text(
-                            text = if (state.isVerifyingEmail) "Verificando..." else "Confirmar / Verificar correo",
+                            text = if (state.isVerifyingEmail) stringResource(R.string.profile_verifying) else stringResource(R.string.profile_verify_email),
                             color = onSurfaceVariantDark,
                             fontWeight = FontWeight.Bold
                         )
@@ -243,7 +245,7 @@ fun ProfileContent(
             when (state.selectedTab) {
                 ProfileContentTab.REVIEWS -> {
                     when {
-                        state.isReviewsLoading -> com.example.voxel_review.ui.utils.ContentStatus("Cargando reseñas…", loading = true)
+                        state.isReviewsLoading -> com.example.voxel_review.ui.utils.ContentStatus(stringResource(R.string.reviews_loading), loading = true)
                         state.reviewsError != null -> com.example.voxel_review.ui.utils.ContentStatus(
                             state.reviewsError, onRetry = onRetryReviews
                         )

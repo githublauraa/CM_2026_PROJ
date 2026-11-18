@@ -1,5 +1,6 @@
 package com.example.voxel_review.ui.screens.review.components
 
+import com.example.voxel_review.ui.utils.reviewTitle
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -78,7 +79,7 @@ fun ReviewDetailContent(
             )
 
             DescriptionSection(
-                titulo = review.tituloDescripcion,
+                titulo = reviewTitle(review),
                 descripcion = review.descripcion,
                 imagenUsuario = review.imagenUsuario,
                 likes = review.cantidadLikes,

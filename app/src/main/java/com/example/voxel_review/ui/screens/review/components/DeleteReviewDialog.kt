@@ -1,5 +1,7 @@
 package com.example.voxel_review.ui.screens.review.components
 
+import com.example.voxel_review.R
+import androidx.compose.ui.res.stringResource
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -30,7 +32,7 @@ fun DeleteReviewDialog(
 
         title = {
             Text(
-                text = "Eliminar reseña",
+                text = stringResource(R.string.delete_review),
                 fontWeight = FontWeight.Bold,
                 fontSize = 20.sp,
                 color = Color.White
@@ -39,7 +41,7 @@ fun DeleteReviewDialog(
 
         text = {
             Text(
-                text = "¿Estás seguro de que quieres eliminar esta reseña?",
+                text = stringResource(R.string.confirm_delete_review),
                 color = Color.White
             )
         },
@@ -47,7 +49,7 @@ fun DeleteReviewDialog(
         confirmButton = {
             TextButton(onClick = onConfirm) {
                 Text(
-                    text = "Aceptar",
+                    text = stringResource(R.string.accept),
                     fontWeight = FontWeight.Bold,
                     color = errorDark
                 )
@@ -57,7 +59,7 @@ fun DeleteReviewDialog(
         dismissButton = {
             TextButton(onClick = onDismiss) {
                 Text(
-                    text = "Cancelar",
+                    text = stringResource(R.string.cancel),
                     color = Color.White
                 )
             }

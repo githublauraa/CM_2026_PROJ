@@ -1,5 +1,7 @@
 package com.example.voxel_review.ui.screens.profile.components
 
+import com.example.voxel_review.R
+import androidx.compose.ui.res.stringResource
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -36,6 +38,6 @@ fun pickImageButton(onImageSelected: (Uri) -> Unit, modifier: Modifier = Modifie
     ) {
         Icon(Icons.Outlined.PhotoCamera, contentDescription = null, modifier = Modifier.size(16.dp))
         Spacer(Modifier.width(6.dp))
-        Text("Cambiar foto")
+        Text(stringResource(R.string.change_photo))
     }
 }

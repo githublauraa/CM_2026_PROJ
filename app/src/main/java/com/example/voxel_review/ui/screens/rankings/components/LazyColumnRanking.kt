@@ -1,5 +1,7 @@
 package com.example.voxel_review.ui.screens.rankings.components
 
+import com.example.voxel_review.R
+import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -37,8 +39,8 @@ fun LazyColumnRanking(
     if (results.isEmpty()) {
         Box(modifier.fillMaxSize().padding(24.dp), contentAlignment = Alignment.Center) {
             Text(
-                text = if (query.isEmpty()) "Aún no hay críticos en la clasificación"
-                    else "No encontramos críticos con ese nombre",
+                text = if (query.isEmpty()) stringResource(R.string.rankings_empty)
+                    else stringResource(R.string.rankings_no_matches),
                 textAlign = TextAlign.Center,
                 color = onSurfaceVariantDark,
                 style = MaterialTheme.typography.bodyMedium
@@ -59,7 +61,7 @@ fun LazyColumnRanking(
             if (results.size > 3) {
                 item(key = "ranking-standings") {
                     Text(
-                        text = "Más críticos",
+                        text = stringResource(R.string.rankings_more_critics),
                         modifier = Modifier.padding(top = 10.dp, bottom = 2.dp),
                         style = MaterialTheme.typography.titleMedium,
                         color = VoxelTextPrimary

@@ -1,5 +1,7 @@
 package com.example.voxel_review.repository
 
+import com.example.voxel_review.R
+import com.example.voxel_review.data.localization.AppStrings
 import com.example.voxel_review.data.dataSource.impl.firestore.LibraryFirestoreDataSourceImpl
 import com.example.voxel_review.data.dtos.LibraryEntryDto
 import com.example.voxel_review.data.info.InfoGame.GameDetailInfo
@@ -8,6 +10,7 @@ import com.example.voxel_review.data.repository.LibraryRepository
 import com.google.common.truth.Truth.assertThat
 import io.mockk.coEvery
 import io.mockk.coVerify
+import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import org.junit.Test
@@ -15,7 +18,9 @@ import org.junit.Test
 class LibraryRepositoryTest {
 
     private val dataSource = mockk<LibraryFirestoreDataSourceImpl>()
-    private val repository = LibraryRepository(dataSource)
+    private val repository = LibraryRepository(dataSource, mockk<AppStrings>(relaxed = true) {
+        every { get(R.string.error_library_remove) } returns "No se pudo quitar el juego de tu colección."
+    })
 
     private val sampleGame = GameDetailInfo(
         id = "game-1",

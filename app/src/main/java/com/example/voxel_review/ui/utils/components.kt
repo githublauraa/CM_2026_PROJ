@@ -140,7 +140,7 @@ fun MostrarLogoPreview() {
 @Preview
 fun BotonPreview() {
     Boton(
-        textoBoton = "Iniciar sesion",
+        textoBoton = stringResource(R.string.iniciar_sesi_n),
         colorFondo = VoxelSurface,
         colorBorde = VoxelSurface,
         colorLetra = VoxelSurface,

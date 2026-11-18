@@ -1,5 +1,7 @@
 package com.example.voxel_review.ui.screens.settings.components
 
+import com.example.voxel_review.R
+import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.runtime.Composable
@@ -16,7 +18,7 @@ fun GamerPreferencesSection(
     Column(
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        SectionTitle("PREFERENCIAS GAMER")
+        SectionTitle(stringResource(R.string.settings_gaming))
 
         AccentSelector(
             selectedAccent = selectedAccent,

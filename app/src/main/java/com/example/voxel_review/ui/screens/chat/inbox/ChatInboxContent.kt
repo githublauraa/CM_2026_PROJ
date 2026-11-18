@@ -1,5 +1,7 @@
 package com.example.voxel_review.ui.screens.chat.inbox
 
+import com.example.voxel_review.R
+import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -31,7 +33,7 @@ fun ChatInboxContent(
     Scaffold(
         modifier = modifier.fillMaxSize(),
         containerColor = VoxelBackground,
-        topBar = { ScreenHeader("Chats", onBack) }
+        topBar = { ScreenHeader(stringResource(R.string.nav_chats), onBack) }
     ) { padding ->
         LazyColumn(
             modifier = Modifier.fillMaxSize().padding(padding)
@@ -43,10 +45,10 @@ fun ChatInboxContent(
                     ContentStatus(state.error, onRetry = onRetry)
                 }
                 state.isLoading && state.conversations.isEmpty() -> item {
-                    ContentStatus("Cargando chats…", loading = true)
+                    ContentStatus(stringResource(R.string.chat_inbox_loading), loading = true)
                 }
                 state.conversations.isEmpty() -> item {
-                    ContentStatus("Para iniciar un chat, abre el perfil de un usuario y toca Mensaje.")
+                    ContentStatus(stringResource(R.string.chat_inbox_empty))
                 }
             }
 
@@ -67,7 +69,7 @@ fun ChatInboxContent(
             if (state.nextCursor != null) {
                 item {
                     ChatHistoryButton(
-                        label = "Cargar más chats",
+                        label = stringResource(R.string.chat_inbox_older),
                         isLoading = state.isLoadingOlder,
                         error = state.olderError,
                         onClick = onLoadOlder

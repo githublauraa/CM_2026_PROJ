@@ -1,5 +1,8 @@
 package com.example.voxel_review.ui.screens.following
 
+import androidx.compose.ui.res.pluralStringResource
+import com.example.voxel_review.R
+import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -97,7 +100,7 @@ fun FollowingContent(
     Scaffold(
         modifier = modifier.fillMaxSize().imePadding(),
         containerColor = VoxelBackground,
-        topBar = { ScreenHeader("Conexiones", onBackClick) }
+        topBar = { ScreenHeader(stringResource(R.string.connections), onBackClick) }
     ) { padding ->
         Column(Modifier.fillMaxSize().padding(padding)) {
             Row(
@@ -109,14 +112,14 @@ fun FollowingContent(
                     .padding(4.dp),
                 horizontalArrangement = Arrangement.spacedBy(4.dp)
             ) {
-                ConnectionTab("Seguidores", showFollowers, { onTabSelected(true) }, Modifier.weight(1f))
-                ConnectionTab("Seguidos", !showFollowers, { onTabSelected(false) }, Modifier.weight(1f))
+                ConnectionTab(stringResource(R.string.followers), showFollowers, { onTabSelected(true) }, Modifier.weight(1f))
+                ConnectionTab(stringResource(R.string.following), !showFollowers, { onTabSelected(false) }, Modifier.weight(1f))
             }
 
             when {
                 state.isLoading -> Column {
                     ContentStatus(
-                        if (showFollowers) "Cargando seguidores…" else "Cargando personas seguidas…",
+                        if (showFollowers) stringResource(R.string.followers_loading) else stringResource(R.string.following_loading),
                         loading = true
                     )
                 }
@@ -125,8 +128,8 @@ fun FollowingContent(
                 }
                 state.users.isEmpty() -> Column {
                     ContentStatus(
-                        if (showFollowers) "Este usuario todavía no tiene seguidores"
-                        else "Este usuario todavía no sigue a nadie"
+                        if (showFollowers) stringResource(R.string.followers_empty)
+                        else stringResource(R.string.following_empty)
                     )
                 }
                 else -> {
@@ -136,15 +139,15 @@ fun FollowingContent(
                         DiscoverSearchBar(
                             query = query,
                             onQueryChange = { query = it },
-                            placeholder = "Buscar por nombre de usuario"
+                            placeholder = stringResource(R.string.search_username)
                         )
                         val count = state.users.size
                         val summary = if (search.isNotEmpty()) {
-                            "${users.size} de $count perfiles"
+                            stringResource(R.string.profile_count_matches, users.size, count)
                         } else if (showFollowers) {
-                            if (count == 1) "1 seguidor" else "$count seguidores"
+                            if (count == 1) stringResource(R.string.one_follower) else pluralStringResource(R.plurals.follower_count, count, count)
                         } else {
-                            if (count == 1) "1 perfil seguido" else "$count perfiles seguidos"
+                            if (count == 1) stringResource(R.string.one_following) else pluralStringResource(R.plurals.following_count, count, count)
                         }
                         Text(
                             text = summary,
@@ -153,7 +156,7 @@ fun FollowingContent(
                             modifier = Modifier.padding(start = 20.dp, top = 16.dp, end = 20.dp)
                         )
                         if (users.isEmpty()) {
-                            ContentStatus("No se encontraron perfiles con ese nombre.")
+                            ContentStatus(stringResource(R.string.profiles_no_matches))
                         } else {
                             LazyColumn(
                                 modifier = Modifier.weight(1f),
@@ -246,7 +249,7 @@ private fun FollowingUserCard(user: ProfileInfo, onClick: () -> Unit) {
                         overflow = TextOverflow.Ellipsis
                     )
                     Text(
-                        text = if (user.followers == 1) "1 seguidor" else "${user.followers} seguidores",
+                        text = if (user.followers == 1) stringResource(R.string.one_follower) else pluralStringResource(R.plurals.follower_count, user.followers, user.followers),
                         color = VoxelTextSecondary,
                         style = MaterialTheme.typography.bodySmall
                     )
@@ -259,7 +262,7 @@ private fun FollowingUserCard(user: ProfileInfo, onClick: () -> Unit) {
                     verticalArrangement = Arrangement.spacedBy(4.dp)
                 ) {
                     Text(
-                        text = "Biografía",
+                        text = stringResource(R.string.register_bio),
                         color = VoxelTextSecondary,
                         style = MaterialTheme.typography.labelMedium,
                         fontWeight = FontWeight.SemiBold
@@ -281,7 +284,7 @@ private fun FollowingUserCard(user: ProfileInfo, onClick: () -> Unit) {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Ver perfil",
+                    text = stringResource(R.string.view_profile),
                     color = VoxelPrimary,
                     style = MaterialTheme.typography.labelLarge
                 )

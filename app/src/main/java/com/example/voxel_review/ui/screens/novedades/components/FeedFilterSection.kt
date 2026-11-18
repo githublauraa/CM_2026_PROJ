@@ -1,5 +1,7 @@
 package com.example.voxel_review.ui.screens.novedades.components
 
+import com.example.voxel_review.R
+import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -50,9 +52,9 @@ fun FeedFilterSection(
             ) {
                 Icon(Icons.Outlined.Place, contentDescription = null, tint = VoxelPrimary)
                 Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(3.dp)) {
-                    Text("Mapa de reseñas", style = MaterialTheme.typography.titleMedium)
+                    Text(stringResource(R.string.reviews_map), style = MaterialTheme.typography.titleMedium)
                     Text(
-                        "Explora reseñas por ubicación",
+                        stringResource(R.string.reviews_map_subtitle),
                         style = MaterialTheme.typography.bodySmall,
                         color = onSurfaceVariantDark
                     )
@@ -67,13 +69,13 @@ fun FeedFilterSection(
             horizontalArrangement = Arrangement.spacedBy(4.dp)
         ) {
             FeedFilterChip(
-                text = "Todos",
+                text = stringResource(R.string.filter_all),
                 isSelected = selectedFilter == "Todos",
                 onClick = { onFilterSelected("Todos") },
                 modifier = Modifier.weight(1f)
             )
             FeedFilterChip(
-                text = "Siguiendo",
+                text = stringResource(R.string.filter_following),
                 isSelected = selectedFilter == "Siguiendo",
                 onClick = { onFilterSelected("Siguiendo") },
                 modifier = Modifier.weight(1f).testTag("btnSiguiendo")

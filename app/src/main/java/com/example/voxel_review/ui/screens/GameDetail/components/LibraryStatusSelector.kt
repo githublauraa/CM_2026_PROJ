@@ -1,5 +1,8 @@
 package com.example.voxel_review.ui.screens.GameDetail.components
 
+import com.example.voxel_review.ui.utils.libraryStatusLabel
+import com.example.voxel_review.R
+import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -51,7 +54,7 @@ fun LibraryStatusSelector(
 ) {
     Column(modifier = modifier.fillMaxWidth()) {
         Text(
-            text = "MI COLECCIÓN",
+            text = stringResource(R.string.my_collection_uppercase),
             color = Color.White,
             fontSize = 18.sp,
             fontWeight = FontWeight.Bold
@@ -95,12 +98,12 @@ fun LibraryStatusSelector(
                 ) {
                     Icon(
                         imageVector = icon,
-                        contentDescription = status.label,
+                        contentDescription = libraryStatusLabel(status),
                         tint = if (isSelected) surfaceDark else VoxelTextSecondary,
                         modifier = Modifier.size(16.dp)
                     )
                     Text(
-                        text = status.label,
+                        text = libraryStatusLabel(status),
                         color = if (isSelected) surfaceDark else Color.White,
                         fontSize = 13.sp,
                         fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Medium

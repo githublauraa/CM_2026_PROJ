@@ -1,5 +1,7 @@
 package com.example.voxel_review.data.repository
 
+import com.example.voxel_review.R
+import com.example.voxel_review.data.localization.AppStrings
 import com.example.voxel_review.data.dataSource.impl.firestore.UserFirestoreDataSourceImpl
 import com.example.voxel_review.data.info.profile.ProfileInfo
 import javax.inject.Inject
@@ -8,19 +10,20 @@ import kotlinx.coroutines.CancellationException
 
 class UserRepository @Inject constructor(
 	private val userRemoteDataSource: UserFirestoreDataSourceImpl,
-	private val authRepository: AuthRepository
+	private val authRepository: AuthRepository,
+	private val strings: AppStrings
 ) {
 	suspend fun getUserById(id: String): Result<ProfileInfo> {
 		return try {
 			val currentUserId = authRepository.currentUser?.uid.orEmpty()
 			val user = userRemoteDataSource.getUserById(id, currentUserId)
-			if (user == null) return Result.failure(Exception("No encontramos este perfil."))
+			if (user == null) return Result.failure(Exception(strings[R.string.profile_not_found]))
 			val userProfileInfo = user.toUserProfileinfo()
 			Result.success(userProfileInfo)
 		} catch (cancellation: CancellationException) {
 		    throw cancellation
 		} catch (e: Exception) {
-			Result.failure(Exception("No se pudo cargar el perfil.", e))
+			Result.failure(Exception(strings[R.string.error_profile], e))
 		}
 	}
 
@@ -30,7 +33,7 @@ class UserRepository @Inject constructor(
         } catch (e: CancellationException) {
             throw e
         } catch (e: Exception) {
-            Result.failure(Exception("No se pudieron cargar las personas seguidas.", e))
+            Result.failure(Exception(strings[R.string.error_following], e))
         }
     }
 
@@ -40,7 +43,7 @@ class UserRepository @Inject constructor(
         } catch (e: CancellationException) {
             throw e
         } catch (e: Exception) {
-            Result.failure(Exception("No se pudieron cargar los seguidores.", e))
+            Result.failure(Exception(strings[R.string.error_followers], e))
         }
     }
 
@@ -52,7 +55,7 @@ class UserRepository @Inject constructor(
 		} catch (cancellation: CancellationException) {
 		    throw cancellation
 		} catch (e: Exception) {
-			Result.failure(Exception("No se pudo cargar la clasificación.", e))
+			Result.failure(Exception(strings[R.string.error_rankings], e))
 		}
 	}
 
@@ -64,7 +67,7 @@ class UserRepository @Inject constructor(
 		} catch (cancellation: CancellationException) {
 		    throw cancellation
 		} catch (e: Exception) {
-			Result.failure(Exception("No se pudo guardar el perfil.", e))
+			Result.failure(Exception(strings[R.string.error_profile_save], e))
 		}
 	}
 
@@ -76,7 +79,7 @@ class UserRepository @Inject constructor(
 		} catch (cancellation: CancellationException) {
 		    throw cancellation
 		} catch (e: Exception) {
-			Result.failure(Exception("No se pudo actualizar la biografía.", e))
+			Result.failure(Exception(strings[R.string.error_bio], e))
 		}
 
 	}
@@ -89,7 +92,7 @@ class UserRepository @Inject constructor(
 		} catch (cancellation: CancellationException) {
 		    throw cancellation
 		} catch (e: Exception) {
-			Result.failure(Exception("No se pudo actualizar el seguimiento.", e))
+			Result.failure(Exception(strings[R.string.error_follow], e))
 		}
 	}
 
@@ -101,7 +104,7 @@ class UserRepository @Inject constructor(
 		} catch (cancellation: CancellationException) {
 		    throw cancellation
 		} catch (e: Exception) {
-			Result.failure(Exception("No se pudo actualizar el nombre de usuario.", e))
+			Result.failure(Exception(strings[R.string.error_username], e))
 		}
 
 	}
@@ -113,7 +116,7 @@ class UserRepository @Inject constructor(
 		} catch (cancellation: CancellationException) {
 		    throw cancellation
 		} catch (e: Exception) {
-			Result.failure(Exception("No se pudo guardar la verificación del correo.", e))
+			Result.failure(Exception(strings[R.string.error_save_verification], e))
 		}
 	}
 }

@@ -1,5 +1,7 @@
 package com.example.voxel_review.ui.screens.notifications.components
 
+import com.example.voxel_review.R
+import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -49,14 +51,21 @@ fun HighlightedNotificationCard(
     val isLike = notification.reviewId != null
     val accent = if (isLike) VoxelSecondary else VoxelPrimary
     val action = when {
-        notification.chatSenderId != null -> "Abrir chat"
-        isLike -> "Ver reseña"
-        else -> "Ver perfil"
+        notification.chatSenderId != null -> stringResource(R.string.chat_notification_open)
+        isLike -> stringResource(R.string.view_review)
+        else -> stringResource(R.string.view_profile)
     }
     val icon = when {
         notification.chatSenderId != null -> Icons.AutoMirrored.Outlined.Chat
         isLike -> Icons.Filled.Favorite
         else -> Icons.Outlined.PersonAdd
+    }
+
+    val message = when {
+        isLike && notification.reviewGameTitle.isNotBlank() ->
+            stringResource(R.string.notice_like_game, notification.reviewGameTitle)
+        isLike -> stringResource(R.string.notice_like)
+        else -> notification.message
     }
 
     Row(
@@ -111,7 +120,7 @@ fun HighlightedNotificationCard(
             )
 
             Text(
-                text = notification.message,
+                text = message,
                 color = VoxelTextSecondary,
                 style = MaterialTheme.typography.bodySmall
             )

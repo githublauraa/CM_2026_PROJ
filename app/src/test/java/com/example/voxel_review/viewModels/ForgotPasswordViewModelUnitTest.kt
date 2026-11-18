@@ -5,6 +5,9 @@ import com.example.voxel_review.data.repository.AuthRepository
 import com.example.voxel_review.ui.screens.forgotPassword.ForgotPasswordViewModel
 import com.google.common.truth.Truth.assertThat
 import io.mockk.coEvery
+import io.mockk.every
+import com.example.voxel_review.R
+import com.example.voxel_review.data.localization.AppStrings
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -26,7 +29,9 @@ class ForgotPasswordViewModelUnitTest {
     fun setUp(){
         Dispatchers.setMain(StandardTestDispatcher())
         authRepository = mockk()
-        viewModel = ForgotPasswordViewModel (authRepository)
+        val strings = mockk<AppStrings>(relaxed = true)
+        every { strings[R.string.valid_email_required] } returns "Ingresa un correo electrónico válido"
+        viewModel = ForgotPasswordViewModel(authRepository, strings)
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)

@@ -1,5 +1,7 @@
 package com.example.voxel_review.ui.screens.notifications.components
 
+import com.example.voxel_review.R
+import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -45,7 +47,7 @@ fun NotificationSectionHeader(
 
         if (showSeeAll) {
             Text(
-                text = "Ver todos",
+                text = stringResource(R.string.view_all),
                 color = secondaryDark,
                 fontSize = 11.sp,
                 fontWeight = FontWeight.Bold,
@@ -61,7 +63,7 @@ fun NotificationSectionHeader(
 @Composable
 fun NotificationSectionHeaderPreview() {
     NotificationSectionHeader(
-        title = "DESTACADOS",
+        title = stringResource(R.string.highlights_uppercase),
         showSeeAll = true,
         onSeeAllClick = {}
     )

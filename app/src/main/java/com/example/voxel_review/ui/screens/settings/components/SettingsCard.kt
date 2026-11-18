@@ -21,10 +21,11 @@ import com.example.voxel_review.ui.theme.Voxel_ReviewTheme
 @Composable
 fun SettingsCard(
     color: Color,
+    modifier: Modifier = Modifier,
     content: @Composable ColumnScope.() -> Unit
 ) {
     Card(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .border(
                 1.dp,

@@ -1,5 +1,7 @@
 package com.example.voxel_review.ui.screens.following
 
+import com.example.voxel_review.R
+import com.example.voxel_review.data.localization.AppStrings
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.voxel_review.data.repository.UserRepository
@@ -13,7 +15,8 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel
 class FollowingViewModel @Inject constructor(
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
+    private val strings: AppStrings
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(FollowingState())
     val uiState: StateFlow<FollowingState> = _uiState
@@ -25,7 +28,7 @@ class FollowingViewModel @Inject constructor(
             _uiState.update { FollowingState(showingFollowers = showFollowers) }
             if (userId.isBlank()) {
                 _uiState.update {
-                    it.copy(isLoading = false, error = "No se pudo identificar al usuario")
+                    it.copy(isLoading = false, error = strings[R.string.error_user_id])
                 }
                 return@launch
             }
@@ -40,7 +43,7 @@ class FollowingViewModel @Inject constructor(
                 _uiState.update {
                     it.copy(
                         isLoading = false,
-                        error = failure.message ?: "No se pudo cargar la lista."
+                        error = failure.message ?: strings[R.string.error_load_list]
                     )
                 }
             }

@@ -1,5 +1,7 @@
 package com.example.voxel_review.data.repository
 
+import com.example.voxel_review.R
+import com.example.voxel_review.data.localization.AppStrings
 import com.example.voxel_review.data.dataSource.impl.firestore.ReviewFirebaseDataSourceImpl
 import com.example.voxel_review.data.dtos.CreateReviewDto
 import com.example.voxel_review.data.dtos.toReviewInfo
@@ -14,14 +16,15 @@ import kotlinx.coroutines.flow.map
 
 class ReviewRepository @Inject constructor(
     private val reviewRemoteDataSource: ReviewFirebaseDataSourceImpl,
-    private val authRepository: AuthRepository
-    ) {
+    private val authRepository: AuthRepository,
+    private val strings: AppStrings
+) {
     suspend fun getReceivedLikes(userId: String): Result<List<NotificationInfo>> = try {
         Result.success(reviewRemoteDataSource.getReceivedLikes(userId))
     } catch (e: CancellationException) {
         throw e
     } catch (e: Exception) {
-        Result.failure(Exception("No se pudieron cargar los Me gusta recibidos.", e))
+        Result.failure(Exception(strings[R.string.error_received_likes], e))
     }
 
     suspend fun getAllReviews(): Result<List<ReviewInfo>> {
@@ -31,7 +34,7 @@ class ReviewRepository @Inject constructor(
         } catch (cancellation: CancellationException) {
             throw cancellation
         } catch (e: Exception) {
-            Result.failure(Exception("No se pudieron cargar las reseñas.", e))
+            Result.failure(Exception(strings[R.string.error_reviews], e))
         }
     }
 
@@ -42,7 +45,7 @@ class ReviewRepository @Inject constructor(
         } catch (e: CancellationException) {
             throw e
         } catch (e: Exception) {
-            Result.failure(Exception("No se pudieron cargar las reseñas del mapa.", e))
+            Result.failure(Exception(strings[R.string.error_map_reviews], e))
         }
     }
 
@@ -56,7 +59,7 @@ class ReviewRepository @Inject constructor(
             selectedReview?.toReviewInfo()
         }.catch { error ->
             if (error is CancellationException || error !is Exception) throw error
-            throw Exception("No se pudo cargar la reseña.", error)
+            throw Exception(strings[R.string.error_review], error)
         }
 
     suspend fun getGameReviews(id: String): Result<List<ReviewInfo>> {
@@ -68,7 +71,7 @@ class ReviewRepository @Inject constructor(
         } catch (cancellation: CancellationException) {
             throw cancellation
         } catch (e: Exception) {
-            Result.failure(Exception("No se pudieron cargar las reseñas del videojuego.", e))
+            Result.failure(Exception(strings[R.string.error_game_reviews], e))
         }
     }
 
@@ -80,7 +83,7 @@ class ReviewRepository @Inject constructor(
         } catch (cancellation: CancellationException) {
             throw cancellation
         } catch (e: Exception) {
-            Result.failure(Exception("No se pudieron cargar las reseñas del perfil.", e))
+            Result.failure(Exception(strings[R.string.error_profile_reviews], e))
         }
     }
 
@@ -94,15 +97,15 @@ class ReviewRepository @Inject constructor(
             Result.success(Unit)
         } catch (e: HttpException) {
             val message = if (e.code() == 400) {
-                "No se pudo publicar la reseña. Revisa si ya publicaste una para este videojuego."
+                strings[R.string.error_review_duplicate]
             } else {
-                "No se pudo publicar la reseña."
+                strings[R.string.error_review_post]
             }
             Result.failure(Exception(message, e))
         } catch (cancellation: CancellationException) {
             throw cancellation
         } catch (e: Exception) {
-            Result.failure(Exception("No se pudo publicar la reseña.", e))
+            Result.failure(Exception(strings[R.string.error_review_post], e))
         }
     }
 
@@ -113,7 +116,7 @@ class ReviewRepository @Inject constructor(
         } catch (cancellation: CancellationException) {
             throw cancellation
         } catch (e: Exception) {
-            Result.failure(Exception("No se pudo eliminar la reseña.", e))
+            Result.failure(Exception(strings[R.string.error_review_delete], e))
         }
     }
 
@@ -124,7 +127,7 @@ class ReviewRepository @Inject constructor(
         } catch (cancellation: CancellationException) {
             throw cancellation
         } catch (e: Exception) {
-            Result.failure(Exception("No se pudo actualizar la reseña.", e))
+            Result.failure(Exception(strings[R.string.error_review_update], e))
         }
     }
 
@@ -136,7 +139,7 @@ class ReviewRepository @Inject constructor(
         } catch (cancellation: CancellationException) {
             throw cancellation
         } catch (e: Exception) {
-            Result.failure(Exception("No se pudieron cargar los comentarios.", e))
+            Result.failure(Exception(strings[R.string.error_comments], e))
         }
     }
 
@@ -147,7 +150,7 @@ class ReviewRepository @Inject constructor(
         } catch (cancellation: CancellationException) {
             throw cancellation
         } catch (e: Exception) {
-            Result.failure(Exception("No se pudo guardar la reacción.", e))
+            Result.failure(Exception(strings[R.string.error_review_reaction], e))
         }
     }
 
@@ -157,7 +160,7 @@ class ReviewRepository @Inject constructor(
                 reviews.map { it.toReviewInfo() }
             }.catch { error ->
                 if (error is CancellationException || error !is Exception) throw error
-                throw Exception("No se pudieron cargar las reseñas del videojuego.", error)
+                throw Exception(strings[R.string.error_game_reviews], error)
             }
     }
 
@@ -169,7 +172,7 @@ class ReviewRepository @Inject constructor(
         } catch (cancellation: CancellationException) {
             throw cancellation
         } catch (e: Exception) {
-            Result.failure(Exception("No se pudieron cargar las reseñas de las personas que sigues.", e))
+            Result.failure(Exception(strings[R.string.error_followed_reviews], e))
         }
     }
 

@@ -1,5 +1,7 @@
 package com.example.voxel_review.ui.screens.review
 
+import com.example.voxel_review.R
+import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -78,7 +80,7 @@ fun HeroSection(
             verticalArrangement = Arrangement.spacedBy(6.dp)
         ) {
             Text(
-                text = "RESEÑA DEL JUEGO",
+                text = stringResource(R.string.game_review_uppercase),
                 color = VoxelPrimary,
                 fontFamily = FontFamily.SansSerif,
                 fontWeight = FontWeight.Bold,

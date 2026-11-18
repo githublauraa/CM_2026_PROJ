@@ -1,5 +1,8 @@
 package com.example.voxel_review.ui.screens.novedades.components
 
+import com.example.voxel_review.ui.utils.reviewTitle
+import com.example.voxel_review.R
+import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -34,7 +37,7 @@ fun FollowedReviewsSection(
         }
     } else if (reviews.isEmpty()) {
         Text(
-            text = "No hay publicaciones recientes de los usuarios que sigues.",
+            text = stringResource(R.string.feed_no_recent_followed_reviews),
             color = VoxelTextSecondary,
             fontSize = 14.sp,
             modifier = modifier.padding(vertical = 20.dp)
@@ -64,13 +67,13 @@ private fun FollowedReviewCard(review: ReviewInfo, onClick: () -> Unit, onProfil
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp), verticalAlignment = Alignment.CenterVertically) {
                 GameImage(
                     imageUrl = review.imagenJuego,
-                    contentDescription = "Portada de ${review.tituloJuego}",
+                    contentDescription = stringResource(R.string.game_cover, review.tituloJuego),
                     modifier = Modifier.size(width = 64.dp, height = 84.dp)
                         .clip(RoundedCornerShape(8.dp))
                 )
                 Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                     Text(
-                        review.tituloJuego.ifBlank { "Juego no disponible" },
+                        review.tituloJuego.ifBlank { stringResource(R.string.game_unavailable) },
                         color = White, fontSize = 18.sp, fontWeight = FontWeight.Bold,
                         maxLines = 2, overflow = TextOverflow.Ellipsis
                     )
@@ -87,11 +90,11 @@ private fun FollowedReviewCard(review: ReviewInfo, onClick: () -> Unit, onProfil
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 ProfileImage(profileImage = review.imagenUsuario, size = 32)
-                Text(review.username.ifBlank { "Ver perfil" }, color = VoxelPrimary, fontSize = 13.sp, modifier = Modifier.weight(1f))
+                Text(review.username.ifBlank { stringResource(R.string.view_profile) }, color = VoxelPrimary, fontSize = 13.sp, modifier = Modifier.weight(1f))
             }
             if (review.tituloDescripcion.isNotBlank()) {
                 Text(
-                    review.tituloDescripcion,
+                    reviewTitle(review),
                     style = MaterialTheme.typography.titleMedium,
                     color = White,
                     maxLines = 2,
@@ -103,8 +106,8 @@ private fun FollowedReviewCard(review: ReviewInfo, onClick: () -> Unit, onProfil
                 lineHeight = 21.sp, maxLines = 3, overflow = TextOverflow.Ellipsis
             )
             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
-                Text("${review.cantidadLikes} Me gusta", color = VoxelTextSecondary, fontSize = 12.sp)
-                TextButton(onClick = onClick) { Text("Ver reseña", color = VoxelPrimary) }
+                Text(stringResource(R.string.likes_count, review.cantidadLikes), color = VoxelTextSecondary, fontSize = 12.sp)
+                TextButton(onClick = onClick) { Text(stringResource(R.string.view_review), color = VoxelPrimary) }
             }
         }
     }

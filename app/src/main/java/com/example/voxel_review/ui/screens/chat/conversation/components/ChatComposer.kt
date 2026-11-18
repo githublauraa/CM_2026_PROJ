@@ -1,5 +1,7 @@
 package com.example.voxel_review.ui.screens.chat.conversation.components
 
+import com.example.voxel_review.R
+import androidx.compose.ui.res.stringResource
 import android.net.Uri
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -74,7 +76,7 @@ fun ChatComposer(
                     textStyle = MaterialTheme.typography.bodyLarge.copy(fontFamily = FontFamily.SansSerif),
                     placeholder = {
                         Text(
-                            text = if (isSending) "Enviando…" else "Escribe un mensaje",
+                            text = if (isSending) stringResource(R.string.sending) else stringResource(R.string.message_placeholder),
                             color = Color(0xFF525268),
                             fontFamily = FontFamily.SansSerif,
                             fontSize = 15.sp
@@ -108,7 +110,7 @@ fun ChatComposer(
                     ),
                     modifier = Modifier.padding(bottom = 4.dp).size(48.dp).testTag("sendChatMessage")
                 ) {
-                    Icon(Icons.AutoMirrored.Filled.Send, contentDescription = "Enviar mensaje")
+                    Icon(Icons.AutoMirrored.Filled.Send, contentDescription = stringResource(R.string.send_message))
                 }
             }
         }

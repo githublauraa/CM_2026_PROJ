@@ -30,7 +30,7 @@ class EditProfileViewModelUnitTest {
         Dispatchers.setMain(StandardTestDispatcher())
         firebaseAuth = mockk()
         userRepository = mockk()
-        viewModel = EditProfileViewModel(userRepository, firebaseAuth)
+        viewModel = EditProfileViewModel(userRepository, firebaseAuth, mockk(relaxed = true))
     }
 
 

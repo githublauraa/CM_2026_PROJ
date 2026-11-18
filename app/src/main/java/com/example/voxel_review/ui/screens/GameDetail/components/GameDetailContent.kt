@@ -1,6 +1,8 @@
 
 package com.example.voxel_review.ui.screens.GameDetail.components
 
+import com.example.voxel_review.ui.utils.reviewTitle
+import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -89,7 +91,7 @@ fun GameDetailContent(
 
                     else -> {
                         Text(
-                            text = "No se encontró el videojuego",
+                            text = stringResource(R.string.game_not_found),
                             color = Color.White
                         )
                     }
@@ -120,7 +122,7 @@ fun GameDetailContent(
 
                     // Descripción
                     GameDescription(
-                        text = "Sobre el juego",
+                        text = stringResource(R.string.about_game),
                         description = game.descripcion
                     )
 
@@ -151,7 +153,7 @@ fun GameDetailContent(
 
                     // Sección de reseñas
                     Text(
-                        text = "RESEÑAS DE USUARIOS",
+                        text = stringResource(R.string.user_reviews_uppercase),
                         color = Color.White,
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Bold
@@ -174,7 +176,7 @@ fun GameDetailContent(
                     } else if (state.reviews.isEmpty()) {
                         if (state.reviewsError == null) {
                             Text(
-                                text = "Este videojuego todavía no tiene reseñas.",
+                                text = stringResource(R.string.game_no_reviews),
                                 color = Color.LightGray,
                                 fontSize = 14.sp
                             )
@@ -210,7 +212,7 @@ fun GameDetailContent(
                                         placeholder = painterResource(R.drawable.imagen_login_user),
                                         fallback = painterResource(R.drawable.imagen_login_user),
                                         error = painterResource(R.drawable.imagen_login_user),
-                                        contentDescription = "Imagen del usuario",
+                                        contentDescription = stringResource(R.string.profile_photo_description),
                                         modifier = Modifier
                                             .size(55.dp)
                                             .clip(CircleShape)
@@ -226,7 +228,7 @@ fun GameDetailContent(
                                     ) {
 
                                         Text(
-                                            text = review.tituloDescripcion,
+                                            text = reviewTitle(review),
                                             color = Color.White,
                                             fontSize = 16.sp,
                                             fontWeight = FontWeight.SemiBold
@@ -247,7 +249,7 @@ fun GameDetailContent(
                                         )
 
                                         Text(
-                                            text = "Calificación: ${"%.1f".format(review.ratingGeneral)}/5",
+                                            text = stringResource(R.string.game_rating, "%.1f".format(review.ratingGeneral)),
                                             color = Color.White,
                                             fontSize = 13.sp
                                         )
@@ -287,7 +289,7 @@ fun GameDetailContent(
                     )
                 } else {
                     Text(
-                        text = "Verifica tu correo electrónico para poder reseñar este artículo.",
+                        text = stringResource(R.string.verify_email_to_review),
                         color = Color.White,
                         fontSize = 13.sp,
                         modifier = Modifier

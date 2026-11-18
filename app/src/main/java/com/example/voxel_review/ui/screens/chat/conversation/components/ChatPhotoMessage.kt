@@ -1,5 +1,7 @@
 package com.example.voxel_review.ui.screens.chat.conversation.components
 
+import com.example.voxel_review.R
+import androidx.compose.ui.res.stringResource
 import android.graphics.Bitmap
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -42,9 +44,9 @@ fun ChatPhotoMessage(
         when {
             image != null -> Image(
                 bitmap = image.asImageBitmap(),
-                contentDescription = "Abrir foto del chat",
+                contentDescription = stringResource(R.string.chat_open_photo),
                 modifier = Modifier.widthIn(max = 240.dp).heightIn(max = 250.dp)
-                    .clickable(onClickLabel = "Ampliar foto") { expanded = true }
+                    .clickable(onClickLabel = stringResource(R.string.chat_enlarge_photo)) { expanded = true }
             )
             result == null -> CircularProgressIndicator(
                 modifier = Modifier.size(26.dp),
@@ -52,14 +54,14 @@ fun ChatPhotoMessage(
                 strokeWidth = 2.dp
             )
             else -> TextButton(onClick = { attempt++ }) {
-                Text("Reintentar cargar la foto", color = Color(0xFF352B5D))
+                Text(stringResource(R.string.chat_retry_photo), color = Color(0xFF352B5D))
             }
         }
     }
 
     if (expanded && image != null) {
         Dialog(onDismissRequest = { expanded = false }) {
-            Image(image.asImageBitmap(), contentDescription = "Foto ampliada")
+            Image(image.asImageBitmap(), contentDescription = stringResource(R.string.chat_expanded_photo))
         }
     }
 }

@@ -1,5 +1,7 @@
 package com.example.voxel_review.ui.screens.chat.conversation
 
+import com.example.voxel_review.R
+import androidx.compose.ui.res.stringResource
 import android.graphics.Bitmap
 import android.net.Uri
 import androidx.compose.foundation.layout.Arrangement
@@ -71,7 +73,7 @@ fun ChatContent(
                 ChatBackdrop(Modifier.matchParentSize())
 
                 if (state.messages.isEmpty() && loadError == null) {
-                    val message = if (state.isLoading) "Cargando mensajes…" else "Envía el primer mensaje."
+                    val message = if (state.isLoading) stringResource(R.string.chat_loading) else stringResource(R.string.chat_empty)
                     ContentStatus(message, loading = state.isLoading)
                 }
 
@@ -106,7 +108,7 @@ fun ChatContent(
                     if (state.nextCursor != null) {
                         item {
                             ChatHistoryButton(
-                                label = "Cargar mensajes anteriores",
+                                label = stringResource(R.string.chat_load_older),
                                 isLoading = state.isLoadingOlder,
                                 error = state.olderError,
                                 onClick = onLoadOlder

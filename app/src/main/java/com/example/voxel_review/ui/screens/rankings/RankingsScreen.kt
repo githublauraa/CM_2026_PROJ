@@ -1,5 +1,7 @@
 package com.example.voxel_review.ui.screens.rankings
 
+import com.example.voxel_review.R
+import androidx.compose.ui.res.stringResource
 import com.example.voxel_review.ui.utils.ContentStatus
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -53,7 +55,7 @@ fun RankingContent(
             DiscoverSearchBar(
                 query = state.searchQuery,
                 onQueryChange = onSearchQueryChange,
-                placeholder = "Buscar críticos...",
+                placeholder = stringResource(R.string.search_critics),
                 modifier = Modifier.padding(top = 12.dp, bottom = 12.dp)
             )
         }

@@ -1,5 +1,7 @@
 package com.example.voxel_review.ui.screens.start.components
 
+import com.example.voxel_review.R
+import androidx.compose.ui.res.stringResource
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -33,6 +35,6 @@ fun MensajeUsuario(
 @Preview
 fun MensajeUsuarioPreview() {
     MensajeUsuario(
-        tipo = "Usuario"
+        tipo = stringResource(R.string.generic_user)
     )
 }

@@ -1,5 +1,7 @@
 package com.example.voxel_review.ui.screens.start
 
+import com.example.voxel_review.R
+import com.example.voxel_review.data.localization.AppStrings
 import androidx.lifecycle.ViewModel
 import com.example.voxel_review.data.repository.AuthRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,7 +19,8 @@ import kotlinx.coroutines.launch
  */
 @HiltViewModel
 class StartViewModel @Inject constructor(
-    private val authRepository: AuthRepository
+    private val authRepository: AuthRepository,
+    private val strings: AppStrings
 ): ViewModel() {
 
     // Estado interno modificable únicamente desde el ViewModel.
@@ -64,8 +67,8 @@ class StartViewModel @Inject constructor(
         val correo = state.correo.trim()
         val password = state.password
         val validationError = when {
-            correo.isEmpty() || password.isEmpty() -> "Completa todos los campos."
-            password.length < 6 -> "La contraseña debe tener al menos 6 caracteres."
+            correo.isEmpty() || password.isEmpty() -> strings[R.string.complete_fields]
+            password.length < 6 -> strings[R.string.password_at_least_six]
             else -> null
         }
         if (validationError != null) {

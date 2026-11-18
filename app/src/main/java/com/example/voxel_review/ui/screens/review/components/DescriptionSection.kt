@@ -1,5 +1,6 @@
 package com.example.voxel_review.ui.screens.review
 
+import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -74,7 +75,7 @@ fun DescriptionSection(
                         placeholder = painterResource(R.drawable.imagen_login_user),
                         fallback = painterResource(R.drawable.imagen_login_user),
                         error = painterResource(R.drawable.imagen_login_user),
-                        contentDescription = "Foto del autor",
+                        contentDescription = stringResource(R.string.author_photo),
                         contentScale = ContentScale.Crop,
                         modifier = Modifier.size(44.dp).clip(CircleShape)
                     )
@@ -86,7 +87,7 @@ fun DescriptionSection(
 
                         Text(
                             fontFamily = FontFamily.SansSerif,
-                            text = "RESEÑA DE LA COMUNIDAD",
+                            text = stringResource(R.string.community_review_uppercase),
                             color = VoxelPrimary,
                             fontSize = 11.sp,
                             letterSpacing = 1.sp,
@@ -113,7 +114,7 @@ fun DescriptionSection(
             HorizontalDivider(color = VoxelBorder)
             Text(
                 fontFamily = FontFamily.SansSerif,
-                text = descripcion.ifBlank { "Esta reseña aún no tiene una descripción." },
+                text = descripcion.ifBlank { stringResource(R.string.no_review_description) },
                 color = VoxelTextPrimary.copy(alpha = 0.9f),
                 fontSize = 16.sp,
                 lineHeight = 24.sp

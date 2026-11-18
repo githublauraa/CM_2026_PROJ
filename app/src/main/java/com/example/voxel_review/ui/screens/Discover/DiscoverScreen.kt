@@ -1,5 +1,7 @@
 package com.example.voxel_review.ui.screens.Discover
 
+import com.example.voxel_review.R
+import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -82,7 +84,7 @@ fun DiscoverScreen(
             if (searching || games.isNotEmpty()) {
                 item {
                     Text(
-                        text = if (searching) "Resultados" else "En tendencia",
+                        text = if (searching) stringResource(R.string.discover_results) else stringResource(R.string.discover_trending),
                         style = MaterialTheme.typography.titleLarge,
                         fontWeight = FontWeight.Bold,
                         color = VoxelTextPrimary,
@@ -114,12 +116,12 @@ fun DiscoverScreen(
                             errorMessage != null -> {
                                 Text(errorMessage, color = onSurfaceVariantDark)
                                 TextButton(onClick = discoverViewModel::loadVideoGames) {
-                                    Text("Reintentar", color = VoxelPrimary)
+                                    Text(stringResource(R.string.try_again), color = VoxelPrimary)
                                 }
                             }
                             else -> Text(
-                                text = if (searching) "No encontramos juegos con ese nombre"
-                                    else "Aún no hay juegos para explorar",
+                                text = if (searching) stringResource(R.string.discover_no_matches)
+                                    else stringResource(R.string.discover_empty),
                                 color = onSurfaceVariantDark
                             )
                         }

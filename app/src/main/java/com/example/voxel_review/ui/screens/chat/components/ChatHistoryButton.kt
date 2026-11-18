@@ -1,5 +1,7 @@
 package com.example.voxel_review.ui.screens.chat.components
 
+import com.example.voxel_review.R
+import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.MaterialTheme
@@ -23,7 +25,7 @@ fun ChatHistoryButton(
     ) {
         error?.let { Text(it, color = MaterialTheme.colorScheme.error) }
         TextButton(onClick = onClick, enabled = !isLoading) {
-            Text(if (isLoading) "Cargando…" else label)
+            Text(if (isLoading) stringResource(R.string.loading) else label)
         }
     }
 }

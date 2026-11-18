@@ -1,6 +1,8 @@
 
 package com.example.voxel_review.ui.screens.Discover
 
+import com.example.voxel_review.R
+import com.example.voxel_review.data.localization.AppStrings
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.voxel_review.data.info.InfoDiscover.GenreInfo
@@ -20,7 +22,8 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 class DiscoverViewModel @Inject constructor(
     private val videoGameRepository: VideoGameRepository,
-    private val reviewRepository: ReviewRepository
+    private val reviewRepository: ReviewRepository,
+    private val strings: AppStrings
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(DiscoverState())
@@ -82,7 +85,7 @@ class DiscoverViewModel @Inject constructor(
                     _uiState.update {
                         it.copy(
                             isLoading = false,
-                            error = exception.message ?: "No se pudieron cargar los juegos"
+                            error = exception.message ?: strings[R.string.error_games]
                         )
                     }
                 }

@@ -1,6 +1,8 @@
 
 package com.example.voxel_review.ui.screens.GameDetail
 
+import com.example.voxel_review.R
+import com.example.voxel_review.data.localization.AppStrings
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.voxel_review.data.dtos.toGameDetailInfo
@@ -28,11 +30,12 @@ class GameDetailViewModel @Inject constructor(
     private val videoGameRepository: VideoGameRepository,
     private val reviewRepository: ReviewRepository,
     private val libraryRepository: LibraryRepository,
-    private val authRepository: AuthRepository
+    private val authRepository: AuthRepository,
+    private val strings: AppStrings
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(GameDetailState())
-    private val reactions = OptimisticReviewReactions(viewModelScope, reviewRepository)
+    private val reactions = OptimisticReviewReactions(viewModelScope, reviewRepository, strings)
 
     val uiState: StateFlow<GameDetailState> = combine(_uiState, reactions.pending) { state, pendingReactions ->
         val displayedReviews = state.reviews.map { review ->
@@ -93,7 +96,7 @@ class GameDetailViewModel @Inject constructor(
 
         if (gameId.isBlank()) {
             _uiState.update {
-                it.copy(error = "ID del videojuego inválido")
+                it.copy(error = strings[R.string.invalid_game_id])
             }
             return
         }
@@ -136,7 +139,7 @@ class GameDetailViewModel @Inject constructor(
                     _uiState.update {
                         it.copy(
                             error = exception.message
-                                ?: "No se pudo cargar el videojuego"
+                                ?: strings[R.string.error_game]
                         )
                     }
                 }
@@ -196,7 +199,7 @@ class GameDetailViewModel @Inject constructor(
                         isUpdatingLibrary = false,
                         libraryStatus = previousStatus,
                         libraryError = result.exceptionOrNull()?.message
-                            ?: "No se pudo actualizar tu colección"
+                            ?: strings[R.string.error_update_library]
                     )
                 }
             }

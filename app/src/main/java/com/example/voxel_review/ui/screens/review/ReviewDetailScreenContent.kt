@@ -1,5 +1,6 @@
 package com.example.voxel_review.ui.screens.review
 
+import com.example.voxel_review.R
 import android.content.Intent
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -72,23 +73,29 @@ fun ReviewDetailScreenContent(
                         val ratingFormatted = String.format(Locale.US, "%.1f", review.ratingGeneral)
                         val shareText = buildString {
                             appendLine("🎮 ${review.tituloJuego} ($ratingFormatted/5 ⭐)")
-                            appendLine("✍️🔥 ${review.tituloDescripcion}")
-                            appendLine("• Jugabilidad: ${review.ratingJugabilidad.toInt()}/5 | Gráficos: ${review.ratingGraficos.toInt()}/5 | Historia: ${review.ratingHistoria.toInt()}/5")
+                            val author = review.username.ifBlank { context.getString(R.string.generic_user) }
+                            appendLine("✍️🔥 ${context.getString(R.string.review_by, author)}")
+                            appendLine(context.getString(
+                                R.string.share_review_scores,
+                                review.ratingJugabilidad.toInt(),
+                                review.ratingGraficos.toInt(),
+                                review.ratingHistoria.toInt()
+                            ))
                             appendLine()
                             appendLine("\"${review.descripcion}\"")
                             appendLine()
-                            append("— Compartido desde Voxel Review")
+                            append(context.getString(R.string.shared_from))
                         }
                         val sendIntent = Intent(Intent.ACTION_SEND).apply {
                             type = "text/plain"
                             putExtra(
                                 Intent.EXTRA_SUBJECT,
-                                "Reseña de ${review.tituloJuego} en Voxel Review"
+                                context.getString(R.string.share_review_subject, review.tituloJuego)
                             )
                             putExtra(Intent.EXTRA_TEXT, shareText)
                         }
                         context.startActivity(
-                            Intent.createChooser(sendIntent, "Compartir reseña")
+                            Intent.createChooser(sendIntent, context.getString(R.string.share_review))
                         )
                     }
                 }

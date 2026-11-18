@@ -1,5 +1,7 @@
 package com.example.voxel_review.ui.review
 
+import com.example.voxel_review.R
+import com.example.voxel_review.data.localization.AppStrings
 import com.example.voxel_review.data.info.review.ReviewInfo
 import com.example.voxel_review.data.repository.ReviewRepository
 import kotlinx.coroutines.CoroutineScope
@@ -37,7 +39,8 @@ private val ReviewInfo.reaction: ReviewReaction
 
 internal class OptimisticReviewReactions(
     private val scope: CoroutineScope,
-    private val repository: ReviewRepository
+    private val repository: ReviewRepository,
+    private val strings: AppStrings
 ) {
     private val _pending = MutableStateFlow<Map<String, ReviewReaction>>(emptyMap())
     val pending = _pending.asStateFlow()
@@ -66,7 +69,7 @@ internal class OptimisticReviewReactions(
                         liveReview.first { it == null || it.reaction == target }
                     }
                 } else {
-                    onError(result.exceptionOrNull()?.message ?: "No se pudo guardar la reacción.")
+                    onError(result.exceptionOrNull()?.message ?: strings[R.string.error_review_reaction])
                 }
             } finally {
                 _pending.update { it - reviewId }

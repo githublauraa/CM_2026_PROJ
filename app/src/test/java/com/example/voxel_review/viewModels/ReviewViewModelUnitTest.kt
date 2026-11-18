@@ -53,7 +53,7 @@ class ReviewViewModelUnitTest {
             reviewRepository.toggleReviewReaction(review.idResenia, "user-1", true)
         } coAnswers { writeResult.await() }
 
-        viewModel = ReviewViewModel(reviewRepository)
+        viewModel = ReviewViewModel(reviewRepository, mockk(relaxed = true))
         viewModel.getGameReviews("game-1", review.idResenia)
     }
 

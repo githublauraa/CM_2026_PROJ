@@ -53,7 +53,7 @@ fun RatingCard(
 
         Text(
                 fontFamily = FontFamily.SansSerif,
-            text = "Calificaciones",
+            text = stringResource(R.string.ratings),
             color = VoxelTextPrimary,
             fontSize = 16.sp,
             fontWeight = FontWeight.Bold,

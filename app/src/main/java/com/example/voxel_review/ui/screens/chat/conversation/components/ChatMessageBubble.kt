@@ -1,5 +1,7 @@
 package com.example.voxel_review.ui.screens.chat.conversation.components
 
+import com.example.voxel_review.R
+import androidx.compose.ui.res.stringResource
 import android.graphics.Bitmap
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -14,6 +16,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -34,8 +37,9 @@ fun ChatMessageBubble(
     modifier: Modifier = Modifier,
     contact: ChatContact? = null
 ) {
-    val formatter = remember {
-        DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT).withZone(ZoneId.systemDefault())
+    val locale = LocalConfiguration.current.locales[0]
+    val formatter = remember(locale) {
+        DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT).withLocale(locale).withZone(ZoneId.systemDefault())
     }
     val bubbleShape = RoundedCornerShape(
         topStart = 20.dp,
@@ -74,7 +78,7 @@ fun ChatMessageBubble(
                 )
             }
             Text(
-                text = if (message.isSending) "Enviando…" else formatter.format(message.sentAt),
+                text = if (message.isSending) stringResource(R.string.sending) else formatter.format(message.sentAt),
                 style = MaterialTheme.typography.labelSmall,
                 fontFamily = FontFamily.SansSerif,
                 color = Color(0xFF45465B),

@@ -1,5 +1,7 @@
 package com.example.voxel_review.viewModels
 
+import com.example.voxel_review.data.localization.AppStrings
+import androidx.test.platform.app.InstrumentationRegistry
 import com.example.voxel_review.data.repository.AuthRepository
 import com.example.voxel_review.ui.screens.crearCuenta.CreateAccountViewModel
 import com.google.firebase.Firebase
@@ -19,6 +21,8 @@ import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.flow.map
 
 class RegisterViewModelIntegrationTest {
+    private val appStrings = AppStrings(InstrumentationRegistry.getInstrumentation().targetContext)
+
 
     private lateinit var viewModel: CreateAccountViewModel
     private lateinit var authRepository: AuthRepository
@@ -33,10 +37,10 @@ class RegisterViewModelIntegrationTest {
         } catch (e: Exception) {
         }
 
-        authRepository = AuthRepository(AuthRemoteDataSource(Firebase.auth))
-        val userRepository = UserRepository(UserFirestoreDataSourceImpl(Firebase.firestore), AuthRepository(AuthRemoteDataSource(Firebase.auth)))
+        authRepository = AuthRepository(AuthRemoteDataSource(Firebase.auth), appStrings)
+        val userRepository = UserRepository(UserFirestoreDataSourceImpl(Firebase.firestore), authRepository, appStrings)
 
-        viewModel = CreateAccountViewModel(authRepository, userRepository)
+        viewModel = CreateAccountViewModel(authRepository, userRepository, appStrings)
     }
 
     @After

@@ -1,5 +1,6 @@
 package com.example.voxel_review.ui.screens.profile.components
 
+import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.layout.size
 import androidx.compose.ui.unit.dp
 import androidx.compose.material3.Icon
@@ -13,9 +14,9 @@ import com.example.voxel_review.ui.utils.ScreenHeader
 
 @Composable
 fun TopBar(onBackClick: () -> Unit, onClickImage: () -> Unit, modifier: Modifier = Modifier) {
-    ScreenHeader("Mi Perfil", onBackClick, modifier) {
+    ScreenHeader(stringResource(R.string.my_profile), onBackClick, modifier) {
         IconButton(onClick = onClickImage) {
-            Icon(painterResource(R.drawable.settings), "Configuración", tint = White, modifier = Modifier.size(24.dp))
+            Icon(painterResource(R.drawable.settings), stringResource(R.string.settings_title), tint = White, modifier = Modifier.size(24.dp))
         }
     }
 }

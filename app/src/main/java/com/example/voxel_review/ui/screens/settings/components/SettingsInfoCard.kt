@@ -1,5 +1,7 @@
 package com.example.voxel_review.ui.screens.settings.components
 
+import com.example.voxel_review.R
+import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.MaterialTheme
@@ -20,7 +22,7 @@ fun SettingsInfoCard() {
         color = VoxelSurfaceVariant
     ) {
         Text(
-            text = "Términos de servicio y privacidad",
+            text = stringResource(R.string.settings_terms),
             color = VoxelTextSecondary,
             fontSize = 14.sp
         )
@@ -30,7 +32,7 @@ fun SettingsInfoCard() {
         )
 
         Text(
-            text = "Voxel Review Versión 1.4.2 · Hecho por y para apasionados de los videojuegos",
+            text = stringResource(R.string.settings_about),
             color = VoxelTextSecondary,
             fontSize = 11.sp,
             lineHeight = 15.sp

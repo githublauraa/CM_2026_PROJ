@@ -1,5 +1,7 @@
 package com.example.voxel_review.ui.screens.profile.components
 
+import com.example.voxel_review.R
+import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -56,7 +58,7 @@ fun GameCards(
     ) {
 
         Text(
-            text = "Mis Juegos",
+            text = stringResource(R.string.my_games),
             color = White,
             fontSize = 26.sp,
             fontWeight = FontWeight.Bold,
@@ -64,7 +66,7 @@ fun GameCards(
         )
 
         if (reviews.isEmpty()) {
-            com.example.voxel_review.ui.utils.ContentStatus("Todavía no hay reseñas. Los juegos reseñados aparecerán aquí.")
+            com.example.voxel_review.ui.utils.ContentStatus(stringResource(R.string.profile_no_reviews))
         }
 
         LazyVerticalGrid(
@@ -125,7 +127,7 @@ fun GameCardImage(
 ) {
     GameImage(
         imageUrl = imagenJuego,
-        contentDescription = "Imagen del juego",
+        contentDescription = stringResource(R.string.game_image),
         modifier = modifier.clip(RoundedCornerShape(12.dp))
     )
 }

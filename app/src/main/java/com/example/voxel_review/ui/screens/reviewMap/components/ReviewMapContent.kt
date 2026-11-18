@@ -1,5 +1,7 @@
 package com.example.voxel_review.ui.screens.reviewMap.components
 
+import com.example.voxel_review.R
+import androidx.compose.ui.res.stringResource
 import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
@@ -91,7 +93,7 @@ fun ReviewMapContent(
             val error = try {
                 val manager = context.getSystemService(LocationManager::class.java)
                 if (manager == null || !LocationManagerCompat.isLocationEnabled(manager)) {
-                    "Activa la ubicación del dispositivo para centrar el mapa."
+                    context.getString(R.string.map_enable_location)
                 } else {
                     val precise = ContextCompat.checkSelfPermission(
                         context, Manifest.permission.ACCESS_FINE_LOCATION
@@ -106,7 +108,7 @@ fun ReviewMapContent(
                         .build()
                     val location = locationClient.getCurrentLocation(request, cancellation.token).await()
                     if (location == null) {
-                        "No se pudo obtener tu ubicación. Inténtalo de nuevo."
+                        context.getString(R.string.map_location_failed)
                     } else {
                         val zoom = if (precise) 16f else 13f
                         val point = LatLng(location.latitude, location.longitude)
@@ -117,7 +119,7 @@ fun ReviewMapContent(
             } catch (exception: CancellationException) {
                 throw exception
             } catch (_: Exception) {
-                "No se pudo obtener tu ubicación. Inténtalo de nuevo."
+                context.getString(R.string.map_location_failed)
             } finally {
                 cancellation.cancel()
                 locating = false
@@ -133,7 +135,7 @@ fun ReviewMapContent(
         if (hasLocationPermission) {
             centerOnLocation()
         } else {
-            scope.launch { snackbar.showSnackbar("Permite el acceso a la ubicación en los ajustes de la app.") }
+            scope.launch { snackbar.showSnackbar(context.getString(R.string.map_location_permission)) }
         }
     }
 
@@ -149,7 +151,7 @@ fun ReviewMapContent(
                 myLocationButtonEnabled = false
             ),
             cameraPositionState = cameraPositionState,
-            contentDescription = "Mapa reseñas voxelReview"
+            contentDescription = stringResource(R.string.map_description)
         ) {
             ReviewMapMarkers(
                 groups = groups,
@@ -161,7 +163,7 @@ fun ReviewMapContent(
             state.isLoading -> CircularProgressIndicator(Modifier.align(Alignment.Center))
             state.error != null -> Text(state.error, Modifier.align(Alignment.TopCenter))
             state.reviews.isEmpty() -> Text(
-                "No hay reseñas con ubicación de las últimas 24 horas",
+                stringResource(R.string.map_empty),
                 Modifier.align(Alignment.TopCenter)
             )
         }
@@ -185,7 +187,7 @@ fun ReviewMapContent(
             if (locating) {
                 CircularProgressIndicator(modifier = Modifier.size(20.dp), strokeWidth = 2.dp)
             } else {
-                Icon(Icons.Filled.MyLocation, contentDescription = "Mi ubicación")
+                Icon(Icons.Filled.MyLocation, contentDescription = stringResource(R.string.map_my_location))
             }
         }
         SnackbarHost(hostState = snackbar, modifier = Modifier.align(Alignment.BottomCenter))
@@ -197,7 +199,7 @@ fun ReviewMapContent(
         if (reviews.isNotEmpty()) {
             AlertDialog(
                 onDismissRequest = { selectedLocation = null },
-                title = { Text("${reviews.size} reseñas en este punto") },
+                title = { Text(stringResource(R.string.reviews_count_location, reviews.size)) },
                 text = {
                     LazyColumn(
                         modifier = Modifier.heightIn(max = 360.dp),
@@ -215,7 +217,7 @@ fun ReviewMapContent(
                     }
                 },
                 confirmButton = {
-                    TextButton(onClick = { selectedLocation = null }) { Text("Cerrar") }
+                    TextButton(onClick = { selectedLocation = null }) { Text(stringResource(R.string.close)) }
                 }
             )
         }
