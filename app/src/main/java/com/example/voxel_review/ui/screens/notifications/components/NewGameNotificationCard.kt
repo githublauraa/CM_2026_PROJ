@@ -1,5 +1,6 @@
 package com.example.voxel_review.ui.screens.notifications.components
 
+import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -69,7 +70,7 @@ fun NewGameNotificationCard(
             modifier = Modifier.weight(1f)
         ) {
             Text(
-                text = "¡Nuevo juego añadido!",
+                text = stringResource(R.string.new_game),
                 color = Color.White,
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Bold

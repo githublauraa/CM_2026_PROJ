@@ -1,5 +1,7 @@
 package com.example.voxel_review.ui.utils
 
+import com.example.voxel_review.R
+import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -18,6 +20,6 @@ fun ContentStatus(message: String, loading: Boolean = false, onRetry: (() -> Uni
     ) {
         if (loading) CircularProgressIndicator(color = VoxelPrimary, modifier = Modifier.size(28.dp))
         Text(message, color = VoxelTextSecondary, textAlign = TextAlign.Center)
-        if (onRetry != null) TextButton(onClick = onRetry) { Text("Reintentar", color = VoxelPrimary) }
+        if (onRetry != null) TextButton(onClick = onRetry) { Text(stringResource(R.string.try_again), color = VoxelPrimary) }
     }
 }

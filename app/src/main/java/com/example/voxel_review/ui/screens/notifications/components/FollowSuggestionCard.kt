@@ -1,5 +1,6 @@
 package com.example.voxel_review.ui.screens.notifications.components
 
+import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -79,7 +80,7 @@ fun FollowSuggestionCard(
             )
 
             Text(
-                text = "Te sigue",
+                text = stringResource(R.string.follows_you),
                 color = Color.White,
                 fontSize = 13.sp,
                 fontWeight = FontWeight.Bold

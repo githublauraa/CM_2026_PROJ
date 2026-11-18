@@ -1,5 +1,7 @@
 package com.example.voxel_review.ui.screens.profile.components
 
+import com.example.voxel_review.R
+import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.size
@@ -28,6 +30,6 @@ fun ButtonLogOut(buttonLogOutPressed: () -> Unit, modifier: Modifier = Modifier)
     ) {
         Icon(Icons.AutoMirrored.Outlined.Logout, contentDescription = null, modifier = Modifier.size(18.dp))
         Spacer(Modifier.width(8.dp))
-        Text("Cerrar sesión")
+        Text(stringResource(R.string.sign_out))
     }
 }

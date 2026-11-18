@@ -1,5 +1,7 @@
 package com.example.voxel_review.e2e
 
+import com.example.voxel_review.data.localization.AppStrings
+import androidx.test.platform.app.InstrumentationRegistry
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.v2.createAndroidComposeRule
 import androidx.compose.ui.test.onAllNodesWithTag
@@ -32,6 +34,8 @@ import org.junit.Test
 
 @HiltAndroidTest
 class LoginAndFollowUserE2ETest {
+    private val appStrings = AppStrings(InstrumentationRegistry.getInstrumentation().targetContext)
+
 
 
     @get:Rule(order = 0)
@@ -56,8 +60,8 @@ class LoginAndFollowUserE2ETest {
 
         val authDataSource = AuthRemoteDataSource(Firebase.auth)
         val userRemoteDataSource = UserFirestoreDataSourceImpl(Firebase.firestore)
-        authRepository = AuthRepository(authDataSource)
-        userRepository = UserRepository(userRemoteDataSource, authRepository)
+        authRepository = AuthRepository(authDataSource, appStrings)
+        userRepository = UserRepository(userRemoteDataSource, authRepository, appStrings)
 
         //usuario registrado
         runBlocking {

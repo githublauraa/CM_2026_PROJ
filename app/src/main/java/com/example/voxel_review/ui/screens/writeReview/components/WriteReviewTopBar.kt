@@ -1,5 +1,6 @@
 package com.example.voxel_review.ui.screens.writeReview.components
 
+import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Icon
@@ -38,14 +39,14 @@ fun TopBar(
         ) {
             Icon(
                 painter = painterResource(R.drawable.ic_back),
-                contentDescription = "Volver",
+                contentDescription = stringResource(R.string.go_back),
                 tint = White,
                 modifier = Modifier.size(24.dp),
             )
         }
 
         Text(
-            text = "Escribir Reseña",
+            text = stringResource(R.string.write_review),
             color = White,
             fontSize = 22.sp,
             fontWeight = FontWeight.Bold,
@@ -58,7 +59,7 @@ fun TopBar(
         ) {
             Icon(
                 painter = painterResource(R.drawable.settings),
-                contentDescription = "Configuración",
+                contentDescription = stringResource(R.string.settings_title),
                 tint = White,
                 modifier = Modifier.size(24.dp),
             )

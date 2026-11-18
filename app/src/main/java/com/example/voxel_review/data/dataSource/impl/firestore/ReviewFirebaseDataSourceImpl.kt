@@ -258,7 +258,8 @@ class ReviewFirebaseDataSourceImpl @Inject constructor(
                     imageUrl = actor.photoUrl.orEmpty(),
                     reviewId = review.id,
                     gameId = review.getString("videoGameId").orEmpty(),
-                    reviewAuthorId = userId
+                    reviewAuthorId = userId,
+                    reviewGameTitle = gameName
                 )
             }
         }.sortedByDescending { it.first }.map { it.second }

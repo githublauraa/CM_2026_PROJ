@@ -1,5 +1,6 @@
 package com.example.voxel_review.ui.screens.settings.components
 
+import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.material3.HorizontalDivider
@@ -25,13 +26,13 @@ fun GeneralSettingsSection(
     Column(
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        SectionTitle("AJUSTES GENERALES")
+        SectionTitle(stringResource(R.string.settings_general))
 
         SettingsCard(color = color) {
         SettingSwitch(
             color = color,
             symbol = "☾",
-            title = "Modo Oscuro",
+            title = stringResource(R.string.settings_dark_mode),
             checked = darkMode,
             accentColor = VoxelTextPrimary,
             onCheckedChange = {}
@@ -41,7 +42,7 @@ fun GeneralSettingsSection(
         SettingSwitch(
             color = color,
             iconRes = R.drawable.campana_notificaciones,
-            title = "Notificaciones",
+            title = stringResource(R.string.notificaciones),
             checked = notificationsEnabled,
             accentColor = VoxelSecondary,
             onCheckedChange = onNotificationsChange

@@ -1,5 +1,7 @@
 package com.example.voxel_review.ui.screens.forgotPassword
 
+import com.example.voxel_review.R
+import com.example.voxel_review.data.localization.AppStrings
 import android.util.Patterns
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -17,7 +19,8 @@ import kotlinx.coroutines.launch
  */
 @HiltViewModel
 class ForgotPasswordViewModel @Inject constructor(
-    private val authRepository: AuthRepository
+    private val authRepository: AuthRepository,
+    private val strings: AppStrings
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(ForgotPasswordState())
@@ -47,7 +50,7 @@ class ForgotPasswordViewModel @Inject constructor(
         if (email.isEmpty()) {
             _uiState.update {
                 it.copy(
-                    errorMessage = "Por favor, ingresa tu correo electrónico",
+                    errorMessage = strings[R.string.enter_email],
                     isEmailSent = false
                 )
             }
@@ -57,7 +60,7 @@ class ForgotPasswordViewModel @Inject constructor(
         if (!email.matches(Regex("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$"))) {
             _uiState.update {
                 it.copy(
-                    errorMessage = "Ingresa un correo electrónico válido",
+                    errorMessage = strings[R.string.valid_email_required],
                     isEmailSent = false
                 )
             }
@@ -89,7 +92,7 @@ class ForgotPasswordViewModel @Inject constructor(
                         isLoading = false,
                         isEmailSent = false,
                         errorMessage = result.exceptionOrNull()?.message
-                            ?: "Error al enviar el correo de recuperación"
+                            ?: strings[R.string.error_reset_email]
                     )
                 }
             }

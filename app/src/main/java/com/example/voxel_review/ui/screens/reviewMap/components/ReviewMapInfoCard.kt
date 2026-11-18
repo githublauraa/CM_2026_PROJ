@@ -1,5 +1,6 @@
 package com.example.voxel_review.ui.screens.reviewMap.components
 
+import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -81,7 +82,7 @@ fun ReviewMapInfoCard(
                         .data(review.imagenJuego.takeIf { it.isNotBlank() })
                         .allowHardware(false)
                         .build(),
-                    contentDescription = "Imagen del videojuego",
+                    contentDescription = stringResource(R.string.game_image),
                     modifier = Modifier
                         .size(width = 52.dp, height = 66.dp)
                         .clip(RoundedCornerShape(12.dp)),
@@ -111,7 +112,7 @@ fun ReviewMapInfoCard(
                     )
 
                     Text(
-                        text = "Por ${review.username.ifBlank { "Sin nombre" }}",
+                        text = stringResource(R.string.map_by_author, review.username.ifBlank { stringResource(R.string.unnamed) }),
                         color = VoxelTextSecondary,
                         style = MaterialTheme.typography.bodySmall,
                         maxLines = 1,
@@ -130,7 +131,7 @@ fun ReviewMapInfoCard(
                 )
             }
             Text(
-                text = "Ver reseña completa",
+                text = stringResource(R.string.map_view_full_review),
                 color = VoxelPrimary,
                 style = MaterialTheme.typography.labelLarge,
                 modifier = Modifier.align(Alignment.End)

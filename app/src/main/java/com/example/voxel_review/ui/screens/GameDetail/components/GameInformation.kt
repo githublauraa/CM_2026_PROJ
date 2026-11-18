@@ -1,5 +1,7 @@
 package com.example.voxel_review.ui.screens.GameDetail.components
 
+import com.example.voxel_review.R
+import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -35,13 +37,13 @@ fun GameInformation(
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             GameInfoRow(
-                title = "DESARROLLADOR",
+                title = stringResource(R.string.developer_uppercase),
                 value = developer,
                 icon = Icons.Outlined.Business
             )
             HorizontalDivider(color = VoxelBorder)
             GameInfoRow(
-                title = "LANZAMIENTO",
+                title = stringResource(R.string.release_uppercase),
                 value = releaseDate,
                 icon = Icons.Outlined.CalendarMonth
             )

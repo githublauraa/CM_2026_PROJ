@@ -1,6 +1,8 @@
 
 package com.example.voxel_review.ui.screens.writeReview.components
 
+import com.example.voxel_review.R
+import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
@@ -41,28 +43,28 @@ fun GameCalification(
             .padding(20.dp, 12.dp)
     ) {
         Text(
-            text = "CALIFICACIONES",
+            text = stringResource(R.string.review_scores_uppercase),
             color = VoxelTextSecondary,
             fontSize = 15.sp,
             fontWeight = FontWeight.Bold
         )
 
         RatingSlider(
-            title = "JUGABILIDAD",
+            title = stringResource(R.string.gameplay_uppercase),
             rating = gameplayRating,
             color = Color.Cyan,
             onRatingChange = onGameplayRatingChange
         )
 
         RatingSlider(
-            title = "GRÁFICOS",
+            title = stringResource(R.string.graphics_uppercase),
             rating = graphicsRating,
             color = Color.Magenta,
             onRatingChange = onGraphicsRatingChange
         )
 
         RatingSlider(
-            title = "HISTORIA",
+            title = stringResource(R.string.story_uppercase),
             rating = storyRating,
             color = Color.Yellow,
             onRatingChange = onStoryRatingChange

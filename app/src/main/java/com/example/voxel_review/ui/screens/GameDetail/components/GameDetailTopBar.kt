@@ -45,7 +45,7 @@ fun GameDetailTopBar(
         ) {
             Icon(
                 painter = painterResource(R.drawable.ic_back),
-                contentDescription = "Volver",
+                contentDescription = stringResource(R.string.go_back),
                 tint = Color.White
             )
         }
@@ -64,7 +64,7 @@ fun GameDetailTopBar(
         ) {
             Icon(
                 painter = painterResource (R.drawable.ic_search),
-                contentDescription = "Buscar",
+                contentDescription = stringResource(R.string.buscar),
                 tint = Color.White
             )
         }

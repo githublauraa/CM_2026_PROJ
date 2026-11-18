@@ -1,5 +1,6 @@
 package com.example.voxel_review.ui.screens.chat.conversation.components
 
+import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
@@ -38,7 +39,7 @@ fun ChatHeader(
         CenterAlignedTopAppBar(
             title = {
                 Text(
-                    text = contact?.name ?: "Conversación",
+                    text = contact?.name ?: stringResource(R.string.conversation_title),
                     color = VoxelTextPrimary,
                     style = MaterialTheme.typography.titleLarge,
                     fontFamily = FontFamily.SansSerif,
@@ -56,7 +57,7 @@ fun ChatHeader(
                 IconButton(onClick = onBack) {
                     Icon(
                         painter = painterResource(R.drawable.ic_back),
-                        contentDescription = "Volver",
+                        contentDescription = stringResource(R.string.go_back),
                         tint = VoxelTextPrimary,
                         modifier = Modifier.size(24.dp)
                     )

@@ -1,5 +1,7 @@
 package com.example.voxel_review.ui.screens.notifications
 
+import com.example.voxel_review.R
+import com.example.voxel_review.data.localization.AppStrings
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.voxel_review.data.info.InfoNotifications.NotificationInfo
@@ -19,7 +21,8 @@ class NotificationsViewModel @Inject constructor(
     private val userRepository: UserRepository,
     reviewRepository: ReviewRepository,
     chatRepository: ChatRepository,
-    authRepository: AuthRepository
+    authRepository: AuthRepository,
+    private val strings: AppStrings
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(NotificationsState())
@@ -28,7 +31,7 @@ class NotificationsViewModel @Inject constructor(
     init {
         val userId = authRepository.currentUser?.uid
         if (userId.isNullOrBlank()) {
-            val message = "Inicia sesión para ver tus notificaciones."
+            val message = strings[R.string.sign_in_notifications]
             _uiState.value = NotificationsState(
                 isLoading = false,
                 followersError = message,
@@ -55,7 +58,7 @@ class NotificationsViewModel @Inject constructor(
                     NotificationInfo(
                         id = follower.id,
                         title = follower.nick,
-                        message = "Empezó a seguirte",
+                        message = strings[R.string.notice_follow],
                         imageUrl = follower.pfp
                     )
                 }

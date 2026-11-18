@@ -1,5 +1,7 @@
 package com.example.voxel_review.ui.screens.crearCuenta
 
+import com.example.voxel_review.R
+import com.example.voxel_review.data.localization.AppStrings
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,7 +22,8 @@ import com.example.voxel_review.data.repository.UserRepository
 @HiltViewModel
 class CreateAccountViewModel @Inject constructor(
     private val authRepository: AuthRepository,
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
+    private val strings: AppStrings
 ): ViewModel() {
 
     // Estado interno modificable únicamente desde el ViewModel.
@@ -91,9 +94,9 @@ class CreateAccountViewModel @Inject constructor(
 
         val email = state.email.trim()
         val error = when {
-            email.isEmpty() -> "Ingresa tu correo electrónico"
-            state.password.length < 6 -> "La contraseña debe tener al menos 6 caracteres"
-            !state.terminosAceptados -> "Por favor, acepta los términos y condiciones"
+            email.isEmpty() -> strings[R.string.enter_email]
+            state.password.length < 6 -> strings[R.string.password_at_least_six]
+            !state.terminosAceptados -> strings[R.string.accept_terms_required]
             else -> null
         }
         if (error != null) {
@@ -117,7 +120,7 @@ class CreateAccountViewModel @Inject constructor(
                     _uiState.update {
                         it.copy(
                             loading = false,
-                            errorMessage = "No se pudo obtener el ID del usuario",
+                            errorMessage = strings[R.string.error_user_id],
                             mostrarMensaje = true
                         )
                     }
@@ -142,7 +145,7 @@ class CreateAccountViewModel @Inject constructor(
                         it.copy(
                             loading = false,
                             errorMessage = registerResult.exceptionOrNull()?.message
-                                ?: "No se pudo guardar el perfil",
+                                ?: strings[R.string.error_profile_save],
                             mostrarMensaje = true
                         )
                     }
@@ -151,7 +154,7 @@ class CreateAccountViewModel @Inject constructor(
                 _uiState.update {
                     it.copy(
                         loading = false,
-                        errorMessage = result.exceptionOrNull()?.message ?: "No se pudo crear la cuenta.",
+                        errorMessage = result.exceptionOrNull()?.message ?: strings[R.string.error_create_account],
                         mostrarMensaje = true
                     )
                 }

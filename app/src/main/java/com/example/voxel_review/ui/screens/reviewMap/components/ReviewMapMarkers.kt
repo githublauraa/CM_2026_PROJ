@@ -1,5 +1,7 @@
 package com.example.voxel_review.ui.screens.reviewMap.components
 
+import androidx.compose.ui.res.pluralStringResource
+import com.example.voxel_review.R
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -55,7 +57,7 @@ fun ReviewMapMarkers(
                     ReviewRatingPin(rating)
                 }
             } else {
-                val title = "${group.size} reseñas"
+                val title = pluralStringResource(R.plurals.review_count, group.size, group.size)
                 MarkerComposable(
                     group.size,
                     state = rememberUpdatedMarkerState(position = position),

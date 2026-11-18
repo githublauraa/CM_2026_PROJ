@@ -184,7 +184,7 @@ fun WriteReviewScreen(
                 }
 
                 if (publicationLocation == null) {
-                    locationError = "No se pudo obtener tu ubicación. Actívala e inténtalo de nuevo, o desmarca la opción para publicar sin aparecer en el mapa."
+                    locationError = context.getString(R.string.location_unavailable_review)
                 } else {
                     writeReviewViewModel.publishReview(
                         videoGameId = gameId,
@@ -207,7 +207,7 @@ fun WriteReviewScreen(
             publishWithLocation()
         } else {
             waitingForLocation = false
-            locationError = "Para aparecer en el mapa, permite el acceso a la ubicación. Puedes desmarcar la opción para publicar sin ubicación."
+            locationError = context.getString(R.string.location_permission_review)
         }
     }
 
@@ -285,7 +285,7 @@ fun WriteReviewScreen(
                             },
                             enabled = !waitingForLocation
                         )
-                        Text("Mostrar esta reseña en el mapa con mi ubicación aproximada")
+                        Text(stringResource(R.string.review_include_location))
                     }
                 }
 
@@ -313,9 +313,9 @@ fun WriteReviewScreen(
                         }
                     },
                     text = if (waitingForLocation) {
-                        "Obteniendo ubicación…"
+                        stringResource(R.string.getting_location)
                     } else if (isEditing) {
-                        "Actualizar reseña"
+                        stringResource(R.string.update_review)
                     } else {
                         stringResource(R.string.publish_review)
                     }
@@ -323,9 +323,9 @@ fun WriteReviewScreen(
             } else if (!canWriteReview) {
                 Text(
                     text = if (currentUserId.isNullOrBlank()) {
-                        "Debes iniciar sesión para escribir una reseña."
+                        stringResource(R.string.sign_in_to_review)
                     } else {
-                        "No puedes escribir o editar reseñas de otro usuario."
+                        stringResource(R.string.review_other_user_denied)
                     },
                     color = onErrorLight
                 )

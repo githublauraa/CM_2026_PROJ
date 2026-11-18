@@ -1,5 +1,7 @@
 package com.example.voxel_review.repository
 
+import com.example.voxel_review.R
+import com.example.voxel_review.data.localization.AppStrings
 import android.net.Uri
 import com.example.voxel_review.data.dataSource.CachedChatNotification
 import com.example.voxel_review.data.dataSource.ChatNotificationCache
@@ -29,7 +31,11 @@ class ChatRepositoryTest {
     private val auth = mockk<AuthRepository>()
     private val photos = mockk<ChatPhotoStorageService>()
     private val cache = mockk<ChatNotificationCache>()
-    private val repository = ChatRepository(remote, auth, photos, cache)
+    private val repository = ChatRepository(remote, auth, photos, cache, mockk<AppStrings>(relaxed = true) {
+        every { get(R.string.error_chat_messages) } returns "No se pudieron cargar los mensajes. Inténtalo de nuevo."
+        every { get(R.string.error_chat_send_photo) } returns "No se pudo enviar la foto. Inténtalo de nuevo."
+        every { get(R.string.notice_message) } returns "Te envió un mensaje"
+    })
 
     @Test
     fun ambosParticipantesEscribenEnElMismoChat() = runTest {

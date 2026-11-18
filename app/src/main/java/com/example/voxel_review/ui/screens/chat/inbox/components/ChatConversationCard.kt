@@ -16,6 +16,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -34,7 +35,6 @@ import com.example.voxel_review.ui.theme.VoxelTextPrimary
 import java.time.LocalDate
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
-import java.util.Locale
 
 @Composable
 fun ChatConversationCard(
@@ -44,16 +44,17 @@ fun ChatConversationCard(
     shape: Shape = RoundedCornerShape(24.dp),
     showDivider: Boolean = false
 ) {
+    val locale = LocalConfiguration.current.locales[0]
     val zone = ZoneId.systemDefault()
     val today = LocalDate.now(zone)
-    val timestamp = remember(conversation.updatedAt, today, zone) {
+    val timestamp = remember(conversation.updatedAt, today, zone, locale) {
         val updated = conversation.updatedAt.atZone(zone)
         val pattern = when {
             updated.toLocalDate() == today -> "HH:mm"
             updated.year == today.year -> "d MMM"
             else -> "d MMM yy"
         }
-        updated.format(DateTimeFormatter.ofPattern(pattern, Locale.forLanguageTag("es")))
+        updated.format(DateTimeFormatter.ofPattern(pattern, locale))
     }
 
     Card(

@@ -1,5 +1,7 @@
 package com.example.voxel_review.ui.screens.chat.conversation.components
 
+import com.example.voxel_review.R
+import androidx.compose.ui.res.stringResource
 import android.net.Uri
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -28,12 +30,12 @@ fun ChatPhotoPreview(
     AlertDialog(
         modifier = modifier,
         onDismissRequest = { if (!isSending) onDiscard() },
-        title = { Text("Enviar foto") },
+        title = { Text(stringResource(R.string.send_photo)) },
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
                 AsyncImage(
                     model = photo,
-                    contentDescription = "Vista previa de la foto",
+                    contentDescription = stringResource(R.string.photo_preview),
                     contentScale = ContentScale.Fit,
                     modifier = Modifier.fillMaxWidth().heightIn(min = 160.dp, max = 300.dp)
                 )
@@ -42,11 +44,11 @@ fun ChatPhotoPreview(
         },
         confirmButton = {
             Button(onClick = onSend, enabled = !isSending) {
-                Text(if (isSending) "Enviando…" else "Enviar foto")
+                Text(if (isSending) stringResource(R.string.sending) else stringResource(R.string.send_photo))
             }
         },
         dismissButton = {
-            TextButton(onClick = onDiscard, enabled = !isSending) { Text("Descartar") }
+            TextButton(onClick = onDiscard, enabled = !isSending) { Text(stringResource(R.string.discard)) }
         }
     )
 }

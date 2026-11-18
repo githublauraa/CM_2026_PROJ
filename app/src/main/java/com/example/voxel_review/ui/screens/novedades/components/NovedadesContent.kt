@@ -1,5 +1,7 @@
 package com.example.voxel_review.ui.screens.novedades.components
 
+import com.example.voxel_review.R
+import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -57,7 +59,7 @@ fun NovedadesContent(
             onMapClick = onMapClick
         )
         Text(
-            text = if (following) "Reseñas de usuarios que sigues" else "Juegos reseñados",
+            text = if (following) stringResource(R.string.feed_followed_reviews) else stringResource(R.string.feed_reviewed_games),
             style = MaterialTheme.typography.titleMedium,
             color = VoxelTextPrimary,
             modifier = Modifier.padding(start = 20.dp, end = 20.dp, top = 18.dp, bottom = 8.dp)
@@ -82,7 +84,7 @@ fun NovedadesContent(
                 modifier = Modifier.padding(horizontal = 20.dp)
             )
             state.listaJuegos.isEmpty() -> Text(
-                text = "Aún no hay juegos con reseñas",
+                text = stringResource(R.string.feed_empty_reviews),
                 color = onSurfaceVariantDark,
                 modifier = Modifier.padding(20.dp)
             )

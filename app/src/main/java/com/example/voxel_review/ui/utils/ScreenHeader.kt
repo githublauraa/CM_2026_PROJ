@@ -29,7 +29,7 @@ fun ScreenHeader(
         title = { ScreenHeaderTitle(title) },
         navigationIcon = {
             IconButton(onClick = onBack) {
-                Icon(painterResource(R.drawable.ic_back), "Volver", tint = White, modifier = Modifier.size(24.dp))
+                Icon(painterResource(R.drawable.ic_back), stringResource(R.string.go_back), tint = White, modifier = Modifier.size(24.dp))
             }
         },
         actions = actions,

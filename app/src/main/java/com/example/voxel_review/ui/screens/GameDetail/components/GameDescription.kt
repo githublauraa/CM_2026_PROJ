@@ -1,5 +1,7 @@
 package com.example.voxel_review.ui.screens.GameDetail.components
 
+import com.example.voxel_review.R
+import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -54,7 +56,7 @@ fun GameDescription(
                 )
             }
             Text(
-                text = description.ifBlank { "Aún no hay una descripción disponible." },
+                text = description.ifBlank { stringResource(R.string.game_no_description) },
                 color = VoxelTextSecondary,
                 fontSize = 14.sp,
                 lineHeight = 22.sp
@@ -69,6 +71,6 @@ fun GameDescriptionPreview() {
     GameDescription(
         description = "Explora un vasto universo de Bethesda Game Studios. " +
             "Crea tu personaje, navega por mil planetas y descubre misterios cósmicos.",
-        text = "Sobre el juego"
+        text = stringResource(R.string.about_game)
     )
 }

@@ -1,5 +1,7 @@
 package com.example.voxel_review.ui.screens.GameDetail.components
 
+import com.example.voxel_review.R
+import androidx.compose.ui.res.stringResource
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.FloatingActionButton
@@ -31,7 +33,7 @@ fun WriteReviewButton(
 
         Icon(
             imageVector = Icons.Default.Edit,
-            contentDescription = "Escribir reseña",
+            contentDescription = stringResource(R.string.write_review_action),
             tint = Color.White
         )
     }

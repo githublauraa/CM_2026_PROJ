@@ -1,5 +1,8 @@
 package com.example.voxel_review.ui.screens.rankings.components
 
+import androidx.compose.ui.res.pluralStringResource
+import com.example.voxel_review.R
+import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -70,7 +73,7 @@ internal fun RankingPodium(
                         textAlign = TextAlign.Center
                     )
                     Text(
-                        text = if (leader.value.numResenias == 1) "1 reseña" else "${leader.value.numResenias} reseñas",
+                        text = if (leader.value.numResenias == 1) stringResource(R.string.one_review) else pluralStringResource(R.plurals.review_count, leader.value.numResenias, leader.value.numResenias),
                         style = MaterialTheme.typography.labelSmall,
                         textAlign = TextAlign.Center,
                         color = accent

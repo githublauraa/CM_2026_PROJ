@@ -1,5 +1,7 @@
 package com.example.voxel_review.ui.screens.settings.components
 
+import com.example.voxel_review.R
+import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -91,7 +93,7 @@ private fun SettingSwitchPreview() {
         SettingSwitch(
             color = VoxelPrimary,
             symbol = "☾",
-            title = "Modo Oscuro",
+            title = stringResource(R.string.settings_dark_mode),
             checked = true,
             accentColor = VoxelPrimary,
             onCheckedChange = {}

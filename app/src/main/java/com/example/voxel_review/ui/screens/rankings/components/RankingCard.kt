@@ -1,5 +1,8 @@
 package com.example.voxel_review.ui.screens.rankings.components
 
+import androidx.compose.ui.res.pluralStringResource
+import com.example.voxel_review.R
+import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -85,7 +88,7 @@ internal fun RankingCard(
                     overflow = TextOverflow.Ellipsis
                 )
                 Text(
-                    text = if (user.numResenias == 1) "1 reseña" else "${user.numResenias} reseñas",
+                    text = if (user.numResenias == 1) stringResource(R.string.one_review) else pluralStringResource(R.plurals.review_count, user.numResenias, user.numResenias),
                     style = MaterialTheme.typography.bodySmall,
                     color = if (featured) accent else onSurfaceVariantDark
                 )

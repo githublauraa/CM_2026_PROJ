@@ -1,5 +1,7 @@
 package com.example.voxel_review.ui.screens.profile.components
 
+import com.example.voxel_review.R
+import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.foundation.layout.PaddingValues
@@ -33,6 +35,6 @@ fun EditButton(onEditProfileClick: () -> Unit, modifier: Modifier = Modifier) {
     ) {
         Icon(Icons.Outlined.Edit, contentDescription = null, modifier = Modifier.size(16.dp))
         Spacer(Modifier.width(6.dp))
-        Text("Editar perfil", fontWeight = FontWeight.Bold)
+        Text(stringResource(R.string.edit_profile_title), fontWeight = FontWeight.Bold)
     }
 }

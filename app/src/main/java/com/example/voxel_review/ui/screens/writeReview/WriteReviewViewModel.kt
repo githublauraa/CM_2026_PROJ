@@ -1,6 +1,8 @@
 
 package com.example.voxel_review.ui.screens.writeReview
 
+import com.example.voxel_review.R
+import com.example.voxel_review.data.localization.AppStrings
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -23,7 +25,8 @@ import kotlinx.coroutines.Job
 class WriteReviewViewModel @Inject constructor(
     private val reviewRepository: ReviewRepository,
     private val videoGameRepository: VideoGameRepository,
-    private val authRepository: AuthRepository
+    private val authRepository: AuthRepository,
+    private val strings: AppStrings
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(WriteReviewState())
@@ -39,7 +42,7 @@ class WriteReviewViewModel @Inject constructor(
             _uiState.update {
                 it.copy(
                     game = null,
-                    errorMessage = "ID del videojuego inválido"
+                    errorMessage = strings[R.string.invalid_game_id]
                 )
             }
             return
@@ -67,7 +70,7 @@ class WriteReviewViewModel @Inject constructor(
                     _uiState.update {
                         it.copy(
                             errorMessage = exception.message
-                                ?: "No se pudo cargar el videojuego"
+                                ?: strings[R.string.error_game]
                         )
                     }
                 }
@@ -120,7 +123,7 @@ class WriteReviewViewModel @Inject constructor(
                 _uiState.update {
                     it.copy(
                         errorMessage = result.exceptionOrNull()?.message
-                            ?: "No se encontró la reseña para editar."
+                            ?: strings[R.string.no_review_to_edit]
                     )
                 }
             }
@@ -135,7 +138,7 @@ class WriteReviewViewModel @Inject constructor(
             if (userId == null) {
                 _uiState.update {
                     it.copy(
-                        errorMessage = "Debes iniciar sesión"
+                        errorMessage = strings[R.string.sign_in_required]
                     )
                 }
                 return@launch
@@ -176,7 +179,7 @@ class WriteReviewViewModel @Inject constructor(
 
                         Log.d(
                             "REVIEW_TEST",
-                            "No existe reseña para este videojuego"
+                            strings[R.string.no_review_for_game]
                         )
 
                         _uiState.update {
@@ -202,7 +205,7 @@ class WriteReviewViewModel @Inject constructor(
                     _uiState.update {
                         it.copy(
                             errorMessage = exception.message
-                                ?: "No se pudieron cargar las reseñas"
+                                ?: strings[R.string.error_reviews]
                         )
                     }
                 }
@@ -260,7 +263,7 @@ class WriteReviewViewModel @Inject constructor(
 
                 _uiState.update {
                     it.copy(
-                        errorMessage = "Las calificaciones deben estar entre 0 y 5"
+                        errorMessage = strings[R.string.invalid_rating]
                     )
                 }
 
@@ -268,7 +271,7 @@ class WriteReviewViewModel @Inject constructor(
 
                 _uiState.update {
                     it.copy(
-                        errorMessage = "La descripción no puede estar vacía"
+                        errorMessage = strings[R.string.description_required]
                     )
                 }
 
@@ -306,7 +309,7 @@ class WriteReviewViewModel @Inject constructor(
 
                     _uiState.update {
                         it.copy(
-                            errorMessage = error?.message ?: "No se pudo publicar la reseña."
+                            errorMessage = error?.message ?: strings[R.string.error_review_post]
                         )
                     }
                 }
@@ -331,7 +334,7 @@ class WriteReviewViewModel @Inject constructor(
 
                 _uiState.update {
                     it.copy(
-                        errorMessage = "Las calificaciones deben estar entre 0 y 5"
+                        errorMessage = strings[R.string.invalid_rating]
                     )
                 }
 
@@ -339,7 +342,7 @@ class WriteReviewViewModel @Inject constructor(
 
                 _uiState.update {
                     it.copy(
-                        errorMessage = "La descripción no puede estar vacía"
+                        errorMessage = strings[R.string.description_required]
                     )
                 }
 
@@ -373,7 +376,7 @@ class WriteReviewViewModel @Inject constructor(
                     _uiState.update {
                         it.copy(
                             errorMessage = result.exceptionOrNull()?.message
-                                ?: "No se pudo actualizar la reseña."
+                                ?: strings[R.string.error_review_update]
                         )
                     }
                 }

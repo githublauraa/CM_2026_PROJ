@@ -1,5 +1,7 @@
 package com.example.voxel_review.ui.screens.reviewMap
 
+import com.example.voxel_review.R
+import com.example.voxel_review.data.localization.AppStrings
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.voxel_review.data.repository.ReviewRepository
@@ -13,7 +15,8 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel
 class ReviewMapViewModel @Inject constructor(
-    private val reviewRepository: ReviewRepository
+    private val reviewRepository: ReviewRepository,
+    private val strings: AppStrings
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(ReviewMapState())
@@ -39,7 +42,7 @@ class ReviewMapViewModel @Inject constructor(
                     _uiState.update {
                         it.copy(
                             isLoading = false,
-                            error = exception.message ?: "No se pudieron cargar las reseñas"
+                            error = exception.message ?: strings[R.string.error_reviews]
                         )
                     }
                 }

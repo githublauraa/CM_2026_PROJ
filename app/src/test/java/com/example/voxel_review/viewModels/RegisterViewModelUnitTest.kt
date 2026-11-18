@@ -32,7 +32,7 @@ class RegisterViewModelUnitTest {
         Dispatchers.setMain(StandardTestDispatcher())
         authRepository = mockk()
         userRepository = mockk()
-        viewModel = CreateAccountViewModel(authRepository, userRepository)
+        viewModel = CreateAccountViewModel(authRepository, userRepository, mockk(relaxed = true))
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)

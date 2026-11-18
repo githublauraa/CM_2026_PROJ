@@ -6,7 +6,9 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import androidx.activity.ComponentActivity
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.os.LocaleListCompat
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
@@ -24,7 +26,7 @@ import dagger.hilt.android.AndroidEntryPoint
  * Configura el contenido de Jetpack Compose y aplica el tema de Voxel Review.
  */
 @AndroidEntryPoint
-class MainActivity : ComponentActivity() {
+class MainActivity : AppCompatActivity() {
     @Inject lateinit var chatNotifications: ChatNotificationRegistration
     @Inject lateinit var foregroundNotifications: ForegroundChatNotifications
     private val chatNotification = MutableStateFlow<ChatNotificationTarget?>(null)
@@ -50,6 +52,10 @@ class MainActivity : ComponentActivity() {
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        if (AppCompatDelegate.getApplicationLocales().isEmpty) {
+            AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags("es"))
+        }
 
         enableEdgeToEdge()
         readChatNotification(intent)

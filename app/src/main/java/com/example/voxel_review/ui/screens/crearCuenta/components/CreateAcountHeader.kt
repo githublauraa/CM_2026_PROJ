@@ -1,5 +1,7 @@
 package com.example.voxel_review.ui.screens.crearCuenta.components
 
+import com.example.voxel_review.R
+import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -42,14 +44,14 @@ fun CreateAcountHeader(
         NombreApp()
 
         Text(
-            text = "Crear",
+            text = stringResource(R.string.create),
             color = VoxelPrimary,
             fontSize = 25.sp,
             fontWeight = FontWeight.Bold
         )
 
         Text(
-            text = "Cuenta Voxel",
+            text = stringResource(R.string.voxel_account),
             color = VoxelSecondary,
             fontSize = 26.sp,
             fontWeight = FontWeight.Bold

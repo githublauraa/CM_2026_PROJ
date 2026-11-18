@@ -44,7 +44,8 @@ class ProfileViewModelLibraryUnitTest {
             storageRepository = storageRepository,
             userRepository = userRepository,
             reviewRepository = reviewRepository,
-            libraryRepository = libraryRepository
+            libraryRepository = libraryRepository,
+            strings = mockk(relaxed = true)
         )
     }
 

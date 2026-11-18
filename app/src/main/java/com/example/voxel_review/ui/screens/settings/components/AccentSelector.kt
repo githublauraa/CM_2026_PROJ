@@ -1,5 +1,7 @@
 package com.example.voxel_review.ui.screens.settings.components
 
+import com.example.voxel_review.R
+import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -27,7 +29,7 @@ fun AccentSelector(
         color = VoxelSurfaceVariant
     ) {
         Text(
-            text = "Cambiar color de tema de la aplicación:",
+            text = stringResource(R.string.settings_accent),
             color = VoxelTextSecondary,
             fontSize = 13.sp
         )

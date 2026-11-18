@@ -1,5 +1,7 @@
 package com.example.voxel_review.ui.screens.profile.components
 
+import com.example.voxel_review.R
+import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -38,10 +40,10 @@ fun StatsPanel(
     ) {
         ItemEstadistica(
             valor = followers,
-            etiqueta = "Seguidores",
+            etiqueta = stringResource(R.string.followers),
             icono = Icons.Outlined.Group,
             modifier = Modifier.weight(1f).clickable(
-                onClickLabel = "Ver seguidores",
+                onClickLabel = stringResource(R.string.view_followers),
                 onClick = onFollowersClick
             )
         )
@@ -51,10 +53,10 @@ fun StatsPanel(
         )
         ItemEstadistica(
             valor = followed,
-            etiqueta = "Seguidos",
+            etiqueta = stringResource(R.string.following),
             icono = Icons.Outlined.PersonAdd,
             modifier = Modifier.weight(1f).clickable(
-                onClickLabel = "Ver personas seguidas",
+                onClickLabel = stringResource(R.string.view_following),
                 onClick = onFollowingClick
             )
         )

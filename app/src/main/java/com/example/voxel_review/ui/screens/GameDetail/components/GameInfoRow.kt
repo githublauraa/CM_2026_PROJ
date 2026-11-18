@@ -1,5 +1,7 @@
 package com.example.voxel_review.ui.screens.GameDetail.components
 
+import com.example.voxel_review.R
+import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -55,7 +57,7 @@ fun GameInfoRow(
                 fontWeight = FontWeight.Medium
             )
             Text(
-                text = value.ifBlank { "No disponible" },
+                text = value.ifBlank { stringResource(R.string.unavailable) },
                 color = VoxelTextPrimary,
                 fontSize = 15.sp,
                 fontWeight = FontWeight.SemiBold
@@ -67,5 +69,5 @@ fun GameInfoRow(
 @Preview
 @Composable
 fun GameInfoRowPreview() {
-    GameInfoRow(title = "DESARROLLADOR", value = "Bethesda Game Studios")
+    GameInfoRow(title = stringResource(R.string.developer_uppercase), value = "Bethesda Game Studios")
 }

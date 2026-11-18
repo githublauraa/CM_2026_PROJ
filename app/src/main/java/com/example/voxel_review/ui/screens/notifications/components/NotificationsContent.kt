@@ -1,5 +1,7 @@
 package com.example.voxel_review.ui.screens.notifications.components
 
+import com.example.voxel_review.R
+import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -26,21 +28,21 @@ fun NotificationsContent(
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         notificationSection(
-            title = "Mensajes de chat",
+            title = R.string.chat_notification_channel,
             keyPrefix = "chat",
             notifications = state.messages,
             error = state.messagesError,
             onNotificationClick = onNotificationClick
         )
         notificationSection(
-            title = "Nuevos seguidores",
+            title = R.string.new_followers,
             keyPrefix = "follow",
             notifications = state.followers,
             error = state.followersError,
             onNotificationClick = onNotificationClick
         )
         notificationSection(
-            title = "Me gusta en tus reseñas",
+            title = R.string.review_likes,
             keyPrefix = "like",
             notifications = state.likes,
             error = state.likesError,
@@ -51,14 +53,14 @@ fun NotificationsContent(
         val hasNotifications = state.messages.isNotEmpty() || state.followers.isNotEmpty() || state.likes.isNotEmpty()
         val hasError = state.messagesError != null || state.followersError != null || state.likesError != null
         when {
-            isLoading && !hasNotifications -> item { ContentStatus("Cargando avisos…", loading = true) }
-            !hasNotifications && !hasError -> item { ContentStatus("Sin actividad reciente") }
+            isLoading && !hasNotifications -> item { ContentStatus(stringResource(R.string.notices_loading), loading = true) }
+            !hasNotifications && !hasError -> item { ContentStatus(stringResource(R.string.no_recent_activity)) }
         }
     }
 }
 
 private fun LazyListScope.notificationSection(
-    title: String,
+    title: Int,
     keyPrefix: String,
     notifications: List<NotificationInfo>,
     error: String?,
@@ -66,7 +68,7 @@ private fun LazyListScope.notificationSection(
 ) {
     if (notifications.isEmpty() && error == null) return
 
-    item(key = "$keyPrefix-title") { NotificationSectionHeader(title = title) }
+    item(key = "$keyPrefix-title") { NotificationSectionHeader(title = stringResource(title)) }
     if (notifications.isEmpty() && error != null) {
         item(key = "$keyPrefix-error") { ContentStatus(error) }
     }

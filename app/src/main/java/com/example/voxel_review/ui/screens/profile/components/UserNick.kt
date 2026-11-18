@@ -1,5 +1,7 @@
 package com.example.voxel_review.ui.screens.profile.components
 
+import com.example.voxel_review.R
+import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -50,7 +52,7 @@ fun UserNick(
             if (isVerified) {
                 Icon(
                     imageVector = Icons.Filled.Verified,
-                    contentDescription = "Usuario verificado",
+                    contentDescription = stringResource(R.string.verified_user),
                     tint = VoxelSecondary,
                     modifier = Modifier
                         .size(22.dp)
@@ -61,7 +63,7 @@ fun UserNick(
         if (isVerified) {
             Spacer(modifier = Modifier.height(4.dp))
             Text(
-                text = "Usuario verificado",
+                text = stringResource(R.string.verified_user),
                 color = VoxelSecondary,
                 fontSize = 14.sp,
                 fontWeight = FontWeight.SemiBold,

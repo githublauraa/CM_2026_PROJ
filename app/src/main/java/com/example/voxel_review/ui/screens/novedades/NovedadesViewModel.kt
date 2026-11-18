@@ -1,6 +1,8 @@
 
 package com.example.voxel_review.ui.screens.novedades
 
+import com.example.voxel_review.R
+import com.example.voxel_review.data.localization.AppStrings
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.voxel_review.data.repository.VideoGameRepository
@@ -19,7 +21,8 @@ import kotlinx.coroutines.launch
 class NovedadesViewModel @Inject constructor(
     private val videoGameRepository: VideoGameRepository,
     private val reviewRepository: ReviewRepository,
-    private val authRepository: AuthRepository
+    private val authRepository: AuthRepository,
+    private val strings: AppStrings
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(NovedadesState())
@@ -61,14 +64,14 @@ class NovedadesViewModel @Inject constructor(
                         .onFailure { error ->
                             _uiState.update {
                                 it.copy(isLoading = false, error = error.message
-                                    ?: "No se pudieron cargar las reseñas")
+                                    ?: strings[R.string.error_reviews])
                             }
                         }
                 }
                 .onFailure { error ->
                     _uiState.update {
                         it.copy(isLoading = false, error = error.message
-                            ?: "No se pudieron cargar los videojuegos")
+                            ?: strings[R.string.error_games])
                     }
                 }
         }
@@ -89,7 +92,7 @@ class NovedadesViewModel @Inject constructor(
 
         if (currentUserId.isBlank()) {
             _uiState.update {
-                it.copy(error = "Debes iniciar sesión para ver seguidos")
+                it.copy(error = strings[R.string.sign_in_followed_reviews])
             }
             return
         }
@@ -115,7 +118,7 @@ class NovedadesViewModel @Inject constructor(
                     _uiState.update {
                         it.copy(
                             isLoading = false,
-                            error = exception.message ?: "No se pudieron obtener las reseñas"
+                            error = exception.message ?: strings[R.string.error_reviews]
                         )
                     }
                 }

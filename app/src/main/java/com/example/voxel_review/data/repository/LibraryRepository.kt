@@ -1,5 +1,7 @@
 package com.example.voxel_review.data.repository
 
+import com.example.voxel_review.R
+import com.example.voxel_review.data.localization.AppStrings
 import com.example.voxel_review.data.dataSource.impl.firestore.LibraryFirestoreDataSourceImpl
 import com.example.voxel_review.data.dtos.LibraryEntryDto
 import com.example.voxel_review.data.dtos.toLibraryGameInfo
@@ -14,7 +16,8 @@ import javax.inject.Inject
  * de cada usuario en Cloud Firestore.
  */
 class LibraryRepository @Inject constructor(
-    private val libraryRemoteDataSource: LibraryFirestoreDataSourceImpl
+    private val libraryRemoteDataSource: LibraryFirestoreDataSourceImpl,
+    private val strings: AppStrings
 ) {
 
     suspend fun getUserLibrary(userId: String): Result<List<LibraryGameInfo>> {
@@ -26,7 +29,7 @@ class LibraryRepository @Inject constructor(
         } catch (e: CancellationException) {
             throw e
         } catch (e: Exception) {
-            Result.failure(Exception("No se pudo cargar la colección.", e))
+            Result.failure(Exception(strings[R.string.error_collection], e))
         }
     }
 
@@ -38,7 +41,7 @@ class LibraryRepository @Inject constructor(
         } catch (e: CancellationException) {
             throw e
         } catch (e: Exception) {
-            Result.failure(Exception("No se pudo consultar el estado del juego en tu colección.", e))
+            Result.failure(Exception(strings[R.string.error_library_status], e))
         }
     }
 
@@ -48,7 +51,7 @@ class LibraryRepository @Inject constructor(
         status: LibraryStatus
     ): Result<Unit> {
         if (userId.isBlank() || game.id.isBlank()) {
-            return Result.failure(IllegalArgumentException("Usuario o videojuego inválido"))
+            return Result.failure(IllegalArgumentException(strings[R.string.invalid_user_or_game]))
         }
         return try {
             val dto = LibraryEntryDto(
@@ -64,13 +67,13 @@ class LibraryRepository @Inject constructor(
         } catch (e: CancellationException) {
             throw e
         } catch (e: Exception) {
-            Result.failure(Exception("No se pudo guardar el juego en tu colección.", e))
+            Result.failure(Exception(strings[R.string.error_library_save], e))
         }
     }
 
     suspend fun removeGameFromLibrary(userId: String, videoGameId: String): Result<Unit> {
         if (userId.isBlank() || videoGameId.isBlank()) {
-            return Result.failure(IllegalArgumentException("Usuario o videojuego inválido"))
+            return Result.failure(IllegalArgumentException(strings[R.string.invalid_user_or_game]))
         }
         return try {
             libraryRemoteDataSource.deleteLibraryEntry(userId, videoGameId)
@@ -78,7 +81,7 @@ class LibraryRepository @Inject constructor(
         } catch (e: CancellationException) {
             throw e
         } catch (e: Exception) {
-            Result.failure(Exception("No se pudo quitar el juego de tu colección.", e))
+            Result.failure(Exception(strings[R.string.error_library_remove], e))
         }
     }
 }

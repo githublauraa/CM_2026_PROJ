@@ -6,6 +6,7 @@ import android.app.PendingIntent
 import android.content.Intent
 import android.net.Uri
 import androidx.core.app.NotificationCompat
+import androidx.core.content.ContextCompat
 import com.example.voxel_review.ChatNotificationTarget
 import com.example.voxel_review.MainActivity
 import com.example.voxel_review.R
@@ -43,12 +44,13 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         val target = ChatNotificationTarget(recipientId, senderId)
         if (foregroundNotifications.showIfForeground(target)) return
 
+        val localized = ContextCompat.getContextForLanguage(this)
         val manager = getSystemService(NotificationManager::class.java)
         if (!manager.areNotificationsEnabled()) return
         manager.createNotificationChannel(
             NotificationChannel(
                 CHANNEL_ID,
-                getString(R.string.chat_notification_channel),
+                localized.getString(R.string.chat_notification_channel),
                 NotificationManager.IMPORTANCE_HIGH
             )
         )
@@ -66,8 +68,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
         val notification = NotificationCompat.Builder(this, CHANNEL_ID)
             .setSmallIcon(R.drawable.campana_notificaciones)
-            .setContentTitle(getString(R.string.chat_notification_title))
-            .setContentText(getString(R.string.chat_notification_body))
+            .setContentTitle(localized.getString(R.string.chat_notification_title))
+            .setContentText(localized.getString(R.string.chat_notification_body))
             .setCategory(NotificationCompat.CATEGORY_MESSAGE)
             .setVisibility(NotificationCompat.VISIBILITY_PRIVATE)
             .setContentIntent(pendingIntent)

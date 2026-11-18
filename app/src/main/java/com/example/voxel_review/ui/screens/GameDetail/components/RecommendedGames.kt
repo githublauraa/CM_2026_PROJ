@@ -1,5 +1,7 @@
 package com.example.voxel_review.ui.screens.GameDetail.components
 
+import com.example.voxel_review.R
+import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -28,7 +30,7 @@ fun RecommendedGames(
 
     Column {
         Text(
-            text = "También Recomendado",
+            text = stringResource(R.string.also_recommended),
             color = Color.White,
             fontSize = 16.sp,
             fontWeight = FontWeight.Bold

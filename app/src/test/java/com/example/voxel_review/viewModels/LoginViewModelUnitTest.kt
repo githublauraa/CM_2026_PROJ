@@ -24,7 +24,7 @@ class LoginViewModelUnitTest {
     fun setUp(){
         Dispatchers.setMain(StandardTestDispatcher())
         authRepository = mockk()
-        viewModel = StartViewModel(authRepository)
+        viewModel = StartViewModel(authRepository, mockk(relaxed = true))
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)

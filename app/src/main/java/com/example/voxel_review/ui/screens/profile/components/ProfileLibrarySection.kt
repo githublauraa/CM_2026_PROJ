@@ -1,5 +1,8 @@
 package com.example.voxel_review.ui.screens.profile.components
 
+import com.example.voxel_review.ui.utils.libraryStatusLabel
+import com.example.voxel_review.R
+import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -59,7 +62,7 @@ fun ProfileTabChips(
     ) {
         ProfileContentTab.entries.forEach { tab ->
             FeedFilterChip(
-                text = tab.label,
+                text = stringResource(if (tab == ProfileContentTab.REVIEWS) R.string.nav_reviews else R.string.library),
                 isSelected = selectedTab == tab,
                 onClick = { onSelectTab(tab) },
                 modifier = Modifier.testTag("profileTab_${tab.name}")
@@ -88,7 +91,7 @@ fun ProfileLibrarySection(
             .padding(16.dp)
     ) {
         Text(
-            text = "Mi Colección",
+            text = stringResource(R.string.my_collection),
             color = White,
             fontSize = 26.sp,
             fontWeight = FontWeight.Bold,
@@ -101,7 +104,7 @@ fun ProfileLibrarySection(
         ) {
             item {
                 FeedFilterChip(
-                    text = "Todos",
+                    text = stringResource(R.string.filter_all),
                     isSelected = selectedFilter == null,
                     onClick = { onSelectFilter(null) },
                     modifier = Modifier.testTag("libraryFilter_ALL")
@@ -109,7 +112,7 @@ fun ProfileLibrarySection(
             }
             items(LibraryStatus.entries) { status ->
                 FeedFilterChip(
-                    text = status.label,
+                    text = libraryStatusLabel(status),
                     isSelected = selectedFilter == status,
                     onClick = { onSelectFilter(status) },
                     modifier = Modifier.testTag("libraryFilter_${status.name}")
@@ -119,7 +122,7 @@ fun ProfileLibrarySection(
 
         when {
             isLoading -> {
-                ContentStatus("Cargando colección…", loading = true)
+                ContentStatus(stringResource(R.string.collection_loading), loading = true)
             }
 
             errorMessage != null -> {
@@ -128,9 +131,9 @@ fun ProfileLibrarySection(
 
             games.isEmpty() -> {
                 val emptyText = if (selectedFilter == null) {
-                    "Todavía no hay juegos en esta colección."
+                    stringResource(R.string.collection_empty)
                 } else {
-                    "No hay juegos marcados como \"${selectedFilter.label}\"."
+                    stringResource(R.string.collection_filter_empty, libraryStatusLabel(selectedFilter))
                 }
                 ContentStatus(emptyText)
             }
@@ -210,7 +213,7 @@ private fun LibraryGameCard(
                 Spacer(modifier = Modifier.height(6.dp))
 
                 Text(
-                    text = entry.status.label,
+                    text = libraryStatusLabel(entry.status),
                     color = badgeColor,
                     fontSize = 11.sp,
                     fontWeight = FontWeight.SemiBold,

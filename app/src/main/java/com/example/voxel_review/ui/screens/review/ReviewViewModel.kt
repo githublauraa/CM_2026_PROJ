@@ -1,5 +1,7 @@
 package com.example.voxel_review.ui.screens.review
 
+import com.example.voxel_review.R
+import com.example.voxel_review.data.localization.AppStrings
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.voxel_review.data.repository.ReviewRepository
@@ -19,11 +21,12 @@ import kotlinx.coroutines.Job
 
 @HiltViewModel
 class ReviewViewModel @Inject constructor(
-    private val reviewRepository: ReviewRepository
+    private val reviewRepository: ReviewRepository,
+    private val strings: AppStrings
 ): ViewModel() {
 
     private val _uiState = MutableStateFlow(ReviewDetailState())
-    private val reactions = OptimisticReviewReactions(viewModelScope, reviewRepository)
+    private val reactions = OptimisticReviewReactions(viewModelScope, reviewRepository, strings)
 
     val uiState: StateFlow<ReviewDetailState> = combine(_uiState, reactions.pending) { state, pendingReactions ->
         val review = state.review
@@ -69,7 +72,7 @@ class ReviewViewModel @Inject constructor(
                             review = selectedReview,
                             isLoading = false,
                             errorMessage = if (selectedReview == null) {
-                                "Reseña no encontrada"
+                                strings[R.string.review_not_found]
                             } else {
                                 null
                             }

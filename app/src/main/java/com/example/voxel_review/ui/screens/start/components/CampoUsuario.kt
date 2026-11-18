@@ -39,7 +39,7 @@ fun CampoUsuario(
 
         placeholder = {
             Text(
-                text = "Correo electrónico",
+                text = stringResource(R.string.login_email),
                 color = onSurfaceVariantDark
             )
         },

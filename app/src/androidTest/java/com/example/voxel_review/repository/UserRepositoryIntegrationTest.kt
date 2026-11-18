@@ -1,5 +1,7 @@
 package com.example.voxel_review.repository
 
+import com.example.voxel_review.data.localization.AppStrings
+import androidx.test.platform.app.InstrumentationRegistry
 import com.example.voxel_review.data.dataSource.AuthRemoteDataSource
 import com.example.voxel_review.data.dataSource.UserRemoteDataSource
 import com.example.voxel_review.data.dataSource.impl.firestore.UserFirestoreDataSourceImpl
@@ -17,6 +19,8 @@ import org.junit.Before
 import org.junit.Test
 
 class UserRepositoryIntegrationTest {
+    private val appStrings = AppStrings(InstrumentationRegistry.getInstrumentation().targetContext)
+
 
 
     //base de datos
@@ -51,9 +55,9 @@ class UserRepositoryIntegrationTest {
 
         val userDataSource = UserFirestoreDataSourceImpl(db)
         val authDataSource = AuthRemoteDataSource(auth)
-        val authRepository = AuthRepository(authDataSource)
+        val authRepository = AuthRepository(authDataSource, appStrings)
 
-        userRepository = UserRepository(userDataSource, authRepository)
+        userRepository = UserRepository(userDataSource, authRepository, appStrings)
         dataSourceUser = UserFirestoreDataSourceImpl(db)
 
         val batch = db.batch()

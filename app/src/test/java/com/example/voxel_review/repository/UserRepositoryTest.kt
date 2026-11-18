@@ -1,9 +1,12 @@
 package com.example.voxel_review.repository
 
 
+import com.example.voxel_review.R
+import com.example.voxel_review.data.localization.AppStrings
 import com.example.voxel_review.data.dataSource.impl.firestore.UserFirestoreDataSourceImpl
 import com.example.voxel_review.data.dtos.UserProfileFirestoreDto
 import com.example.voxel_review.data.repository.UserRepository
+import io.mockk.every
 import io.mockk.mockk
 import com.example.voxel_review.data.repository.AuthRepository
 import com.google.common.truth.Truth
@@ -18,7 +21,10 @@ class UserRepositoryTest {
     private val mockDataSource = mockk<UserFirestoreDataSourceImpl>()
     private val authRepository = mockk<AuthRepository>()
 
-    private val userRepository =  UserRepository(mockDataSource, authRepository)
+    private val userRepository =  UserRepository(mockDataSource, authRepository, mockk<AppStrings>(relaxed = true) {
+        every { get(R.string.error_followers) } returns "No se pudieron cargar los seguidores."
+        every { get(R.string.profile_not_found) } returns "No encontramos este perfil."
+    })
 
     @Test
     fun getFollowers_muestraUnMensajeEnEspanolSiFallaLaConexion() = runTest {

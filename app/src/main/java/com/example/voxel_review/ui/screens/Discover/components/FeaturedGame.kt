@@ -1,5 +1,8 @@
 package com.example.voxel_review.ui.screens.Discover.components
 
+import androidx.compose.ui.res.pluralStringResource
+import com.example.voxel_review.R
+import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -39,8 +42,8 @@ internal fun FeaturedGame(
         game.categoria.takeIf { it.isNotBlank() },
         when (game.reviewCount) {
             0 -> null
-            1 -> "1 reseña"
-            else -> "${game.reviewCount} reseñas"
+            1 -> stringResource(R.string.one_review)
+            else -> pluralStringResource(R.plurals.review_count, game.reviewCount, game.reviewCount)
         }
     ).joinToString(" · ")
     Column(
@@ -48,7 +51,7 @@ internal fun FeaturedGame(
             .fillMaxWidth()
             .clip(shape)
             .background(VoxelSurface)
-            .clickable(onClickLabel = "Ver ficha del juego", onClick = onClick)
+            .clickable(onClickLabel = stringResource(R.string.open_game), onClick = onClick)
     ) {
         GameImage(
             game.imagen,
@@ -65,7 +68,7 @@ internal fun FeaturedGame(
                 verticalArrangement = Arrangement.spacedBy(4.dp)
             ) {
                 Text(
-                    text = if (game.reviewCount > 0) "Más reseñado" else "Juego destacado",
+                    text = if (game.reviewCount > 0) stringResource(R.string.most_reviewed) else stringResource(R.string.featured_game),
                     style = MaterialTheme.typography.labelMedium,
                     color = VoxelPrimary
                 )

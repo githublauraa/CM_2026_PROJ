@@ -1,5 +1,7 @@
 package com.example.voxel_review.data.repository
 
+import com.example.voxel_review.R
+import com.example.voxel_review.data.localization.AppStrings
 import android.graphics.Bitmap
 import android.net.Uri
 import com.example.voxel_review.data.dataSource.ChatDocument
@@ -32,7 +34,8 @@ class ChatRepository @Inject constructor(
     private val remoteDataSource: ChatRemoteDataSource,
     private val authRepository: AuthRepository,
     private val photoStorage: ChatPhotoStorageService,
-    private val notificationCache: ChatNotificationCache
+    private val notificationCache: ChatNotificationCache,
+    private val strings: AppStrings
 ) {
     fun observeNotifications(userId: String): Flow<Result<List<NotificationInfo>>> {
         val contacts = mutableMapOf<String, ChatContact>()
@@ -42,8 +45,8 @@ class ChatRepository @Inject constructor(
                 if (contact != null) contacts[notice.senderId] = contact
                 NotificationInfo(
                     id = notice.id,
-                    title = contact?.name ?: "Usuario",
-                    message = "Te envió un mensaje",
+                    title = contact?.name ?: strings[R.string.generic_user],
+                    message = strings[R.string.notice_message],
                     imageUrl = contact?.photoUrl.orEmpty(),
                     chatSenderId = notice.senderId,
                     timestampMillis = notice.receivedAt
@@ -72,8 +75,8 @@ class ChatRepository @Inject constructor(
 
                 NotificationInfo(
                     id = notice.id,
-                    title = notice.senderName.ifBlank { "Usuario" },
-                    message = if (notice.isPhoto) "Te envió una foto" else "Te envió un mensaje",
+                    title = notice.senderName.ifBlank { strings[R.string.generic_user] },
+                    message = if (notice.isPhoto) strings[R.string.notice_photo] else strings[R.string.notice_message],
                     imageUrl = notice.senderPhotoUrl,
                     chatSenderId = notice.senderId,
                     timestampMillis = notice.createdAt?.toDate()?.time ?: 0
@@ -83,13 +86,13 @@ class ChatRepository @Inject constructor(
         }
     }.catch { error ->
         if (error is CancellationException || error !is Exception) throw error
-        emit(Result.failure(Exception("No se pudieron cargar los avisos de mensajes.", error)))
+        emit(Result.failure(Exception(strings[R.string.error_chat_notices], error)))
     }
 
     fun observeConversations(): Flow<Result<ChatPage<ChatConversation>>> = flow {
         val userId = authRepository.currentUser?.uid
         if (userId == null) {
-            emit(Result.failure(Exception("Inicia sesión para ver tus chats.")))
+            emit(Result.failure(Exception(strings[R.string.sign_in_chats])))
             return@flow
         }
 
@@ -99,38 +102,38 @@ class ChatRepository @Inject constructor(
         }
     }.catch { error ->
         if (error is CancellationException || error !is Exception) throw error
-        emit(Result.failure(Exception("No se pudieron cargar tus chats. Inténtalo de nuevo.", error)))
+        emit(Result.failure(Exception(strings[R.string.error_chat_inbox], error)))
     }
 
     suspend fun loadOlderConversations(cursor: ChatCursor): Result<ChatPage<ChatConversation>> {
         return try {
             val userId = authRepository.currentUser?.uid
-                ?: return Result.failure(Exception("Inicia sesión para ver tus chats."))
+                ?: return Result.failure(Exception(strings[R.string.sign_in_chats]))
             val page = remoteDataSource.getConversationsBefore(userId, cursor)
             Result.success(toConversations(page, userId, mutableMapOf()))
         } catch (error: CancellationException) {
             throw error
         } catch (error: Exception) {
-            Result.failure(Exception("No se pudieron cargar más chats. Inténtalo de nuevo.", error))
+            Result.failure(Exception(strings[R.string.error_chat_inbox_older], error))
         }
     }
 
     suspend fun getContact(contactId: String): Result<ChatContact> {
         return try {
             val contact = remoteDataSource.getContact(contactId)
-                ?: return Result.failure(Exception("El perfil de este usuario ya no está disponible."))
-            Result.success(ChatContact(contactId, contact.username.ifBlank { "Usuario" }, contact.photoUrl.orEmpty()))
+                ?: return Result.failure(Exception(strings[R.string.chat_profile_unavailable]))
+            Result.success(ChatContact(contactId, contact.username.ifBlank { strings[R.string.generic_user] }, contact.photoUrl.orEmpty()))
         } catch (error: CancellationException) {
             throw error
         } catch (error: Exception) {
-            Result.failure(Exception("No se pudo cargar el perfil del chat.", error))
+            Result.failure(Exception(strings[R.string.error_chat_profile], error))
         }
     }
 
     fun observeMessages(contactId: String): Flow<Result<ChatPage<ChatMessage>>> = flow {
         val userId = authRepository.currentUser?.uid
         if (userId == null) {
-            emit(Result.failure(Exception("Inicia sesión para ver los mensajes.")))
+            emit(Result.failure(Exception(strings[R.string.sign_in_messages])))
             return@flow
         }
 
@@ -140,46 +143,46 @@ class ChatRepository @Inject constructor(
         }
     }.catch { error ->
         if (error is CancellationException || error !is Exception) throw error
-        emit(Result.failure(Exception("No se pudieron cargar los mensajes. Inténtalo de nuevo.", error)))
+        emit(Result.failure(Exception(strings[R.string.error_chat_messages], error)))
     }
 
     suspend fun loadOlderMessages(contactId: String, cursor: ChatCursor): Result<ChatPage<ChatMessage>> {
         return try {
             val userId = authRepository.currentUser?.uid
-                ?: return Result.failure(Exception("Inicia sesión para ver los mensajes."))
+                ?: return Result.failure(Exception(strings[R.string.sign_in_messages]))
             val chatId = participantIds(userId, contactId).joinToString("~")
             val page = remoteDataSource.getMessagesBefore(chatId, cursor)
             Result.success(toMessages(page, userId))
         } catch (error: CancellationException) {
             throw error
         } catch (error: Exception) {
-            Result.failure(Exception("No se pudieron cargar los mensajes anteriores.", error))
+            Result.failure(Exception(strings[R.string.error_chat_older], error))
         }
     }
 
     suspend fun sendMessage(contactId: String, draft: String): Result<Unit> {
         val text = draft.trim()
         if (text.isEmpty() || text.length > CHAT_MESSAGE_LIMIT) {
-            return Result.failure(Exception("Escribe un mensaje de 1 a $CHAT_MESSAGE_LIMIT caracteres."))
+            return Result.failure(Exception(strings.format(R.string.chat_message_invalid, CHAT_MESSAGE_LIMIT)))
         }
 
         return try {
             val userId = authRepository.currentUser?.uid
-                ?: return Result.failure(Exception("Inicia sesión para enviar mensajes."))
+                ?: return Result.failure(Exception(strings[R.string.sign_in_send_message]))
             val participants = participantIds(userId, contactId)
             remoteDataSource.sendMessage(participants.joinToString("~"), participants, userId, text)
             Result.success(Unit)
         } catch (error: CancellationException) {
             throw error
         } catch (error: Exception) {
-            Result.failure(Exception("No se pudo enviar el mensaje. Inténtalo de nuevo.", error))
+            Result.failure(Exception(strings[R.string.error_chat_send], error))
         }
     }
 
     suspend fun sendPhoto(contactId: String, capture: Uri): Result<Unit> {
         return try {
             val userId = authRepository.currentUser?.uid
-                ?: return Result.failure(Exception("Inicia sesión para enviar fotos."))
+                ?: return Result.failure(Exception(strings[R.string.sign_in_send_photos]))
             val participants = participantIds(userId, contactId)
             val chatId = participants.joinToString("~")
             val messageId = remoteDataSource.newMessageId(chatId)
@@ -205,14 +208,14 @@ class ChatRepository @Inject constructor(
         } catch (error: CancellationException) {
             throw error
         } catch (error: Exception) {
-            Result.failure(Exception("No se pudo enviar la foto. Inténtalo de nuevo.", error))
+            Result.failure(Exception(strings[R.string.error_chat_send_photo], error))
         }
     }
 
     suspend fun loadPhoto(contactId: String, path: String): Result<Bitmap> {
         return try {
             val userId = authRepository.currentUser?.uid
-                ?: return Result.failure(Exception("Inicia sesión para ver la foto."))
+                ?: return Result.failure(Exception(strings[R.string.sign_in_view_photo]))
             val participants = participantIds(userId, contactId)
             val chatId = participants.joinToString("~")
             val validPath = participants.any { participant ->
@@ -224,7 +227,7 @@ class ChatRepository @Inject constructor(
         } catch (error: CancellationException) {
             throw error
         } catch (error: Exception) {
-            Result.failure(Exception("No se pudo cargar la foto.", error))
+            Result.failure(Exception(strings[R.string.error_chat_photo], error))
         }
     }
 
@@ -233,7 +236,7 @@ class ChatRepository @Inject constructor(
             photoStorage.discardCapture(capture)
             Result.success(Unit)
         } catch (error: Exception) {
-            Result.failure(Exception("No se pudo borrar la foto temporal.", error))
+            Result.failure(Exception(strings[R.string.camera_cleanup_error], error))
         }
     }
 
@@ -280,7 +283,7 @@ class ChatRepository @Inject constructor(
         val chats = page.items.mapNotNull { chat ->
             if (chat.hasPendingWrites) return@mapNotNull null
             val contactId = chat.data.participantIds.firstOrNull { it != userId } ?: return@mapNotNull null
-            val contact = contacts[contactId] ?: ChatContact(contactId, "Usuario")
+            val contact = contacts[contactId] ?: ChatContact(contactId, strings[R.string.generic_user])
             val timestamp = chat.data.updatedAt ?: return@mapNotNull null
             ChatConversation(
                 id = chat.id,

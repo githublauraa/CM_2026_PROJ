@@ -45,7 +45,8 @@ class GameDetailViewModelLibraryUnitTest {
             videoGameRepository = videoGameRepository,
             reviewRepository = reviewRepository,
             libraryRepository = libraryRepository,
-            authRepository = auth
+            authRepository = auth,
+            strings = mockk(relaxed = true)
         )
     }
 

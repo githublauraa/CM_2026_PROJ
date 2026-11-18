@@ -1,5 +1,7 @@
 package com.example.voxel_review.ui.screens.editProfile
 
+import com.example.voxel_review.R
+import com.example.voxel_review.data.localization.AppStrings
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.voxel_review.data.repository.UserRepository
@@ -14,7 +16,8 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 class EditProfileViewModel @Inject constructor(
     private val userRepository: UserRepository,
-    private val firebaseAuth: FirebaseAuth
+    private val firebaseAuth: FirebaseAuth,
+    private val strings: AppStrings
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(EditProfileState())
@@ -25,7 +28,7 @@ class EditProfileViewModel @Inject constructor(
 
         val userId = firebaseAuth.currentUser?.uid
         if (userId.isNullOrBlank()) {
-            _uiState.update { it.copy(errorMessage = "Usuario no autenticado") }
+            _uiState.update { it.copy(errorMessage = strings[R.string.sign_in_edit_profile]) }
             return
         }
 
@@ -47,7 +50,7 @@ class EditProfileViewModel @Inject constructor(
                     _uiState.update {
                         it.copy(
                             isProfileLoading = false,
-                            errorMessage = error.message ?: "Error al cargar el perfil"
+                            errorMessage = error.message ?: strings[R.string.error_profile]
                         )
                     }
                 }
@@ -83,7 +86,7 @@ class EditProfileViewModel @Inject constructor(
         val userId = firebaseAuth.currentUser?.uid
         if (userId.isNullOrBlank()) {
             _uiState.update {
-                it.copy(errorMessage = "Usuario no autenticado")
+                it.copy(errorMessage = strings[R.string.sign_in_edit_profile])
             }
             return
         }
@@ -104,7 +107,7 @@ class EditProfileViewModel @Inject constructor(
                     it.copy(
                         isLoading = false,
                         errorMessage = bioResult.exceptionOrNull()?.message
-                            ?: "Error al guardar la biografía"
+                            ?: strings[R.string.error_bio]
                     )
                 }
                 return@launch
@@ -127,7 +130,7 @@ class EditProfileViewModel @Inject constructor(
                         it.copy(
                             isLoading = false,
                             errorMessage = error.message
-                                ?: "La biografía se guardó, pero no se pudo guardar el nombre de usuario"
+                                ?: strings[R.string.partial_bio_saved]
                         )
                     }
                 }

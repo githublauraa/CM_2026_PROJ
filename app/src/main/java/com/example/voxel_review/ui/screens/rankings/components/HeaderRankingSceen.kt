@@ -37,7 +37,7 @@ fun HeaderRankingSceen(
     ) {
         ScreenHeaderTitle(stringResource(R.string.nav_rankings), modifier = Modifier.fillMaxWidth())
         Text(
-            text = "Críticos por número de reseñas",
+            text = stringResource(R.string.rankings_subtitle),
             modifier = Modifier.fillMaxWidth(),
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.bodySmall,
@@ -51,7 +51,7 @@ fun HeaderRankingSceen(
                 .padding(horizontal = 4.dp),
             horizontalArrangement = Arrangement.spacedBy(4.dp)
         ) {
-            listOf(true to "Críticos", false to "Juegos").forEach { (critics, label) ->
+            listOf(true to stringResource(R.string.critics), false to stringResource(R.string.games)).forEach { (critics, label) ->
                 val selected = seleccionado == critics
                 TextButton(
                     onClick = { onChangeSeleccionado(critics) },
