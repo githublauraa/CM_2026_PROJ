@@ -1,5 +1,7 @@
 package com.example.voxel_review.ui.screens.GameDetail.components
 
+import com.example.voxel_review.R
+import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material.icons.Icons
@@ -33,7 +35,7 @@ fun ReviewReactions(
             enabled = enabled,
             count = likes,
             icon = if (isLiked) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
-            description = if (isLiked) "Quitar like" else "Dar like",
+            description = stringResource(if (isLiked) R.string.review_remove_like else R.string.review_like),
             tag = "btnLike",
             onClick = { onReactionClick(false) }
         )
@@ -42,7 +44,7 @@ fun ReviewReactions(
             enabled = enabled,
             count = dislikes,
             icon = if (isDisliked) Icons.Filled.ThumbDown else Icons.Outlined.ThumbDown,
-            description = if (isDisliked) "Quitar dislike" else "Dar dislike",
+            description = stringResource(if (isDisliked) R.string.review_remove_dislike else R.string.review_dislike),
             tag = "btnDislike",
             onClick = { onReactionClick(true) }
         )

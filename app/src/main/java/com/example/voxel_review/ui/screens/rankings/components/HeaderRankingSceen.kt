@@ -1,5 +1,7 @@
 package com.example.voxel_review.ui.screens.rankings.components
 
+import com.example.voxel_review.R
+import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -33,7 +35,7 @@ fun HeaderRankingSceen(
         modifier = modifier.fillMaxWidth().padding(start = 20.dp, end = 20.dp, top = 18.dp),
         verticalArrangement = Arrangement.spacedBy(6.dp)
     ) {
-        ScreenHeaderTitle("Rankings", modifier = Modifier.fillMaxWidth())
+        ScreenHeaderTitle(stringResource(R.string.nav_rankings), modifier = Modifier.fillMaxWidth())
         Text(
             text = "Críticos por número de reseñas",
             modifier = Modifier.fillMaxWidth(),

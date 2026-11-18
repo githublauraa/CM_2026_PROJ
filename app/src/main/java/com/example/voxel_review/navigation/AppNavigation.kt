@@ -2,6 +2,8 @@ package com.example.voxel_review.navigation
 
 import android.net.Uri
 import com.example.voxel_review.ui.screens.following.FollowingScreen
+import com.example.voxel_review.ui.screens.chat.inbox.ChatInboxScreen
+import com.example.voxel_review.ui.screens.chat.conversation.ChatScreen
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
@@ -70,6 +72,11 @@ sealed class AppScreen(val route: String) {
     object RankingsUser : AppScreen("rankingsUser")
     object Configuration : AppScreen("configuration")
     object Notifications : AppScreen("notifications")
+    object Chats : AppScreen("chats")
+
+    object Chat : AppScreen("chat") {
+        fun createRoute(contactId: String) = "$route/${Uri.encode(contactId)}"
+    }
 
     object Following : AppScreen("following") {
         fun createRoute(userId: String, showFollowers: Boolean = false) =
@@ -291,6 +298,9 @@ fun AppNavigation(
                     onEditProfileClick = {
                         navController.navigate(AppScreen.EditProfile.route)
                     },
+                    onMessageClick = {
+                        navController.navigate(AppScreen.Chat.createRoute(profileId)) { launchSingleTop = true }
+                    },
                 )
             }
         }
@@ -419,6 +429,26 @@ fun AppNavigation(
 
 
         // NOTIFICACIONES
+        composable(route = AppScreen.Chats.route) {
+            ChatInboxScreen(
+                viewModel = hiltViewModel(),
+                onBack = { navController.popBackStack() },
+                onChatClick = { contactId ->
+                    navController.navigate(AppScreen.Chat.createRoute(contactId)) { launchSingleTop = true }
+                }
+            )
+        }
+
+        composable(
+            route = "${AppScreen.Chat.route}/{contactId}",
+            arguments = listOf(navArgument("contactId") { type = NavType.StringType })
+        ) {
+            ChatScreen(
+                viewModel = hiltViewModel(),
+                onBack = { navController.popBackStack() }
+            )
+        }
+
         composable(route = AppScreen.Notifications.route) {
 
             val notificationsViewModel: NotificationsViewModel = hiltViewModel()
@@ -429,16 +459,19 @@ fun AppNavigation(
                     navController.popBackStack()
                 },
                 onNotificationClick = { notification ->
+                    val chatSenderId = notification.chatSenderId
                     val reviewId = notification.reviewId
-                    if (reviewId == null) {
-                        navController.navigate(
+                    when {
+                        chatSenderId != null -> navController.navigate(AppScreen.Chat.createRoute(chatSenderId))
+                        reviewId != null -> {
+                            val gameId = Uri.encode(notification.gameId)
+                            val authorId = Uri.encode(notification.reviewAuthorId)
+                            navController.navigate(
+                                "${AppScreen.FullReviews.route}?juegoId=$gameId&reviewId=${Uri.encode(reviewId)}&userId=$authorId"
+                            )
+                        }
+                        else -> navController.navigate(
                             "${AppScreen.PerfilUser.route}?profileId=${Uri.encode(notification.id)}"
-                        )
-                    } else {
-                        val gameId = Uri.encode(notification.gameId)
-                        val authorId = Uri.encode(notification.reviewAuthorId)
-                        navController.navigate(
-                            "${AppScreen.FullReviews.route}?juegoId=$gameId&reviewId=${Uri.encode(reviewId)}&userId=$authorId"
                         )
                     }
                 }

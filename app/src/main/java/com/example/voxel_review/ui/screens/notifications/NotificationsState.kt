@@ -8,5 +8,8 @@ data class NotificationsState(
     val followersError: String? = null,
     val likes: List<NotificationInfo> = emptyList(),
     val likesLoading: Boolean = true,
-    val likesError: String? = null
+    val likesError: String? = null,
+    val messages: List<NotificationInfo> = emptyList(),
+    val messagesLoading: Boolean = true,
+    val messagesError: String? = null
 )

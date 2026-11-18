@@ -8,6 +8,8 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Chat
+import androidx.compose.material.icons.automirrored.outlined.Chat
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
@@ -19,10 +21,13 @@ import androidx.compose.material.icons.outlined.Star
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.compose.ui.text.font.FontFamily
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.voxel_review.R
@@ -44,6 +49,12 @@ private val bottomNavItems = listOf(
     BottomNavItem(AppScreen.RankingsUser.route, R.string.nav_rankings, Icons.Filled.Home, Icons.Outlined.Home),
     BottomNavItem(AppScreen.Discover.route, R.string.nav_discover, Icons.Filled.Search, Icons.Outlined.Search),
     BottomNavItem(AppScreen.Reviews.route, R.string.nav_reviews, Icons.Filled.Star, Icons.Outlined.Star),
+    BottomNavItem(
+        AppScreen.Chats.route,
+        R.string.nav_chats,
+        Icons.AutoMirrored.Filled.Chat,
+        Icons.AutoMirrored.Outlined.Chat
+    ),
     BottomNavItem(AppScreen.PerfilUser.route, R.string.nav_profile, Icons.Filled.Person, Icons.Outlined.Person)
 )
 
@@ -77,10 +88,22 @@ fun DiscoverBottomNavigationBar(
                     icon = {
                         Icon(
                             imageVector = if (selected) item.filledIcon else item.outlinedIcon,
-                            contentDescription = null
+                            contentDescription = null,
+                            tint = when {
+                                selected -> VoxelSecondary
+                                item.route == AppScreen.Chats.route -> Color.White
+                                else -> onSurfaceVariantDark
+                            }
                         )
                     },
-                    label = { Text(stringResource(item.label), maxLines = 1) },
+                    label = {
+                        val label = stringResource(item.label)
+                        if (item.label == R.string.nav_rankings) {
+                            Text(label, maxLines = 1, fontFamily = FontFamily.SansSerif, fontSize = 10.sp)
+                        } else {
+                            Text(label, maxLines = 1)
+                        }
+                    },
                     colors = colors,
                     modifier = Modifier.testTag("nav_${item.route}")
                 )

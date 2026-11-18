@@ -37,7 +37,7 @@ fun LazyColumnRanking(
     if (results.isEmpty()) {
         Box(modifier.fillMaxSize().padding(24.dp), contentAlignment = Alignment.Center) {
             Text(
-                text = if (query.isEmpty()) "Aún no hay críticos en el ranking"
+                text = if (query.isEmpty()) "Aún no hay críticos en la clasificación"
                     else "No encontramos críticos con ese nombre",
                 textAlign = TextAlign.Center,
                 color = onSurfaceVariantDark,

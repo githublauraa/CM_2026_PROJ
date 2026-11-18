@@ -50,6 +50,7 @@ fun ProfileScreen(
     onFollowingClick: () -> Unit = {},
     onFollowersClick: () -> Unit = {},
     onGameClick: (String) -> Unit = {},
+    onMessageClick: (() -> Unit)? = null,
     modifier: Modifier = Modifier
 ) {
 
@@ -81,6 +82,7 @@ fun ProfileScreen(
         onEditProfileClick = onEditProfileClick,
         onFollowingClick = onFollowingClick,
         onFollowersClick = onFollowersClick,
+        onMessageClick = if (currentUserId != null && !isOwnProfile) onMessageClick else null,
         buttonFollowPressed = {
             profileViewModel.followOrUnfollow(profileId)
         },
@@ -106,6 +108,7 @@ fun ProfileContent(
     buttonFollowPressed: ()-> Unit,
     onVerifyEmailClick: () -> Unit = {},
     onGameClick: (String) -> Unit = {},
+    onMessageClick: (() -> Unit)? = null,
     onSelectTab: (ProfileContentTab) -> Unit = {},
     onSelectLibraryFilter: (com.example.voxel_review.data.info.library.LibraryStatus?) -> Unit = {},
     onRetry: () -> Unit = {},
@@ -183,10 +186,20 @@ fun ProfileContent(
                         pickImageButton(onImageSelected = onImageSelected, modifier = Modifier.weight(1f))
                     }
                 } else {
-                    ButtonFollow(
-                        text = if (profile.followed) "siguiendo" else "seguir",
-                        buttonFollowPressed = buttonFollowPressed
-                    )
+                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        ButtonFollow(
+                            text = if (profile.followed) "siguiendo" else "seguir",
+                            buttonFollowPressed = buttonFollowPressed
+                        )
+                        if (onMessageClick != null) {
+                            OutlinedButton(
+                                onClick = onMessageClick,
+                                modifier = Modifier.testTag("openProfileChat")
+                            ) {
+                                Text("Mensaje")
+                            }
+                        }
+                    }
                 }
                 if (isOwnProfile && !profile.emailVerified) {
                     OutlinedButton(

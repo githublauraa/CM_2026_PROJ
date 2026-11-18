@@ -1,0 +1,88 @@
+// Integrar este bloque dentro de match /databases/{database}/documents.
+match /chats/{chatId} {
+  function isParticipant(participantIds) {
+    return request.auth != null && request.auth.uid in participantIds;
+  }
+
+  function validParticipants(participantIds) {
+    return participantIds is list
+      && participantIds.size() == 2
+      && participantIds[0] is string
+      && participantIds[1] is string
+      && participantIds[0].matches('[A-Za-z0-9_-]{1,128}')
+      && participantIds[1].matches('[A-Za-z0-9_-]{1,128}')
+      && participantIds[0] < participantIds[1]
+      && chatId == participantIds[0] + '~' + participantIds[1];
+  }
+
+  function pageIsLimited() {
+    return request.query.limit > 0 && request.query.limit <= 31;
+  }
+
+  function validText(text) {
+    return text is string && text.trim().size() > 0 && text.size() <= 1000;
+  }
+
+  function newMessageMatchesPreview(chat) {
+    let messagePath = /databases/$(database)/documents/chats/$(chatId)/messages/$(chat.lastMessageId);
+    let message = getAfter(messagePath).data;
+
+    return !exists(messagePath)
+      && message.senderId == request.auth.uid
+      && message.sentAt == request.time
+      && message.text == chat.lastMessage;
+  }
+
+  function validChat(chat) {
+    return chat.keys().hasOnly(['participantIds', 'lastMessageId', 'lastMessage', 'updatedAt'])
+      && validParticipants(chat.participantIds)
+      && isParticipant(chat.participantIds)
+      && validText(chat.lastMessage)
+      && chat.lastMessageId is string
+      && chat.lastMessageId.matches('[A-Za-z0-9]{20}')
+      && chat.updatedAt == request.time
+      && newMessageMatchesPreview(chat);
+  }
+
+  function profilesExist(participantIds) {
+    return exists(/databases/$(database)/documents/users/$(participantIds[0]))
+      && exists(/databases/$(database)/documents/users/$(participantIds[1]));
+  }
+
+  allow get: if isParticipant(resource.data.participantIds);
+  allow list: if pageIsLimited() && isParticipant(resource.data.participantIds);
+  allow create: if validChat(request.resource.data) && profilesExist(request.resource.data.participantIds);
+  allow update: if request.resource.data.participantIds == resource.data.participantIds
+    && validChat(request.resource.data);
+
+  match /messages/{messageId} {
+    function canReadMessages() {
+      // Permite abrir un chat vacío antes de que exista su primer mensaje.
+      let participants = chatId.split('~');
+      return validParticipants(participants) && isParticipant(participants);
+    }
+
+    function validMessage(message) {
+      let chat = getAfter(/databases/$(database)/documents/chats/$(chatId)).data;
+
+      let photoPath = message.get('photoPath', null);
+
+      return message.keys().hasOnly(['senderId', 'text', 'sentAt', 'photoPath'])
+        && (photoPath == null || (
+          message.text == 'Foto'
+          && photoPath == 'chatPhotos/' + chatId + '/' + request.auth.uid + '/' + messageId + '.jpg'
+        ))
+        && message.senderId == request.auth.uid
+        && validText(message.text)
+        && message.sentAt == request.time
+        && isParticipant(chat.participantIds)
+        && chat.lastMessageId == messageId
+        && chat.lastMessage == message.text
+        && chat.updatedAt == request.time;
+    }
+
+    allow get: if canReadMessages();
+    allow list: if canReadMessages() && pageIsLimited();
+    allow create: if canReadMessages() && validMessage(request.resource.data);
+  }
+}

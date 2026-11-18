@@ -89,15 +89,26 @@ class ReviewFirebaseDataSourceImpl @Inject constructor(
     }
 
     suspend fun getRecentReviewsWithLocation(): List<ReviewDto> {
-        val reviews = getAllReviews()
         val now = Instant.now()
         val cutoff = now.minus(24, ChronoUnit.HOURS)
 
-        return reviews.filter { review ->
-            if (review.latitude == null || review.longitude == null) return@filter false
+        // Los documentos guardan ISO-8601 con fracciones de segundo opcionales.
+        val firstSecond = cutoff.truncatedTo(ChronoUnit.SECONDS).toString().removeSuffix("Z")
+        val nextSecond = now.truncatedTo(ChronoUnit.SECONDS).plusSeconds(1).toString().removeSuffix("Z")
+        val snapshot = db.collection("reviews")
+            .whereGreaterThanOrEqualTo("createdAt", firstSecond)
+            .whereLessThan("createdAt", nextSecond)
+            .get()
+            .await()
+
+        return snapshot.documents.mapNotNull { document ->
+            val review = document.toObject(ReviewDto::class.java) ?: return@mapNotNull null
+            if (review.latitude == null || review.longitude == null) return@mapNotNull null
 
             val publishedAt = runCatching { Instant.parse(review.createdAt) }.getOrNull()
-            publishedAt != null && publishedAt in cutoff..now
+            if (publishedAt == null || publishedAt !in cutoff..now) return@mapNotNull null
+
+            review.copy(reviewId = document.id)
         }
     }
 

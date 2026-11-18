@@ -156,7 +156,7 @@ fun ProfileImage(
 
 ){
     AsyncImage(
-        contentDescription = "User image",
+        contentDescription = stringResource(R.string.profile_photo_description),
         model = ImageRequest.Builder(LocalContext.current)
             .data(profileImage)
             .crossfade(true)

@@ -7,5 +7,7 @@ data class NotificationInfo(
     val imageUrl: String,
     val reviewId: String? = null,
     val gameId: String = "",
-    val reviewAuthorId: String = ""
+    val reviewAuthorId: String = "",
+    val chatSenderId: String? = null,
+    val timestampMillis: Long = 0
 )

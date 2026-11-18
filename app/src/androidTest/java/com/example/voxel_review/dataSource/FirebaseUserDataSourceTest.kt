@@ -103,7 +103,6 @@ class FirebaseUserDataSourceTest {
             username = "username_1",
             bio = "Bio de usuario 1",
             photoUrl = "https://picsum.photos/200/200?random=1",
-            FCMToken = ""
         )
         val userId = "999"
         //Act (ejecutar) (realizar prueba)

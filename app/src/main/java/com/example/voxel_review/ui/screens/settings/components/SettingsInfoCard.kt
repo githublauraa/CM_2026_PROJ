@@ -30,7 +30,7 @@ fun SettingsInfoCard() {
         )
 
         Text(
-            text = "Voxel Review Versión 1.4.2 · Hecho por y para apasionados del gaming",
+            text = "Voxel Review Versión 1.4.2 · Hecho por y para apasionados de los videojuegos",
             color = VoxelTextSecondary,
             fontSize = 11.sp,
             lineHeight = 15.sp

@@ -1,5 +1,6 @@
 package com.example.voxel_review.ui.screens.profile.components
 
+import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
@@ -18,7 +19,7 @@ fun Pfp(
     modifier: Modifier = Modifier.size(200.dp)
 ){
     AsyncImage(
-        contentDescription = "User image",
+        contentDescription = stringResource(R.string.profile_photo_description),
         model = ImageRequest.Builder(LocalContext.current)
             .data(profileImage)
             .crossfade(true)

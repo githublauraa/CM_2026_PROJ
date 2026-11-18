@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.Chat
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.outlined.PersonAdd
 import androidx.compose.material3.Icon
@@ -47,7 +48,16 @@ fun HighlightedNotificationCard(
 ) {
     val isLike = notification.reviewId != null
     val accent = if (isLike) VoxelSecondary else VoxelPrimary
-    val action = if (isLike) "Ver reseña" else "Ver perfil"
+    val action = when {
+        notification.chatSenderId != null -> "Abrir chat"
+        isLike -> "Ver reseña"
+        else -> "Ver perfil"
+    }
+    val icon = when {
+        notification.chatSenderId != null -> Icons.AutoMirrored.Outlined.Chat
+        isLike -> Icons.Filled.Favorite
+        else -> Icons.Outlined.PersonAdd
+    }
 
     Row(
         modifier = modifier
@@ -79,7 +89,7 @@ fun HighlightedNotificationCard(
                 contentAlignment = Alignment.Center
             ) {
                 Icon(
-                    imageVector = if (isLike) Icons.Filled.Favorite else Icons.Outlined.PersonAdd,
+                    imageVector = icon,
                     contentDescription = null,
                     tint = accent,
                     modifier = Modifier.size(14.dp)
