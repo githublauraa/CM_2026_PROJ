@@ -1,5 +1,6 @@
 package com.example.voxel_review.ui.screens.crearCuenta.components
 
+import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -83,7 +84,7 @@ fun FormularioCreateAccountPreview() {
     FormularioCreateAccount(
         value = "",
         icono = R.drawable.img_username,
-        placeholder = "username",
+        placeholder = stringResource(R.string.register_username),
         onValueChange = {}
     )
 }

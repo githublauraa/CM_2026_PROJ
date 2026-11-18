@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -24,37 +25,56 @@ fun NotificationsContent(
         contentPadding = PaddingValues(start = 20.dp, end = 20.dp, bottom = 24.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        item {
-            NotificationSectionHeader(title = "Nuevos seguidores")
-        }
+        notificationSection(
+            title = "Mensajes de chat",
+            keyPrefix = "chat",
+            notifications = state.messages,
+            error = state.messagesError,
+            onNotificationClick = onNotificationClick
+        )
+        notificationSection(
+            title = "Nuevos seguidores",
+            keyPrefix = "follow",
+            notifications = state.followers,
+            error = state.followersError,
+            onNotificationClick = onNotificationClick
+        )
+        notificationSection(
+            title = "Me gusta en tus reseñas",
+            keyPrefix = "like",
+            notifications = state.likes,
+            error = state.likesError,
+            onNotificationClick = onNotificationClick
+        )
 
+        val isLoading = state.messagesLoading || state.isLoading || state.likesLoading
+        val hasNotifications = state.messages.isNotEmpty() || state.followers.isNotEmpty() || state.likes.isNotEmpty()
+        val hasError = state.messagesError != null || state.followersError != null || state.likesError != null
         when {
-            state.isLoading -> item { ContentStatus("Cargando notificaciones…") }
-            state.followersError != null -> item { ContentStatus(state.followersError) }
-            state.followers.isEmpty() -> item { ContentStatus("Todavía no tienes avisos de seguimiento.") }
-            else -> items(state.followers, key = { it.id }) { follower ->
-                HighlightedNotificationCard(
-                    notification = follower,
-                    onClick = { onNotificationClick(follower) }
-                )
-            }
+            isLoading && !hasNotifications -> item { ContentStatus("Cargando avisos…", loading = true) }
+            !hasNotifications && !hasError -> item { ContentStatus("Sin actividad reciente") }
         }
+    }
+}
 
-        item {
-            NotificationSectionHeader(title = "Me gusta en tus reseñas")
-        }
+private fun LazyListScope.notificationSection(
+    title: String,
+    keyPrefix: String,
+    notifications: List<NotificationInfo>,
+    error: String?,
+    onNotificationClick: (NotificationInfo) -> Unit
+) {
+    if (notifications.isEmpty() && error == null) return
 
-        when {
-            state.likesLoading -> item { ContentStatus("Cargando me gusta…") }
-            state.likesError != null -> item { ContentStatus(state.likesError) }
-            state.likes.isEmpty() -> item { ContentStatus("Tus reseñas aún no tienen me gusta de otros usuarios.") }
-            else -> items(state.likes, key = { it.id }) { like ->
-                HighlightedNotificationCard(
-                    notification = like,
-                    onClick = { onNotificationClick(like) }
-                )
-            }
-        }
+    item(key = "$keyPrefix-title") { NotificationSectionHeader(title = title) }
+    if (notifications.isEmpty() && error != null) {
+        item(key = "$keyPrefix-error") { ContentStatus(error) }
+    }
+    items(notifications, key = { "$keyPrefix-${it.id}" }) { notification ->
+        HighlightedNotificationCard(
+            notification = notification,
+            onClick = { onNotificationClick(notification) }
+        )
     }
 }
 
@@ -62,7 +82,7 @@ fun NotificationsContent(
 @Composable
 private fun NotificationsContentPreview() {
     NotificationsContent(
-        state = NotificationsState(isLoading = false),
+        state = NotificationsState(isLoading = false, likesLoading = false, messagesLoading = false),
         onNotificationClick = {}
     )
 }

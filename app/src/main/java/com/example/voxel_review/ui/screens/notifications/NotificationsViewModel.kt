@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.voxel_review.data.info.InfoNotifications.NotificationInfo
 import com.example.voxel_review.data.repository.AuthRepository
+import com.example.voxel_review.data.repository.ChatRepository
 import com.example.voxel_review.data.repository.UserRepository
 import com.example.voxel_review.data.repository.ReviewRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,6 +18,7 @@ import kotlinx.coroutines.launch
 class NotificationsViewModel @Inject constructor(
     private val userRepository: UserRepository,
     reviewRepository: ReviewRepository,
+    chatRepository: ChatRepository,
     authRepository: AuthRepository
 ) : ViewModel() {
 
@@ -31,9 +33,22 @@ class NotificationsViewModel @Inject constructor(
                 isLoading = false,
                 followersError = message,
                 likesLoading = false,
-                likesError = message
+                likesError = message,
+                messagesLoading = false,
+                messagesError = message
             )
         } else {
+            viewModelScope.launch {
+                chatRepository.observeNotifications(userId).collect { result ->
+                    result.onSuccess { messages ->
+                        _uiState.update {
+                            it.copy(messages = messages, messagesLoading = false, messagesError = null)
+                        }
+                    }.onFailure { error ->
+                        _uiState.update { it.copy(messagesLoading = false, messagesError = error.message) }
+                    }
+                }
+            }
             viewModelScope.launch {
                 val result = userRepository.getFollowers(userId)
                 val followers = result.getOrDefault(emptyList()).map { follower ->

@@ -1,5 +1,7 @@
 package com.example.voxel_review.ui.screens.writeReview.components
 
+import com.example.voxel_review.R
+import androidx.compose.ui.res.stringResource
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -23,7 +25,7 @@ import com.example.voxel_review.ui.theme.VoxelSecondary
 @Composable
 fun BotonPublicarReview(
     onClick: () -> Unit,
-    text: String = "PUBLICAR REVIEW",
+    text: String = stringResource(R.string.publish_review),
     enabled: Boolean = true,
     modifier: Modifier = Modifier
 ) {

@@ -1,0 +1,17 @@
+// Integrar este bloque dentro de match /databases/{database}/documents.
+match /chatPushRegistrations/{userId}/devices/{installationId} {
+  allow create, update: if request.auth != null
+    && request.auth.uid == userId
+    && installationId.matches('[A-Za-z0-9_-]{22}')
+    && request.resource.data.keys().hasOnly(['token'])
+    && request.resource.data.token is string
+    && request.resource.data.token.size() > 0
+    && request.resource.data.token.size() <= 4096;
+}
+
+match /chatNotifications/{userId}/messages/{notificationId} {
+  allow list: if request.auth != null
+    && request.auth.uid == userId
+    && request.query.limit > 0
+    && request.query.limit <= 30;
+}

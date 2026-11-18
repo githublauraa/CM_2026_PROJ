@@ -142,7 +142,7 @@ class CreateAccountViewModel @Inject constructor(
                         it.copy(
                             loading = false,
                             errorMessage = registerResult.exceptionOrNull()?.message
-                                ?: "Error al guardar el usuario en Firestore",
+                                ?: "No se pudo guardar el perfil",
                             mostrarMensaje = true
                         )
                     }

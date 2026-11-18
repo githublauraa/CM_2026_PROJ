@@ -1,5 +1,7 @@
 package com.example.voxel_review.ui.screens.writeReview
 
+import com.example.voxel_review.R
+import androidx.compose.ui.res.stringResource
 import android.Manifest
 import android.content.pm.PackageManager
 import android.location.LocationManager
@@ -315,7 +317,7 @@ fun WriteReviewScreen(
                     } else if (isEditing) {
                         "Actualizar reseña"
                     } else {
-                        "PUBLICAR REVIEW"
+                        stringResource(R.string.publish_review)
                     }
                 )
             } else if (!canWriteReview) {

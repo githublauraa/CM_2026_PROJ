@@ -127,7 +127,7 @@ class EditProfileViewModel @Inject constructor(
                         it.copy(
                             isLoading = false,
                             errorMessage = error.message
-                                ?: "La biografía se guardó, pero no se pudo guardar el username"
+                                ?: "La biografía se guardó, pero no se pudo guardar el nombre de usuario"
                         )
                     }
                 }

@@ -1,6 +1,8 @@
 package com.example.voxel_review
 
 import android.app.Application
+import com.example.voxel_review.data.dataSource.services.ChatNotificationRegistration
+import jakarta.inject.Inject
 import com.google.firebase.Firebase
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.auth
@@ -9,11 +11,13 @@ import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
 class BaseApplication :Application() {
+    @Inject lateinit var chatNotifications: ChatNotificationRegistration
 
     override fun onCreate() {
         super.onCreate()
 
         FirebaseApp.initializeApp(this)
+        chatNotifications.start()
 
 //        if (BuildConfig.DEBUG){
 //            Firebase.firestore.useEmulator("10.0.2.2", 8080)

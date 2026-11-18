@@ -1,0 +1,33 @@
+// Integrar este bloque dentro de match /b/{bucket}/o.
+match /chatPhotos/{chatId}/{senderId}/{fileName} {
+  function isParticipant() {
+    let participants = chatId.split('~');
+    return request.auth != null
+      && participants.size() == 2
+      && participants[0] != participants[1]
+      && senderId in participants
+      && request.auth.uid in participants
+      && fileName.matches('[A-Za-z0-9]{20}[.]jpg');
+  }
+
+  function messageExists() {
+    let messageId = fileName.split('[.]')[0];
+    return firestore.exists(/databases/(default)/documents/chats/$(chatId)/messages/$(messageId));
+  }
+
+  function hasPublishedPhoto() {
+    let messageId = fileName.split('[.]')[0];
+    let message = firestore.get(/databases/(default)/documents/chats/$(chatId)/messages/$(messageId));
+
+    return message != null && message.data != null && message.data.senderId == senderId
+      && message.data.photoPath == 'chatPhotos/' + chatId + '/' + senderId + '/' + fileName;
+  }
+
+  allow get: if isParticipant() && hasPublishedPhoto();
+  allow create: if isParticipant()
+    && request.auth.uid == senderId
+    && request.resource.contentType == 'image/jpeg'
+    && request.resource.size > 0
+    && request.resource.size <= 5 * 1024 * 1024;
+  allow delete: if isParticipant() && request.auth.uid == senderId && !messageExists();
+}

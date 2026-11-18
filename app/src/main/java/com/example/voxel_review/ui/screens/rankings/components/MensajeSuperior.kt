@@ -1,5 +1,7 @@
 package com.example.voxel_review.ui.screens.rankings.components
 
+import com.example.voxel_review.R
+import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,7 +22,7 @@ fun MensajeSuperior(
     modifier: Modifier = Modifier
 ) {
     Text(
-        text = "Rankings usuarios",
+        text = stringResource(R.string.nav_rankings),
         fontWeight = FontWeight.Bold,
         color = White,
         fontSize = 22.sp,
