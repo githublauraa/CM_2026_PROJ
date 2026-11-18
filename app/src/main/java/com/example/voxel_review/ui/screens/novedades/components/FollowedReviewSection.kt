@@ -3,6 +3,8 @@ package com.example.voxel_review.ui.screens.novedades.components
 import com.example.voxel_review.ui.utils.reviewTitle
 import com.example.voxel_review.R
 import androidx.compose.ui.res.stringResource
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -57,47 +59,75 @@ fun FollowedReviewsSection(
 }
 
 @Composable
-private fun FollowedReviewCard(review: ReviewInfo, onClick: () -> Unit, onProfileClick: () -> Unit) {
-    Card(
+private fun FollowedReviewCard(
+    review: ReviewInfo,
+    onClick: () -> Unit,
+    onProfileClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Surface(
         onClick = onClick,
-        modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(containerColor = VoxelSurface)
+        modifier = modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(20.dp),
+        color = VoxelSurface,
+        border = BorderStroke(1.dp, VoxelBorder)
     ) {
         Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp), verticalAlignment = Alignment.CenterVertically) {
                 GameImage(
                     imageUrl = review.imagenJuego,
                     contentDescription = stringResource(R.string.game_cover, review.tituloJuego),
-                    modifier = Modifier.size(width = 64.dp, height = 84.dp)
-                        .clip(RoundedCornerShape(8.dp))
+                    modifier = Modifier.size(width = 74.dp, height = 104.dp)
+                        .clip(RoundedCornerShape(12.dp))
                 )
                 Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                     Text(
                         review.tituloJuego.ifBlank { stringResource(R.string.game_unavailable) },
-                        color = White, fontSize = 18.sp, fontWeight = FontWeight.Bold,
+                        style = MaterialTheme.typography.titleMedium,
+                        color = VoxelTextPrimary,
+                        fontWeight = FontWeight.SemiBold,
                         maxLines = 2, overflow = TextOverflow.Ellipsis
                     )
                     if (review.desarrollador.isNotBlank()) {
-                        Text(review.desarrollador, color = VoxelTextSecondary, fontSize = 12.sp)
+                        Text(
+                            review.desarrollador,
+                            style = MaterialTheme.typography.labelMedium,
+                            color = onSurfaceVariantDark,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        )
                     }
-                    Text("★ ${formatRating(review.ratingGeneral)}/5", color = VoxelAccentYellow, fontWeight = FontWeight.Bold)
+                    RatingBadge(
+                        rating = "${formatRating(review.ratingGeneral)}/5",
+                        modifier = Modifier.padding(top = 4.dp)
+                    )
                 }
             }
             HorizontalDivider(color = VoxelBorder)
             Row(
-                modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(8.dp)).clickable(onClick = onProfileClick).padding(vertical = 4.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(12.dp))
+                    .background(VoxelSurfaceVariant.copy(alpha = 0.45f))
+                    .clickable(onClick = onProfileClick)
+                    .padding(horizontal = 10.dp, vertical = 8.dp),
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 ProfileImage(profileImage = review.imagenUsuario, size = 32)
-                Text(review.username.ifBlank { stringResource(R.string.view_profile) }, color = VoxelPrimary, fontSize = 13.sp, modifier = Modifier.weight(1f))
+                Text(
+                    review.username.ifBlank { stringResource(R.string.view_profile) },
+                    color = VoxelTextPrimary,
+                    style = MaterialTheme.typography.labelLarge,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
             }
             if (review.tituloDescripcion.isNotBlank()) {
                 Text(
                     reviewTitle(review),
                     style = MaterialTheme.typography.titleMedium,
-                    color = White,
+                    color = VoxelTextPrimary,
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis
                 )
