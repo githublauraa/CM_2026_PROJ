@@ -352,4 +352,12 @@
     <item quantity="one">%d profile followed</item>
     <item quantity="other">%d profiles followed</item>
   </plurals>
+  <string name="settings_appearance">APPEARANCE</string>
+  <string name="settings_color">Accent color</string>
+  <string name="settings_color_cyan">Cyan</string>
+  <string name="settings_color_pink">Pink</string>
+  <string name="settings_color_aqua">Turquoise</string>
+  <string name="settings_color_yellow">Yellow</string>
+  <string name="settings_color_purple">Purple</string>
+  <string name="settings_panel_color">Screen color</string>
 </resources>

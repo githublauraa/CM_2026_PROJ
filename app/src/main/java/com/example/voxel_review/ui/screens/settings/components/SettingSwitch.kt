@@ -1,13 +1,11 @@
 package com.example.voxel_review.ui.screens.settings.components
 
-import com.example.voxel_review.R
-import androidx.compose.ui.res.stringResource
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.selection.toggleable
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
@@ -16,87 +14,50 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.example.voxel_review.ui.theme.VoxelPrimary
+import com.example.voxel_review.ui.theme.VoxelBackgroundDark
+import com.example.voxel_review.ui.theme.VoxelBorder
+import com.example.voxel_review.ui.theme.VoxelSurfaceVariant
 import com.example.voxel_review.ui.theme.VoxelTextPrimary
-import com.example.voxel_review.ui.theme.Voxel_ReviewTheme
+import com.example.voxel_review.ui.theme.VoxelTextSecondary
 
 @Composable
 fun SettingSwitch(
-    color: Color,
-    symbol: String? = null,
-    iconRes: Int? = null,
+    icon: ImageVector,
     title: String,
     checked: Boolean,
     accentColor: Color,
-    onCheckedChange: (Boolean) -> Unit
+    onCheckedChange: (Boolean) -> Unit,
+    modifier: Modifier = Modifier
 ) {
-    Column {
-
-        Row(
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            if (iconRes != null) {
-                Image(
-                    painter = painterResource(iconRes),
-                    contentDescription = null,
-                    modifier = Modifier.size(22.dp),
-                    colorFilter = ColorFilter.tint(accentColor)
-                )
-            } else {
-                Text(
-                    text = symbol.orEmpty(),
-                    color = accentColor,
-                    fontSize = 22.sp
-                )
-            }
-
-            Spacer(Modifier.width(12.dp))
-
-            Text(
-                text = title,
-                modifier = Modifier.weight(1f),
-                color = VoxelTextPrimary,
-                fontSize = 15.sp,
-                fontWeight = FontWeight.SemiBold
-            )
-
-            Switch(
-                checked = checked,
-                onCheckedChange = onCheckedChange,
-                colors = SwitchDefaults.colors(
-                    checkedThumbColor = MaterialTheme.colorScheme.background,
-                    checkedTrackColor = accentColor,
-                    uncheckedThumbColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                    uncheckedTrackColor = MaterialTheme.colorScheme.surface
-                )
-            )
-        }
-    }
-}
-
-@Preview(
-    showBackground = true,
-    backgroundColor = 0xFF0F0D1F
-)
-@Composable
-private fun SettingSwitchPreview() {
-    Voxel_ReviewTheme(
-        darkTheme = true,
-        dynamicColor = false
+    Row(
+        modifier = modifier.fillMaxWidth()
+            .toggleable(value = checked, role = Role.Switch, onValueChange = onCheckedChange)
+            .padding(horizontal = 16.dp, vertical = 13.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        SettingSwitch(
-            color = VoxelPrimary,
-            symbol = "☾",
-            title = stringResource(R.string.settings_dark_mode),
-            checked = true,
-            accentColor = VoxelPrimary,
-            onCheckedChange = {}
+        SettingsIconTile(accent = accentColor) {
+            Icon(icon, contentDescription = null, tint = accentColor)
+        }
+        Text(
+            text = title,
+            modifier = Modifier.weight(1f),
+            color = VoxelTextPrimary,
+            style = MaterialTheme.typography.titleMedium
+        )
+        Switch(
+            checked = checked,
+            onCheckedChange = null,
+            colors = SwitchDefaults.colors(
+                checkedThumbColor = VoxelBackgroundDark,
+                checkedTrackColor = accentColor,
+                uncheckedThumbColor = VoxelTextSecondary,
+                uncheckedTrackColor = VoxelSurfaceVariant,
+                uncheckedBorderColor = VoxelBorder
+            )
         )
     }
 }

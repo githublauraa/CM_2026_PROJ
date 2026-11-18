@@ -1,8 +1,10 @@
 package com.example.voxel_review.ui.utils
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.text.TextAutoSize
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
@@ -20,6 +22,7 @@ import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material.icons.outlined.Star
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -28,6 +31,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.style.TextAlign
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.voxel_review.R
@@ -73,6 +77,10 @@ fun DiscoverBottomNavigationBar(
         unselectedTextColor = onSurfaceVariantDark
     )
 
+    val labelSize = remember {
+        TextAutoSize.StepBased(minFontSize = 9.sp, maxFontSize = 12.sp, stepSize = 0.5.sp)
+    }
+
     Column(modifier) {
         HorizontalDivider(color = VoxelBorder)
         NavigationBar(containerColor = VoxelSurface, tonalElevation = 0.dp) {
@@ -97,12 +105,17 @@ fun DiscoverBottomNavigationBar(
                         )
                     },
                     label = {
-                        val label = stringResource(item.label)
-                        if (item.label == R.string.nav_rankings) {
-                            Text(label, maxLines = 1, fontFamily = FontFamily.SansSerif, fontSize = 10.sp)
-                        } else {
-                            Text(label, maxLines = 1)
-                        }
+                        Text(
+                            text = stringResource(item.label),
+                            style = MaterialTheme.typography.labelMedium.copy(
+                                fontFamily = FontFamily.SansSerif,
+                                letterSpacing = 0.sp,
+                                lineHeight = 14.sp
+                            ),
+                            textAlign = TextAlign.Center,
+                            maxLines = 1,
+                            autoSize = labelSize
+                        )
                     },
                     colors = colors,
                     modifier = Modifier.testTag("nav_${item.route}")

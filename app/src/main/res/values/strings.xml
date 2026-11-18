@@ -380,4 +380,12 @@
     <item quantity="one">%d perfil seguido</item>
     <item quantity="other">%d perfiles seguidos</item>
   </plurals>
+  <string name="settings_appearance">APARIENCIA</string>
+  <string name="settings_color">Color de acento</string>
+  <string name="settings_color_cyan">Cian</string>
+  <string name="settings_color_pink">Rosa</string>
+  <string name="settings_color_aqua">Turquesa</string>
+  <string name="settings_color_yellow">Amarillo</string>
+  <string name="settings_color_purple">Morado</string>
+  <string name="settings_panel_color">Color de esta pantalla</string>
 </resources>

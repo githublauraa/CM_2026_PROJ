@@ -20,7 +20,6 @@ fun SettingsRoute(
 
     SettingsScreen(
         onBack = onBackClick,
-        darkMode = false,
         notificationsEnabled = state.notificationsEnabled,
         selectedAccent = state.selectedAccent,
         onNotificationsChange = { settingsViewModel.updateNotifications(it) },

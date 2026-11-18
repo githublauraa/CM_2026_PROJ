@@ -353,4 +353,12 @@
     <item quantity="one">%d perfil seguido</item>
     <item quantity="other">%d perfis seguidos</item>
   </plurals>
+  <string name="settings_appearance">APARÊNCIA</string>
+  <string name="settings_color">Cor de destaque</string>
+  <string name="settings_color_cyan">Ciano</string>
+  <string name="settings_color_pink">Rosa</string>
+  <string name="settings_color_aqua">Turquesa</string>
+  <string name="settings_color_yellow">Amarelo</string>
+  <string name="settings_color_purple">Roxo</string>
+  <string name="settings_panel_color">Cor desta tela</string>
 </resources>

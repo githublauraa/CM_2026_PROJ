@@ -1,70 +1,44 @@
 package com.example.voxel_review.ui.screens.settings.components
 
-import androidx.compose.ui.res.stringResource
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material3.HorizontalDivider
-import com.example.voxel_review.ui.theme.VoxelBorder
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.lerp
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.voxel_review.R
-import com.example.voxel_review.ui.screens.settings.*
-import com.example.voxel_review.ui.theme.VoxelPrimary
-import com.example.voxel_review.ui.theme.VoxelSecondary
-import com.example.voxel_review.ui.theme.Voxel_ReviewTheme
-import androidx.compose.ui.graphics.Color
+import com.example.voxel_review.ui.screens.settings.AppLanguage
+import com.example.voxel_review.ui.theme.VoxelBorder
 import com.example.voxel_review.ui.theme.VoxelTextPrimary
 
 @Composable
 fun GeneralSettingsSection(
-    color: Color,
-    darkMode: Boolean,
+    language: AppLanguage,
+    accent: Color,
     notificationsEnabled: Boolean,
-    onNotificationsChange: (Boolean) -> Unit
+    onLanguageChange: (AppLanguage) -> Unit,
+    onNotificationsChange: (Boolean) -> Unit,
+    modifier: Modifier = Modifier
 ) {
-    Column(
-        verticalArrangement = Arrangement.spacedBy(12.dp)
-    ) {
+    val highlight = lerp(accent, VoxelTextPrimary, 0.35f)
+    Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(10.dp)) {
         SectionTitle(stringResource(R.string.settings_general))
-
-        SettingsCard(color = color) {
-        SettingSwitch(
-            color = color,
-            symbol = "☾",
-            title = stringResource(R.string.settings_dark_mode),
-            checked = darkMode,
-            accentColor = VoxelTextPrimary,
-            onCheckedChange = {}
-        )
-
-        HorizontalDivider(color = VoxelBorder)
-        SettingSwitch(
-            color = color,
-            iconRes = R.drawable.campana_notificaciones,
-            title = stringResource(R.string.notificaciones),
-            checked = notificationsEnabled,
-            accentColor = VoxelSecondary,
-            onCheckedChange = onNotificationsChange
-        )
+        SettingsCard {
+            LanguageSelector(language = language, onLanguageChange = onLanguageChange, accent = highlight)
+            HorizontalDivider(modifier = Modifier.padding(start = 70.dp, end = 16.dp), color = VoxelBorder)
+            SettingSwitch(
+                icon = Icons.Outlined.Notifications,
+                title = stringResource(R.string.notificaciones),
+                checked = notificationsEnabled,
+                accentColor = highlight,
+                onCheckedChange = onNotificationsChange
+            )
         }
-    }
-}
-@Preview(
-    showBackground = true,
-    backgroundColor = 0xFF0F0D1F
-)
-@Composable
-private fun GeneralSettingsSectionPreview() {
-    Voxel_ReviewTheme(
-        darkTheme = true,
-        dynamicColor = false
-    ) {
-        GeneralSettingsSection(
-            color = VoxelPrimary,
-            darkMode = true,
-            notificationsEnabled = true,
-            onNotificationsChange = {}
-        )
     }
 }
