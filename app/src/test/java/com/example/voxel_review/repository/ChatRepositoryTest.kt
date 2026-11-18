@@ -1,7 +1,10 @@
 package com.example.voxel_review.repository
 
 import android.net.Uri
+import com.example.voxel_review.data.dataSource.CachedChatNotification
+import com.example.voxel_review.data.dataSource.ChatNotificationCache
 import com.example.voxel_review.data.dataSource.ChatRemoteDataSource
+import com.example.voxel_review.data.dtos.ChatContactDto
 import com.example.voxel_review.data.dataSource.services.ChatPhotoStorageService
 import com.example.voxel_review.data.info.chat.ChatCursor
 import com.example.voxel_review.data.info.chat.ChatPage
@@ -15,6 +18,7 @@ import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import org.junit.Test
 import java.io.IOException
@@ -24,7 +28,8 @@ class ChatRepositoryTest {
     private val remote = mockk<ChatRemoteDataSource>()
     private val auth = mockk<AuthRepository>()
     private val photos = mockk<ChatPhotoStorageService>()
-    private val repository = ChatRepository(remote, auth, photos)
+    private val cache = mockk<ChatNotificationCache>()
+    private val repository = ChatRepository(remote, auth, photos, cache)
 
     @Test
     fun ambosParticipantesEscribenEnElMismoChat() = runTest {
@@ -110,6 +115,25 @@ class ChatRepositoryTest {
         assertThat(repository.sendPhoto("usuarioB", capture).exceptionOrNull()?.message)
             .isEqualTo("No se pudo enviar la foto. Inténtalo de nuevo.")
         coVerify(exactly = 1) { photos.removeUpload(path) }
+    }
+
+
+    @Test
+    fun muestraUnAvisoRecibidoAunqueFalleElHistorialRemoto() = runTest {
+        every { cache.observe("destinatario") } returns flowOf(
+            listOf(CachedChatNotification("chat_mensaje", "autor", 100))
+        )
+        every { remote.observeNotifications("destinatario") } returns flow { throw IOException() }
+        coEvery { remote.getContact("autor") } returns ChatContactDto(username = "Ana")
+
+        val notice = repository.observeNotifications("destinatario")
+            .first { it.getOrNull()?.isNotEmpty() == true }
+            .getOrThrow()
+            .single()
+
+        assertThat(notice.title).isEqualTo("Ana")
+        assertThat(notice.chatSenderId).isEqualTo("autor")
+        assertThat(notice.message).isEqualTo("Te envió un mensaje")
     }
 
 }

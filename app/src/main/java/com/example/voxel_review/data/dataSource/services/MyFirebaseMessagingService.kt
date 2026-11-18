@@ -9,6 +9,7 @@ import androidx.core.app.NotificationCompat
 import com.example.voxel_review.ChatNotificationTarget
 import com.example.voxel_review.MainActivity
 import com.example.voxel_review.R
+import com.example.voxel_review.data.dataSource.ChatNotificationCache
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
@@ -20,6 +21,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     @Inject lateinit var auth: FirebaseAuth
     @Inject lateinit var registration: ChatNotificationRegistration
     @Inject lateinit var foregroundNotifications: ForegroundChatNotifications
+    @Inject lateinit var notificationCache: ChatNotificationCache
 
     override fun onNewToken(token: String) {
         registration.refresh()
@@ -34,6 +36,9 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         val chatId = data["chatId"] ?: return
         val messageId = data["messageId"] ?: return
         if (recipientId != auth.currentUser?.uid || recipientId == senderId) return
+
+        val receivedAt = message.sentTime.takeIf { it > 0 } ?: System.currentTimeMillis()
+        notificationCache.save(recipientId, "${chatId}_$messageId", senderId, receivedAt)
 
         val target = ChatNotificationTarget(recipientId, senderId)
         if (foregroundNotifications.showIfForeground(target)) return

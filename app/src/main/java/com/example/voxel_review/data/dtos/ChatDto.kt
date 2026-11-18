@@ -26,5 +26,6 @@ data class ChatNotificationDto(
     val senderId: String = "",
     val senderName: String = "",
     val senderPhotoUrl: String = "",
-    val isPhoto: Boolean = false
+    val isPhoto: Boolean = false,
+    val createdAt: Timestamp? = null
 )

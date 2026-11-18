@@ -3,6 +3,7 @@ package com.example.voxel_review.data.repository
 import android.graphics.Bitmap
 import android.net.Uri
 import com.example.voxel_review.data.dataSource.ChatDocument
+import com.example.voxel_review.data.dataSource.ChatNotificationCache
 import com.example.voxel_review.data.dataSource.ChatRemoteDataSource
 import com.example.voxel_review.data.dataSource.services.ChatPhotoStorageService
 import com.example.voxel_review.data.dtos.ChatDto
@@ -21,15 +22,50 @@ import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.flow
 import java.time.Instant
 
 class ChatRepository @Inject constructor(
     private val remoteDataSource: ChatRemoteDataSource,
     private val authRepository: AuthRepository,
-    private val photoStorage: ChatPhotoStorageService
+    private val photoStorage: ChatPhotoStorageService,
+    private val notificationCache: ChatNotificationCache
 ) {
-    fun observeNotifications(userId: String): Flow<Result<List<NotificationInfo>>> = flow {
+    fun observeNotifications(userId: String): Flow<Result<List<NotificationInfo>>> {
+        val contacts = mutableMapOf<String, ChatContact>()
+        val received = notificationCache.observe(userId).map { notices ->
+            notices.map { notice ->
+                val contact = contacts[notice.senderId] ?: getContact(notice.senderId).getOrNull()
+                if (contact != null) contacts[notice.senderId] = contact
+                NotificationInfo(
+                    id = notice.id,
+                    title = contact?.name ?: "Usuario",
+                    message = "Te envió un mensaje",
+                    imageUrl = contact?.photoUrl.orEmpty(),
+                    chatSenderId = notice.senderId,
+                    timestampMillis = notice.receivedAt
+                )
+            }
+        }
+
+        val remote = observeRemoteNotifications(userId).onStart { emit(Result.success(emptyList())) }
+        return combine(remote, received) { result, local ->
+            if (result.isFailure && local.isEmpty()) {
+                result
+            } else {
+                val notifications = (result.getOrDefault(emptyList()) + local)
+                    .distinctBy { it.id }
+                    .sortedByDescending { it.timestampMillis }
+                    .take(30)
+                Result.success(notifications)
+            }
+        }
+    }
+
+    private fun observeRemoteNotifications(userId: String): Flow<Result<List<NotificationInfo>>> = flow {
         remoteDataSource.observeNotifications(userId).collect { notices ->
             val notifications = notices.mapNotNull { notice ->
                 if (notice.senderId.isBlank()) return@mapNotNull null
@@ -39,7 +75,8 @@ class ChatRepository @Inject constructor(
                     title = notice.senderName.ifBlank { "Usuario" },
                     message = if (notice.isPhoto) "Te envió una foto" else "Te envió un mensaje",
                     imageUrl = notice.senderPhotoUrl,
-                    chatSenderId = notice.senderId
+                    chatSenderId = notice.senderId,
+                    timestampMillis = notice.createdAt?.toDate()?.time ?: 0
                 )
             }
             emit(Result.success(notifications))
