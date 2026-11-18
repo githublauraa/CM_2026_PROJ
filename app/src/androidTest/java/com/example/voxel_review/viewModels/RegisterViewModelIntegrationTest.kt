@@ -16,7 +16,6 @@ import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Test
 import com.google.common.truth.Truth.assertThat
-import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.flow.map
 
 class RegisterViewModelIntegrationTest {
@@ -24,7 +23,6 @@ class RegisterViewModelIntegrationTest {
     private lateinit var viewModel: CreateAccountViewModel
     private lateinit var authRepository: AuthRepository
 
-    private lateinit var auth: FirebaseAuth
 
     @Before
     fun setup() {
@@ -36,10 +34,9 @@ class RegisterViewModelIntegrationTest {
         }
 
         authRepository = AuthRepository(AuthRemoteDataSource(Firebase.auth))
-        auth = Firebase.auth
         val userRepository = UserRepository(UserFirestoreDataSourceImpl(Firebase.firestore), AuthRepository(AuthRemoteDataSource(Firebase.auth)))
 
-        viewModel = CreateAccountViewModel(authRepository, userRepository, auth)
+        viewModel = CreateAccountViewModel(authRepository, userRepository)
     }
 
     @After
@@ -110,7 +107,7 @@ class RegisterViewModelIntegrationTest {
         val state = viewModel.uiState.value
 
         assertThat(state.errorMessage).isNotEmpty()
-        assertThat(state.errorMessage).isEqualTo("El correo electrónico ya está en uso")
+        assertThat(state.errorMessage).isEqualTo("El correo electrónico ya está en uso.")
     }
 
 
@@ -143,7 +140,7 @@ class RegisterViewModelIntegrationTest {
         val state = viewModel.uiState.value
 
         assertThat(state.errorMessage).isNotEmpty()
-        assertThat(state.errorMessage).isEqualTo("El correo no es valido")
+        assertThat(state.errorMessage).isEqualTo("Revisa el formato del correo electrónico.")
     }
 
 }

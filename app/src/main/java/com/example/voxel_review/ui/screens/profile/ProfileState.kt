@@ -21,6 +21,7 @@ data class ProfileState(
     val isReviewDeleted: Boolean = false,
     val isReviewUpdated: Boolean = false,
     val errorMessage: String? = null,
+    val deleteReviewError: String? = null,
     val currentUserId: String = "",
     val isVerifyingEmail: Boolean = false,
     val verificationMessage: String? = null,

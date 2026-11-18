@@ -58,7 +58,8 @@ class DiscoverViewModel @Inject constructor(
             videoGameRepository.getAllVideoGames()
                 .onSuccess { games ->
 
-                    val reviewCounts = reviews.await().getOrNull().orEmpty()
+                    val reviewResult = reviews.await()
+                    val reviewCounts = reviewResult.getOrNull().orEmpty()
                         .groupingBy { it.videoGameId }
                         .eachCount()
                     val trendingSearches = games.map { game ->
@@ -70,6 +71,7 @@ class DiscoverViewModel @Inject constructor(
                     _uiState.update {
                         it.copy(
                             trendingSearches = trendingSearches,
+                            error = reviewResult.exceptionOrNull()?.message,
                             isLoading = false
                         )
                     }

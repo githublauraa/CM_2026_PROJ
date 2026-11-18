@@ -76,10 +76,7 @@ fun ProfileScreen(
         onGameClick = onGameClick,
         onSelectTab = profileViewModel::selectProfileTab,
         onSelectLibraryFilter = profileViewModel::selectLibraryFilter,
-        buttonLogOutPressed = {
-            profileViewModel.logOut()
-            buttonLogOutPressed()
-        },
+        buttonLogOutPressed = { profileViewModel.logOut(buttonLogOutPressed) },
         isOwnProfile = isOwnProfile,
         onEditProfileClick = onEditProfileClick,
         onFollowingClick = onFollowingClick,
@@ -219,6 +216,10 @@ fun ProfileContent(
                             .testTag("verificationMessage")
                     )
                 }
+            }
+
+            state.errorMessage?.let { message ->
+                com.example.voxel_review.ui.utils.ContentStatus(message)
             }
 
             ProfileTabChips(

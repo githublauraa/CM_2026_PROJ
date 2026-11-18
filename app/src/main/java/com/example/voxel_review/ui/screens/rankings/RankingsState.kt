@@ -12,7 +12,8 @@ import com.example.voxel_review.data.info.profile.ProfileInfo
 data class RankingsState(
     val users: List<ProfileInfo> = emptyList(),
     val seleccionado: Boolean = true,
-    val searchQuery: String = ""
+    val searchQuery: String = "",
+    val error: String? = null
 ) {
     val filteredUsers: List<ProfileInfo>
         get() = if (searchQuery.isBlank()) {

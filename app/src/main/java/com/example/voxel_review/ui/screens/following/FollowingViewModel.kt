@@ -36,12 +36,11 @@ class FollowingViewModel @Inject constructor(
             }
             result.onSuccess { users ->
                 _uiState.update { it.copy(users = users, isLoading = false, error = null) }
-            }.onFailure {
+            }.onFailure { failure ->
                 _uiState.update {
                     it.copy(
                         isLoading = false,
-                        error = if (showFollowers) "No se pudieron cargar los seguidores"
-                            else "No se pudieron cargar las personas seguidas"
+                        error = failure.message ?: "No se pudo cargar la lista."
                     )
                 }
             }

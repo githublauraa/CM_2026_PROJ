@@ -1,6 +1,8 @@
 package com.example.voxel_review.ui.screens.review
 
 import com.google.firebase.auth.FirebaseAuth
+import android.widget.Toast
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.CircularProgressIndicator
@@ -38,6 +40,13 @@ fun ReviewDetailScreen(
 
     val state by reviewViewModel.uiState.collectAsState()
     val profileState by profileViewModel.uiState.collectAsState()
+    val context = LocalContext.current
+    LaunchedEffect(profileState.deleteReviewError) {
+        profileState.deleteReviewError?.let { message ->
+            Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+            profileViewModel.clearDeleteReviewError()
+        }
+    }
 
     LaunchedEffect(juegoId, reviewId, userId) {
         if (reviewId.isNotBlank() && userId.isNotBlank()) {

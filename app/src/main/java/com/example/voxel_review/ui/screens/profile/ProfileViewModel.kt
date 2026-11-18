@@ -16,7 +16,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import com.example.voxel_review.data.dtos.CreateReviewDto
-import com.google.firebase.auth.FirebaseAuth
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
@@ -43,22 +42,28 @@ class ProfileViewModel @Inject constructor(
 			val result = userRepository.getUserById(userId)
 			if (result.isSuccess){
 				var userProfileInfo = result.getOrNull()!!
+				var verificationMessage: String? = null
 				if (userId == authRepository.currentUser?.uid && !userProfileInfo.emailVerified) {
 					val verifiedResult = authRepository.reloadAndCheckEmailVerified()
+					verificationMessage = verifiedResult.exceptionOrNull()?.message
 					if (verifiedResult.getOrNull() == true) {
-						userRepository.updateEmailVerified(userId, true)
-						userProfileInfo = userProfileInfo.copy(emailVerified = true)
+						val update = userRepository.updateEmailVerified(userId, true)
+						verificationMessage = update.exceptionOrNull()?.message
+						if (update.isSuccess) {
+							userProfileInfo = userProfileInfo.copy(emailVerified = true)
+						}
 					}
 				}
 				_uiState.update {
 					it.copy(
 						profile = userProfileInfo,
                         errorMessage = null,
-						profileImageUrl = userProfileInfo.pfp
+						profileImageUrl = userProfileInfo.pfp,
+						verificationMessage = verificationMessage
 					)
 				}
             } else {
-                _uiState.update { it.copy(errorMessage = "No se pudo cargar el perfil") }
+                _uiState.update { it.copy(errorMessage = result.exceptionOrNull()?.message ?: "No se pudo cargar el perfil") }
             }
         }
     }
@@ -68,8 +73,20 @@ class ProfileViewModel @Inject constructor(
 		_uiState.update { it.copy(isVerifyingEmail = true, verificationMessage = null) }
 		viewModelScope.launch {
 			val checkResult = authRepository.reloadAndCheckEmailVerified()
+			if (checkResult.isFailure) {
+				_uiState.update {
+					it.copy(isVerifyingEmail = false, verificationMessage = checkResult.exceptionOrNull()?.message)
+				}
+				return@launch
+			}
 			if (checkResult.getOrNull() == true) {
-				userRepository.updateEmailVerified(uid, true)
+				val update = userRepository.updateEmailVerified(uid, true)
+				if (update.isFailure) {
+					_uiState.update {
+						it.copy(isVerifyingEmail = false, verificationMessage = update.exceptionOrNull()?.message)
+					}
+					return@launch
+				}
 				_uiState.update { state ->
 					state.copy(
 						profile = state.profile?.copy(emailVerified = true),
@@ -116,7 +133,7 @@ class ProfileViewModel @Inject constructor(
 			} else {
 				_uiState.update {
 					it.copy(
-						reviewsError = "No se pudieron cargar las reseñas",
+						reviewsError = result.exceptionOrNull()?.message ?: "No se pudieron cargar las reseñas",
                         isReviewsLoading = false
 					)
 				}
@@ -139,7 +156,7 @@ class ProfileViewModel @Inject constructor(
 			} else {
 				_uiState.update {
 					it.copy(
-						libraryError = "No se pudo cargar la colección",
+						libraryError = result.exceptionOrNull()?.message ?: "No se pudo cargar la colección",
 						isLibraryLoading = false
 					)
 				}
@@ -160,8 +177,10 @@ class ProfileViewModel @Inject constructor(
 	// 	}
 	// }
 
-	fun logOut() {
+	fun logOut(onSuccess: () -> Unit) {
 		authRepository.logOut()
+			.onSuccess { onSuccess() }
+			.onFailure { error -> _uiState.update { it.copy(errorMessage = error.message) } }
 	}
 
 	fun uploadImageFireBase(uri: Uri) {
@@ -172,16 +191,19 @@ class ProfileViewModel @Inject constructor(
 			if (result.isSuccess) {
 				_uiState.update {
 					it.copy(
-						profileImageUrl = result.getOrNull()
+						profileImageUrl = result.getOrNull(),
+						errorMessage = null
 					)
 				}
+			} else {
+				_uiState.update { it.copy(errorMessage = result.exceptionOrNull()?.message) }
 			}
 		}
 	}
 
 	fun deleteReview(reviewId: String, profileId: String) {
 		viewModelScope.launch {
-			_uiState.update { it.copy(isReviewDeleted = false) }
+			_uiState.update { it.copy(isReviewDeleted = false, deleteReviewError = null) }
 
 			val result = reviewRepository.deleteReview(reviewId)
 
@@ -192,17 +214,21 @@ class ProfileViewModel @Inject constructor(
 							review.idResenia != reviewId
 						} ?: emptyList(),
 						isReviewDeleted = true,
-						errorMessage = null
+						deleteReviewError = null
 					)
 				}
 			} else {
 				_uiState.update {
 					it.copy(
-						errorMessage = "Error al eliminar la reseña"
+						deleteReviewError = result.exceptionOrNull()?.message ?: "Error al eliminar la reseña"
 					)
 				}
 			}
 		}
+	}
+
+	fun clearDeleteReviewError() {
+		_uiState.update { it.copy(deleteReviewError = null) }
 	}
 
 	fun updateReview(reviewId: String, review: CreateReviewDto) {
@@ -220,7 +246,7 @@ class ProfileViewModel @Inject constructor(
 			} else {
 				_uiState.update {
 					it.copy(
-						errorMessage = "Error al actualizar la reseña"
+						errorMessage = result.exceptionOrNull()?.message ?: "Error al actualizar la reseña"
 					)
 				}
 			}
@@ -228,18 +254,21 @@ class ProfileViewModel @Inject constructor(
 	}
 
 	fun followOrUnfollow(targetUserId: String){
-		val currentUserId = FirebaseAuth.getInstance().currentUser?.uid ?:""
+		val currentUserId = authRepository.currentUser?.uid.orEmpty()
 
 		viewModelScope.launch {
 			val result = userRepository.followOrUnfollow(currentUserId, targetUserId)
 			if (result.isSuccess){
 				val profile = uiState.value.profile ?: return@launch
 				_uiState.value = _uiState.value.copy(
+					errorMessage = null,
 					profile = _uiState.value.profile?.copy(
 						followers = if(profile.followed) profile.followers - 1 else profile.followers + 1,
 						followed = !profile.followed
 					)
 				)
+			} else {
+				_uiState.update { it.copy(errorMessage = result.exceptionOrNull()?.message) }
 			}
 		}
 	}

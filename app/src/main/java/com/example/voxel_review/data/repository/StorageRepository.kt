@@ -6,6 +6,7 @@ import com.example.voxel_review.data.dataSource.StorageRemoteDataSource
 import com.example.voxel_review.data.dataSource.AuthRemoteDataSource
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.CancellationException
 
 class StorageRepository @Inject constructor(
     private val storage: StorageRemoteDataSource,
@@ -15,7 +16,7 @@ class StorageRepository @Inject constructor(
 
     suspend fun uploadProfileImage(uri: Uri): Result<String> {
      return try{
-         val userId = auth.currentUser?.uid ?: return Result.failure(Exception("No user logged in"))
+         val userId = auth.currentUser?.uid ?: return Result.failure(Exception("Inicia sesión para cambiar la foto de perfil."))
 
          val path = "profile/$userId.jpg"
          val url = storage.uploadImage(path, uri)
@@ -28,9 +29,10 @@ class StorageRepository @Inject constructor(
          auth.updateProfileImage(url)
 
          Result.success(url)
-     }
-     catch (e: Exception){
-         Result.failure(e)
+     } catch (cancellation: CancellationException) {
+         throw cancellation
+     } catch (e: Exception) {
+         Result.failure(Exception("No se pudo actualizar la foto de perfil.", e))
      }
     }
 }

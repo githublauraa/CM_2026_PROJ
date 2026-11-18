@@ -9,13 +9,8 @@ import kotlinx.coroutines.flow.update
 import jakarta.inject.Inject
 import com.example.voxel_review.data.repository.AuthRepository
 import androidx.lifecycle.viewModelScope
-import com.example.voxel_review.data.injection.FirebaseHiltModule.auth
 import kotlinx.coroutines.launch
 import com.example.voxel_review.data.repository.UserRepository
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
-import com.google.firebase.auth.FirebaseAuthUserCollisionException
-import kotlinx.coroutines.tasks.await
 
 
 /**
@@ -25,8 +20,7 @@ import kotlinx.coroutines.tasks.await
 @HiltViewModel
 class CreateAccountViewModel @Inject constructor(
     private val authRepository: AuthRepository,
-    private val userRepository: UserRepository,
-    private val auth: FirebaseAuth
+    private val userRepository: UserRepository
 ): ViewModel() {
 
     // Estado interno modificable únicamente desde el ViewModel.
@@ -138,16 +132,10 @@ class CreateAccountViewModel @Inject constructor(
                 )
 
                 if (registerResult.isSuccess) {
-                    // 📧 Enviar correo de verificación al registrar exitosamente
-                    try {
-                        auth.currentUser?.sendEmailVerification()?.await()
-                        //Log.d("CreateAccountVM", "Correo de verificación enviado exitosamente")
-                    } catch (e: Exception) {
-                        // Opcional: manejar si falla el envío de correo de verificación
-                        //Log.e("CreateAccountVM", "Error al enviar verificación de correo", e)
+                    val verification = authRepository.sendEmailVerification()
+                    _uiState.update {
+                        it.copy(loading = false, verificationError = verification.exceptionOrNull()?.message)
                     }
-
-                    _uiState.update { it.copy(loading = false) }
                     onSuccess()
                 } else {
                     _uiState.update {
@@ -160,37 +148,13 @@ class CreateAccountViewModel @Inject constructor(
                     }
                 }
             } else {
-
-
                 _uiState.update {
-                    val e = result.exceptionOrNull()
-
-                    when (e){
-                        is FirebaseAuthUserCollisionException -> {
-                            it.copy(
-                                loading = false,
-                                errorMessage = "El correo electrónico ya está en uso",
-                                mostrarMensaje = true
-                            )
-                        }
-                        is FirebaseAuthInvalidCredentialsException -> {
-                            it.copy(
-                                loading = false,
-                                errorMessage = "El correo no es valido",
-                                mostrarMensaje = true
-                            )
-                        }
-                        else -> {
-                            //Log.e("RegistroE2E", "Error al registrar", e)
-                            it.copy(
-                                loading = false,
-                                errorMessage = "Error al registrar un usuario",
-                                mostrarMensaje = true
-                            )
-                        }
-                    }
+                    it.copy(
+                        loading = false,
+                        errorMessage = result.exceptionOrNull()?.message ?: "No se pudo crear la cuenta.",
+                        mostrarMensaje = true
+                    )
                 }
-
             }
         }
     }

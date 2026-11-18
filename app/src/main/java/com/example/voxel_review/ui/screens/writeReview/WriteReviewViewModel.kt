@@ -18,7 +18,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.Job
-import retrofit2.HttpException
 
 @HiltViewModel
 class WriteReviewViewModel @Inject constructor(
@@ -120,7 +119,8 @@ class WriteReviewViewModel @Inject constructor(
 
                 _uiState.update {
                     it.copy(
-                        errorMessage = "No se pudo cargar la reseña para editar"
+                        errorMessage = result.exceptionOrNull()?.message
+                            ?: "No se encontró la reseña para editar."
                     )
                 }
             }
@@ -306,12 +306,7 @@ class WriteReviewViewModel @Inject constructor(
 
                     _uiState.update {
                         it.copy(
-                            errorMessage =
-                                if (error is HttpException && error.code() == 400) {
-                                    "No se pudo publicar la reseña. Es posible que ya tengas una reseña de este videojuego."
-                                } else {
-                                    "Ocurrió un error al publicar la reseña"
-                                }
+                            errorMessage = error?.message ?: "No se pudo publicar la reseña."
                         )
                     }
                 }
@@ -377,7 +372,8 @@ class WriteReviewViewModel @Inject constructor(
 
                     _uiState.update {
                         it.copy(
-                            errorMessage = "Error al actualizar la reseña"
+                            errorMessage = result.exceptionOrNull()?.message
+                                ?: "No se pudo actualizar la reseña."
                         )
                     }
                 }

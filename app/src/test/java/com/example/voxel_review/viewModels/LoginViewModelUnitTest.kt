@@ -75,7 +75,7 @@ class LoginViewModelUnitTest {
         val state = viewModel.uiState.value
         assertThat(state.loading).isFalse()
         assertThat(state.mostrarMensaje).isTrue()
-        assertThat(state.errorMessage).isNotEmpty()
+        assertThat(state.errorMessage).isEqualTo("Credenciales incorrectas")
     }
 
 

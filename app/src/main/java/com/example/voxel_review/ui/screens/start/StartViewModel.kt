@@ -8,9 +8,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import jakarta.inject.Inject
 import androidx.lifecycle.viewModelScope
-import com.google.firebase.FirebaseTooManyRequestsException
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
-import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import kotlinx.coroutines.launch
 
 
@@ -79,14 +76,7 @@ class StartViewModel @Inject constructor(
         _uiState.update { it.copy(loading = true, errorMessage = "", mostrarMensaje = false) }
         viewModelScope.launch {
             val result = authRepository.signIn(correo, password)
-            val errorMessage = when (result.exceptionOrNull()) {
-                null -> ""
-                is FirebaseAuthInvalidUserException -> "Usuario no existe."
-                is FirebaseAuthInvalidCredentialsException -> "Credenciales incorrectas."
-                is FirebaseTooManyRequestsException ->
-                    "Demasiados intentos. Vuelve a intentarlo más tarde."
-                else -> "No se pudo iniciar sesión. Inténtalo de nuevo."
-            }
+            val errorMessage = result.exceptionOrNull()?.message.orEmpty()
             _uiState.update {
                 it.copy(
                     loading = false,

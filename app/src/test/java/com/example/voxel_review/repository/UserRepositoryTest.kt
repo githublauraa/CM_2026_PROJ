@@ -8,6 +8,8 @@ import io.mockk.mockk
 import com.example.voxel_review.data.repository.AuthRepository
 import com.google.common.truth.Truth
 import io.mockk.coEvery
+import java.io.IOException
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.test.runTest
 import org.junit.Test
 
@@ -17,6 +19,31 @@ class UserRepositoryTest {
     private val authRepository = mockk<AuthRepository>()
 
     private val userRepository =  UserRepository(mockDataSource, authRepository)
+
+    @Test
+    fun getFollowers_muestraUnMensajeEnEspanolSiFallaLaConexion() = runTest {
+        val error = IOException("Connection reset")
+        coEvery { mockDataSource.getFollowers("123") } throws error
+
+        val failure = userRepository.getFollowers("123").exceptionOrNull()
+
+        Truth.assertThat(failure?.message)
+            .isEqualTo("No se pudieron cargar los seguidores.")
+        Truth.assertThat(failure?.cause).isSameInstanceAs(error)
+    }
+
+    @Test
+    fun getAllUsers_propagaLaCancelacion() = runTest {
+        val cancellation = CancellationException()
+        coEvery { mockDataSource.getAllUsers() } throws cancellation
+
+        try {
+            userRepository.getAllUsers()
+            throw AssertionError("La consulta debía propagar la cancelación")
+        } catch (error: CancellationException) {
+            Truth.assertThat(error).isSameInstanceAs(cancellation)
+        }
+    }
 
     @Test
     fun `al llamar getUserById, si el id  usuario es valido retorna un result con el user info`() = runTest {
@@ -61,7 +88,7 @@ class UserRepositoryTest {
         val result = userRepository.getUserById("999")
         //Assert
         Truth.assertThat(result.isFailure).isTrue()
-        Truth.assertThat(result.exceptionOrNull()?.message).isEqualTo("User not found")
+        Truth.assertThat(result.exceptionOrNull()?.message).isEqualTo("No encontramos este perfil.")
     }
 
     @Test

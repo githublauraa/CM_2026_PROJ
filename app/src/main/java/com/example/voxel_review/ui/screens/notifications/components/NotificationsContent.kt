@@ -30,7 +30,7 @@ fun NotificationsContent(
 
         when {
             state.isLoading -> item { ContentStatus("Cargando notificaciones…") }
-            state.hasError -> item { ContentStatus("No se pudieron cargar las notificaciones.") }
+            state.followersError != null -> item { ContentStatus(state.followersError) }
             state.followers.isEmpty() -> item { ContentStatus("Todavía no tienes avisos de seguimiento.") }
             else -> items(state.followers, key = { it.id }) { follower ->
                 HighlightedNotificationCard(
@@ -46,7 +46,7 @@ fun NotificationsContent(
 
         when {
             state.likesLoading -> item { ContentStatus("Cargando me gusta…") }
-            state.likesError -> item { ContentStatus("No se pudieron cargar los me gusta.") }
+            state.likesError != null -> item { ContentStatus(state.likesError) }
             state.likes.isEmpty() -> item { ContentStatus("Tus reseñas aún no tienen me gusta de otros usuarios.") }
             else -> items(state.likes, key = { it.id }) { like ->
                 HighlightedNotificationCard(

@@ -26,7 +26,13 @@ class NotificationsViewModel @Inject constructor(
     init {
         val userId = authRepository.currentUser?.uid
         if (userId.isNullOrBlank()) {
-            _uiState.value = NotificationsState(isLoading = false, hasError = true, likesLoading = false, likesError = true)
+            val message = "Inicia sesión para ver tus notificaciones."
+            _uiState.value = NotificationsState(
+                isLoading = false,
+                followersError = message,
+                likesLoading = false,
+                likesError = message
+            )
         } else {
             viewModelScope.launch {
                 val result = userRepository.getFollowers(userId)
@@ -39,7 +45,7 @@ class NotificationsViewModel @Inject constructor(
                     )
                 }
                 _uiState.update {
-                    it.copy(followers = followers, isLoading = false, hasError = result.isFailure)
+                    it.copy(followers = followers, isLoading = false, followersError = result.exceptionOrNull()?.message)
                 }
             }
             viewModelScope.launch {
@@ -48,7 +54,7 @@ class NotificationsViewModel @Inject constructor(
                     it.copy(
                         likes = result.getOrDefault(emptyList()),
                         likesLoading = false,
-                        likesError = result.isFailure
+                        likesError = result.exceptionOrNull()?.message
                     )
                 }
             }

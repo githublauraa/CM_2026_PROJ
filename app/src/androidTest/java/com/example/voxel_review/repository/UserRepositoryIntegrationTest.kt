@@ -94,7 +94,7 @@ class UserRepositoryIntegrationTest {
         val result = userRepository.getUserById(id)
         //assert
         Truth.assertThat(result.isFailure).isTrue()
-        Truth.assertThat(result.exceptionOrNull()?.message).isEqualTo("User not found")
+        Truth.assertThat(result.exceptionOrNull()?.message).isEqualTo("No encontramos este perfil.")
     }
 
     //verificar que traiga los 10 usuarios

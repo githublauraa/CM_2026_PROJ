@@ -5,14 +5,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.voxel_review.data.dtos.toGameDetailInfo
 import com.example.voxel_review.data.info.library.LibraryStatus
+import com.example.voxel_review.data.repository.AuthRepository
 import com.example.voxel_review.data.repository.LibraryRepository
 import com.example.voxel_review.data.repository.ReviewRepository
 import com.example.voxel_review.data.repository.VideoGameRepository
 import com.example.voxel_review.ui.review.OptimisticReviewReactions
-import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
-import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -22,7 +21,6 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
 
 
 @HiltViewModel
@@ -30,7 +28,7 @@ class GameDetailViewModel @Inject constructor(
     private val videoGameRepository: VideoGameRepository,
     private val reviewRepository: ReviewRepository,
     private val libraryRepository: LibraryRepository,
-    private val auth: FirebaseAuth
+    private val authRepository: AuthRepository
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(GameDetailState())
@@ -57,7 +55,7 @@ class GameDetailViewModel @Inject constructor(
     )
 
     init {
-        val userId = auth.currentUser?.uid ?: ""
+        val userId = authRepository.currentUser?.uid ?: ""
 
         _uiState.update {
             it.copy(currentUserId = userId)
@@ -65,30 +63,28 @@ class GameDetailViewModel @Inject constructor(
     }
 
     fun refreshEmailVerification() {
-        val user = auth.currentUser
+        val user = authRepository.currentUser
         _uiState.update {
             it.copy(
                 currentUserId = user?.uid,
-                isEmailVerified = user?.isEmailVerified == true
+                isEmailVerified = user?.isEmailVerified == true,
+                verificationError = null
             )
         }
         if (user == null) return
 
         viewModelScope.launch {
-            try {
-                user.reload().await()
-                val currentUser = auth.currentUser
-                _uiState.update {
-                    it.copy(
-                        currentUserId = currentUser?.uid,
-                        isEmailVerified = currentUser?.isEmailVerified == true
-                    )
+            authRepository.reloadAndCheckEmailVerified()
+                .onSuccess { verified ->
+                    if (authRepository.currentUser?.uid == user.uid) {
+                        _uiState.update { it.copy(isEmailVerified = verified, verificationError = null) }
+                    }
                 }
-            } catch (e: CancellationException) {
-                throw e
-            } catch (_: Exception) {
-                // Conserva el último estado conocido si no hay conexión.
-            }
+                .onFailure { error ->
+                    if (authRepository.currentUser?.uid == user.uid) {
+                        _uiState.update { it.copy(verificationError = error.message) }
+                    }
+                }
         }
     }
 
@@ -109,17 +105,21 @@ class GameDetailViewModel @Inject constructor(
                     reviews = emptyList(),
                     isLoading = true,
                     error = null,
+                    reviewsError = null,
                     libraryStatus = null,
                     libraryError = null
                 )
             }
 
-            val uid = auth.currentUser?.uid
+            val uid = authRepository.currentUser?.uid
             if (!uid.isNullOrBlank()) {
                 launch {
                     libraryRepository.getGameStatus(uid, gameId)
                         .onSuccess { status ->
                             _uiState.update { it.copy(libraryStatus = status) }
+                        }
+                        .onFailure { failure ->
+                            _uiState.update { it.copy(libraryError = failure.message) }
                         }
                 }
             }
@@ -145,7 +145,7 @@ class GameDetailViewModel @Inject constructor(
                 .catch { e ->
                     _uiState.update {
                         it.copy(
-                            error = e.message,
+                            reviewsError = e.message,
                             isLoading = false
                         )
                     }
@@ -163,7 +163,7 @@ class GameDetailViewModel @Inject constructor(
 
     fun toggleLibraryStatus(status: LibraryStatus) {
         val currentState = _uiState.value
-        val uid = auth.currentUser?.uid
+        val uid = authRepository.currentUser?.uid
         val game = currentState.game
 
         if (uid.isNullOrBlank() || game == null || currentState.isUpdatingLibrary) return

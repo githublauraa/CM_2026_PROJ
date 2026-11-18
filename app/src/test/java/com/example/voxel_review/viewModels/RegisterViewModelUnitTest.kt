@@ -8,7 +8,6 @@ import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
@@ -26,7 +25,6 @@ class RegisterViewModelUnitTest {
 
     private lateinit var userRepository: UserRepository
 
-    private lateinit var auth: FirebaseAuth
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @Before
@@ -34,8 +32,7 @@ class RegisterViewModelUnitTest {
         Dispatchers.setMain(StandardTestDispatcher())
         authRepository = mockk()
         userRepository = mockk()
-        auth = mockk()
-        viewModel = CreateAccountViewModel(authRepository, userRepository, auth)
+        viewModel = CreateAccountViewModel(authRepository, userRepository)
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -56,7 +53,7 @@ class RegisterViewModelUnitTest {
 
         coEvery { userRepository.registerUser(nombreUsuario = any(), bio = any(), userId = any(), photoUrl = any()) } returns Result.success(Unit)
 
-        coEvery { auth.currentUser?.sendEmailVerification() } returns null
+        coEvery { authRepository.sendEmailVerification() } returns Result.success(Unit)
         // Act
         viewModel.createAcount {
             registroExitoso = true

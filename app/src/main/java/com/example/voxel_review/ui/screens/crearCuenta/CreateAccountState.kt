@@ -18,6 +18,7 @@ data class CreateAccountState(
     val mostrarContrasena: Boolean = false,
     val terminosAceptados: Boolean = false,
     val errorMessage: String = "",
+    val verificationError: String? = null,
     val mostrarMensaje: Boolean = false,
     val username: String = "",
     val bio: String = "",

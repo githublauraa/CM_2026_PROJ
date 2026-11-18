@@ -1,5 +1,6 @@
 package com.example.voxel_review.ui.screens.rankings
 
+import com.example.voxel_review.ui.utils.ContentStatus
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -56,6 +57,8 @@ fun RankingContent(
                 modifier = Modifier.padding(top = 12.dp, bottom = 12.dp)
             )
         }
+
+        state.error?.let { message -> ContentStatus(message) }
 
         LazyColumnRanking(
             state = state,

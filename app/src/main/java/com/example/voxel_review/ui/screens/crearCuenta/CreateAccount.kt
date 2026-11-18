@@ -1,5 +1,7 @@
 package com.example.voxel_review.ui.screens.crearCuenta
 
+import android.widget.Toast
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -46,6 +48,7 @@ fun CreateAccountScreen(
     modifier: Modifier = Modifier
 ) {
     val state by createAccountViewModel.uiState.collectAsState()
+    val context = LocalContext.current
     CreateAccountContent(
         state = state,
         onBioChange = createAccountViewModel::updateBio,
@@ -54,7 +57,14 @@ fun CreateAccountScreen(
         onPasswordChange = createAccountViewModel::updatePassword,
         onTerminosAceptadosChange = createAccountViewModel::updateTerminosAceptados,
         onMostrarContrasenaChange = createAccountViewModel::updateMostrarContrasena,
-        onSubmit = { createAccountViewModel.createAcount(unirseButtonPressed) },
+        onSubmit = {
+            createAccountViewModel.createAcount {
+                createAccountViewModel.uiState.value.verificationError?.let { message ->
+                    Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+                }
+                unirseButtonPressed()
+            }
+        },
         onBackToLogin = onBackToLogin,
         modifier = modifier
     )

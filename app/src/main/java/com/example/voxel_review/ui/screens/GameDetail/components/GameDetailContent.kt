@@ -145,6 +145,10 @@ fun GameDetailContent(
 
                     Spacer(modifier = Modifier.height(24.dp))
 
+                    state.verificationError?.let { message ->
+                        Text(text = message, color = MaterialTheme.colorScheme.error)
+                    }
+
                     // Sección de reseñas
                     Text(
                         text = "RESEÑAS DE USUARIOS",
@@ -159,22 +163,22 @@ fun GameDetailContent(
                         Text(text = message, color = MaterialTheme.colorScheme.error)
                     }
 
+                    state.reviewsError?.let { message ->
+                        Text(text = message, color = MaterialTheme.colorScheme.error)
+                    }
+
                     if (state.isLoading) {
 
                         CircularProgressIndicator()
 
                     } else if (state.reviews.isEmpty()) {
-
-                        Text(
-                            text = if (state.error != null) {
-                                "No se pudieron cargar las reseñas: ${state.error}"
-                            } else {
-                                "Este videojuego todavía no tiene reseñas."
-                            },
-                            color = Color.LightGray,
-                            fontSize = 14.sp
-                        )
-
+                        if (state.reviewsError == null) {
+                            Text(
+                                text = "Este videojuego todavía no tiene reseñas.",
+                                color = Color.LightGray,
+                                fontSize = 14.sp
+                            )
+                        }
                     } else {
 
                         // Mostrar todas las reseñas del videojuego

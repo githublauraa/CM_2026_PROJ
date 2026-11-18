@@ -108,7 +108,7 @@ class ReviewViewModelUnitTest {
         val state = viewModel.uiState.value
         assertThat(state.review).isEqualTo(latest)
         assertThat(state.isUpdatingReaction).isFalse()
-        assertThat(state.reactionError).isNotEmpty()
+        assertThat(state.reactionError).isEqualTo("Error de red")
         assertThat(state.errorMessage).isNull()
     }
 }

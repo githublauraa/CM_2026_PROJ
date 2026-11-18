@@ -7,7 +7,7 @@ import com.example.voxel_review.data.repository.ReviewRepository
 import com.example.voxel_review.data.repository.VideoGameRepository
 import com.example.voxel_review.ui.screens.GameDetail.GameDetailViewModel
 import com.google.common.truth.Truth.assertThat
-import com.google.firebase.auth.FirebaseAuth
+import com.example.voxel_review.data.repository.AuthRepository
 import com.google.firebase.auth.FirebaseUser
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -31,7 +31,7 @@ class GameDetailViewModelLibraryUnitTest {
     private val videoGameRepository = mockk<VideoGameRepository>()
     private val reviewRepository = mockk<ReviewRepository>()
     private val libraryRepository = mockk<LibraryRepository>()
-    private val auth = mockk<FirebaseAuth>()
+    private val auth = mockk<AuthRepository>()
     private val firebaseUser = mockk<FirebaseUser>()
 
     private lateinit var viewModel: GameDetailViewModel
@@ -45,7 +45,7 @@ class GameDetailViewModelLibraryUnitTest {
             videoGameRepository = videoGameRepository,
             reviewRepository = reviewRepository,
             libraryRepository = libraryRepository,
-            auth = auth
+            authRepository = auth
         )
     }
 

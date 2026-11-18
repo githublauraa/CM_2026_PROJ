@@ -82,12 +82,12 @@ class ProfileViewModelLibraryUnitTest {
 
     @Test
     fun `getUserLibrary en error actualiza libraryError`() = runTest {
-        coEvery { libraryRepository.getUserLibrary("user-1") } returns Result.failure(RuntimeException("Fallo"))
+        coEvery { libraryRepository.getUserLibrary("user-1") } returns Result.failure(RuntimeException("No se pudo cargar la colección. Revisa tu conexión a internet."))
 
         viewModel.getUserLibrary("user-1")
         advanceUntilIdle()
 
         assertThat(viewModel.uiState.value.isLibraryLoading).isFalse()
-        assertThat(viewModel.uiState.value.libraryError).isEqualTo("No se pudo cargar la colección")
+        assertThat(viewModel.uiState.value.libraryError).isEqualTo("No se pudo cargar la colección. Revisa tu conexión a internet.")
     }
 }

@@ -100,6 +100,7 @@ class LibraryRepositoryTest {
 
         assertThat(ok.isSuccess).isTrue()
         assertThat(fail.isFailure).isTrue()
-        assertThat(fail.exceptionOrNull()?.message).isEqualTo("Error de red")
+        assertThat(fail.exceptionOrNull()?.message).isEqualTo("No se pudo quitar el juego de tu colección.")
+        assertThat(fail.exceptionOrNull()?.cause?.message).isEqualTo("Error de red")
     }
 }

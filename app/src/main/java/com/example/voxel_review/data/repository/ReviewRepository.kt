@@ -9,6 +9,7 @@ import retrofit2.HttpException
 import javax.inject.Inject
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 
 class ReviewRepository @Inject constructor(
@@ -20,15 +21,17 @@ class ReviewRepository @Inject constructor(
     } catch (e: CancellationException) {
         throw e
     } catch (e: Exception) {
-        Result.failure(e)
+        Result.failure(Exception("No se pudieron cargar los Me gusta recibidos.", e))
     }
 
     suspend fun getAllReviews(): Result<List<ReviewInfo>> {
         return try {
             val reviews = reviewRemoteDataSource.getAllReviews()
             Result.success(reviews.map { it.toReviewInfo() })
+        } catch (cancellation: CancellationException) {
+            throw cancellation
         } catch (e: Exception) {
-            Result.failure(e)
+            Result.failure(Exception("No se pudieron cargar las reseñas.", e))
         }
     }
 
@@ -39,7 +42,7 @@ class ReviewRepository @Inject constructor(
         } catch (e: CancellationException) {
             throw e
         } catch (e: Exception) {
-            Result.failure(e)
+            Result.failure(Exception("No se pudieron cargar las reseñas del mapa.", e))
         }
     }
 
@@ -51,6 +54,9 @@ class ReviewRepository @Inject constructor(
                 reviews.find { review -> review.reviewId == reviewId }
             }
             selectedReview?.toReviewInfo()
+        }.catch { error ->
+            if (error is CancellationException || error !is Exception) throw error
+            throw Exception("No se pudo cargar la reseña.", error)
         }
 
     suspend fun getGameReviews(id: String): Result<List<ReviewInfo>> {
@@ -59,12 +65,10 @@ class ReviewRepository @Inject constructor(
             val reviews = reviewRemoteDataSource.getGameReviews(id,currentUser)
             val reviewsInfo = reviews.map { it.toReviewInfo() }
             Result.success(reviewsInfo)
-        } catch (e: HttpException) {
-            e.printStackTrace()
-            Result.failure(e)
+        } catch (cancellation: CancellationException) {
+            throw cancellation
         } catch (e: Exception) {
-            e.printStackTrace()
-            Result.failure(e)
+            Result.failure(Exception("No se pudieron cargar las reseñas del videojuego.", e))
         }
     }
 
@@ -73,10 +77,10 @@ class ReviewRepository @Inject constructor(
             val reviews = reviewRemoteDataSource.getUserReviews(id)
             val reviewsInfo = reviews.map { it.toReviewInfo() }
             Result.success(reviewsInfo)
-        } catch (e: HttpException) {
-            Result.failure(e)
+        } catch (cancellation: CancellationException) {
+            throw cancellation
         } catch (e: Exception) {
-            Result.failure(e)
+            Result.failure(Exception("No se pudieron cargar las reseñas del perfil.", e))
         }
     }
 
@@ -89,9 +93,16 @@ class ReviewRepository @Inject constructor(
             reviewRemoteDataSource.createReview(userId, videoGameId, review)
             Result.success(Unit)
         } catch (e: HttpException) {
-            Result.failure(e)
+            val message = if (e.code() == 400) {
+                "No se pudo publicar la reseña. Revisa si ya publicaste una para este videojuego."
+            } else {
+                "No se pudo publicar la reseña."
+            }
+            Result.failure(Exception(message, e))
+        } catch (cancellation: CancellationException) {
+            throw cancellation
         } catch (e: Exception) {
-            Result.failure(e)
+            Result.failure(Exception("No se pudo publicar la reseña.", e))
         }
     }
 
@@ -99,10 +110,10 @@ class ReviewRepository @Inject constructor(
         return try {
             reviewRemoteDataSource.deleteReview(reviewId)
             Result.success(Unit)
-        } catch (e: HttpException) {
-            Result.failure(e)
+        } catch (cancellation: CancellationException) {
+            throw cancellation
         } catch (e: Exception) {
-            Result.failure(e)
+            Result.failure(Exception("No se pudo eliminar la reseña.", e))
         }
     }
 
@@ -110,10 +121,10 @@ class ReviewRepository @Inject constructor(
         return try {
             reviewRemoteDataSource.updateReview(id, review)
             Result.success(Unit)
-        } catch (e: HttpException) {
-            Result.failure(e)
+        } catch (cancellation: CancellationException) {
+            throw cancellation
         } catch (e: Exception) {
-            Result.failure(e)
+            Result.failure(Exception("No se pudo actualizar la reseña.", e))
         }
     }
 
@@ -122,10 +133,10 @@ class ReviewRepository @Inject constructor(
             val comments = reviewRemoteDataSource.getReviewComments(id)
             val commentsInfo = comments.map { it.toReviewInfo() }
             Result.success(commentsInfo)
-        } catch (e: HttpException) {
-            Result.failure(e)
+        } catch (cancellation: CancellationException) {
+            throw cancellation
         } catch (e: Exception) {
-            Result.failure(e)
+            Result.failure(Exception("No se pudieron cargar los comentarios.", e))
         }
     }
 
@@ -133,8 +144,10 @@ class ReviewRepository @Inject constructor(
         return try{
             reviewRemoteDataSource.sendOrDeleteReview(reviewId, userId, dislike)
             Result.success(Unit)
-        } catch (e: Exception){
-            Result.failure(e)
+        } catch (cancellation: CancellationException) {
+            throw cancellation
+        } catch (e: Exception) {
+            Result.failure(Exception("No se pudo guardar la reacción.", e))
         }
     }
 
@@ -142,6 +155,9 @@ class ReviewRepository @Inject constructor(
         return reviewRemoteDataSource.listenReview(gameId)
             .map { reviews ->
                 reviews.map { it.toReviewInfo() }
+            }.catch { error ->
+                if (error is CancellationException || error !is Exception) throw error
+                throw Exception("No se pudieron cargar las reseñas del videojuego.", error)
             }
     }
 
@@ -150,9 +166,10 @@ class ReviewRepository @Inject constructor(
             val reviews = reviewRemoteDataSource.getFollowedUsersReviews(currentUserId)
             val reviewsInfo = reviews.map { it.toReviewInfo() }
             Result.success(reviewsInfo)
+        } catch (cancellation: CancellationException) {
+            throw cancellation
         } catch (e: Exception) {
-            e.printStackTrace()
-            Result.failure(e)
+            Result.failure(Exception("No se pudieron cargar las reseñas de las personas que sigues.", e))
         }
     }
 

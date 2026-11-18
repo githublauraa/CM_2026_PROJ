@@ -5,8 +5,8 @@ import com.example.voxel_review.data.info.InfoNotifications.NotificationInfo
 data class NotificationsState(
     val followers: List<NotificationInfo> = emptyList(),
     val isLoading: Boolean = true,
-    val hasError: Boolean = false,
+    val followersError: String? = null,
     val likes: List<NotificationInfo> = emptyList(),
     val likesLoading: Boolean = true,
-    val likesError: Boolean = false
+    val likesError: String? = null
 )

@@ -32,8 +32,10 @@ class RankingsViewModel @Inject constructor( private val userRepository: UserRep
             val result = userRepository.getAllUsers()
             if (result.isSuccess) {
                 _uiState.update {
-                    it.copy(users = result.getOrNull() ?: emptyList())
+                    it.copy(users = result.getOrNull() ?: emptyList(), error = null)
                 }
+            } else {
+                _uiState.update { it.copy(error = result.exceptionOrNull()?.message) }
             }
         }
     }

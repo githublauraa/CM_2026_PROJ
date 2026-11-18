@@ -66,7 +66,7 @@ internal class OptimisticReviewReactions(
                         liveReview.first { it == null || it.reaction == target }
                     }
                 } else {
-                    onError("No se pudo guardar la reacción. Inténtalo de nuevo.")
+                    onError(result.exceptionOrNull()?.message ?: "No se pudo guardar la reacción.")
                 }
             } finally {
                 _pending.update { it - reviewId }

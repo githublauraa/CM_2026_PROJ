@@ -44,6 +44,7 @@ fun DiscoverScreen(
     modifier: Modifier = Modifier.testTag("discover")
 ) {
     val state by discoverViewModel.uiState.collectAsState()
+    val errorMessage = state.error
     val searching = state.searchQuery.isNotBlank()
     val featured = if (searching) null else state.trendingSearches.let { games ->
         games.maxWithOrNull(
@@ -97,6 +98,10 @@ fun DiscoverScreen(
                 )
                 HorizontalDivider(color = VoxelBorder.copy(alpha = 0.65f))
             }
+            if (errorMessage != null && (featured != null || games.isNotEmpty())) {
+                item { Text(errorMessage, color = onSurfaceVariantDark) }
+            }
+
             if (featured == null && games.isEmpty()) {
                 item {
                     Column(
@@ -106,8 +111,8 @@ fun DiscoverScreen(
                     ) {
                         when {
                             state.isLoading -> CircularProgressIndicator(color = VoxelPrimary)
-                            state.error != null -> {
-                                Text("No pudimos cargar los juegos", color = onSurfaceVariantDark)
+                            errorMessage != null -> {
+                                Text(errorMessage, color = onSurfaceVariantDark)
                                 TextButton(onClick = discoverViewModel::loadVideoGames) {
                                     Text("Reintentar", color = VoxelPrimary)
                                 }

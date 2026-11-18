@@ -26,7 +26,7 @@ class LibraryRepository @Inject constructor(
         } catch (e: CancellationException) {
             throw e
         } catch (e: Exception) {
-            Result.failure(e)
+            Result.failure(Exception("No se pudo cargar la colección.", e))
         }
     }
 
@@ -38,7 +38,7 @@ class LibraryRepository @Inject constructor(
         } catch (e: CancellationException) {
             throw e
         } catch (e: Exception) {
-            Result.failure(e)
+            Result.failure(Exception("No se pudo consultar el estado del juego en tu colección.", e))
         }
     }
 
@@ -64,7 +64,7 @@ class LibraryRepository @Inject constructor(
         } catch (e: CancellationException) {
             throw e
         } catch (e: Exception) {
-            Result.failure(e)
+            Result.failure(Exception("No se pudo guardar el juego en tu colección.", e))
         }
     }
 
@@ -78,7 +78,7 @@ class LibraryRepository @Inject constructor(
         } catch (e: CancellationException) {
             throw e
         } catch (e: Exception) {
-            Result.failure(e)
+            Result.failure(Exception("No se pudo quitar el juego de tu colección.", e))
         }
     }
 }
