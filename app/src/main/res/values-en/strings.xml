@@ -360,4 +360,14 @@
   <string name="settings_color_yellow">Yellow</string>
   <string name="settings_color_purple">Purple</string>
   <string name="settings_panel_color">Screen color</string>
+    <string name="player_statistics">Statistics</string>
+    <string name="statistics_loading">Loading statistics…</string>
+    <string name="statistics_empty">Publish a review or add games to your collection to get started.</string>
+    <string name="statistics_overview">Gaming overview</string>
+    <string name="statistics_review_count">Published reviews</string>
+    <string name="statistics_average">Average rating</string>
+    <string name="statistics_completed">Completed games</string>
+    <string name="statistics_collection">Collection status</string>
+    <string name="statistics_ratings">Rating distribution</string>
+    <string name="statistics_rounding">Ratings grouped by the nearest whole star.</string>
 </resources>

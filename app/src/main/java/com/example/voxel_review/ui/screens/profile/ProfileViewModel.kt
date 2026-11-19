@@ -167,7 +167,7 @@ class ProfileViewModel @Inject constructor(
 		}
 	}
 
-	fun selectProfileTab(tab: ProfileContentTab) {
+    fun selectProfileTab(tab: ProfileContentTab) {
 		_uiState.update { it.copy(selectedTab = tab) }
 	}
 

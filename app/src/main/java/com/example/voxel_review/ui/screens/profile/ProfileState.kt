@@ -7,7 +7,8 @@ import com.example.voxel_review.data.info.review.ReviewInfo
 
 enum class ProfileContentTab(val label: String) {
     REVIEWS("Reseñas"),
-    LIBRARY("Colección")
+    LIBRARY("Colección"),
+    STATISTICS("Estadísticas")
 }
 
 data class ProfileState(

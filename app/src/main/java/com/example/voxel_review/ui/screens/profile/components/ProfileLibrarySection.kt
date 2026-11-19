@@ -3,6 +3,8 @@ package com.example.voxel_review.ui.screens.profile.components
 import com.example.voxel_review.ui.utils.libraryStatusLabel
 import com.example.voxel_review.R
 import androidx.compose.ui.res.stringResource
+import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -58,11 +60,16 @@ fun ProfileTabChips(
         horizontalArrangement = Arrangement.spacedBy(10.dp),
         modifier = modifier
             .fillMaxWidth()
+            .horizontalScroll(rememberScrollState())
             .padding(horizontal = 16.dp, vertical = 12.dp)
     ) {
         ProfileContentTab.entries.forEach { tab ->
             FeedFilterChip(
-                text = stringResource(if (tab == ProfileContentTab.REVIEWS) R.string.nav_reviews else R.string.library),
+                text = stringResource(when (tab) {
+                    ProfileContentTab.REVIEWS -> R.string.nav_reviews
+                    ProfileContentTab.LIBRARY -> R.string.library
+                    ProfileContentTab.STATISTICS -> R.string.player_statistics
+                }),
                 isSelected = selectedTab == tab,
                 onClick = { onSelectTab(tab) },
                 modifier = Modifier.testTag("profileTab_${tab.name}")
