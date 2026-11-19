@@ -4,6 +4,7 @@ import com.example.voxel_review.R
 import com.example.voxel_review.data.localization.AppStrings
 import com.example.voxel_review.data.dataSource.impl.firestore.ReviewFirebaseDataSourceImpl
 import com.example.voxel_review.data.dtos.CreateReviewDto
+import com.example.voxel_review.data.dtos.newestFirst
 import com.example.voxel_review.data.dtos.toReviewInfo
 import com.example.voxel_review.data.info.review.ReviewInfo
 import com.example.voxel_review.data.info.InfoNotifications.NotificationInfo
@@ -52,7 +53,7 @@ class ReviewRepository @Inject constructor(
     fun getSelectedReviewLive(gameId: String, reviewId: String): Flow<ReviewInfo?> =
         reviewRemoteDataSource.listenSelectedReview(gameId, reviewId).map { reviews ->
             val selectedReview = if (reviewId.isBlank()) {
-                reviews.firstOrNull()
+                reviews.newestFirst().firstOrNull()
             } else {
                 reviews.find { review -> review.reviewId == reviewId }
             }
@@ -66,7 +67,7 @@ class ReviewRepository @Inject constructor(
         return try {
             val currentUser = authRepository.currentUser?.uid ?:""
             val reviews = reviewRemoteDataSource.getGameReviews(id,currentUser)
-            val reviewsInfo = reviews.map { it.toReviewInfo() }
+            val reviewsInfo = reviews.newestFirst().map { it.toReviewInfo() }
             Result.success(reviewsInfo)
         } catch (cancellation: CancellationException) {
             throw cancellation
@@ -157,7 +158,7 @@ class ReviewRepository @Inject constructor(
     suspend fun getReviewsLive(gameId: String): Flow<List<ReviewInfo>> {
         return reviewRemoteDataSource.listenReview(gameId)
             .map { reviews ->
-                reviews.map { it.toReviewInfo() }
+                reviews.newestFirst().map { it.toReviewInfo() }
             }.catch { error ->
                 if (error is CancellationException || error !is Exception) throw error
                 throw Exception(strings[R.string.error_game_reviews], error)

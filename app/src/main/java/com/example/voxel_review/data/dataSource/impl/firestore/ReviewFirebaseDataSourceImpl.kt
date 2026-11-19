@@ -3,6 +3,7 @@ package com.example.voxel_review.data.dataSource.impl.firestore
 import com.example.voxel_review.data.dataSource.ReviewRemoteDataSource
 import com.example.voxel_review.data.info.InfoNotifications.NotificationInfo
 import com.example.voxel_review.data.dtos.CreateReviewDto
+import com.example.voxel_review.data.dtos.newestFirst
 import com.example.voxel_review.data.dtos.ReviewDto
 import jakarta.inject.Inject
 import com.google.firebase.firestore.FirebaseFirestore
@@ -124,14 +125,14 @@ class ReviewFirebaseDataSourceImpl @Inject constructor(
                 }
             }
         } else {
-            db.collection("reviews").whereEqualTo("videoGameId", gameId).limit(1)
+            db.collection("reviews").whereEqualTo("videoGameId", gameId)
                 .addSnapshotListener { snapshot, error ->
                     if (error != null) {
                         close(error)
                     } else {
                         trySend(snapshot?.documents.orEmpty().mapNotNull { doc ->
                             doc.toObject(ReviewDto::class.java)?.copy(reviewId = doc.id)
-                        })
+                        }.newestFirst().take(1))
                     }
                 }
         }
