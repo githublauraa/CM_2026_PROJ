@@ -361,4 +361,14 @@
   <string name="settings_color_yellow">Amarelo</string>
   <string name="settings_color_purple">Roxo</string>
   <string name="settings_panel_color">Cor desta tela</string>
+    <string name="player_statistics">Estatísticas</string>
+    <string name="statistics_loading">Carregando estatísticas…</string>
+    <string name="statistics_empty">Publique uma resenha ou adicione jogos à sua coleção para começar.</string>
+    <string name="statistics_overview">Resumo do jogador</string>
+    <string name="statistics_review_count">Resenhas publicadas</string>
+    <string name="statistics_average">Nota média</string>
+    <string name="statistics_completed">Jogos concluídos</string>
+    <string name="statistics_collection">Estado da coleção</string>
+    <string name="statistics_ratings">Distribuição de notas</string>
+    <string name="statistics_rounding">Notas agrupadas pela estrela inteira mais próxima.</string>
 </resources>

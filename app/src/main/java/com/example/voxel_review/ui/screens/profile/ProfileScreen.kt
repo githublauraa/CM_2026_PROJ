@@ -253,6 +253,9 @@ fun ProfileContent(
                         else -> GameCards(reviews = reviews, onReviewClick = onReviewClick)
                     }
                 }
+                ProfileContentTab.STATISTICS -> {
+                    ProfileStatisticsSection(state, onRetryReviews, onRetryLibrary)
+                }
                 ProfileContentTab.LIBRARY -> {
                     ProfileLibrarySection(
                         games = state.filteredLibraryGames,

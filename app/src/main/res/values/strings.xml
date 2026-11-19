@@ -388,4 +388,14 @@
   <string name="settings_color_yellow">Amarillo</string>
   <string name="settings_color_purple">Morado</string>
   <string name="settings_panel_color">Color de esta pantalla</string>
+    <string name="player_statistics">Estadísticas</string>
+    <string name="statistics_loading">Cargando estadísticas…</string>
+    <string name="statistics_empty">Publica una reseña o añade juegos a tu colección para comenzar.</string>
+    <string name="statistics_overview">Resumen del jugador</string>
+    <string name="statistics_review_count">Reseñas publicadas</string>
+    <string name="statistics_average">Puntuación promedio</string>
+    <string name="statistics_completed">Juegos completados</string>
+    <string name="statistics_collection">Estado de la colección</string>
+    <string name="statistics_ratings">Distribución de puntuaciones</string>
+    <string name="statistics_rounding">Notas agrupadas por la estrella más cercana.</string>
 </resources>
