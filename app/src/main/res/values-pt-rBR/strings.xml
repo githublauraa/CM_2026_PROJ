@@ -371,4 +371,5 @@
     <string name="statistics_collection">Estado da coleção</string>
     <string name="statistics_ratings">Distribuição de notas</string>
     <string name="statistics_rounding">Notas agrupadas pela estrela inteira mais próxima.</string>
+    <string name="unverified_user">Usuário não verificado</string>
 </resources>

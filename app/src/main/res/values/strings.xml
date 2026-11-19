@@ -398,4 +398,5 @@
     <string name="statistics_collection">Estado de la colección</string>
     <string name="statistics_ratings">Distribución de puntuaciones</string>
     <string name="statistics_rounding">Notas agrupadas por la estrella más cercana.</string>
+    <string name="unverified_user">Usuario no verificado</string>
 </resources>

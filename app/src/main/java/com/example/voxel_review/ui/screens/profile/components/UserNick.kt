@@ -23,6 +23,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.voxel_review.ui.theme.VoxelTextSecondary
 import com.example.voxel_review.ui.theme.VoxelSecondary
 
 @Composable
@@ -60,16 +61,14 @@ fun UserNick(
                 )
             }
         }
-        if (isVerified) {
-            Spacer(modifier = Modifier.height(4.dp))
-            Text(
-                text = stringResource(R.string.verified_user),
-                color = VoxelSecondary,
-                fontSize = 14.sp,
-                fontWeight = FontWeight.SemiBold,
-                modifier = Modifier
-                    .testTag("verifiedBadgeLabel")
-            )
-        }
+        Spacer(modifier = Modifier.height(4.dp))
+        Text(
+            text = stringResource(if (isVerified) R.string.verified_user else R.string.unverified_user),
+            color = if (isVerified) VoxelSecondary else VoxelTextSecondary,
+            fontSize = 14.sp,
+            fontWeight = FontWeight.SemiBold,
+            modifier = Modifier
+                .testTag(if (isVerified) "verifiedBadgeLabel" else "unverifiedBadgeLabel")
+        )
     }
 }

@@ -21,7 +21,6 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.example.voxel_review.data.info.profile.ProfileInfo
 import com.example.voxel_review.ui.theme.VoxelSurface
@@ -65,12 +64,9 @@ internal fun RankingPodium(
                         fontWeight = FontWeight.Bold
                     )
                     ProfileImage(profileImage = leader.value.pfp, size = if (index == 0) 54 else 40)
-                    Text(
-                        text = leader.value.nick,
-                        style = MaterialTheme.typography.titleSmall,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                        textAlign = TextAlign.Center
+                    RankingUserName(
+                        user = leader.value,
+                        style = MaterialTheme.typography.titleSmall
                     )
                     Text(
                         text = if (leader.value.numResenias == 1) stringResource(R.string.one_review) else pluralStringResource(R.plurals.review_count, leader.value.numResenias, leader.value.numResenias),

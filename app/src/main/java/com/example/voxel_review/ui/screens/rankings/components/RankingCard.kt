@@ -26,7 +26,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.example.voxel_review.data.info.profile.ProfileInfo
 import com.example.voxel_review.ui.theme.VoxelBorder
@@ -81,11 +80,9 @@ internal fun RankingCard(
             }
             ProfileImage(profileImage = user.pfp, size = if (featured) 48 else 38)
             Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(3.dp)) {
-                Text(
-                    text = user.nick,
-                    style = if (featured) MaterialTheme.typography.titleLarge else MaterialTheme.typography.titleMedium,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
+                RankingUserName(
+                    user = user,
+                    style = if (featured) MaterialTheme.typography.titleLarge else MaterialTheme.typography.titleMedium
                 )
                 Text(
                     text = if (user.numResenias == 1) stringResource(R.string.one_review) else pluralStringResource(R.plurals.review_count, user.numResenias, user.numResenias),
