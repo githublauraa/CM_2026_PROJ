@@ -13,7 +13,8 @@ data class CreateReviewDto(
     // Ubicación donde se publicó la reseña
     val latitude: Double? = null,
     val longitude: Double? = null,
-    val createdAt: String = ""
+    val createdAt: String = "",
+    val containsSpoilers: Boolean = false
 )
 
 

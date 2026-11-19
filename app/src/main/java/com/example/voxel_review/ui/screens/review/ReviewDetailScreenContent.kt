@@ -82,7 +82,11 @@ fun ReviewDetailScreenContent(
                                 review.ratingHistoria.toInt()
                             ))
                             appendLine()
-                            appendLine("\"${review.descripcion}\"")
+                            if (review.containsSpoilers) {
+                                appendLine(context.getString(R.string.review_spoiler_warning))
+                            } else {
+                                appendLine("\"${review.descripcion}\"")
+                            }
                             appendLine()
                             append(context.getString(R.string.shared_from))
                         }

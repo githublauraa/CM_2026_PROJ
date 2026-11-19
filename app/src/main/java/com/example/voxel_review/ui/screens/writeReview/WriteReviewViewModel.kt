@@ -81,6 +81,7 @@ class WriteReviewViewModel @Inject constructor(
         _uiState.update {
             it.copy(
                 reviewText = review.descripcion,
+                containsSpoilers = review.containsSpoilers,
                 gameplayRating = review.ratingJugabilidad.toInt(),
                 graphicsRating = review.ratingGraficos.toInt(),
                 storyRating = review.ratingHistoria.toInt(),
@@ -186,6 +187,7 @@ class WriteReviewViewModel @Inject constructor(
                             it.copy(
                                 editingReviewId = null,
                                 reviewText = "",
+                                containsSpoilers = false,
                                 gameplayRating = 0,
                                 graphicsRating = 0,
                                 storyRating = 0,
@@ -210,6 +212,10 @@ class WriteReviewViewModel @Inject constructor(
                     }
                 }
         }
+    }
+
+    fun updateContainsSpoilers(containsSpoilers: Boolean) {
+        _uiState.update { it.copy(containsSpoilers = containsSpoilers) }
     }
 
     fun updateReviewText(text: String) {
@@ -284,6 +290,7 @@ class WriteReviewViewModel @Inject constructor(
                     graphicsRating = state.graphicsRating,
                     storyRating = state.storyRating,
                     content = state.reviewText,
+                    containsSpoilers = state.containsSpoilers,
                     latitude = latitude,
                     longitude = longitude
                 )
@@ -355,6 +362,7 @@ class WriteReviewViewModel @Inject constructor(
                     graphicsRating = state.graphicsRating,
                     storyRating = state.storyRating,
                     content = state.reviewText,
+                    containsSpoilers = state.containsSpoilers,
                 )
 
                 val result = reviewRepository.updateReview(

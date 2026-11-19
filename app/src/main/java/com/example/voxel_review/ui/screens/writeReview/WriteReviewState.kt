@@ -11,5 +11,6 @@ data class WriteReviewState(
     val isPublished: Boolean = false,
     val errorMessage: String? = null,
 
-    val editingReviewId: String? = null
+    val editingReviewId: String? = null,
+    val containsSpoilers: Boolean = false
 )

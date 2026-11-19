@@ -22,4 +22,5 @@ data class ReviewInfo(
     val longitude: Double? = null,
     val cantidadDislikes: Int = 0,
     val dislikedByCurrentUser: Boolean = false,
+    val containsSpoilers: Boolean = false,
 )

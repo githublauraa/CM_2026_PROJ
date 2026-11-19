@@ -81,6 +81,8 @@ fun ReviewDetailContent(
             DescriptionSection(
                 titulo = reviewTitle(review),
                 descripcion = review.descripcion,
+                reviewId = review.idResenia,
+                containsSpoilers = review.containsSpoilers,
                 imagenUsuario = review.imagenUsuario,
                 likes = review.cantidadLikes,
                 isliked = review.likedByCurrentUser,

@@ -46,7 +46,9 @@ fun DescriptionSection(
     dislikes: Int = 0,
     isDisliked: Boolean = false,
     reactionsEnabled: Boolean = true,
-    onReactionClick: (Boolean) -> Unit = {}
+    onReactionClick: (Boolean) -> Unit = {},
+    reviewId: String = "",
+    containsSpoilers: Boolean = false
 ) {
     Card(
         modifier = modifier,
@@ -112,12 +114,11 @@ fun DescriptionSection(
                 )
             }
             HorizontalDivider(color = VoxelBorder)
-            Text(
-                fontFamily = FontFamily.SansSerif,
+            com.example.voxel_review.ui.utils.SpoilerProtectedText(
+                reviewId = reviewId,
                 text = descripcion.ifBlank { stringResource(R.string.no_review_description) },
-                color = VoxelTextPrimary.copy(alpha = 0.9f),
-                fontSize = 16.sp,
-                lineHeight = 24.sp
+                containsSpoilers = containsSpoilers,
+                color = VoxelTextPrimary.copy(alpha = 0.9f)
             )
 
         }

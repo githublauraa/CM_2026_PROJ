@@ -170,7 +170,7 @@
   <string name="reviews_map">Mapa de reseñas</string>
   <string name="reviews_map_subtitle">Explora reseñas por ubicación</string>
   <string name="filter_all">Todos</string>
-  <string name="location_unavailable_review">No se pudo obtener tu ubicación. Actívala e inténtalo de nuevo, o desmarca la opción para publicar sin aparecer en el mapa.</string>
+  <string name="location_unavailable_review">No se pudo obtener tu ubicación. Comprueba que esté activada. Si la ubicación aproximada no está disponible, permite la ubicación precisa al reintentar o desde los ajustes de la app.</string>
   <string name="location_permission_review">Para aparecer en el mapa, permite el acceso a la ubicación. Puedes desmarcar la opción para publicar sin ubicación.</string>
   <string name="review_include_location">Mostrar esta reseña en el mapa con mi ubicación aproximada</string>
   <string name="getting_location">Obteniendo ubicación…</string>
@@ -399,4 +399,9 @@
     <string name="statistics_ratings">Distribución de puntuaciones</string>
     <string name="statistics_rounding">Notas agrupadas por la estrella más cercana.</string>
     <string name="unverified_user">Usuario no verificado</string>
+    <string name="review_contains_spoilers">Contiene spoilers</string>
+    <string name="review_spoiler_warning">Esta reseña contiene spoilers.</string>
+    <string name="review_show_spoilers">Mostrar reseña</string>
+    <string name="review_hide_spoilers">Ocultar reseña</string>
+    <string name="publish_review_without_location">Publicar sin ubicación</string>
 </resources>

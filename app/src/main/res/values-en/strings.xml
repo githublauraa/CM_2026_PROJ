@@ -52,7 +52,7 @@
   <string name="reviews_map">Review map</string>
   <string name="reviews_map_subtitle">Explore reviews by location</string>
   <string name="filter_all">All</string>
-  <string name="location_unavailable_review">Couldn\'t get your location. Turn it on and try again, or uncheck the option to post without appearing on the map.</string>
+  <string name="location_unavailable_review">Could not get your location. Check that location is enabled. If approximate location is unavailable, allow precise location when retrying or in the app settings.</string>
   <string name="location_permission_review">Allow location access to appear on the map. You can uncheck this option to post without your location.</string>
   <string name="review_include_location">Show this review on the map using my approximate location</string>
   <string name="getting_location">Getting your location…</string>
@@ -371,4 +371,9 @@
     <string name="statistics_ratings">Rating distribution</string>
     <string name="statistics_rounding">Ratings grouped by the nearest whole star.</string>
     <string name="unverified_user">Unverified user</string>
+    <string name="review_contains_spoilers">Contains spoilers</string>
+    <string name="review_spoiler_warning">This review contains spoilers.</string>
+    <string name="review_show_spoilers">Show review</string>
+    <string name="review_hide_spoilers">Hide review</string>
+    <string name="publish_review_without_location">Publish without location</string>
 </resources>

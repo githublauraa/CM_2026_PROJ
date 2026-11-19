@@ -143,7 +143,7 @@
   <string name="reviews_map">Mapa de avaliações</string>
   <string name="reviews_map_subtitle">Explore avaliações por localização</string>
   <string name="filter_all">Todos</string>
-  <string name="location_unavailable_review">Não foi possível obter sua localização. Ative-a e tente novamente ou desmarque a opção para publicar sem aparecer no mapa.</string>
+  <string name="location_unavailable_review">Não foi possível obter sua localização. Confira se ela está ativada. Se a localização aproximada estiver indisponível, permita a localização precisa ao tentar novamente ou nas configurações do app.</string>
   <string name="location_permission_review">Permita o acesso à sua localização para aparecer no mapa. Você pode desmarcar a opção para publicar sem localização.</string>
   <string name="review_include_location">Mostrar esta avaliação no mapa com minha localização aproximada</string>
   <string name="getting_location">Obtendo sua localização…</string>
@@ -372,4 +372,9 @@
     <string name="statistics_ratings">Distribuição de notas</string>
     <string name="statistics_rounding">Notas agrupadas pela estrela inteira mais próxima.</string>
     <string name="unverified_user">Usuário não verificado</string>
+    <string name="review_contains_spoilers">Contém spoilers</string>
+    <string name="review_spoiler_warning">Esta resenha contém spoilers.</string>
+    <string name="review_show_spoilers">Mostrar resenha</string>
+    <string name="review_hide_spoilers">Ocultar resenha</string>
+    <string name="publish_review_without_location">Publicar sem localização</string>
 </resources>

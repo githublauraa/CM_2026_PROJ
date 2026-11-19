@@ -132,9 +132,11 @@ private fun FollowedReviewCard(
                     overflow = TextOverflow.Ellipsis
                 )
             }
-            Text(
-                review.descripcion, color = VoxelTextSecondary, fontSize = 14.sp,
-                lineHeight = 21.sp, maxLines = 3, overflow = TextOverflow.Ellipsis
+            com.example.voxel_review.ui.utils.SpoilerProtectedText(
+                reviewId = review.idResenia,
+                text = review.descripcion,
+                containsSpoilers = review.containsSpoilers,
+                maxLines = 3
             )
             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
                 Text(stringResource(R.string.likes_count, review.cantidadLikes), color = VoxelTextSecondary, fontSize = 12.sp)

@@ -218,7 +218,8 @@ class ReviewFirebaseDataSourceImpl @Inject constructor(
                 "gameplayRating" to review.gameplayRating,
                 "graphicsRating" to review.graphicsRating,
                 "storyRating" to review.storyRating,
-                "content" to review.content
+                "content" to review.content,
+                "containsSpoilers" to review.containsSpoilers
             )
         ).await()
     }

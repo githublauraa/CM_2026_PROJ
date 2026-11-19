@@ -238,10 +238,11 @@ fun GameDetailContent(
                                             modifier = Modifier.height(6.dp)
                                         )
 
-                                        Text(
+                                        com.example.voxel_review.ui.utils.SpoilerProtectedText(
+                                            reviewId = review.idResenia,
                                             text = review.descripcion,
-                                            color = Color.LightGray,
-                                            fontSize = 14.sp
+                                            containsSpoilers = review.containsSpoilers,
+                                            color = Color.LightGray
                                         )
 
                                         Spacer(

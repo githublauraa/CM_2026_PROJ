@@ -122,12 +122,13 @@ fun ReviewMapInfoCard(
             }
             if (review.descripcion.isNotBlank()) {
                 HorizontalDivider(color = VoxelBorder)
-                Text(
+                com.example.voxel_review.ui.utils.SpoilerProtectedText(
+                    reviewId = review.idResenia,
+                    containsSpoilers = review.containsSpoilers,
                     text = review.descripcion.trim(),
                     color = VoxelTextPrimary,
                     style = MaterialTheme.typography.bodySmall,
-                    maxLines = 2,
-                    overflow = TextOverflow.Ellipsis
+                    maxLines = 2
                 )
             }
             Text(

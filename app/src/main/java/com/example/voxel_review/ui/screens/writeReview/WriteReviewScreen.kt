@@ -4,13 +4,26 @@ import com.example.voxel_review.R
 import androidx.compose.ui.res.stringResource
 import android.Manifest
 import android.content.pm.PackageManager
-import android.location.LocationManager
-import android.os.CancellationSignal
-import android.os.SystemClock
-import androidx.core.location.LocationManagerCompat
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.selection.toggleable
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.platform.testTag
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.background
+import com.example.voxel_review.ui.theme.VoxelTextPrimary
+import com.example.voxel_review.ui.theme.VoxelTextSecondary
+import com.example.voxel_review.ui.theme.VoxelPrimary
+import com.example.voxel_review.ui.theme.VoxelBackground
+import com.example.voxel_review.ui.theme.VoxelSurface
 import androidx.compose.foundation.layout.Row
+import androidx.compose.material3.TextButton
+import com.example.voxel_review.ui.theme.errorDark
+import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -19,17 +32,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.ContextCompat
-import com.google.android.gms.location.CurrentLocationRequest
-import com.google.android.gms.location.Granularity
-import com.google.android.gms.location.LocationServices
-import com.google.android.gms.location.Priority
-import com.google.android.gms.tasks.CancellationTokenSource
-import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.suspendCancellableCoroutine
-import kotlin.coroutines.resume
-import kotlinx.coroutines.tasks.await
-import kotlinx.coroutines.withTimeoutOrNull
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -132,57 +135,18 @@ fun WriteReviewScreen(
 
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
-    val locationClient = remember(context) {
-        LocationServices.getFusedLocationProviderClient(context)
+    val reviewLocationProvider = remember(context) {
+        com.example.voxel_review.data.dataSource.services.ReviewLocationProvider(context)
     }
     var shareLocation by rememberSaveable { mutableStateOf(false) }
     var waitingForLocation by remember { mutableStateOf(false) }
     var locationError by remember { mutableStateOf<String?>(null) }
-    val locationPermission = Manifest.permission.ACCESS_COARSE_LOCATION
+    val locationPermission = Manifest.permission.ACCESS_FINE_LOCATION
 
     fun publishWithLocation() {
         scope.launch {
-            val requestedAt = SystemClock.elapsedRealtimeNanos()
-            val cancellation = CancellationTokenSource()
             try {
-                val publicationLocation = try {
-                    withTimeoutOrNull(7_000L) {
-                        val manager = context.getSystemService(LocationManager::class.java)
-                        if (manager?.isProviderEnabled(LocationManager.GPS_PROVIDER) == true) {
-                            val gpsLocation = withTimeoutOrNull(3_500L) {
-                                suspendCancellableCoroutine { continuation ->
-                                    val signal = CancellationSignal()
-                                    continuation.invokeOnCancellation { signal.cancel() }
-                                    LocationManagerCompat.getCurrentLocation(
-                                        manager,
-                                        LocationManager.GPS_PROVIDER,
-                                        signal,
-                                        ContextCompat.getMainExecutor(context)
-                                    ) { fix -> continuation.resume(fix) }
-                                }
-                            }
-                            if (gpsLocation != null &&
-                                gpsLocation.elapsedRealtimeNanos >= requestedAt
-                            ) {
-                                return@withTimeoutOrNull gpsLocation
-                            }
-                        }
-
-                        val request = CurrentLocationRequest.Builder()
-                            .setPriority(Priority.PRIORITY_HIGH_ACCURACY)
-                            .setGranularity(Granularity.GRANULARITY_COARSE)
-                            .setMaxUpdateAgeMillis(0L)
-                            .setDurationMillis(3_000L)
-                            .build()
-                        locationClient.getCurrentLocation(request, cancellation.token).await()
-                            ?.takeIf { it.elapsedRealtimeNanos >= requestedAt }
-                    }
-                } catch (exception: CancellationException) {
-                    throw exception
-                } catch (_: Exception) {
-                    null
-                }
-
+                val publicationLocation = reviewLocationProvider.getLocation()
                 if (publicationLocation == null) {
                     locationError = context.getString(R.string.location_unavailable_review)
                 } else {
@@ -193,16 +157,15 @@ fun WriteReviewScreen(
                     )
                 }
             } finally {
-                cancellation.cancel()
                 waitingForLocation = false
             }
         }
     }
 
     val requestLocation = rememberLauncherForActivityResult(
-        ActivityResultContracts.RequestPermission()
-    ) { granted ->
-        if (granted) {
+        ActivityResultContracts.RequestMultiplePermissions()
+    ) { permissions ->
+        if (permissions.values.any { it }) {
             waitingForLocation = true
             publishWithLocation()
         } else {
@@ -224,123 +187,189 @@ fun WriteReviewScreen(
     }
 
     Box(
-        modifier = modifier.fillMaxSize()
+        modifier = modifier.fillMaxSize().imePadding()
     ) {
         FondoPantalla(
             modifier = Modifier.fillMaxSize()
         )
 
         Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-            modifier = Modifier
-                .align(Alignment.TopCenter)
-                .fillMaxWidth(0.9f)
-                .verticalScroll(rememberScrollState())
+            modifier = Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            TopBar(
-                onBackClick = onBackClick,
-                onSettingsClick = onSettingsClick
-            )
-
-            if (game != null) {
-                GameInfo(
-                    imagen = game.imagen,
-                    nombre = game.nombre,
-                    desarrollador = game.desarrollador,
-                    anio = game.lanzamiento
-                )
-            }
-
-            if (canWriteReview && isReviewReady) {
-                GameCalification(
-                    gameplayRating = state.gameplayRating,
-                    graphicsRating = state.graphicsRating,
-                    storyRating = state.storyRating,
-                    onGameplayRatingChange = {
-                        writeReviewViewModel.updateGameplayRating(it)
-                    },
-                    onGraphicsRatingChange = {
-                        writeReviewViewModel.updateGraphicsRating(it)
-                    },
-                    onStoryRatingChange = {
-                        writeReviewViewModel.updateStoryRating(it)
-                    }
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(12.dp),
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxWidth(0.9f)
+                    .verticalScroll(rememberScrollState())
+                    .padding(bottom = 16.dp)
+            ) {
+                TopBar(
+                    onBackClick = onBackClick,
+                    onSettingsClick = onSettingsClick
                 )
 
-                ReviewText(
-                    text = state.reviewText,
-                    onTextChange = {
-                        writeReviewViewModel.updateReviewText(it)
-                    }
-                )
-
-                if (!isEditing) {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Checkbox(
-                            checked = shareLocation,
-                            onCheckedChange = {
-                                shareLocation = it
-                                locationError = null
-                            },
-                            enabled = !waitingForLocation
-                        )
-                        Text(stringResource(R.string.review_include_location))
-                    }
+                if (game != null) {
+                    GameInfo(
+                        imagen = game.imagen,
+                        nombre = game.nombre,
+                        desarrollador = game.desarrollador,
+                        anio = game.lanzamiento
+                    )
                 }
 
-                BotonPublicarReview(
-                    enabled = !waitingForLocation,
-                    onClick = {
-                        locationError = null
-                        if (reviewIdToEdit != null) {
-                            writeReviewViewModel.updateReview(
-                                reviewId = reviewIdToEdit,
-                                userId = currentUserId.orEmpty(),
-                                videoGameId = gameId
-                            )
-                        } else if (!shareLocation || state.reviewText.isBlank()) {
-                            writeReviewViewModel.publishReview(videoGameId = gameId)
-                        } else {
-                            waitingForLocation = true
-                            if (ContextCompat.checkSelfPermission(context, locationPermission) ==
-                                PackageManager.PERMISSION_GRANTED
-                            ) {
-                                publishWithLocation()
-                            } else {
-                                requestLocation.launch(locationPermission)
-                            }
+                if (canWriteReview && isReviewReady) {
+                    GameCalification(
+                        gameplayRating = state.gameplayRating,
+                        graphicsRating = state.graphicsRating,
+                        storyRating = state.storyRating,
+                        onGameplayRatingChange = {
+                            writeReviewViewModel.updateGameplayRating(it)
+                        },
+                        onGraphicsRatingChange = {
+                            writeReviewViewModel.updateGraphicsRating(it)
+                        },
+                        onStoryRatingChange = {
+                            writeReviewViewModel.updateStoryRating(it)
                         }
-                    },
-                    text = if (waitingForLocation) {
-                        stringResource(R.string.getting_location)
-                    } else if (isEditing) {
-                        stringResource(R.string.update_review)
-                    } else {
-                        stringResource(R.string.publish_review)
+                    )
+
+                    ReviewText(
+                        text = state.reviewText,
+                        onTextChange = {
+                            writeReviewViewModel.updateReviewText(it)
+                        }
+                    )
+
+                    Column(Modifier.fillMaxWidth()) {
+                        ReviewOptionRow(
+                            text = stringResource(R.string.review_contains_spoilers),
+                            checked = state.containsSpoilers,
+                            enabled = !waitingForLocation,
+                            tag = "reviewContainsSpoilers",
+                            onCheckedChange = writeReviewViewModel::updateContainsSpoilers
+                        )
+                        if (!isEditing) {
+                            ReviewOptionRow(
+                                text = stringResource(R.string.review_include_location),
+                                checked = shareLocation,
+                                enabled = !waitingForLocation,
+                                tag = "reviewIncludeLocation",
+                                onCheckedChange = {
+                                    shareLocation = it
+                                    locationError = null
+                                }
+                            )
+                        }
                     }
-                )
-            } else if (!canWriteReview) {
-                Text(
-                    text = if (currentUserId.isNullOrBlank()) {
-                        stringResource(R.string.sign_in_to_review)
-                    } else {
-                        stringResource(R.string.review_other_user_denied)
-                    },
-                    color = onErrorLight
-                )
+                } else if (!canWriteReview) {
+                    Text(
+                        text = if (currentUserId.isNullOrBlank()) {
+                            stringResource(R.string.sign_in_to_review)
+                        } else {
+                            stringResource(R.string.review_other_user_denied)
+                        },
+                        color = onErrorLight
+                    )
+                }
+
             }
-
-            val errorMessage =
-                locationError ?: state.errorMessage ?: profileState.errorMessage
-
-            errorMessage?.let {
-                Text(
-                    text = it,
-                    color = onErrorLight
-                )
+            if (canWriteReview && isReviewReady) {
+                Column(
+                    modifier = Modifier.fillMaxWidth()
+                        .background(VoxelSurface)
+                        .navigationBarsPadding()
+                        .padding(horizontal = 20.dp, vertical = 12.dp)
+                ) {
+                    val errorMessage = locationError ?: state.errorMessage ?: profileState.errorMessage
+                    errorMessage?.let { message ->
+                        Text(
+                            text = message,
+                            color = errorDark,
+                            modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)
+                                .testTag("reviewPublishError")
+                        )
+                    }
+                    if (locationError != null && shareLocation && !isEditing && !waitingForLocation) {
+                        TextButton(
+                            onClick = {
+                                shareLocation = false
+                                locationError = null
+                                writeReviewViewModel.publishReview(videoGameId = gameId)
+                            },
+                            modifier = Modifier.fillMaxWidth().testTag("publishReviewWithoutLocation")
+                        ) {
+                            Text(stringResource(R.string.publish_review_without_location), color = VoxelPrimary)
+                        }
+                    }
+                    BotonPublicarReview(
+                        enabled = !waitingForLocation,
+                        onClick = {
+                            locationError = null
+                            if (reviewIdToEdit != null) {
+                                writeReviewViewModel.updateReview(
+                                    reviewId = reviewIdToEdit,
+                                    userId = currentUserId.orEmpty(),
+                                    videoGameId = gameId
+                                )
+                            } else if (!shareLocation || state.reviewText.isBlank()) {
+                                writeReviewViewModel.publishReview(videoGameId = gameId)
+                            } else {
+                                waitingForLocation = true
+                                if (ContextCompat.checkSelfPermission(context, locationPermission) ==
+                                    PackageManager.PERMISSION_GRANTED
+                                ) {
+                                    publishWithLocation()
+                                } else {
+                                    requestLocation.launch(arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION))
+                                }
+                            }
+                        },
+                        text = if (waitingForLocation) {
+                            stringResource(R.string.getting_location)
+                        } else if (isEditing) {
+                            stringResource(R.string.update_review)
+                        } else {
+                            stringResource(R.string.publish_review)
+                        }
+                    )
+                }
             }
         }
+    }
+}
+
+@Composable
+private fun ReviewOptionRow(
+    text: String,
+    checked: Boolean,
+    enabled: Boolean,
+    tag: String,
+    onCheckedChange: (Boolean) -> Unit
+) {
+    Row(
+        modifier = Modifier.fillMaxWidth()
+            .heightIn(min = 48.dp)
+            .testTag(tag)
+            .toggleable(value = checked, enabled = enabled, role = Role.Checkbox, onValueChange = onCheckedChange)
+            .padding(horizontal = 4.dp, vertical = 8.dp),
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Checkbox(
+            checked = checked,
+            onCheckedChange = null,
+            enabled = enabled,
+            modifier = Modifier.size(24.dp),
+            colors = CheckboxDefaults.colors(
+                checkedColor = VoxelPrimary,
+                uncheckedColor = VoxelTextSecondary,
+                checkmarkColor = VoxelBackground
+            )
+        )
+        Text(text = text, color = VoxelTextPrimary, modifier = Modifier.weight(1f))
     }
 }
 
