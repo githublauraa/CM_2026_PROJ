@@ -44,7 +44,7 @@ fun GenreChip(
     ) {
 
         Text(
-            text = stringResource(id = genre.nombre),
+            text = genre.customName ?: stringResource(id = genre.nombre),
             color = onSurfaceVariantDark,
             fontSize = 12.sp
         )

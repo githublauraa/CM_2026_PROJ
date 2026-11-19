@@ -11,6 +11,10 @@ import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Text
+import androidx.compose.ui.res.stringResource
+import com.example.voxel_review.R
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -31,7 +35,8 @@ fun SettingsScreen(
     onAccentChange: (AccentOption) -> Unit,
     modifier: Modifier = Modifier,
     language: AppLanguage = AppLanguage.SPANISH,
-    onLanguageChange: (AppLanguage) -> Unit = {}
+    onLanguageChange: (AppLanguage) -> Unit = {},
+    onAdminClick: (() -> Unit)? = null
 ) {
     Column(modifier = modifier.fillMaxSize().background(VoxelBackground)) {
         Box(
@@ -45,6 +50,20 @@ fun SettingsScreen(
                 verticalArrangement = Arrangement.spacedBy(21.dp)
             ) {
                 SettingsHeader(accent = selectedAccent.color, onBack = onBack)
+                if (onAdminClick != null) {
+                    androidx.compose.material3.Button(
+                        onClick = onAdminClick,
+                        shape = androidx.compose.foundation.shape.RoundedCornerShape(18.dp),
+                        colors = androidx.compose.material3.ButtonDefaults.buttonColors(
+                            containerColor = com.example.voxel_review.ui.theme.VoxelPrimary,
+                            contentColor = VoxelBackground
+                        ),
+                        contentPadding = androidx.compose.foundation.layout.PaddingValues(20.dp),
+                        modifier = Modifier.fillMaxWidth().padding(horizontal = 18.dp)
+                    ) {
+                        Text(stringResource(R.string.admin_title), style = androidx.compose.material3.MaterialTheme.typography.titleMedium)
+                    }
+                }
                 GeneralSettingsSection(
                     accent = selectedAccent.color,
                     modifier = Modifier.padding(horizontal = 18.dp),

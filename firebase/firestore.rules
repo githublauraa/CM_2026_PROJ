@@ -1,0 +1,61 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Existing production access for other collections is preserved.
+    // The catalog is excluded so its admin rules cannot be bypassed.
+    match /{collection}/{document=**} {
+      allow read, write: if collection != 'video-Games' && request.auth != null;
+    }
+
+// Integrar dentro de match /databases/{database}/documents.
+// Reemplazar cualquier permiso anterior sobre video-Games, no añadir junto a uno abierto.
+match /video-Games/{gameId} {
+  function isCatalogAdmin() {
+    return request.auth != null && request.auth.token.get('admin', false) == true;
+  }
+  function boundedText(value, maximum) {
+    return value is string && value.trim().size() > 0 && value.size() <= maximum;
+  }
+  function validGenreAt(genres, index) {
+    return genres.size() <= index || boundedText(genres[index], 60);
+  }
+  function validGame(game) {
+    return game.videoGameId == gameId
+      && boundedText(game.name, 120)
+      && boundedText(game.description, 5000)
+      && boundedText(game.developer, 120)
+      && boundedText(game.platform, 200)
+      && game.releaseDate is string
+      && game.releaseDate.matches('[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])')
+      && game.imageUrl is string && game.imageUrl.size() <= 2048
+      && game.imageUrl.matches('https://[^/\\s]+.*')
+      && game.archived is bool
+      && game.genres is list && game.genres.size() > 0 && game.genres.size() <= 10
+      && validGenreAt(game.genres, 0) && validGenreAt(game.genres, 1)
+      && validGenreAt(game.genres, 2) && validGenreAt(game.genres, 3)
+      && validGenreAt(game.genres, 4) && validGenreAt(game.genres, 5)
+      && validGenreAt(game.genres, 6) && validGenreAt(game.genres, 7)
+      && validGenreAt(game.genres, 8) && validGenreAt(game.genres, 9);
+  }
+  function catalogFields() {
+    return ['videoGameId', 'name', 'description', 'developer', 'platform',
+            'releaseDate', 'imageUrl', 'genres', 'archived'];
+  }
+
+  // Los archivados se pueden consultar por ID para conservar biblioteca y reseñas.
+  allow read: if request.auth != null;
+  allow create: if isCatalogAdmin()
+    && request.resource.data.keys().hasOnly(catalogFields())
+    && validGame(request.resource.data);
+  allow update: if isCatalogAdmin() && (
+    (request.resource.data.diff(resource.data).affectedKeys().hasOnly(['archived'])
+      && request.resource.data.archived is bool)
+    || (request.resource.data.diff(resource.data).affectedKeys().hasOnly(catalogFields())
+      && validGame(request.resource.data))
+  );
+  allow delete: if false;
+}
+
+  }
+}

@@ -1,6 +1,8 @@
 package com.example.voxel_review.ui.screens.settings
 
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import com.example.voxel_review.ui.screens.admin.AdminAccessViewModel
 import androidx.core.os.LocaleListCompat
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -12,9 +14,13 @@ import androidx.compose.ui.platform.LocalConfiguration
 fun SettingsRoute(
     settingsViewModel: SettingsViewModel,
     onBackClick: () -> Unit,
+    onAdminClick: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     val state by settingsViewModel.uiState.collectAsState()
+
+    val accessViewModel: AdminAccessViewModel = hiltViewModel()
+    val isAdmin by accessViewModel.isAdmin.collectAsState()
 
     val language = AppLanguage.fromTag(LocalConfiguration.current.locales[0]?.toLanguageTag())
 
@@ -30,6 +36,7 @@ fun SettingsRoute(
                 AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags(selected.tag))
             }
         },
-        modifier = modifier
+        modifier = modifier,
+        onAdminClick = if (isAdmin) onAdminClick else null
     )
 }

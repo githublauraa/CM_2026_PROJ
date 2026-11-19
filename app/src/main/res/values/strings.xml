@@ -404,4 +404,33 @@
     <string name="review_show_spoilers">Mostrar reseña</string>
     <string name="review_hide_spoilers">Ocultar reseña</string>
     <string name="publish_review_without_location">Publicar sin ubicación</string>
+
+    <string name="admin_title">Administrar catálogo</string>
+    <string name="admin_back">Volver</string>
+    <string name="admin_refresh">Actualizar</string>
+    <string name="admin_add">Agregar juego</string>
+    <string name="admin_edit">Editar juego</string>
+    <string name="admin_denied">Solo una cuenta administradora puede gestionar los juegos. Si acabas de recibir el rol, pulsa Actualizar.</string>
+    <string name="admin_name">Nombre</string>
+    <string name="admin_description">Descripción</string>
+    <string name="admin_developer">Desarrollador</string>
+    <string name="admin_platforms">Plataformas (separadas por comas)</string>
+    <string name="admin_date">Lanzamiento (AAAA-MM-DD)</string>
+    <string name="admin_cover">URL HTTPS de la portada</string>
+    <string name="admin_genres">Géneros (separados por comas)</string>
+    <string name="admin_save">Guardar juego</string>
+    <string name="admin_cancel">Cancelar</string>
+    <string name="admin_archive">Archivar</string>
+    <string name="admin_restore">Restaurar</string>
+    <string name="admin_archived">Archivado</string>
+    <string name="admin_empty">Todavía no hay juegos en el catálogo.</string>
+    <string name="admin_form_hint">* Campos obligatorios</string>
+    <string name="admin_invalid">Revisa los campos, la fecha y la URL HTTPS de la portada.</string>
+    <string name="admin_duplicate">Ya existe un juego con ese nombre, incluso entre los archivados. Edita el existente.</string>
+    <string name="admin_load_error">No se pudo cargar el catálogo o verificar tus permisos. Intenta actualizar.</string>
+    <string name="admin_save_error">No se pudo completar la operación. Comprueba tu conexión y tus permisos y vuelve a intentarlo.</string>
+    <string name="admin_saved">Catálogo actualizado.</string>
+    <string name="admin_confirm">Confirmar</string>
+    <string name="admin_archive_confirm">¿Archivar %1$s? Se ocultará del catálogo y conservará sus reseñas.</string>
+    <string name="admin_restore_confirm">¿Volver a mostrar %1$s en el catálogo?</string>
 </resources>

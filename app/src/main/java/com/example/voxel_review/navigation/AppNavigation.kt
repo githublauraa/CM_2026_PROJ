@@ -1,6 +1,9 @@
 package com.example.voxel_review.navigation
 
 import android.net.Uri
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LifecycleEventEffect
+import com.example.voxel_review.ui.screens.admin.AdminCatalogScreen
 import com.example.voxel_review.ui.screens.following.FollowingScreen
 import com.example.voxel_review.ui.screens.chat.inbox.ChatInboxScreen
 import com.example.voxel_review.ui.screens.chat.conversation.ChatScreen
@@ -72,6 +75,7 @@ sealed class AppScreen(val route: String) {
     object RankingsUser : AppScreen("rankingsUser")
     object Configuration : AppScreen("configuration")
     object Notifications : AppScreen("notifications")
+    object AdminCatalog : AppScreen("adminCatalog")
     object Chats : AppScreen("chats")
 
     object Chat : AppScreen("chat") {
@@ -205,6 +209,9 @@ fun AppNavigation(
         composable(route = AppScreen.Reviews.route) {
 
             val novedadesViewModel: NovedadesViewModel = hiltViewModel()
+            LifecycleEventEffect(Lifecycle.Event.ON_RESUME) {
+                novedadesViewModel.getAllJuegos()
+            }
 
             NovedadScreen(
                 onMapClick = {
@@ -329,6 +336,13 @@ fun AppNavigation(
             )
         }
 
+        composable(route = AppScreen.AdminCatalog.route) {
+            AdminCatalogScreen(
+                viewModel = hiltViewModel(),
+                onBack = { navController.popBackStack() }
+            )
+        }
+
         // CONFIGURACIÓN
         composable(route = AppScreen.Configuration.route) {
 
@@ -336,6 +350,7 @@ fun AppNavigation(
 
             SettingsRoute(
                 settingsViewModel = settingsViewModel,
+                onAdminClick = { navController.navigate(AppScreen.AdminCatalog.route) },
                 onBackClick = {
                     navController.popBackStack()
                 }
@@ -347,6 +362,9 @@ fun AppNavigation(
         composable(route = AppScreen.Discover.route) {
 
             val discoverViewModel: DiscoverViewModel = hiltViewModel()
+            LifecycleEventEffect(Lifecycle.Event.ON_RESUME) {
+                discoverViewModel.loadVideoGames()
+            }
 
             DiscoverScreen(
                 discoverViewModel = discoverViewModel,

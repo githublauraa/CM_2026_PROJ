@@ -19,6 +19,7 @@ class JuegosFirebaseDataSourceImpl @Inject constructor(
 
             documento.toObject(VideoGameDto::class.java)
                 ?.copy(videoGameId = documento.id)
+                ?.takeUnless { it.archived }
         }
     }
 

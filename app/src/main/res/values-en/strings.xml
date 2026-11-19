@@ -377,4 +377,33 @@
     <string name="review_hide_spoilers">Hide review</string>
     <string name="publish_review_without_location">Publish without location</string>
     <string name="nav_chats">Chats</string>
+
+    <string name="admin_title">Manage catalog</string>
+    <string name="admin_back">Back</string>
+    <string name="admin_refresh">Refresh</string>
+    <string name="admin_add">Add game</string>
+    <string name="admin_edit">Edit game</string>
+    <string name="admin_denied">Only an administrator can manage games. If you just received access, tap Refresh.</string>
+    <string name="admin_name">Name</string>
+    <string name="admin_description">Description</string>
+    <string name="admin_developer">Developer</string>
+    <string name="admin_platforms">Platforms (comma separated)</string>
+    <string name="admin_date">Release date (YYYY-MM-DD)</string>
+    <string name="admin_cover">Cover HTTPS URL</string>
+    <string name="admin_genres">Genres (comma separated)</string>
+    <string name="admin_save">Save game</string>
+    <string name="admin_cancel">Cancel</string>
+    <string name="admin_archive">Archive</string>
+    <string name="admin_restore">Restore</string>
+    <string name="admin_archived">Archived</string>
+    <string name="admin_empty">There are no games in the catalog yet.</string>
+    <string name="admin_form_hint">* Required fields</string>
+    <string name="admin_invalid">Check the fields, date and cover HTTPS URL.</string>
+    <string name="admin_duplicate">A game with this name already exists, including archived games. Edit the existing game.</string>
+    <string name="admin_load_error">Could not load the catalog or verify your access. Try refreshing.</string>
+    <string name="admin_save_error">Could not complete the operation. Check your connection and permissions and try again.</string>
+    <string name="admin_saved">Catalog updated.</string>
+    <string name="admin_confirm">Confirm</string>
+    <string name="admin_archive_confirm">Archive %1$s? It will be hidden from the catalog and its reviews will be preserved.</string>
+    <string name="admin_restore_confirm">Show %1$s in the catalog again?</string>
 </resources>

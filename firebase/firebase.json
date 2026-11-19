@@ -2,5 +2,8 @@
   "functions": {
     "source": "functions",
     "codebase": "chat-notifications"
+  },
+  "firestore": {
+    "rules": "firestore.rules"
   }
 }

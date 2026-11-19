@@ -44,3 +44,7 @@ await db.collection("chatNotifications").doc(recipientId)
 ```
 
 Desde esa carpeta, despliega solo el cambio con `firebase deploy --only functions:notifyNewChatMessage --project voxelreview-78caf`. Usa el despliegue de tu carpeta o el de esta implementación según dónde esté alojada la función existente.
+
+## Administrador del catálogo
+
+La configuración del rol, las reglas y las pruebas están en [CATALOG_ADMIN.md](CATALOG_ADMIN.md). El panel Android se abre desde Configuración → Administrar catálogo.

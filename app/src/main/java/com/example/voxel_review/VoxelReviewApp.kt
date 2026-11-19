@@ -97,6 +97,7 @@ fun VoxelReviewApp(
             currentRoute?.startsWith(AppScreen.FullReviews.route) != true &&
             currentRoute ?.startsWith(AppScreen.WriteReview.route) != true &&
             currentRoute != AppScreen.Configuration.route &&
+            currentRoute != AppScreen.AdminCatalog.route &&
             currentRoute ?.startsWith(AppScreen.GameDetail.route) != true
 
     val barOverlaysContent = showBar && currentRoute?.substringBefore("?") in setOf(

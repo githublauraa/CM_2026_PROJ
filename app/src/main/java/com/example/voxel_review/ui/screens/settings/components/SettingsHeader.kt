@@ -35,9 +35,9 @@ fun SettingsHeader(
     val highlight = lerp(accent, VoxelTextPrimary, 0.35f)
     Box(modifier = modifier.fillMaxWidth()) {
         Column(
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 48.dp, vertical = 24.dp),
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 48.dp, vertical = 12.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(12.dp)
+            verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             Box(
                 modifier = Modifier.size(54.dp).background(highlight.copy(alpha = 0.14f), RoundedCornerShape(18.dp)),

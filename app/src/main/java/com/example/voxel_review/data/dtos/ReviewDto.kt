@@ -1,5 +1,7 @@
 package com.example.voxel_review.data.dtos
 
+import com.example.voxel_review.data.info.InfoDiscover.GenreInfo
+
 import com.example.voxel_review.data.info.InfoDiscover.TrendingSearchInfo
 import com.example.voxel_review.data.info.review.ReviewInfo
 import com.example.voxel_review.data.info.InfoGame.GameDetailInfo
@@ -41,7 +43,9 @@ data class VideoGameDto(
 	val developer: String,
 	val platform: String,
 	val releaseDate: String,
-	val imageUrl: String?
+	val imageUrl: String?,
+	val genres: List<String> = emptyList(),
+	val archived: Boolean = false
 ){
 	constructor() : this(
 		videoGameId = "",
@@ -104,7 +108,7 @@ fun VideoGameDto.toGameDetailInfo(): GameDetailInfo {
 		descripcion = description,
 		desarrollador = developer,
 		lanzamiento = releaseDate,
-		generos = emptyList(),
+		generos = genres.map { GenreInfo(id = it, customName = it) },
 		imagen = imageUrl ?: ""
 	)
 }
