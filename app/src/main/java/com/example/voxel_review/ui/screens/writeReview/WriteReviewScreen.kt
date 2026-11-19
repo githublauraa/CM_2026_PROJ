@@ -134,6 +134,8 @@ fun WriteReviewScreen(
         reviewId.isBlank() || state.editingReviewId == reviewId
 
     val context = LocalContext.current
+    val location_unavailable_reviewText = stringResource(R.string.location_unavailable_review)
+    val location_permission_reviewText = stringResource(R.string.location_permission_review)
     val scope = rememberCoroutineScope()
     val reviewLocationProvider = remember(context) {
         com.example.voxel_review.data.dataSource.services.ReviewLocationProvider(context)
@@ -148,7 +150,7 @@ fun WriteReviewScreen(
             try {
                 val publicationLocation = reviewLocationProvider.getLocation()
                 if (publicationLocation == null) {
-                    locationError = context.getString(R.string.location_unavailable_review)
+                    locationError = location_unavailable_reviewText
                 } else {
                     writeReviewViewModel.publishReview(
                         videoGameId = gameId,
@@ -170,7 +172,7 @@ fun WriteReviewScreen(
             publishWithLocation()
         } else {
             waitingForLocation = false
-            locationError = context.getString(R.string.location_permission_review)
+            locationError = location_permission_reviewText
         }
     }
 

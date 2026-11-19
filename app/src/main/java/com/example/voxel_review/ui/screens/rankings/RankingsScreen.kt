@@ -29,14 +29,12 @@ import com.example.voxel_review.ui.theme.Voxel_ReviewTheme
  * Recibe el estado y los eventos necesarios sin acceder directamente al ViewModel.
  *
  * @param state Estado actual de la pantalla de rankings.
- * @param onChangeSeleccionado Acción ejecutada al cambiar el tipo de ranking seleccionado.
  * @param onUserClick Acción ejecutada al presionar la tarjeta de un usuario.
  * @param modifier Modificador para personalizar el contenido.
  */
 @Composable
 fun RankingContent(
     state: RankingsState,
-    onChangeSeleccionado: (Boolean) -> Unit,
     onSearchQueryChange: (String) -> Unit,
     onUserClick: (ProfileInfo) -> Unit,
     modifier: Modifier = Modifier.testTag("homeScreen")
@@ -46,19 +44,14 @@ fun RankingContent(
             Brush.verticalGradient(0f to VoxelSurface, 0.4f to VoxelBackground)
         )
     ) {
-        HeaderRankingSceen(
-            seleccionado = state.seleccionado,
-            onChangeSeleccionado = onChangeSeleccionado
-        )
+        HeaderRankingSceen()
 
-        if (state.seleccionado) {
-            DiscoverSearchBar(
-                query = state.searchQuery,
-                onQueryChange = onSearchQueryChange,
-                placeholder = stringResource(R.string.search_critics),
-                modifier = Modifier.padding(top = 12.dp, bottom = 12.dp)
-            )
-        }
+        DiscoverSearchBar(
+            query = state.searchQuery,
+            onQueryChange = onSearchQueryChange,
+            placeholder = stringResource(R.string.search_critics),
+            modifier = Modifier.padding(top = 12.dp, bottom = 12.dp)
+        )
 
         state.error?.let { message -> ContentStatus(message) }
 
@@ -89,7 +82,6 @@ fun RankingsScreen(
 
     RankingContent(
         state = state,
-        onChangeSeleccionado = rankingsViewModel::onChangeSeleccionado,
         onUserClick = onUserClick,
         onSearchQueryChange = rankingsViewModel::onSearchQueryChange,
         modifier = modifier.testTag("homeScreen")
@@ -106,7 +98,6 @@ fun RankingScreenPreview() {
     Voxel_ReviewTheme(darkTheme = true, dynamicColor = false) {
         RankingContent(
             state = RankingsState(users = users),
-            onChangeSeleccionado = {},
             onSearchQueryChange = {},
             onUserClick = {}
         )

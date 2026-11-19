@@ -31,6 +31,9 @@ fun ChatCameraButton(
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
+    val camera_cleanup_errorText = stringResource(R.string.camera_cleanup_error)
+    val camera_open_errorText = stringResource(R.string.camera_open_error)
+    val camera_permission_errorText = stringResource(R.string.camera_permission_error)
     var pendingCapture by rememberSaveable { mutableStateOf<String?>(null) }
 
     val camera = rememberLauncherForActivityResult(ActivityResultContracts.TakePicture()) { captured ->
@@ -43,7 +46,7 @@ fun ChatCameraButton(
                 try {
                     context.contentResolver.delete(uri, null, null)
                 } catch (_: Exception) {
-                    onError(context.getString(R.string.camera_cleanup_error))
+                    onError(camera_cleanup_errorText)
                 }
             }
         }
@@ -61,7 +64,7 @@ fun ChatCameraButton(
         } catch (_: Exception) {
             pendingCapture = null
             file?.delete()
-            onError(context.getString(R.string.camera_open_error))
+            onError(camera_open_errorText)
         }
     }
 
@@ -69,7 +72,7 @@ fun ChatCameraButton(
         if (granted) {
             openCamera()
         } else {
-            onError(context.getString(R.string.camera_permission_error))
+            onError(camera_permission_errorText)
         }
     }
 

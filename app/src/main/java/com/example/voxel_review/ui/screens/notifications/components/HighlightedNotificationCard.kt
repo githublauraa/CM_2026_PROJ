@@ -65,7 +65,10 @@ fun HighlightedNotificationCard(
         isLike && notification.reviewGameTitle.isNotBlank() ->
             stringResource(R.string.notice_like_game, notification.reviewGameTitle)
         isLike -> stringResource(R.string.notice_like)
-        else -> notification.message
+        notification.chatSenderId != null -> stringResource(
+            if (notification.isPhoto) R.string.notice_photo else R.string.notice_message
+        )
+        else -> stringResource(R.string.notice_follow)
     }
 
     Row(

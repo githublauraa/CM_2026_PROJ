@@ -376,4 +376,5 @@
     <string name="review_show_spoilers">Show review</string>
     <string name="review_hide_spoilers">Hide review</string>
     <string name="publish_review_without_location">Publish without location</string>
+    <string name="nav_chats">Chats</string>
 </resources>

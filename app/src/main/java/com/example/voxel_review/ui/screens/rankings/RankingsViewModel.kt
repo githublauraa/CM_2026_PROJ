@@ -46,17 +46,6 @@ class RankingsViewModel @Inject constructor( private val userRepository: UserRep
         }
     }
 
-    /**
-     * Actualiza el tipo de ranking seleccionado.
-     *
-     * @param seleccionado `true` para mostrar críticos y `false` para mostrar juegos.
-     */
-    fun onChangeSeleccionado(seleccionado: Boolean) {
-        _uiState.value = _uiState.value.copy(
-            seleccionado = seleccionado
-        )
-    }
-
     // Carga la información inicial del ranking al crear el ViewModel.
     init {
         getAllUsers()

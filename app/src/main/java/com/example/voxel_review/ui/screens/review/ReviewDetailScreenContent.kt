@@ -13,6 +13,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -23,7 +25,6 @@ import com.example.voxel_review.ui.screens.review.components.ReviewDetailContent
 import com.example.voxel_review.ui.screens.review.components.ReviewDetailTopBar
 import com.example.voxel_review.ui.utils.FondoPantalla
 import com.google.firebase.auth.FirebaseAuth
-import java.util.Locale
 
 @Composable
 fun ReviewDetailScreenContent(
@@ -39,6 +40,20 @@ fun ReviewDetailScreenContent(
 ) {
     val context = LocalContext.current
     val review = state.review
+    val shareLocale = LocalConfiguration.current.locales[0]
+    val genericUser = stringResource(R.string.generic_user)
+    val shareAuthor = stringResource(R.string.review_by, review?.username?.ifBlank { genericUser } ?: genericUser)
+    val shareScores = stringResource(
+        R.string.share_review_scores,
+        review?.ratingJugabilidad?.toInt() ?: 0,
+        review?.ratingGraficos?.toInt() ?: 0,
+        review?.ratingHistoria?.toInt() ?: 0
+    )
+    val spoilerWarning = stringResource(R.string.review_spoiler_warning)
+    val sharedFrom = stringResource(R.string.shared_from)
+    val shareSubject = stringResource(R.string.share_review_subject, review?.tituloJuego.orEmpty())
+    val shareChooser = stringResource(R.string.share_review)
+
     val currentUserId = FirebaseAuth.getInstance().currentUser?.uid
 
     val canManageReview =
@@ -70,36 +85,30 @@ fun ReviewDetailScreenContent(
                 },
                 onShareClick = {
                     if (review != null) {
-                        val ratingFormatted = String.format(Locale.US, "%.1f", review.ratingGeneral)
+                        val ratingFormatted = String.format(shareLocale, "%.1f", review.ratingGeneral)
                         val shareText = buildString {
                             appendLine("🎮 ${review.tituloJuego} ($ratingFormatted/5 ⭐)")
-                            val author = review.username.ifBlank { context.getString(R.string.generic_user) }
-                            appendLine("✍️🔥 ${context.getString(R.string.review_by, author)}")
-                            appendLine(context.getString(
-                                R.string.share_review_scores,
-                                review.ratingJugabilidad.toInt(),
-                                review.ratingGraficos.toInt(),
-                                review.ratingHistoria.toInt()
-                            ))
+                            appendLine("✍️🔥 $shareAuthor")
+                            appendLine(shareScores)
                             appendLine()
                             if (review.containsSpoilers) {
-                                appendLine(context.getString(R.string.review_spoiler_warning))
+                                appendLine(spoilerWarning)
                             } else {
                                 appendLine("\"${review.descripcion}\"")
                             }
                             appendLine()
-                            append(context.getString(R.string.shared_from))
+                            append(sharedFrom)
                         }
                         val sendIntent = Intent(Intent.ACTION_SEND).apply {
                             type = "text/plain"
                             putExtra(
                                 Intent.EXTRA_SUBJECT,
-                                context.getString(R.string.share_review_subject, review.tituloJuego)
+                                shareSubject
                             )
                             putExtra(Intent.EXTRA_TEXT, shareText)
                         }
                         context.startActivity(
-                            Intent.createChooser(sendIntent, context.getString(R.string.share_review))
+                            Intent.createChooser(sendIntent, shareChooser)
                         )
                     }
                 }

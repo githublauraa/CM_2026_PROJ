@@ -79,7 +79,8 @@ class ChatRepository @Inject constructor(
                     message = if (notice.isPhoto) strings[R.string.notice_photo] else strings[R.string.notice_message],
                     imageUrl = notice.senderPhotoUrl,
                     chatSenderId = notice.senderId,
-                    timestampMillis = notice.createdAt?.toDate()?.time ?: 0
+                    timestampMillis = notice.createdAt?.toDate()?.time ?: 0,
+                    isPhoto = notice.isPhoto
                 )
             }
             emit(Result.success(notifications))

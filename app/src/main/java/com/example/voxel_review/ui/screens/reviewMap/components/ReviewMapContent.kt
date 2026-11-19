@@ -66,6 +66,9 @@ fun ReviewMapContent(
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
+    val map_enable_locationText = stringResource(R.string.map_enable_location)
+    val map_location_failedText = stringResource(R.string.map_location_failed)
+    val map_location_permissionText = stringResource(R.string.map_location_permission)
     var hasLocationPermission by remember(context) {
         mutableStateOf(hasMapLocationPermission(context))
     }
@@ -93,7 +96,7 @@ fun ReviewMapContent(
             val error = try {
                 val manager = context.getSystemService(LocationManager::class.java)
                 if (manager == null || !LocationManagerCompat.isLocationEnabled(manager)) {
-                    context.getString(R.string.map_enable_location)
+                    map_enable_locationText
                 } else {
                     val precise = ContextCompat.checkSelfPermission(
                         context, Manifest.permission.ACCESS_FINE_LOCATION
@@ -108,7 +111,7 @@ fun ReviewMapContent(
                         .build()
                     val location = locationClient.getCurrentLocation(request, cancellation.token).await()
                     if (location == null) {
-                        context.getString(R.string.map_location_failed)
+                        map_location_failedText
                     } else {
                         val zoom = if (precise) 16f else 13f
                         val point = LatLng(location.latitude, location.longitude)
@@ -119,7 +122,7 @@ fun ReviewMapContent(
             } catch (exception: CancellationException) {
                 throw exception
             } catch (_: Exception) {
-                context.getString(R.string.map_location_failed)
+                map_location_failedText
             } finally {
                 cancellation.cancel()
                 locating = false
@@ -135,7 +138,7 @@ fun ReviewMapContent(
         if (hasLocationPermission) {
             centerOnLocation()
         } else {
-            scope.launch { snackbar.showSnackbar(context.getString(R.string.map_location_permission)) }
+            scope.launch { snackbar.showSnackbar(map_location_permissionText) }
         }
     }
 
